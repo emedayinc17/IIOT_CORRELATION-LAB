@@ -1,0 +1,17 @@
+{
+  "scenario": "B",
+  "name": "Operational Baseline with Zabbix",
+  "start_timestamp_utc": "2026-05-02T03:33:35Z",
+  "iterations": "3",
+  "sleep_seconds": "2",
+  "duration_seconds": "20",
+  "services": {
+    "mqtt": "10.10.0.151:1883",
+    "health_app": "10.10.0.152:8080",
+    "telemetry_api": "10.10.0.153:8080",
+    "vulnerable_app": "10.10.0.154:8080",
+    "zabbix_ui": "10.10.0.160:80"
+  },
+  "end_timestamp_utc": "2026-05-02T03:33:55Z",
+  "status": "completed"
+}

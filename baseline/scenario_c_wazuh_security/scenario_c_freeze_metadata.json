@@ -1,0 +1,10 @@
+{
+  "timestamp_utc": "2026-05-02T05:58:56Z",
+  "scenario": "SCENARIO_C",
+  "scope": "Foundation IIoT + Zabbix + Wazuh",
+  "wazuh_deployment_model": "single-node/all-in-one laboratory deployment on MicroK8s single-node",
+  "dataset": "baseline/scenario_c_wazuh_security/wazuh_security_baseline.csv",
+  "frozen_manifests": "baseline/scenario_c_wazuh_security/wazuh-frozen-manifests",
+  "checksums": "baseline/scenario_c_wazuh_security/SHA256SUMS",
+  "excluded_scope": ["Kubernetes hardening", "HA SIEM clustering", "Falco", "CIS benchmark", "runtime security", "Prometheus", "Grafana", "Loki", "Istio"]
+}

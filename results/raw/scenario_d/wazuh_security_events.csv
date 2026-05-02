@@ -1,0 +1,16 @@
+timestamp_utc,attack_uid,attack_id,mitre_ics,component,event_type,source
+2026-05-02T16:56:14Z,D-T0809-1,T0809,T0809,mosquitto,unauthorized_command_message,wazuh_localfile_json
+2026-05-02T16:56:18Z,D-T0814-1,T0814,T0814,telemetry-api,telemetry_manipulation,wazuh_localfile_json
+2026-05-02T16:56:23Z,D-T0860-1,T0860,T0860,vulnerable-app,availability_degradation_http_flood,wazuh_localfile_json
+2026-05-02T16:56:26Z,D-T0809-2,T0809,T0809,mosquitto,unauthorized_command_message,wazuh_localfile_json
+2026-05-02T16:56:30Z,D-T0814-2,T0814,T0814,telemetry-api,telemetry_manipulation,wazuh_localfile_json
+2026-05-02T16:56:34Z,D-T0860-2,T0860,T0860,vulnerable-app,availability_degradation_http_flood,wazuh_localfile_json
+2026-05-02T16:56:37Z,D-T0809-3,T0809,T0809,mosquitto,unauthorized_command_message,wazuh_localfile_json
+2026-05-02T16:56:41Z,D-T0814-3,T0814,T0814,telemetry-api,telemetry_manipulation,wazuh_localfile_json
+2026-05-02T16:56:46Z,D-T0860-3,T0860,T0860,vulnerable-app,availability_degradation_http_flood,wazuh_localfile_json
+2026-05-02T16:56:48Z,D-T0809-4,T0809,T0809,mosquitto,unauthorized_command_message,wazuh_localfile_json
+2026-05-02T16:56:53Z,D-T0814-4,T0814,T0814,telemetry-api,telemetry_manipulation,wazuh_localfile_json
+2026-05-02T16:56:57Z,D-T0860-4,T0860,T0860,vulnerable-app,availability_degradation_http_flood,wazuh_localfile_json
+2026-05-02T16:56:59Z,D-T0809-5,T0809,T0809,mosquitto,unauthorized_command_message,wazuh_localfile_json
+2026-05-02T16:57:04Z,D-T0814-5,T0814,T0814,telemetry-api,telemetry_manipulation,wazuh_localfile_json
+2026-05-02T16:57:08Z,D-T0860-5,T0860,T0860,vulnerable-app,availability_degradation_http_flood,wazuh_localfile_json

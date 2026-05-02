@@ -1,0 +1,14 @@
+{
+  "timestamp_utc": "2026-05-02T16:57:12Z",
+  "scenario": "SCENARIO_D",
+  "scope": "MITRE ATT&CK for ICS controlled attacks over IIoT Foundation with Zabbix and Wazuh active",
+  "iterations": 5,
+  "sleep_seconds": 2,
+  "dos_requests": 40,
+  "dos_concurrency": 8,
+  "attacks": ["T0809", "T0814", "T0860"],
+  "datasets": [
+    "results/raw/scenario_d/mitre_ics_attacks.csv",
+    "results/raw/scenario_d/attack_http_observations.csv"
+  ]
+}

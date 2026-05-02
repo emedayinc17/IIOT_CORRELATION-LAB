@@ -1,0 +1,2 @@
+NAME                  STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS        VOLUMEATTRIBUTESCLASS   AGE
+zabbix-postgres-pvc   Bound    pvc-fd579659-a70f-448c-af85-c4087b19e982   20Gi       RWO            microk8s-hostpath   <unset>                 22m

@@ -1,0 +1,4 @@
+NAMESPACE    NAME                                          STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS        VOLUMEATTRIBUTESCLASS   AGE   VOLUMEMODE
+monitoring   zabbix-postgres-pvc                           Bound    pvc-fd579659-a70f-448c-af85-c4087b19e982   20Gi       RWO            microk8s-hostpath   <unset>                 14h   Filesystem
+security     wazuh-indexer-wazuh-indexer-0                 Bound    pvc-91aebcd7-a585-410b-bcbb-f24f5bf3008e   500Mi      RWO            wazuh-storage       <unset>                 12h   Filesystem
+security     wazuh-manager-master-wazuh-manager-master-0   Bound    pvc-0b73ba42-1617-42bc-b13a-1d2d6f45964d   500Mi      RWO            wazuh-storage       <unset>                 12h   Filesystem

@@ -1,0 +1,300 @@
+find: '/proc/397/task/397/fdinfo/6': No such file or directory
+find: '/proc/397/fd/5': No such file or directory
+find: '/proc/397/fdinfo/5': No such file or directory
+find: '/proc/398/task/398/fd/6': No such file or directory
+find: '/proc/398/task/398/fdinfo/6': No such file or directory
+find: '/proc/398/fd/5': No such file or directory
+find: '/proc/398/fdinfo/5': No such file or directory
+chown: changing group of '/run/secrets/kubernetes.io/serviceaccount': Read-only file system
+chown: changing group of '/run/secrets/kubernetes.io/serviceaccount/ca.crt': Read-only file system
+chown: changing group of '/run/secrets/kubernetes.io/serviceaccount/token': Read-only file system
+chown: changing group of '/run/secrets/kubernetes.io/serviceaccount/namespace': Read-only file system
+chown: changing group of '/run/secrets/kubernetes.io/serviceaccount/..data': Read-only file system
+chown: changing group of '/run/secrets/kubernetes.io/serviceaccount/..2026_05_02_14_09_14.3425935918': Read-only file system
+chown: changing group of '/run/secrets/kubernetes.io/serviceaccount/..2026_05_02_14_09_14.3425935918/namespace': Read-only file system
+chown: changing group of '/run/secrets/kubernetes.io/serviceaccount/..2026_05_02_14_09_14.3425935918/ca.crt': Read-only file system
+chown: changing group of '/run/secrets/kubernetes.io/serviceaccount/..2026_05_02_14_09_14.3425935918/token': Read-only file system
+chown: changing group of '/etc/ssl/filebeat.pem': Read-only file system
+chown: changing group of '/etc/ssl/filebeat.key': Read-only file system
+chown: changing group of '/etc/ssl/root-ca.pem': Read-only file system
+chown: changing group of '/wazuh-config-mount/etc/authd.pass': Read-only file system
+chown: changing group of '/wazuh-config-mount/etc/ossec.conf': Read-only file system
+find: '/proc/400/task/400/fd/6': No such file or directory
+find: '/proc/400/task/400/fdinfo/6': No such file or directory
+find: '/proc/400/fd/5': No such file or directory
+find: '/proc/400/fdinfo/5': No such file or directory
+Removing /var/ossec/queue/db/.template.db
+Identified Wazuh configuration files to mount...
+'/wazuh-config-mount/etc/ossec.conf' -> '/var/ossec/etc/ossec.conf'
+'/wazuh-config-mount/etc/authd.pass' -> '/var/ossec/etc/authd.pass'
+[cont-init.d] 0-wazuh-init: exited 0.
+[cont-init.d] 1-config-filebeat: executing... 
+Customize Elasticsearch output IP
+Configuring username.
+Configuring password.
+Configuring SSL verification mode.
+Configuring Certificate Authorities.
+Configuring SSL Certificate.
+Configuring SSL Key.
+[cont-init.d] 1-config-filebeat: exited 0.
+[cont-init.d] 2-manager: executing... 
+Configuring password.
+2026/05/02 14:12:44 wazuh-analysisd: ERROR: Could not set resource limit for file descriptors to 458752: Operation not permitted (1)
+2026/05/02 14:12:46 wazuh-modulesd:router: INFO: Loaded router module.
+2026/05/02 14:12:46 wazuh-modulesd:content_manager: INFO: Loaded content_manager module.
+2026/05/02 14:12:46 wazuh-modulesd:inventory-harvester: INFO: Loaded Inventory harvester module.
+Starting Wazuh v4.14.5...
+Started wazuh-apid...
+Started wazuh-csyslogd...
+Started wazuh-dbd...
+2026/05/02 14:12:53 wazuh-integratord: INFO: Remote integrations not configured. Clean exit.
+Started wazuh-integratord...
+Started wazuh-agentlessd...
+Started wazuh-authd...
+Started wazuh-db...
+Started wazuh-execd...
+2026/05/02 14:12:55 wazuh-analysisd: ERROR: Could not set resource limit for file descriptors to 458752: Operation not permitted (1)
+Started wazuh-analysisd...
+2026/05/02 14:12:55 wazuh-syscheckd: WARNING: The check_unixaudit option is deprecated in favor of the SCA module.
+Started wazuh-syscheckd...
+Started wazuh-remoted...
+Started wazuh-logcollector...
+Started wazuh-monitord...
+2026/05/02 14:12:58 wazuh-modulesd:router: INFO: Loaded router module.
+2026/05/02 14:12:58 wazuh-modulesd:content_manager: INFO: Loaded content_manager module.
+2026/05/02 14:12:58 wazuh-modulesd:inventory-harvester: INFO: Loaded Inventory harvester module.
+Started wazuh-modulesd...
+Started wazuh-clusterd...
+Completed.
+[cont-init.d] 2-manager: exited 0.
+[cont-init.d] done.
+[services.d] starting services
+[services.d] done.
+2026/05/02 14:12:58 wazuh-modulesd:router: INFO: Starting router module.
+2026/05/02 14:12:58 wazuh-modulesd:database: INFO: Module started.
+2026/05/02 14:12:58 wazuh-modulesd:content_manager: INFO: Starting content_manager module.
+2026/05/02 14:12:58 wazuh-modulesd:download: INFO: Module started.
+2026/05/02 14:12:58 wazuh-modulesd:inventory-harvester: INFO: Starting inventory_harvester module.
+2026/05/02 14:12:58 wazuh-modulesd:control: INFO: Starting control thread.
+2026/05/02 14:13:00 wazuh-modulesd:syscollector: INFO: Module started.
+2026/05/02 14:13:00 wazuh-modulesd:syscollector: INFO: Starting evaluation.
+2026/05/02 14:13:02 wazuh-analysisd: INFO: (7200): Logtest started
+2026/05/02 14:13:03 wazuh-analysisd: INFO: EPS limit disabled
+starting Filebeat
+2026/05/02 14:13:07 wazuh-modulesd:syscollector: INFO: Evaluation finished.
+2026/05/02 14:13:09 indexer-connector: WARNING: IndexerConnector initialization failed for index 'wazuh-states-vulnerabilities-wazuh', retrying until the connection is successful.
+2026/05/02 14:13:09 indexer-connector: WARNING: IndexerConnector initialization failed for index 'wazuh-states-inventory-packages-wazuh', retrying until the connection is successful.
+2026/05/02 14:13:13 indexer-connector: WARNING: IndexerConnector initialization failed for index 'wazuh-states-inventory-system-wazuh', retrying until the connection is successful.
+2026/05/02 14:13:15 wazuh-modulesd:vulnerability-scanner: ERROR: Error opening the database: Couldn't find column family: 'vendor_map'.
+2026/05/02 14:13:18 indexer-connector: WARNING: IndexerConnector initialization failed for index 'wazuh-states-inventory-processes-wazuh', retrying until the connection is successful.
+2026/05/02 14:13:18 wazuh-syscheckd: INFO: (6009): File integrity monitoring scan ended.
+2026/05/02 14:13:18 wazuh-syscheckd: INFO: FIM sync module started.
+2026-05-02T14:13:20.050Z	INFO	instance/beat.go:645	Home path: [/usr/share/filebeat] Config path: [/etc/filebeat] Data path: [/var/lib/filebeat] Logs path: [/var/log/filebeat]
+2026-05-02T14:13:20.083Z	INFO	instance/beat.go:653	Beat ID: d0f37a3a-832f-457c-a69c-96a62d475dc7
+2026-05-02T14:13:20.084Z	INFO	[seccomp]	seccomp/seccomp.go:124	Syscall filter successfully installed
+2026-05-02T14:13:20.102Z	INFO	[beat]	instance/beat.go:981	Beat info	{"system_info": {"beat": {"path": {"config": "/etc/filebeat", "data": "/var/lib/filebeat", "home": "/usr/share/filebeat", "logs": "/var/log/filebeat"}, "type": "filebeat", "uuid": "d0f37a3a-832f-457c-a69c-96a62d475dc7"}}}
+2026-05-02T14:13:20.102Z	INFO	[beat]	instance/beat.go:990	Build info	{"system_info": {"build": {"commit": "aacf9ecd9c494aa0908f61fbca82c906b16562a8", "libbeat": "7.10.2", "time": "2025-10-17T12:05:34.000Z", "version": "7.10.2"}}}
+2026-05-02T14:13:20.102Z	INFO	[beat]	instance/beat.go:993	Go runtime info	{"system_info": {"go": {"os":"linux","arch":"amd64","max_procs":8,"version":"go1.14.12"}}}
+2026-05-02T14:13:20.103Z	INFO	[beat]	instance/beat.go:997	Host info	{"system_info": {"host": {"architecture":"x86_64","boot_time":"2026-05-02T14:08:13Z","containerized":false,"name":"wazuh-manager-master-0","ip":["127.0.0.1/8","::1/128","10.1.21.142/32","fe80::43b:28ff:fe0d:c0ef/64"],"kernel_version":"6.8.0-79-generic","mac":["06:3b:28:0d:c0:ef"],"os":{"family":"redhat","platform":"amzn","name":"Amazon Linux","version":"2023","major":2023,"minor":11,"patch":20260406},"timezone":"UTC","timezone_offset_sec":0}}}
+2026-05-02T14:13:20.103Z	INFO	[beat]	instance/beat.go:1026	Process info	{"system_info": {"process": {"capabilities": {"inheritable":null,"permitted":["chown","dac_override","fowner","fsetid","kill","setgid","setuid","setpcap","net_bind_service","net_raw","sys_chroot","mknod","audit_write","setfcap"],"effective":["chown","dac_override","fowner","fsetid","kill","setgid","setuid","setpcap","net_bind_service","net_raw","sys_chroot","mknod","audit_write","setfcap"],"bounding":["chown","dac_override","fowner","fsetid","kill","setgid","setuid","setpcap","net_bind_service","net_raw","sys_chroot","mknod","audit_write","setfcap"],"ambient":null}, "cwd": "/run/s6/services/filebeat", "exe": "/usr/share/filebeat/bin/filebeat", "name": "filebeat", "pid": 1338, "ppid": 1334, "seccomp": {"mode":"filter","no_new_privs":true}, "start_time": "2026-05-02T14:13:05.580Z"}}}
+2026-05-02T14:13:20.103Z	INFO	instance/beat.go:299	Setup Beat: filebeat; Version: 7.10.2
+2026-05-02T14:13:20.187Z	INFO	eslegclient/connection.go:99	elasticsearch url: https://indexer:9200
+2026-05-02T14:13:20.187Z	INFO	[publisher]	pipeline/module.go:113	Beat name: wazuh-manager-master-0
+2026-05-02T14:13:20.266Z	INFO	beater/filebeat.go:117	Enabled modules/filesets: wazuh (alerts),  ()
+2026-05-02T14:13:20.285Z	INFO	instance/beat.go:455	filebeat start running.
+2026-05-02T14:13:20.342Z	INFO	memlog/store.go:119	Loading data file of '/var/lib/filebeat/registry/filebeat' succeeded. Active transaction id=0
+2026-05-02T14:13:20.364Z	INFO	memlog/store.go:124	Finished loading transaction log file for '/var/lib/filebeat/registry/filebeat'. Active transaction id=42
+2026-05-02T14:13:20.364Z	INFO	[registrar]	registrar/registrar.go:109	States Loaded from registrar: 1
+2026-05-02T14:13:20.364Z	INFO	[crawler]	beater/crawler.go:71	Loading Inputs: 1
+2026-05-02T14:13:20.365Z	INFO	log/input.go:157	Configured paths: [/var/ossec/logs/alerts/alerts.json]
+2026-05-02T14:13:20.365Z	INFO	[crawler]	beater/crawler.go:141	Starting input (ID: 9132358592892857476)
+2026-05-02T14:13:20.365Z	INFO	[crawler]	beater/crawler.go:108	Loading and starting Inputs completed. Enabled inputs: 1
+2026-05-02T14:13:20.365Z	INFO	log/harvester.go:302	Harvester started for file: /var/ossec/logs/alerts/alerts.json
+2026-05-02T14:13:21.402Z	INFO	[publisher]	pipeline/retry.go:219	retryer: send unwait signal to consumer
+2026-05-02T14:13:21.402Z	INFO	[publisher]	pipeline/retry.go:223	  done
+2026-05-02T14:13:21.433Z	INFO	[publisher_pipeline_output]	pipeline/output.go:143	Connecting to backoff(elasticsearch(https://indexer:9200))
+2026/05/02 14:13:21 indexer-connector: WARNING: IndexerConnector initialization failed for index 'wazuh-states-inventory-ports-wazuh', retrying until the connection is successful.
+2026/05/02 14:13:22 wazuh-modulesd:content-updater: WARNING: Couldn't run full content download: Error -1 from server: Could not connect to server - Response body: .
+2026/05/02 14:13:22 wazuh-modulesd:content-updater: ERROR: Action for 'vulnerability_feed_manager' failed: Orchestration run failed: Error -1 from server: Could not connect to server - Response body: .
+2026-05-02T14:13:22.839Z	ERROR	[publisher_pipeline_output]	pipeline/output.go:154	Failed to connect to backoff(elasticsearch(https://indexer:9200)): Get "https://indexer:9200": dial tcp 10.152.183.51:9200: connect: connection refused
+2026-05-02T14:13:22.839Z	INFO	[publisher_pipeline_output]	pipeline/output.go:145	Attempting to reconnect to backoff(elasticsearch(https://indexer:9200)) with 1 reconnect attempt(s)
+2026-05-02T14:13:22.839Z	INFO	[publisher]	pipeline/retry.go:219	retryer: send unwait signal to consumer
+2026-05-02T14:13:22.839Z	INFO	[publisher]	pipeline/retry.go:223	  done
+2026/05/02 14:13:24 wazuh-modulesd:vulnerability-scanner: INFO: Vulnerability scanner module started.
+2026/05/02 14:13:24 indexer-connector: WARNING: IndexerConnector initialization failed for index 'wazuh-states-inventory-hotfixes-wazuh', retrying until the connection is successful.
+2026/05/02 14:13:25 indexer-connector: WARNING: IndexerConnector initialization failed for index 'wazuh-states-inventory-hardware-wazuh', retrying until the connection is successful.
+2026-05-02T14:13:26.682Z	ERROR	[publisher_pipeline_output]	pipeline/output.go:154	Failed to connect to backoff(elasticsearch(https://indexer:9200)): Get "https://indexer:9200": dial tcp 10.152.183.51:9200: connect: connection refused
+2026-05-02T14:13:26.683Z	INFO	[publisher_pipeline_output]	pipeline/output.go:145	Attempting to reconnect to backoff(elasticsearch(https://indexer:9200)) with 2 reconnect attempt(s)
+2026-05-02T14:13:26.683Z	INFO	[publisher]	pipeline/retry.go:219	retryer: send unwait signal to consumer
+2026-05-02T14:13:26.683Z	INFO	[publisher]	pipeline/retry.go:223	  done
+2026/05/02 14:13:26 indexer-connector: WARNING: IndexerConnector initialization failed for index 'wazuh-states-inventory-protocols-wazuh', retrying until the connection is successful.
+2026/05/02 14:13:28 indexer-connector: WARNING: IndexerConnector initialization failed for index 'wazuh-states-inventory-interfaces-wazuh', retrying until the connection is successful.
+2026/05/02 14:13:29 indexer-connector: WARNING: IndexerConnector initialization failed for index 'wazuh-states-inventory-networks-wazuh', retrying until the connection is successful.
+2026/05/02 14:13:30 indexer-connector: WARNING: IndexerConnector initialization failed for index 'wazuh-states-inventory-users-wazuh', retrying until the connection is successful.
+2026/05/02 14:13:31 indexer-connector: WARNING: IndexerConnector initialization failed for index 'wazuh-states-inventory-groups-wazuh', retrying until the connection is successful.
+2026-05-02T14:13:31.669Z	ERROR	[publisher_pipeline_output]	pipeline/output.go:154	Failed to connect to backoff(elasticsearch(https://indexer:9200)): Get "https://indexer:9200": dial tcp 10.152.183.51:9200: connect: connection refused
+2026-05-02T14:13:31.669Z	INFO	[publisher_pipeline_output]	pipeline/output.go:145	Attempting to reconnect to backoff(elasticsearch(https://indexer:9200)) with 3 reconnect attempt(s)
+2026-05-02T14:13:31.670Z	INFO	[publisher]	pipeline/retry.go:219	retryer: send unwait signal to consumer
+2026-05-02T14:13:31.670Z	INFO	[publisher]	pipeline/retry.go:223	  done
+2026/05/02 14:13:31 indexer-connector: WARNING: IndexerConnector initialization failed for index 'wazuh-states-inventory-browser-extensions-wazuh', retrying until the connection is successful.
+2026/05/02 14:13:33 indexer-connector: WARNING: IndexerConnector initialization failed for index 'wazuh-states-inventory-services-wazuh', retrying until the connection is successful.
+2026/05/02 14:13:33 logger-helper: INFO: InventoryHarvesterFacade module started.
+2026-05-02T14:13:44.455Z	ERROR	[publisher_pipeline_output]	pipeline/output.go:154	Failed to connect to backoff(elasticsearch(https://indexer:9200)): Get "https://indexer:9200": dial tcp 10.152.183.51:9200: connect: connection refused
+2026-05-02T14:13:44.455Z	INFO	[publisher_pipeline_output]	pipeline/output.go:145	Attempting to reconnect to backoff(elasticsearch(https://indexer:9200)) with 4 reconnect attempt(s)
+2026-05-02T14:13:44.456Z	INFO	[publisher]	pipeline/retry.go:219	retryer: send unwait signal to consumer
+2026-05-02T14:13:44.456Z	INFO	[publisher]	pipeline/retry.go:223	  done
+2026/05/02 14:13:44 wazuh-syscheckd: INFO: netstat not available. Skipping port check.
+2026/05/02 14:13:49 rootcheck: INFO: Ending rootcheck scan.
+2026-05-02T14:14:11.757Z	ERROR	[publisher_pipeline_output]	pipeline/output.go:154	Failed to connect to backoff(elasticsearch(https://indexer:9200)): 503 Service Unavailable: OpenSearch Security not initialized.
+2026-05-02T14:14:12.005Z	INFO	[publisher_pipeline_output]	pipeline/output.go:145	Attempting to reconnect to backoff(elasticsearch(https://indexer:9200)) with 5 reconnect attempt(s)
+2026-05-02T14:14:12.173Z	INFO	[publisher]	pipeline/retry.go:219	retryer: send unwait signal to consumer
+2026-05-02T14:14:12.173Z	INFO	[publisher]	pipeline/retry.go:223	  done
+2026-05-02T14:14:13.198Z	INFO	[esclientleg]	eslegclient/connection.go:314	Attempting to connect to Elasticsearch version 7.10.2
+2026-05-02T14:14:13.431Z	INFO	[esclientleg]	eslegclient/connection.go:314	Attempting to connect to Elasticsearch version 7.10.2
+2026-05-02T14:14:13.701Z	INFO	template/load.go:183	Existing template will be overwritten, as overwrite is enabled.
+2026-05-02T14:14:13.825Z	INFO	template/load.go:117	Try loading template wazuh to Elasticsearch
+2026-05-02T14:14:17.293Z	INFO	template/load.go:109	template with name 'wazuh' loaded.
+2026-05-02T14:14:17.293Z	INFO	[index-management]	idxmgmt/std.go:298	Loaded index template.
+2026-05-02T14:14:17.293Z	INFO	[publisher_pipeline_output]	pipeline/output.go:151	Connection to backoff(elasticsearch(https://indexer:9200)) established
+2026/05/02 14:14:34 indexer-connector: INFO: IndexerConnector initialized successfully for index: wazuh-states-inventory-networks-wazuh.
+2026/05/02 14:14:35 indexer-connector: INFO: IndexerConnector initialized successfully for index: wazuh-states-inventory-users-wazuh.
+2026/05/02 14:14:36 indexer-connector: INFO: IndexerConnector initialized successfully for index: wazuh-states-inventory-groups-wazuh.
+2026/05/02 14:14:36 indexer-connector: INFO: IndexerConnector initialized successfully for index: wazuh-states-inventory-browser-extensions-wazuh.
+2026/05/02 14:14:36 indexer-connector: INFO: IndexerConnector initialized successfully for index: wazuh-states-inventory-services-wazuh.
+2026/05/02 14:15:13 indexer-connector: INFO: IndexerConnector initialized successfully for index: wazuh-states-vulnerabilities-wazuh.
+2026/05/02 14:15:13 indexer-connector: INFO: IndexerConnector initialized successfully for index: wazuh-states-inventory-packages-wazuh.
+2026/05/02 14:15:16 indexer-connector: INFO: IndexerConnector initialized successfully for index: wazuh-states-inventory-system-wazuh.
+2026/05/02 14:15:21 indexer-connector: INFO: IndexerConnector initialized successfully for index: wazuh-states-inventory-processes-wazuh.
+2026/05/02 14:15:24 indexer-connector: INFO: IndexerConnector initialized successfully for index: wazuh-states-inventory-ports-wazuh.
+2026/05/02 14:15:28 indexer-connector: INFO: IndexerConnector initialized successfully for index: wazuh-states-inventory-hotfixes-wazuh.
+2026/05/02 14:15:28 indexer-connector: INFO: IndexerConnector initialized successfully for index: wazuh-states-inventory-hardware-wazuh.
+2026/05/02 14:15:29 indexer-connector: INFO: IndexerConnector initialized successfully for index: wazuh-states-inventory-protocols-wazuh.
+2026/05/02 14:15:31 indexer-connector: INFO: IndexerConnector initialized successfully for index: wazuh-states-inventory-interfaces-wazuh.
+2026-05-02T14:18:25.905Z	INFO	log/harvester.go:333	File is inactive: /var/ossec/logs/alerts/alerts.json. Closing because close_inactive of 5m0s reached.
+2026/05/02 16:49:08 wazuh-modulesd:syscollector: INFO: Starting evaluation.
+2026/05/02 16:49:15 wazuh-modulesd:syscollector: INFO: Evaluation finished.
+2026/05/02 16:54:42 wazuh-analysisd: ERROR: Could not set resource limit for file descriptors to 458752: Operation not permitted (1)
+2026/05/02 16:54:43 wazuh-modulesd:router: INFO: Loaded router module.
+2026/05/02 16:54:43 wazuh-modulesd:content_manager: INFO: Loaded content_manager module.
+2026/05/02 16:54:43 wazuh-modulesd:inventory-harvester: INFO: Loaded Inventory harvester module.
+2026/05/02 16:54:49 wazuh-logcollector: INFO: (1225): SIGNAL [(15)-(Terminated)] Received. Exit Cleaning...
+2026/05/02 16:54:49 wazuh-monitord: INFO: (1225): SIGNAL [(15)-(Terminated)] Received. Exit Cleaning...
+2026/05/02 16:54:49 wazuh-syscheckd: INFO: (1756): Shutdown received. Releasing resources.
+2026/05/02 16:54:49 wazuh-remoted: INFO: (1225): SIGNAL [(15)-(Terminated)] Received. Exit Cleaning...
+2026/05/02 16:54:49 wazuh-execd: INFO: (1314): Shutdown received. Deleting responses.
+2026/05/02 16:54:49 wazuh-analysisd: INFO: (1225): SIGNAL [(15)-(Terminated)] Received. Exit Cleaning...
+2026/05/02 16:54:49 wazuh-execd: INFO: (1225): SIGNAL [(15)-(Terminated)] Received. Exit Cleaning...
+2026/05/02 16:54:49 wazuh-db: INFO: (1225): SIGNAL [(15)-(Terminated)] Received. Exit Cleaning...
+2026/05/02 16:54:49 wazuh-authd: INFO: (1225): SIGNAL [(15)-(Terminated)] Received. Exit Cleaning...
+2026/05/02 16:54:50 wazuh-modulesd: INFO: Shutting down Wazuh modules.
+2026/05/02 16:54:50 wazuh-syscheckd: INFO: (1225): SIGNAL [(15)-(Terminated)] Received. Exit Cleaning...
+2026/05/02 16:54:50 wazuh-authd: INFO: Exiting...
+2026/05/02 16:54:50 wazuh-modulesd:syscollector: INFO: Stop received for Syscollector.
+2026/05/02 16:54:50 :router: INFO: Stopping server thread
+2026/05/02 16:54:50 wazuh-modulesd:syscollector: INFO: Module finished.
+2026/05/02 16:54:50 wazuh-modulesd:vulnerability-scanner: INFO: Stopping vulnerability_scanner module.
+2026/05/02 16:54:51 wazuh-db: INFO: Graceful process shutdown.
+2026/05/02 16:55:52 wazuh-csyslogd: INFO: Remote syslog server not configured. Clean exit.
+2026/05/02 16:55:52 wazuh-dbd: INFO: Database not configured. Clean exit.
+2026/05/02 16:55:52 wazuh-integratord: INFO: Remote integrations not configured. Clean exit.
+2026/05/02 16:55:53 wazuh-agentlessd: INFO: Not configured. Exiting.
+2026/05/02 16:55:53 wazuh-authd: INFO: Started (pid: 5137).
+2026/05/02 16:55:53 wazuh-authd: INFO: Accepting connections on port 1515. Using password specified on file: etc/authd.pass
+2026/05/02 16:55:53 wazuh-authd: INFO: Setting network timeout to 1.000000 sec.
+2026/05/02 16:55:53 wazuh-db: ERROR: Could not set resource limit for file descriptors to 458752: Operation not permitted (1)
+2026/05/02 16:55:53 wazuh-db: INFO: Started (pid: 5147).
+2026/05/02 16:55:54 :router: INFO: Registering GET endpoint: /v1/agents/ids
+2026/05/02 16:55:54 :router: INFO: Registering GET endpoint: /v1/agents/ids/groups/:name
+2026/05/02 16:55:54 :router: INFO: Registering GET endpoint: /v1/agents/ids/groups
+2026/05/02 16:55:54 :router: INFO: Registering GET endpoint: /v1/agents/:agent_id/groups
+2026/05/02 16:55:54 :router: INFO: Registering POST endpoint: /v1/agents/summary
+2026/05/02 16:55:54 :router: INFO: Registering GET endpoint: /v1/agents/sync
+2026/05/02 16:55:54 :router: INFO: Registering POST endpoint: /v1/agents/sync
+2026/05/02 16:55:54 :router: INFO: Registering POST endpoint: /v1/agents/restartinfo
+2026/05/02 16:55:54 :router: INFO: API started successfully
+2026/05/02 16:55:54 wazuh-execd: INFO: Started (pid: 5186).
+2026/05/02 16:55:55 wazuh-analysisd: ERROR: Could not set resource limit for file descriptors to 458752: Operation not permitted (1)
+2026/05/02 16:55:55 wazuh-syscheckd: WARNING: The check_unixaudit option is deprecated in favor of the SCA module.
+2026/05/02 16:55:55 wazuh-syscheckd: INFO: Started (pid: 5208).
+2026/05/02 16:55:55 wazuh-syscheckd: INFO: (6003): Monitoring path: '/bin', with options 'size | permissions | owner | group | mtime | inode | hash_md5 | hash_sha1 | hash_sha256 | scheduled'.
+2026/05/02 16:55:55 wazuh-syscheckd: INFO: (6003): Monitoring path: '/boot', with options 'size | permissions | owner | group | mtime | inode | hash_md5 | hash_sha1 | hash_sha256 | scheduled'.
+2026/05/02 16:55:55 wazuh-syscheckd: INFO: (6003): Monitoring path: '/etc', with options 'size | permissions | owner | group | mtime | inode | hash_md5 | hash_sha1 | hash_sha256 | scheduled'.
+2026/05/02 16:55:55 wazuh-syscheckd: INFO: (6003): Monitoring path: '/sbin', with options 'size | permissions | owner | group | mtime | inode | hash_md5 | hash_sha1 | hash_sha256 | scheduled'.
+2026/05/02 16:55:55 wazuh-syscheckd: INFO: (6003): Monitoring path: '/usr/bin', with options 'size | permissions | owner | group | mtime | inode | hash_md5 | hash_sha1 | hash_sha256 | scheduled'.
+2026/05/02 16:55:55 wazuh-syscheckd: INFO: (6003): Monitoring path: '/usr/sbin', with options 'size | permissions | owner | group | mtime | inode | hash_md5 | hash_sha1 | hash_sha256 | scheduled'.
+2026/05/02 16:55:55 wazuh-syscheckd: INFO: (6206): Ignore 'file' entry '/etc/mtab'
+2026/05/02 16:55:55 wazuh-syscheckd: INFO: (6206): Ignore 'file' entry '/etc/hosts.deny'
+2026/05/02 16:55:55 wazuh-syscheckd: INFO: (6206): Ignore 'file' entry '/etc/mail/statistics'
+2026/05/02 16:55:55 wazuh-syscheckd: INFO: (6206): Ignore 'file' entry '/etc/random-seed'
+2026/05/02 16:55:55 wazuh-syscheckd: INFO: (6206): Ignore 'file' entry '/etc/random.seed'
+2026/05/02 16:55:55 wazuh-syscheckd: INFO: (6206): Ignore 'file' entry '/etc/adjtime'
+2026/05/02 16:55:55 wazuh-syscheckd: INFO: (6206): Ignore 'file' entry '/etc/httpd/logs'
+2026/05/02 16:55:55 wazuh-syscheckd: INFO: (6206): Ignore 'file' entry '/etc/utmpx'
+2026/05/02 16:55:55 wazuh-syscheckd: INFO: (6206): Ignore 'file' entry '/etc/wtmpx'
+2026/05/02 16:55:55 wazuh-syscheckd: INFO: (6206): Ignore 'file' entry '/etc/cups/certs'
+2026/05/02 16:55:55 wazuh-syscheckd: INFO: (6206): Ignore 'file' entry '/etc/dumpdates'
+2026/05/02 16:55:55 wazuh-syscheckd: INFO: (6206): Ignore 'file' entry '/etc/svc/volatile'
+2026/05/02 16:55:55 wazuh-syscheckd: INFO: (6206): Ignore 'file' entry '/sys/kernel/security'
+2026/05/02 16:55:55 wazuh-syscheckd: INFO: (6206): Ignore 'file' entry '/sys/kernel/debug'
+2026/05/02 16:55:55 wazuh-syscheckd: INFO: (6004): No diff for file: '/etc/ssl/private.key'
+2026/05/02 16:55:55 wazuh-syscheckd: INFO: (6000): Starting daemon...
+2026/05/02 16:55:55 wazuh-syscheckd: INFO: (6010): File integrity monitoring scan frequency: 43200 seconds
+2026/05/02 16:55:55 wazuh-syscheckd: INFO: (6008): File integrity monitoring scan started.
+2026/05/02 16:55:55 rootcheck: INFO: Starting rootcheck scan.
+2026/05/02 16:55:55 wazuh-remoted: ERROR: Could not set resource limit for file descriptors to 458752: Operation not permitted (1)
+2026/05/02 16:55:56 wazuh-remoted: INFO: Started (pid: 5222). Listening on port 1514/TCP (secure).
+2026/05/02 16:55:57 wazuh-remoted: INFO: (1410): Reading authentication keys file.
+2026/05/02 16:55:57 wazuh-analysisd: INFO: Total rules enabled: '8455'
+2026/05/02 16:55:57 wazuh-analysisd: INFO: The option <queue_size> is deprecated and won't apply. Set up each queue size in the internal_options file.
+2026/05/02 16:55:57 wazuh-analysisd: INFO: Started (pid: 5198).
+2026/05/02 16:55:57 wazuh-logcollector: INFO: Monitoring output of command(360): df -P
+2026/05/02 16:55:57 wazuh-logcollector: INFO: Monitoring full output of command(360): netstat -tulpn | sed 's/\([[:alnum:]]\+\)\ \+[[:digit:]]\+\ \+[[:digit:]]\+\ \+\(.*\):\([[:digit:]]*\)\ \+\([0-9\.\:\*]\+\).\+\ \([[:digit:]]*\/[[:alnum:]\-]*\).*/\1 \2 == \3 == \4 \5/' | sort -k 4 -g | sed 's/ == \(.*\) ==/:\1/' | sed 1,2d
+2026/05/02 16:55:57 wazuh-logcollector: INFO: Monitoring full output of command(360): last -n 20
+2026/05/02 16:55:57 wazuh-logcollector: INFO: (1950): Analyzing file: '/var/ossec/logs/active-responses.log'.
+2026/05/02 16:55:57 wazuh-logcollector: INFO: Started (pid: 5259).
+2026/05/02 16:55:57 wazuh-monitord: INFO: Started (pid: 5277).
+2026/05/02 16:55:57 wazuh-modulesd:router: INFO: Loaded router module.
+2026/05/02 16:55:57 wazuh-modulesd:content_manager: INFO: Loaded content_manager module.
+2026/05/02 16:55:57 wazuh-modulesd:inventory-harvester: INFO: Loaded Inventory harvester module.
+2026/05/02 16:55:57 wazuh-modulesd: INFO: Started (pid: 5287).
+2026/05/02 16:55:57 wazuh-modulesd:agent-upgrade: INFO: (8153): Module Agent Upgrade started.
+2026/05/02 16:55:57 wazuh-modulesd:oscap: INFO: Module disabled. Exiting...
+2026/05/02 16:55:57 wazuh-modulesd:osquery: INFO: Module disabled. Exiting...
+2026/05/02 16:55:57 wazuh-modulesd:ciscat: INFO: Module disabled. Exiting...
+2026/05/02 16:55:57 wazuh-modulesd:vulnerability-scanner: INFO: Starting vulnerability_scanner module.
+2026/05/02 16:55:57 wazuh-modulesd:task-manager: INFO: (8200): Module Task Manager started.
+2026/05/02 16:55:57 wazuh-modulesd:router: INFO: Starting router module.
+2026/05/02 16:55:57 wazuh-modulesd:content_manager: INFO: Starting content_manager module.
+2026/05/02 16:55:57 wazuh-modulesd:inventory-harvester: INFO: Starting inventory_harvester module.
+2026/05/02 16:55:57 wazuh-modulesd:database: INFO: Module started.
+2026/05/02 16:55:57 wazuh-modulesd:control: INFO: Starting control thread.
+2026/05/02 16:55:57 wazuh-modulesd:download: INFO: Module started.
+2026/05/02 16:55:59 wazuh-modulesd:syscollector: INFO: Module started.
+2026/05/02 16:55:59 wazuh-modulesd:syscollector: INFO: Starting evaluation.
+2026/05/02 16:56:05 wazuh-analysisd: INFO: (7200): Logtest started
+2026/05/02 16:56:05 wazuh-analysisd: INFO: EPS limit disabled
+2026/05/02 16:56:06 wazuh-modulesd:syscollector: INFO: Evaluation finished.
+2026/05/02 16:56:09 indexer-connector: INFO: IndexerConnector initialized successfully for index: wazuh-states-vulnerabilities-wazuh.
+2026/05/02 16:56:09 indexer-connector: INFO: IndexerConnector initialized successfully for index: wazuh-states-inventory-packages-wazuh.
+2026/05/02 16:56:12 indexer-connector: INFO: IndexerConnector initialized successfully for index: wazuh-states-inventory-system-wazuh.
+2026/05/02 16:56:15 wazuh-modulesd:vulnerability-scanner: ERROR: Error opening the database: Couldn't find column family: 'vendor_map'.
+2026-05-02T16:56:15.237Z	INFO	log/harvester.go:302	Harvester started for file: /var/ossec/logs/alerts/alerts.json
+2026/05/02 16:56:16 indexer-connector: INFO: IndexerConnector initialized successfully for index: wazuh-states-inventory-processes-wazuh.
+2026/05/02 16:56:21 indexer-connector: INFO: IndexerConnector initialized successfully for index: wazuh-states-inventory-ports-wazuh.
+2026/05/02 16:56:22 wazuh-modulesd:content-updater: WARNING: Couldn't run full content download: Error -1 from server: Could not connect to server - Response body: .
+2026/05/02 16:56:22 wazuh-modulesd:content-updater: ERROR: Action for 'vulnerability_feed_manager' failed: Orchestration run failed: Error -1 from server: Could not connect to server - Response body: .
+2026/05/02 16:56:23 wazuh-modulesd:vulnerability-scanner: INFO: Vulnerability scanner module started.
+2026/05/02 16:56:23 wazuh-syscheckd: INFO: (6009): File integrity monitoring scan ended.
+2026/05/02 16:56:23 wazuh-syscheckd: INFO: FIM sync module started.
+2026/05/02 16:56:24 indexer-connector: INFO: IndexerConnector initialized successfully for index: wazuh-states-inventory-hotfixes-wazuh.
+2026/05/02 16:56:26 indexer-connector: INFO: IndexerConnector initialized successfully for index: wazuh-states-inventory-hardware-wazuh.
+2026/05/02 16:56:27 indexer-connector: INFO: IndexerConnector initialized successfully for index: wazuh-states-inventory-protocols-wazuh.
+2026/05/02 16:56:29 indexer-connector: INFO: IndexerConnector initialized successfully for index: wazuh-states-inventory-interfaces-wazuh.
+2026/05/02 16:56:31 indexer-connector: INFO: IndexerConnector initialized successfully for index: wazuh-states-inventory-networks-wazuh.
+2026/05/02 16:56:33 indexer-connector: INFO: IndexerConnector initialized successfully for index: wazuh-states-inventory-users-wazuh.
+2026/05/02 16:56:34 indexer-connector: INFO: IndexerConnector initialized successfully for index: wazuh-states-inventory-groups-wazuh.
+2026/05/02 16:56:36 indexer-connector: INFO: IndexerConnector initialized successfully for index: wazuh-states-inventory-browser-extensions-wazuh.
+2026/05/02 16:56:37 logger-helper: INFO: InventoryHarvesterFacade module started.
+2026/05/02 16:56:37 indexer-connector: INFO: IndexerConnector initialized successfully for index: wazuh-states-inventory-services-wazuh.
+2026/05/02 16:56:50 wazuh-syscheckd: INFO: netstat not available. Skipping port check.
+2026/05/02 16:56:55 rootcheck: INFO: Ending rootcheck scan.

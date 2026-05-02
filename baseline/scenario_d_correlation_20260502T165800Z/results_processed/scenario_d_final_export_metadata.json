@@ -1,0 +1,16 @@
+{
+  "timestamp_utc": "2026-05-02T16:57:56Z",
+  "scenario": "SCENARIO_D",
+  "input": "/home/emeday/iiot-correlation-lab/results/processed/correlation_dataset.csv",
+  "tables": [
+    "results/tables/table_attack_detection.csv",
+    "results/tables/table_correlation_latency.csv",
+    "results/tables/table_sla_impact.csv"
+  ],
+  "figures": [
+    "results/figures/figure_detection_comparison.svg",
+    "results/figures/figure_operational_vs_security.svg",
+    "results/figures/figure_attack_timeline.svg"
+  ],
+  "rows": 15
+}

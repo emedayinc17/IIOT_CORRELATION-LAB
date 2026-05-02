@@ -1,0 +1,13 @@
+{
+  "timestamp_utc": "2026-05-02T17:22:54Z",
+  "scenario": "SCENARIO_D",
+  "zabbix_method": "history.get",
+  "correlation_window_seconds": 120,
+  "zabbix_history_lookback_seconds": 1800,
+  "zabbix_history_forward_seconds": 1800,
+  "fail_on_missing_zabbix_history": true,
+  "attacks": 15,
+  "wazuh_events": 15,
+  "zabbix_history_rows": 120,
+  "correlation_rows": 15
+}

@@ -1,0 +1,10 @@
+timestamp_utc,target,http_code,time_total_seconds
+2026-05-02T02:14:59Z,health-app,200,0.000492
+2026-05-02T02:14:59Z,telemetry-api,200,0.000730
+2026-05-02T02:14:59Z,vulnerable-app,200,0.000602
+2026-05-02T02:15:01Z,health-app,200,0.000546
+2026-05-02T02:15:01Z,telemetry-api,200,0.000519
+2026-05-02T02:15:01Z,vulnerable-app,200,0.000608
+2026-05-02T02:15:03Z,health-app,200,0.000551
+2026-05-02T02:15:03Z,telemetry-api,200,0.000620
+2026-05-02T02:15:03Z,vulnerable-app,200,0.000691

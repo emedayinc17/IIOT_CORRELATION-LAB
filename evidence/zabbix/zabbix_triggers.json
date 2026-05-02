@@ -1,0 +1,250 @@
+[
+  {
+    "triggerid": "25224",
+    "expression": "{36073}=0",
+    "description": "mqtt-broker unavailable",
+    "url": "",
+    "status": "0",
+    "value": "0",
+    "priority": "4",
+    "lastchange": "0",
+    "comments": "",
+    "error": "Cannot evaluate function last(/mqtt-broker/net.tcp.service[tcp,,1883]): item is not supported.",
+    "templateid": "0",
+    "type": "0",
+    "state": "1",
+    "flags": "0",
+    "recovery_mode": "0",
+    "recovery_expression": "",
+    "correlation_mode": "0",
+    "correlation_tag": "",
+    "manual_close": "0",
+    "opdata": "",
+    "event_name": "",
+    "uuid": "",
+    "url_name": "",
+    "hosts": [
+      {
+        "hostid": "10683",
+        "host": "mqtt-broker"
+      }
+    ]
+  },
+  {
+    "triggerid": "25225",
+    "expression": "{36074}>1",
+    "description": "mqtt-broker high latency",
+    "url": "",
+    "status": "0",
+    "value": "0",
+    "priority": "3",
+    "lastchange": "0",
+    "comments": "",
+    "error": "Cannot evaluate function avg(/mqtt-broker/net.tcp.service.perf[tcp,,1883],5m): item is not supported.",
+    "templateid": "0",
+    "type": "0",
+    "state": "1",
+    "flags": "0",
+    "recovery_mode": "0",
+    "recovery_expression": "",
+    "correlation_mode": "0",
+    "correlation_tag": "",
+    "manual_close": "0",
+    "opdata": "",
+    "event_name": "",
+    "uuid": "",
+    "url_name": "",
+    "hosts": [
+      {
+        "hostid": "10683",
+        "host": "mqtt-broker"
+      }
+    ]
+  },
+  {
+    "triggerid": "25226",
+    "expression": "{36075}=0",
+    "description": "health-app unavailable",
+    "url": "",
+    "status": "0",
+    "value": "0",
+    "priority": "4",
+    "lastchange": "0",
+    "comments": "",
+    "error": "Cannot evaluate function last(/health-app/net.tcp.service[http,,8080]): item is not supported.",
+    "templateid": "0",
+    "type": "0",
+    "state": "1",
+    "flags": "0",
+    "recovery_mode": "0",
+    "recovery_expression": "",
+    "correlation_mode": "0",
+    "correlation_tag": "",
+    "manual_close": "0",
+    "opdata": "",
+    "event_name": "",
+    "uuid": "",
+    "url_name": "",
+    "hosts": [
+      {
+        "hostid": "10684",
+        "host": "health-app"
+      }
+    ]
+  },
+  {
+    "triggerid": "25227",
+    "expression": "{36076}>1",
+    "description": "health-app high latency",
+    "url": "",
+    "status": "0",
+    "value": "0",
+    "priority": "3",
+    "lastchange": "0",
+    "comments": "",
+    "error": "Cannot evaluate function avg(/health-app/net.tcp.service.perf[http,,8080],5m): item is not supported.",
+    "templateid": "0",
+    "type": "0",
+    "state": "1",
+    "flags": "0",
+    "recovery_mode": "0",
+    "recovery_expression": "",
+    "correlation_mode": "0",
+    "correlation_tag": "",
+    "manual_close": "0",
+    "opdata": "",
+    "event_name": "",
+    "uuid": "",
+    "url_name": "",
+    "hosts": [
+      {
+        "hostid": "10684",
+        "host": "health-app"
+      }
+    ]
+  },
+  {
+    "triggerid": "25228",
+    "expression": "{36077}=0",
+    "description": "telemetry-api unavailable",
+    "url": "",
+    "status": "0",
+    "value": "0",
+    "priority": "4",
+    "lastchange": "0",
+    "comments": "",
+    "error": "Cannot evaluate function last(/telemetry-api/net.tcp.service[http,,8080]): item is not supported.",
+    "templateid": "0",
+    "type": "0",
+    "state": "1",
+    "flags": "0",
+    "recovery_mode": "0",
+    "recovery_expression": "",
+    "correlation_mode": "0",
+    "correlation_tag": "",
+    "manual_close": "0",
+    "opdata": "",
+    "event_name": "",
+    "uuid": "",
+    "url_name": "",
+    "hosts": [
+      {
+        "hostid": "10685",
+        "host": "telemetry-api"
+      }
+    ]
+  },
+  {
+    "triggerid": "25229",
+    "expression": "{36078}>1",
+    "description": "telemetry-api high latency",
+    "url": "",
+    "status": "0",
+    "value": "0",
+    "priority": "3",
+    "lastchange": "0",
+    "comments": "",
+    "error": "Cannot evaluate function avg(/telemetry-api/net.tcp.service.perf[http,,8080],5m): item is not supported.",
+    "templateid": "0",
+    "type": "0",
+    "state": "1",
+    "flags": "0",
+    "recovery_mode": "0",
+    "recovery_expression": "",
+    "correlation_mode": "0",
+    "correlation_tag": "",
+    "manual_close": "0",
+    "opdata": "",
+    "event_name": "",
+    "uuid": "",
+    "url_name": "",
+    "hosts": [
+      {
+        "hostid": "10685",
+        "host": "telemetry-api"
+      }
+    ]
+  },
+  {
+    "triggerid": "25230",
+    "expression": "{36079}=0",
+    "description": "vulnerable-app unavailable",
+    "url": "",
+    "status": "0",
+    "value": "0",
+    "priority": "4",
+    "lastchange": "0",
+    "comments": "",
+    "error": "Cannot evaluate function last(/vulnerable-app/net.tcp.service[http,,8080]): item is not supported.",
+    "templateid": "0",
+    "type": "0",
+    "state": "1",
+    "flags": "0",
+    "recovery_mode": "0",
+    "recovery_expression": "",
+    "correlation_mode": "0",
+    "correlation_tag": "",
+    "manual_close": "0",
+    "opdata": "",
+    "event_name": "",
+    "uuid": "",
+    "url_name": "",
+    "hosts": [
+      {
+        "hostid": "10686",
+        "host": "vulnerable-app"
+      }
+    ]
+  },
+  {
+    "triggerid": "25231",
+    "expression": "{36080}>1",
+    "description": "vulnerable-app high latency",
+    "url": "",
+    "status": "0",
+    "value": "0",
+    "priority": "3",
+    "lastchange": "0",
+    "comments": "",
+    "error": "Cannot evaluate function avg(/vulnerable-app/net.tcp.service.perf[http,,8080],5m): item is not supported.",
+    "templateid": "0",
+    "type": "0",
+    "state": "1",
+    "flags": "0",
+    "recovery_mode": "0",
+    "recovery_expression": "",
+    "correlation_mode": "0",
+    "correlation_tag": "",
+    "manual_close": "0",
+    "opdata": "",
+    "event_name": "",
+    "uuid": "",
+    "url_name": "",
+    "hosts": [
+      {
+        "hostid": "10686",
+        "host": "vulnerable-app"
+      }
+    ]
+  }
+]

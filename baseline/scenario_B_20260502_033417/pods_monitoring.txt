@@ -1,0 +1,5 @@
+NAME                               READY   STATUS    RESTARTS      AGE   IP            NODE           NOMINATED NODE   READINESS GATES
+zabbix-agent-dnb2c                 1/1     Running   0             22m   10.10.0.101   iiot-lab-k8s   <none>           <none>
+zabbix-postgres-58f59dcd95-n89h9   1/1     Running   0             22m   10.1.21.167   iiot-lab-k8s   <none>           <none>
+zabbix-server-b5fb4666f-rfgmv      1/1     Running   1 (19m ago)   22m   10.1.21.164   iiot-lab-k8s   <none>           <none>
+zabbix-web-897d6bc-rvr44           1/1     Running   0             22m   10.1.21.165   iiot-lab-k8s   <none>           <none>

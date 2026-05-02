@@ -1,0 +1,23 @@
+NAME                                   READY   STATUS    RESTARTS   AGE    IP            NODE           NOMINATED NODE   READINESS GATES
+pod/wazuh-dashboard-67b97859c7-j52zx   1/1     Running   0          3m3s   10.1.21.170   iiot-lab-k8s   <none>           <none>
+pod/wazuh-indexer-0                    1/1     Running   0          3m2s   10.1.21.176   iiot-lab-k8s   <none>           <none>
+pod/wazuh-manager-master-0             1/1     Running   0          3m1s   10.1.21.175   iiot-lab-k8s   <none>           <none>
+
+NAME                         TYPE           CLUSTER-IP       EXTERNAL-IP   PORT(S)                                         AGE     SELECTOR
+service/dashboard            ClusterIP      10.152.183.133   <none>        443/TCP                                         3m6s    app=wazuh-dashboard
+service/indexer              ClusterIP      10.152.183.51    <none>        9200/TCP                                        3m6s    app=wazuh-indexer
+service/wazuh                ClusterIP      10.152.183.151   <none>        55000/TCP,1515/TCP                              3m5s    app=wazuh-manager,node-type=master
+service/wazuh-cluster        ClusterIP      None             <none>        1516/TCP                                        3m5s    app=wazuh-manager
+service/wazuh-dashboard-lb   LoadBalancer   10.152.183.109   10.10.0.161   443:31607/TCP                                   3m11s   app=wazuh-dashboard
+service/wazuh-indexer        ClusterIP      None             <none>        9300/TCP                                        3m4s    app=wazuh-indexer
+service/wazuh-manager-lb     LoadBalancer   10.152.183.45    10.10.0.162   1514:31936/TCP,1515:31645/TCP,55000:31472/TCP   3m11s   app=wazuh-manager,node-type=master
+
+NAME                              READY   UP-TO-DATE   AVAILABLE   AGE    CONTAINERS        IMAGES                         SELECTOR
+deployment.apps/wazuh-dashboard   1/1     1            1           3m4s   wazuh-dashboard   wazuh/wazuh-dashboard:4.14.5   app=wazuh-dashboard
+
+NAME                                         DESIRED   CURRENT   READY   AGE    CONTAINERS        IMAGES                         SELECTOR
+replicaset.apps/wazuh-dashboard-67b97859c7   1         1         1       3m3s   wazuh-dashboard   wazuh/wazuh-dashboard:4.14.5   app=wazuh-dashboard,pod-template-hash=67b97859c7
+
+NAME                                    READY   AGE    CONTAINERS      IMAGES
+statefulset.apps/wazuh-indexer          1/1     3m3s   wazuh-indexer   wazuh/wazuh-indexer:4.14.5
+statefulset.apps/wazuh-manager-master   1/1     3m3s   wazuh-manager   wazuh/wazuh-manager:4.14.5

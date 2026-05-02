@@ -1,0 +1,16 @@
+NAMESPACE        NAME                TYPE           CLUSTER-IP       EXTERNAL-IP   PORT(S)                  AGE     SELECTOR
+default          kubernetes          ClusterIP      10.152.183.1     <none>        443/TCP                  5h32m   <none>
+iiot-poc         health-app          ClusterIP      10.152.183.113   <none>        8080/TCP                 118m    app=health-app,project=iiot-correlation-lab,stage=foundation
+iiot-poc         health-app-lb       LoadBalancer   10.152.183.22    10.10.0.152   8080:31855/TCP           118m    app=health-app,project=iiot-correlation-lab,stage=foundation
+iiot-poc         mosquitto           ClusterIP      10.152.183.173   <none>        1883/TCP                 118m    app=mosquitto,project=iiot-correlation-lab,stage=foundation
+iiot-poc         mosquitto-lb        LoadBalancer   10.152.183.218   10.10.0.151   1883:31070/TCP           118m    app=mosquitto,project=iiot-correlation-lab,stage=foundation
+iiot-poc         telemetry-api       ClusterIP      10.152.183.203   <none>        8080/TCP                 118m    app=telemetry-api,project=iiot-correlation-lab,stage=foundation
+iiot-poc         telemetry-api-lb    LoadBalancer   10.152.183.67    10.10.0.153   8080:30410/TCP           118m    app=telemetry-api,project=iiot-correlation-lab,stage=foundation
+iiot-poc         vulnerable-app      ClusterIP      10.152.183.86    <none>        8080/TCP                 118m    app=vulnerable-app,project=iiot-correlation-lab,stage=foundation
+iiot-poc         vulnerable-app-lb   LoadBalancer   10.152.183.127   10.10.0.154   8080:30326/TCP           118m    app=vulnerable-app,project=iiot-correlation-lab,stage=foundation
+kube-system      kube-dns            ClusterIP      10.152.183.10    <none>        53/UDP,53/TCP,9153/TCP   5h32m   k8s-app=kube-dns
+kube-system      metrics-server      ClusterIP      10.152.183.50    <none>        443/TCP                  5h31m   k8s-app=metrics-server
+metallb-system   webhook-service     ClusterIP      10.152.183.47    <none>        443/TCP                  5h30m   component=controller
+monitoring       zabbix-postgres     ClusterIP      10.152.183.92    <none>        5432/TCP                 49m     app=zabbix-postgres,project=iiot-correlation-lab,stage=zabbix-monitoring
+monitoring       zabbix-server       ClusterIP      10.152.183.20    <none>        10051/TCP                49m     app=zabbix-server,project=iiot-correlation-lab,stage=zabbix-monitoring
+monitoring       zabbix-web          LoadBalancer   10.152.183.71    10.10.0.160   80:30670/TCP             49m     app=zabbix-web,project=iiot-correlation-lab,stage=zabbix-monitoring

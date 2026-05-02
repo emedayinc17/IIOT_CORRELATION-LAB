@@ -1,0 +1,13 @@
+timestamp_utc,scenario,source_namespace,component,event_type,attack_id,mitre_ics,collection_mode,wazuh_injection
+2026-05-02T05:56:08Z,SCENARIO_C,iiot-poc,health-app,baseline_security_probe,NONE,NONE,wazuh_localfile_json,YES
+2026-05-02T05:56:08Z,SCENARIO_C,iiot-poc,telemetry-api,baseline_security_probe,NONE,NONE,wazuh_localfile_json,YES
+2026-05-02T05:56:09Z,SCENARIO_C,iiot-poc,vulnerable-app,baseline_security_probe,NONE,NONE,wazuh_localfile_json,YES
+2026-05-02T05:56:10Z,SCENARIO_C,iiot-poc,mosquitto,baseline_security_probe,NONE,NONE,wazuh_localfile_json,YES
+2026-05-02T05:56:13Z,SCENARIO_C,iiot-poc,health-app,baseline_security_probe,NONE,NONE,wazuh_localfile_json,YES
+2026-05-02T05:56:14Z,SCENARIO_C,iiot-poc,telemetry-api,baseline_security_probe,NONE,NONE,wazuh_localfile_json,YES
+2026-05-02T05:56:15Z,SCENARIO_C,iiot-poc,vulnerable-app,baseline_security_probe,NONE,NONE,wazuh_localfile_json,YES
+2026-05-02T05:56:15Z,SCENARIO_C,iiot-poc,mosquitto,baseline_security_probe,NONE,NONE,wazuh_localfile_json,YES
+2026-05-02T05:56:18Z,SCENARIO_C,iiot-poc,health-app,baseline_security_probe,NONE,NONE,wazuh_localfile_json,YES
+2026-05-02T05:56:19Z,SCENARIO_C,iiot-poc,telemetry-api,baseline_security_probe,NONE,NONE,wazuh_localfile_json,YES
+2026-05-02T05:56:20Z,SCENARIO_C,iiot-poc,vulnerable-app,baseline_security_probe,NONE,NONE,wazuh_localfile_json,YES
+2026-05-02T05:56:21Z,SCENARIO_C,iiot-poc,mosquitto,baseline_security_probe,NONE,NONE,wazuh_localfile_json,YES

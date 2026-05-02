@@ -1,0 +1,2080 @@
+apiVersion: v1
+items:
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      cni.projectcalico.org/containerID: a603b0c447bfa37796872cd0a7d3c9bbfa2e5d3e71839ac503dfd628a58372a9
+      cni.projectcalico.org/podIP: 10.1.21.181/32
+      cni.projectcalico.org/podIPs: 10.1.21.181/32
+      kubectl.kubernetes.io/restartedAt: "2026-05-02T05:52:17Z"
+    creationTimestamp: "2026-05-02T05:52:19Z"
+    generateName: wazuh-dashboard-7d7b9bbd47-
+    labels:
+      app: wazuh-dashboard
+      pod-template-hash: 7d7b9bbd47
+    name: wazuh-dashboard-7d7b9bbd47-wx6jx
+    namespace: security
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: ReplicaSet
+      name: wazuh-dashboard-7d7b9bbd47
+      uid: 292a5ce0-4536-4340-8f0c-de3a674e5ca4
+    resourceVersion: "62252"
+    uid: 4678fb33-bf64-471c-a3f9-811fd43a1770
+  spec:
+    containers:
+    - env:
+      - name: OPENSEARCH_HOSTS
+        value: https://wazuh-indexer:9200
+      - name: OPENSEARCH_USERNAME
+        valueFrom:
+          secretKeyRef:
+            key: username
+            name: indexer-cred
+      - name: OPENSEARCH_PASSWORD
+        valueFrom:
+          secretKeyRef:
+            key: password
+            name: indexer-cred
+      image: wazuh/wazuh-dashboard:4.14.5
+      imagePullPolicy: IfNotPresent
+      name: wazuh-dashboard
+      ports:
+      - containerPort: 5601
+        name: dashboard
+        protocol: TCP
+      resources:
+        limits:
+          cpu: 500m
+          memory: 1Gi
+        requests:
+          cpu: 500m
+          memory: 1Gi
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /usr/share/wazuh-dashboard/config/opensearch_dashboards.yml
+        name: config
+        subPath: opensearch_dashboards.yml
+      - mountPath: /usr/share/wazuh-dashboard/certs/cert.pem
+        name: dashboard-certs
+        readOnly: true
+        subPath: cert.pem
+      - mountPath: /usr/share/wazuh-dashboard/certs/key.pem
+        name: dashboard-certs
+        readOnly: true
+        subPath: key.pem
+      - mountPath: /usr/share/wazuh-dashboard/certs/root-ca.pem
+        name: dashboard-certs
+        readOnly: true
+        subPath: root-ca.pem
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-h878t
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    nodeName: iiot-lab-k8s
+    preemptionPolicy: PreemptLowerPriority
+    priority: 0
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext: {}
+    serviceAccount: default
+    serviceAccountName: default
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    volumes:
+    - configMap:
+        defaultMode: 420
+        name: dashboard-conf-8c8984h96h
+      name: config
+    - name: dashboard-certs
+      secret:
+        defaultMode: 420
+        secretName: dashboard-certs-4ff4b7k55b
+    - name: kube-api-access-h878t
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2026-05-02T05:52:36Z"
+      status: "True"
+      type: PodReadyToStartContainers
+    - lastProbeTime: null
+      lastTransitionTime: "2026-05-02T05:52:22Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2026-05-02T05:52:36Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2026-05-02T05:52:36Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2026-05-02T05:52:21Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: containerd://63501c61fc4b7fa18d0f3278284cad90381840434517ea8cbee407a869a075b5
+      image: docker.io/wazuh/wazuh-dashboard:4.14.5
+      imageID: docker.io/wazuh/wazuh-dashboard@sha256:75437f4fb347db2d040863801f9eb73b0ca16c8b3fb4d93a07df34b7313b16af
+      lastState: {}
+      name: wazuh-dashboard
+      ready: true
+      restartCount: 0
+      started: true
+      state:
+        running:
+          startedAt: "2026-05-02T05:52:36Z"
+    hostIP: 10.10.0.101
+    hostIPs:
+    - ip: 10.10.0.101
+    phase: Running
+    podIP: 10.1.21.181
+    podIPs:
+    - ip: 10.1.21.181
+    qosClass: Guaranteed
+    startTime: "2026-05-02T05:52:22Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      cni.projectcalico.org/containerID: 782e8a7320b49fb84b33b5d72144e96bf60e18c18e61d120577933d87fc32860
+      cni.projectcalico.org/podIP: 10.1.21.176/32
+      cni.projectcalico.org/podIPs: 10.1.21.176/32
+    creationTimestamp: "2026-05-02T04:43:10Z"
+    generateName: wazuh-indexer-
+    labels:
+      app: wazuh-indexer
+      apps.kubernetes.io/pod-index: "0"
+      controller-revision-hash: wazuh-indexer-9879575c9
+      statefulset.kubernetes.io/pod-name: wazuh-indexer-0
+    name: wazuh-indexer-0
+    namespace: security
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: StatefulSet
+      name: wazuh-indexer
+      uid: d986ed72-5c13-4359-b12c-558362cdaa4b
+    resourceVersion: "53999"
+    uid: 0cb33707-27c1-4383-bb46-536cc7f1f651
+  spec:
+    containers:
+    - env:
+      - name: OPENSEARCH_JAVA_OPTS
+        value: -Xms1g -Xmx1g -Dlog4j2.formatMsgNoLookups=true
+      - name: CLUSTER_NAME
+        value: wazuh
+      - name: NETWORK_HOST
+        value: 0.0.0.0
+      - name: NODE_NAME
+        valueFrom:
+          fieldRef:
+            apiVersion: v1
+            fieldPath: metadata.name
+      - name: DISCOVERY_SERVICE
+        value: wazuh-indexer
+      - name: KUBERNETES_NAMESPACE
+        valueFrom:
+          fieldRef:
+            apiVersion: v1
+            fieldPath: metadata.namespace
+      - name: DISABLE_INSTALL_DEMO_CONFIG
+        value: "true"
+      image: wazuh/wazuh-indexer:4.14.5
+      imagePullPolicy: IfNotPresent
+      name: wazuh-indexer
+      ports:
+      - containerPort: 9200
+        name: indexer-rest
+        protocol: TCP
+      - containerPort: 9300
+        name: indexer-nodes
+        protocol: TCP
+      resources:
+        limits:
+          cpu: "1"
+          memory: 2Gi
+        requests:
+          cpu: 500m
+          memory: 1Gi
+      securityContext:
+        capabilities:
+          add:
+          - SYS_CHROOT
+        runAsGroup: 1000
+        runAsUser: 1000
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /var/lib/wazuh-indexer
+        name: wazuh-indexer
+      - mountPath: /usr/share/wazuh-indexer/config/certs/node-key.pem
+        name: indexer-certs
+        readOnly: true
+        subPath: node-key.pem
+      - mountPath: /usr/share/wazuh-indexer/config/certs/node.pem
+        name: indexer-certs
+        readOnly: true
+        subPath: node.pem
+      - mountPath: /usr/share/wazuh-indexer/config/certs/root-ca.pem
+        name: indexer-certs
+        readOnly: true
+        subPath: root-ca.pem
+      - mountPath: /usr/share/wazuh-indexer/config/certs/admin.pem
+        name: indexer-certs
+        readOnly: true
+        subPath: admin.pem
+      - mountPath: /usr/share/wazuh-indexer/config/certs/admin-key.pem
+        name: indexer-certs
+        readOnly: true
+        subPath: admin-key.pem
+      - mountPath: /usr/share/wazuh-indexer/config/opensearch.yml
+        name: indexer-conf
+        readOnly: true
+        subPath: opensearch.yml
+      - mountPath: /usr/share/wazuh-indexer/config/opensearch-security/internal_users.yml
+        name: indexer-conf
+        readOnly: true
+        subPath: internal_users.yml
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-rhgh4
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    hostname: wazuh-indexer-0
+    initContainers:
+    - command:
+      - sh
+      - -c
+      - chown -R 1000:1000 /var/lib/wazuh-indexer
+      image: busybox
+      imagePullPolicy: Always
+      name: volume-mount-hack
+      resources:
+        limits:
+          cpu: 100m
+          memory: 256Mi
+        requests:
+          cpu: 50m
+          memory: 128Mi
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /var/lib/wazuh-indexer
+        name: wazuh-indexer
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-rhgh4
+        readOnly: true
+    - command:
+      - sysctl
+      - -w
+      - vm.max_map_count=262144
+      image: busybox
+      imagePullPolicy: Always
+      name: increase-the-vm-max-map-count
+      resources: {}
+      securityContext:
+        privileged: true
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-rhgh4
+        readOnly: true
+    nodeName: iiot-lab-k8s
+    preemptionPolicy: PreemptLowerPriority
+    priority: 0
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext:
+      fsGroup: 1000
+    serviceAccount: default
+    serviceAccountName: default
+    subdomain: wazuh-indexer
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    volumes:
+    - name: wazuh-indexer
+      persistentVolumeClaim:
+        claimName: wazuh-indexer-wazuh-indexer-0
+    - name: indexer-certs
+      secret:
+        defaultMode: 384
+        secretName: indexer-certs-628m4bd6b2
+    - configMap:
+        defaultMode: 384
+        name: indexer-conf-45bbc2fk49
+      name: indexer-conf
+    - name: kube-api-access-rhgh4
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2026-05-02T04:44:05Z"
+      status: "True"
+      type: PodReadyToStartContainers
+    - lastProbeTime: null
+      lastTransitionTime: "2026-05-02T04:44:44Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2026-05-02T04:45:35Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2026-05-02T04:45:35Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2026-05-02T04:43:45Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: containerd://f3786b525fc092cdd8aae39e45c685fc8e2f0c7ca3078e23277612bd2797195d
+      image: docker.io/wazuh/wazuh-indexer:4.14.5
+      imageID: docker.io/wazuh/wazuh-indexer@sha256:bcba58b3fe756114249b8834bcae8f852d277ffc6b9695d3de5989f5fe94d36c
+      lastState: {}
+      name: wazuh-indexer
+      ready: true
+      restartCount: 0
+      started: true
+      state:
+        running:
+          startedAt: "2026-05-02T04:45:35Z"
+    hostIP: 10.10.0.101
+    hostIPs:
+    - ip: 10.10.0.101
+    initContainerStatuses:
+    - containerID: containerd://6afe2661abd03487764e8d61091ad78ddf2a9a325188cabb26b8c45473dfb5b6
+      image: docker.io/library/busybox:latest
+      imageID: docker.io/library/busybox@sha256:1487d0af5f52b4ba31c7e465126ee2123fe3f2305d638e7827681e7cf6c83d5e
+      lastState: {}
+      name: volume-mount-hack
+      ready: true
+      restartCount: 0
+      started: false
+      state:
+        terminated:
+          containerID: containerd://6afe2661abd03487764e8d61091ad78ddf2a9a325188cabb26b8c45473dfb5b6
+          exitCode: 0
+          finishedAt: "2026-05-02T04:44:04Z"
+          reason: Completed
+          startedAt: "2026-05-02T04:44:04Z"
+    - containerID: containerd://87a921e1bca108c35da1ee020f265f9ac5d04ffc270331033026059a7dda6f0f
+      image: docker.io/library/busybox:latest
+      imageID: docker.io/library/busybox@sha256:1487d0af5f52b4ba31c7e465126ee2123fe3f2305d638e7827681e7cf6c83d5e
+      lastState: {}
+      name: increase-the-vm-max-map-count
+      ready: true
+      restartCount: 0
+      started: false
+      state:
+        terminated:
+          containerID: containerd://87a921e1bca108c35da1ee020f265f9ac5d04ffc270331033026059a7dda6f0f
+          exitCode: 0
+          finishedAt: "2026-05-02T04:44:30Z"
+          reason: Completed
+          startedAt: "2026-05-02T04:44:30Z"
+    phase: Running
+    podIP: 10.1.21.176
+    podIPs:
+    - ip: 10.1.21.176
+    qosClass: Burstable
+    startTime: "2026-05-02T04:43:45Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      cni.projectcalico.org/containerID: 35fc350a144b8fb0ab7335f4ab6804efcf3f18f646581d36bd33c627b3f44024
+      cni.projectcalico.org/podIP: 10.1.21.175/32
+      cni.projectcalico.org/podIPs: 10.1.21.175/32
+    creationTimestamp: "2026-05-02T04:43:11Z"
+    generateName: wazuh-manager-master-
+    labels:
+      app: wazuh-manager
+      apps.kubernetes.io/pod-index: "0"
+      controller-revision-hash: wazuh-manager-master-777d76cb9f
+      node-type: master
+      statefulset.kubernetes.io/pod-name: wazuh-manager-master-0
+    name: wazuh-manager-master-0
+    namespace: security
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: StatefulSet
+      name: wazuh-manager-master
+      uid: 8ce2820c-515b-4065-9b06-725f3496076c
+    resourceVersion: "62945"
+    uid: a481624a-0975-4f98-a323-9b6645a037d8
+  spec:
+    containers:
+    - env:
+      - name: INDEXER_URL
+        value: https://indexer:9200
+      - name: INDEXER_USERNAME
+        valueFrom:
+          secretKeyRef:
+            key: username
+            name: indexer-cred
+      - name: INDEXER_PASSWORD
+        valueFrom:
+          secretKeyRef:
+            key: password
+            name: indexer-cred
+      - name: FILEBEAT_SSL_VERIFICATION_MODE
+        value: full
+      - name: SSL_CERTIFICATE_AUTHORITIES
+        value: /etc/ssl/root-ca.pem
+      - name: SSL_CERTIFICATE
+        value: /etc/ssl/filebeat.pem
+      - name: SSL_KEY
+        value: /etc/ssl/filebeat.key
+      - name: API_USERNAME
+        valueFrom:
+          secretKeyRef:
+            key: username
+            name: wazuh-api-cred
+      - name: API_PASSWORD
+        valueFrom:
+          secretKeyRef:
+            key: password
+            name: wazuh-api-cred
+      - name: WAZUH_CLUSTER_KEY
+        valueFrom:
+          secretKeyRef:
+            key: key
+            name: wazuh-cluster-key
+      image: wazuh/wazuh-manager:4.14.5
+      imagePullPolicy: IfNotPresent
+      name: wazuh-manager
+      ports:
+      - containerPort: 1515
+        name: registration
+        protocol: TCP
+      - containerPort: 1516
+        name: cluster
+        protocol: TCP
+      - containerPort: 55000
+        name: api
+        protocol: TCP
+      resources:
+        limits:
+          cpu: 400m
+          memory: 512Mi
+        requests:
+          cpu: 400m
+          memory: 512Mi
+      securityContext:
+        capabilities:
+          add:
+          - SYS_CHROOT
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /wazuh-config-mount/etc/ossec.conf
+        name: config
+        readOnly: true
+        subPath: master.conf
+      - mountPath: /etc/ssl/root-ca.pem
+        name: filebeat-certs
+        readOnly: true
+        subPath: root-ca.pem
+      - mountPath: /etc/ssl/filebeat.pem
+        name: filebeat-certs
+        readOnly: true
+        subPath: filebeat.pem
+      - mountPath: /etc/ssl/filebeat.key
+        name: filebeat-certs
+        readOnly: true
+        subPath: filebeat-key.pem
+      - mountPath: /wazuh-config-mount/etc/authd.pass
+        name: wazuh-authd-pass
+        readOnly: true
+        subPath: authd.pass
+      - mountPath: /var/ossec/api/configuration
+        name: wazuh-manager-master
+        subPath: wazuh/var/ossec/api/configuration
+      - mountPath: /var/ossec/etc
+        name: wazuh-manager-master
+        subPath: wazuh/var/ossec/etc
+      - mountPath: /var/ossec/logs
+        name: wazuh-manager-master
+        subPath: wazuh/var/ossec/logs
+      - mountPath: /var/ossec/queue
+        name: wazuh-manager-master
+        subPath: wazuh/var/ossec/queue
+      - mountPath: /var/ossec/var/multigroups
+        name: wazuh-manager-master
+        subPath: wazuh/var/ossec/var/multigroups
+      - mountPath: /var/ossec/integrations
+        name: wazuh-manager-master
+        subPath: wazuh/var/ossec/integrations
+      - mountPath: /var/ossec/active-response/bin
+        name: wazuh-manager-master
+        subPath: wazuh/var/ossec/active-response/bin
+      - mountPath: /var/ossec/agentless
+        name: wazuh-manager-master
+        subPath: wazuh/var/ossec/agentless
+      - mountPath: /var/ossec/wodles
+        name: wazuh-manager-master
+        subPath: wazuh/var/ossec/wodles
+      - mountPath: /etc/filebeat
+        name: wazuh-manager-master
+        subPath: filebeat/etc/filebeat
+      - mountPath: /var/lib/filebeat
+        name: wazuh-manager-master
+        subPath: filebeat/var/lib/filebeat
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-jc2wz
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    hostname: wazuh-manager-master-0
+    nodeName: iiot-lab-k8s
+    preemptionPolicy: PreemptLowerPriority
+    priority: 0
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext:
+      fsGroup: 101
+    serviceAccount: default
+    serviceAccountName: default
+    subdomain: wazuh-cluster
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    volumes:
+    - name: wazuh-manager-master
+      persistentVolumeClaim:
+        claimName: wazuh-manager-master-wazuh-manager-master-0
+    - configMap:
+        defaultMode: 420
+        name: wazuh-conf-m5756d8fbh
+      name: config
+    - name: filebeat-certs
+      secret:
+        defaultMode: 420
+        secretName: indexer-certs-628m4bd6b2
+    - name: wazuh-authd-pass
+      secret:
+        defaultMode: 420
+        secretName: wazuh-authd-pass
+    - name: kube-api-access-jc2wz
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2026-05-02T04:44:49Z"
+      status: "True"
+      type: PodReadyToStartContainers
+    - lastProbeTime: null
+      lastTransitionTime: "2026-05-02T04:43:43Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2026-05-02T05:58:54Z"
+      message: 'containers with unready status: [wazuh-manager]'
+      reason: ContainersNotReady
+      status: "False"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2026-05-02T05:58:54Z"
+      message: 'containers with unready status: [wazuh-manager]'
+      reason: ContainersNotReady
+      status: "False"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2026-05-02T04:43:43Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: containerd://35efdb56bd037aac977ec93eb21883b767bad3a005b2d0895f07abe63bc17c41
+      image: docker.io/wazuh/wazuh-manager:4.14.5
+      imageID: docker.io/wazuh/wazuh-manager@sha256:3b2b7aae2daf696071ecc8b32a5d1e65e5c2a625291afc434bd20171a9d41109
+      lastState:
+        terminated:
+          containerID: containerd://f4d7ca8f247e4f6d1206fae756095572a5153a370d8f8d42af0619ebd7a09f47
+          exitCode: 137
+          finishedAt: "2026-05-02T05:49:08Z"
+          reason: OOMKilled
+          startedAt: "2026-05-02T05:28:58Z"
+      name: wazuh-manager
+      ready: false
+      restartCount: 2
+      started: false
+      state:
+        terminated:
+          containerID: containerd://35efdb56bd037aac977ec93eb21883b767bad3a005b2d0895f07abe63bc17c41
+          exitCode: 137
+          finishedAt: "2026-05-02T05:58:52Z"
+          reason: OOMKilled
+          startedAt: "2026-05-02T05:49:12Z"
+    hostIP: 10.10.0.101
+    hostIPs:
+    - ip: 10.10.0.101
+    phase: Running
+    podIP: 10.1.21.175
+    podIPs:
+    - ip: 10.1.21.175
+    qosClass: Guaranteed
+    startTime: "2026-05-02T04:43:43Z"
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"v1","kind":"Service","metadata":{"annotations":{"service.beta.kubernetes.io/aws-load-balancer-backend-protocol":"https","service.beta.kubernetes.io/aws-load-balancer-ssl-ports":"443"},"labels":{"app":"wazuh-dashboard"},"name":"dashboard","namespace":"security"},"spec":{"ports":[{"name":"dashboard","port":443,"targetPort":5601}],"selector":{"app":"wazuh-dashboard"},"type":"LoadBalancer"}}
+      service.beta.kubernetes.io/aws-load-balancer-backend-protocol: https
+      service.beta.kubernetes.io/aws-load-balancer-ssl-ports: "443"
+    creationTimestamp: "2026-05-02T04:43:06Z"
+    labels:
+      app: wazuh-dashboard
+    name: dashboard
+    namespace: security
+    resourceVersion: "53663"
+    uid: e3961a46-12dd-4462-a45e-7eeb78061da9
+  spec:
+    clusterIP: 10.152.183.133
+    clusterIPs:
+    - 10.152.183.133
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: dashboard
+      port: 443
+      protocol: TCP
+      targetPort: 5601
+    selector:
+      app: wazuh-dashboard
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"v1","kind":"Service","metadata":{"annotations":{},"labels":{"app":"wazuh-indexer"},"name":"indexer","namespace":"security"},"spec":{"ports":[{"name":"indexer-rest","port":9200,"targetPort":9200}],"selector":{"app":"wazuh-indexer"},"type":"LoadBalancer"}}
+    creationTimestamp: "2026-05-02T04:43:06Z"
+    labels:
+      app: wazuh-indexer
+    name: indexer
+    namespace: security
+    resourceVersion: "53676"
+    uid: c5692fe5-b795-4623-a298-91b18534d31d
+  spec:
+    clusterIP: 10.152.183.51
+    clusterIPs:
+    - 10.152.183.51
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: indexer-rest
+      port: 9200
+      protocol: TCP
+      targetPort: 9200
+    selector:
+      app: wazuh-indexer
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"v1","kind":"Service","metadata":{"annotations":{"service.beta.kubernetes.io/aws-load-balancer-backend-protocol":"tcp"},"labels":{"app":"wazuh-manager"},"name":"wazuh","namespace":"security"},"spec":{"ports":[{"name":"api","port":55000,"targetPort":55000},{"name":"registration","port":1515,"targetPort":1515}],"selector":{"app":"wazuh-manager","node-type":"master"},"type":"LoadBalancer"}}
+      service.beta.kubernetes.io/aws-load-balancer-backend-protocol: tcp
+    creationTimestamp: "2026-05-02T04:43:07Z"
+    labels:
+      app: wazuh-manager
+    name: wazuh
+    namespace: security
+    resourceVersion: "53694"
+    uid: ff13d734-c0c6-40af-9487-f87fd2861c50
+  spec:
+    clusterIP: 10.152.183.151
+    clusterIPs:
+    - 10.152.183.151
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: api
+      port: 55000
+      protocol: TCP
+      targetPort: 55000
+    - name: registration
+      port: 1515
+      protocol: TCP
+      targetPort: 1515
+    selector:
+      app: wazuh-manager
+      node-type: master
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"v1","kind":"Service","metadata":{"annotations":{},"labels":{"app":"wazuh-manager"},"name":"wazuh-cluster","namespace":"security"},"spec":{"clusterIP":"None","ports":[{"name":"cluster","port":1516,"targetPort":1516}],"selector":{"app":"wazuh-manager"}}}
+    creationTimestamp: "2026-05-02T04:43:07Z"
+    labels:
+      app: wazuh-manager
+    name: wazuh-cluster
+    namespace: security
+    resourceVersion: "53511"
+    uid: 8c3adaaf-8b20-4519-931b-e930a34243fd
+  spec:
+    clusterIP: None
+    clusterIPs:
+    - None
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: cluster
+      port: 1516
+      protocol: TCP
+      targetPort: 1516
+    selector:
+      app: wazuh-manager
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"v1","kind":"Service","metadata":{"annotations":{"metallb.io/loadBalancerIPs":"10.10.0.161","metallb.universe.tf/loadBalancerIPs":"10.10.0.161"},"labels":{"app.kubernetes.io/component":"wazuh-dashboard","app.kubernetes.io/part-of":"iiot-correlation-lab","iiot-lab/scenario":"C"},"name":"wazuh-dashboard-lb","namespace":"security"},"spec":{"ports":[{"name":"https-dashboard","port":443,"protocol":"TCP","targetPort":5601}],"selector":{"app":"wazuh-dashboard"},"type":"LoadBalancer"}}
+      metallb.io/loadBalancerIPs: 10.10.0.161
+      metallb.universe.tf/loadBalancerIPs: 10.10.0.161
+    creationTimestamp: "2026-05-02T04:43:01Z"
+    labels:
+      app.kubernetes.io/component: wazuh-dashboard
+      app.kubernetes.io/part-of: iiot-correlation-lab
+      iiot-lab/scenario: C
+    name: wazuh-dashboard-lb
+    namespace: security
+    resourceVersion: "53702"
+    uid: 0c386023-3d5d-4a1a-8b2e-0c1759cfdc02
+  spec:
+    allocateLoadBalancerNodePorts: true
+    clusterIP: 10.152.183.109
+    clusterIPs:
+    - 10.152.183.109
+    externalTrafficPolicy: Cluster
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    loadBalancerIP: 10.10.0.161
+    ports:
+    - name: https-dashboard
+      nodePort: 31607
+      port: 443
+      protocol: TCP
+      targetPort: 5601
+    selector:
+      app: wazuh-dashboard
+    sessionAffinity: None
+    type: LoadBalancer
+  status:
+    loadBalancer:
+      ingress:
+      - ip: 10.10.0.161
+        ipMode: VIP
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"v1","kind":"Service","metadata":{"annotations":{},"labels":{"app":"wazuh-indexer"},"name":"wazuh-indexer","namespace":"security"},"spec":{"clusterIP":"None","ports":[{"name":"indexer-nodes","port":9300,"targetPort":9300}],"selector":{"app":"wazuh-indexer"}}}
+    creationTimestamp: "2026-05-02T04:43:08Z"
+    labels:
+      app: wazuh-indexer
+    name: wazuh-indexer
+    namespace: security
+    resourceVersion: "53514"
+    uid: 2fd7c03c-cf5c-4924-a20f-b234d9ffb0c8
+  spec:
+    clusterIP: None
+    clusterIPs:
+    - None
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: indexer-nodes
+      port: 9300
+      protocol: TCP
+      targetPort: 9300
+    selector:
+      app: wazuh-indexer
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"v1","kind":"Service","metadata":{"annotations":{"metallb.io/loadBalancerIPs":"10.10.0.162","metallb.universe.tf/loadBalancerIPs":"10.10.0.162"},"labels":{"app.kubernetes.io/component":"wazuh-manager","app.kubernetes.io/part-of":"iiot-correlation-lab","iiot-lab/scenario":"C"},"name":"wazuh-manager-lb","namespace":"security"},"spec":{"ports":[{"name":"agent-events","port":1514,"protocol":"TCP","targetPort":1514},{"name":"agent-registration","port":1515,"protocol":"TCP","targetPort":1515},{"name":"wazuh-api","port":55000,"protocol":"TCP","targetPort":55000}],"selector":{"app":"wazuh-manager","node-type":"master"},"type":"LoadBalancer"}}
+      metallb.io/loadBalancerIPs: 10.10.0.162
+      metallb.universe.tf/loadBalancerIPs: 10.10.0.162
+    creationTimestamp: "2026-05-02T04:43:01Z"
+    labels:
+      app.kubernetes.io/component: wazuh-manager
+      app.kubernetes.io/part-of: iiot-correlation-lab
+      iiot-lab/scenario: C
+    name: wazuh-manager-lb
+    namespace: security
+    resourceVersion: "53710"
+    uid: d816f1f9-02fb-4029-b409-d03599021b5f
+  spec:
+    allocateLoadBalancerNodePorts: true
+    clusterIP: 10.152.183.45
+    clusterIPs:
+    - 10.152.183.45
+    externalTrafficPolicy: Cluster
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    loadBalancerIP: 10.10.0.162
+    ports:
+    - name: agent-events
+      nodePort: 31936
+      port: 1514
+      protocol: TCP
+      targetPort: 1514
+    - name: agent-registration
+      nodePort: 31645
+      port: 1515
+      protocol: TCP
+      targetPort: 1515
+    - name: wazuh-api
+      nodePort: 31472
+      port: 55000
+      protocol: TCP
+      targetPort: 55000
+    selector:
+      app: wazuh-manager
+      node-type: master
+    sessionAffinity: None
+    type: LoadBalancer
+  status:
+    loadBalancer:
+      ingress:
+      - ip: 10.10.0.162
+        ipMode: VIP
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      deployment.kubernetes.io/revision: "6"
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"apps/v1","kind":"Deployment","metadata":{"annotations":{},"name":"wazuh-dashboard","namespace":"security"},"spec":{"replicas":1,"selector":{"matchLabels":{"app":"wazuh-dashboard"}},"template":{"metadata":{"labels":{"app":"wazuh-dashboard"},"name":"wazuh-dashboard"},"spec":{"containers":[{"env":[{"name":"INDEXER_URL","value":"https://indexer:9200"},{"name":"INDEXER_USERNAME","valueFrom":{"secretKeyRef":{"key":"username","name":"indexer-cred"}}},{"name":"INDEXER_PASSWORD","valueFrom":{"secretKeyRef":{"key":"password","name":"indexer-cred"}}},{"name":"DASHBOARD_USERNAME","valueFrom":{"secretKeyRef":{"key":"username","name":"dashboard-cred"}}},{"name":"DASHBOARD_PASSWORD","valueFrom":{"secretKeyRef":{"key":"password","name":"dashboard-cred"}}},{"name":"SERVER_SSL_ENABLED","value":"true"},{"name":"SERVER_SSL_CERTIFICATE","value":"/usr/share/wazuh-dashboard/certs/cert.pem"},{"name":"SERVER_SSL_KEY","value":"/usr/share/wazuh-dashboard/certs/key.pem"},{"name":"WAZUH_API_URL","value":"https://wazuh-manager-master-0.wazuh-cluster"},{"name":"API_USERNAME","valueFrom":{"secretKeyRef":{"key":"username","name":"wazuh-api-cred"}}},{"name":"API_PASSWORD","valueFrom":{"secretKeyRef":{"key":"password","name":"wazuh-api-cred"}}}],"image":"wazuh/wazuh-dashboard:4.14.5","name":"wazuh-dashboard","ports":[{"containerPort":5601,"name":"dashboard"}],"resources":{"limits":{"cpu":"500m","memory":"1Gi"}},"volumeMounts":[{"mountPath":"/usr/share/wazuh-dashboard/config/opensearch_dashboards.yml","name":"config","readOnly":false,"subPath":"opensearch_dashboards.yml"},{"mountPath":"/usr/share/wazuh-dashboard/certs/cert.pem","name":"dashboard-certs","readOnly":true,"subPath":"cert.pem"},{"mountPath":"/usr/share/wazuh-dashboard/certs/key.pem","name":"dashboard-certs","readOnly":true,"subPath":"key.pem"},{"mountPath":"/usr/share/wazuh-dashboard/certs/root-ca.pem","name":"dashboard-certs","readOnly":true,"subPath":"root-ca.pem"}]}],"volumes":[{"configMap":{"name":"dashboard-conf-8c8984h96h"},"name":"config"},{"name":"dashboard-certs","secret":{"secretName":"dashboard-certs-4ff4b7k55b"}}]}}}}
+    creationTimestamp: "2026-05-02T04:43:08Z"
+    generation: 6
+    name: wazuh-dashboard
+    namespace: security
+    resourceVersion: "62280"
+    uid: 9c4fe74d-6ca2-4e11-8ef3-f1f5dff4a26c
+  spec:
+    progressDeadlineSeconds: 600
+    replicas: 1
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        app: wazuh-dashboard
+    strategy:
+      rollingUpdate:
+        maxSurge: 25%
+        maxUnavailable: 25%
+      type: RollingUpdate
+    template:
+      metadata:
+        annotations:
+          kubectl.kubernetes.io/restartedAt: "2026-05-02T05:52:17Z"
+        creationTimestamp: null
+        labels:
+          app: wazuh-dashboard
+        name: wazuh-dashboard
+      spec:
+        containers:
+        - env:
+          - name: OPENSEARCH_HOSTS
+            value: https://wazuh-indexer:9200
+          - name: OPENSEARCH_USERNAME
+            valueFrom:
+              secretKeyRef:
+                key: username
+                name: indexer-cred
+          - name: OPENSEARCH_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                key: password
+                name: indexer-cred
+          image: wazuh/wazuh-dashboard:4.14.5
+          imagePullPolicy: IfNotPresent
+          name: wazuh-dashboard
+          ports:
+          - containerPort: 5601
+            name: dashboard
+            protocol: TCP
+          resources:
+            limits:
+              cpu: 500m
+              memory: 1Gi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /usr/share/wazuh-dashboard/config/opensearch_dashboards.yml
+            name: config
+            subPath: opensearch_dashboards.yml
+          - mountPath: /usr/share/wazuh-dashboard/certs/cert.pem
+            name: dashboard-certs
+            readOnly: true
+            subPath: cert.pem
+          - mountPath: /usr/share/wazuh-dashboard/certs/key.pem
+            name: dashboard-certs
+            readOnly: true
+            subPath: key.pem
+          - mountPath: /usr/share/wazuh-dashboard/certs/root-ca.pem
+            name: dashboard-certs
+            readOnly: true
+            subPath: root-ca.pem
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - configMap:
+            defaultMode: 420
+            name: dashboard-conf-8c8984h96h
+          name: config
+        - name: dashboard-certs
+          secret:
+            defaultMode: 420
+            secretName: dashboard-certs-4ff4b7k55b
+  status:
+    availableReplicas: 1
+    conditions:
+    - lastTransitionTime: "2026-05-02T04:43:23Z"
+      lastUpdateTime: "2026-05-02T04:43:23Z"
+      message: Deployment has minimum availability.
+      reason: MinimumReplicasAvailable
+      status: "True"
+      type: Available
+    - lastTransitionTime: "2026-05-02T04:43:09Z"
+      lastUpdateTime: "2026-05-02T05:52:43Z"
+      message: ReplicaSet "wazuh-dashboard-7d7b9bbd47" has successfully progressed.
+      reason: NewReplicaSetAvailable
+      status: "True"
+      type: Progressing
+    observedGeneration: 6
+    readyReplicas: 1
+    replicas: 1
+    updatedReplicas: 1
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "1"
+      deployment.kubernetes.io/max-replicas: "2"
+      deployment.kubernetes.io/revision: "3"
+    creationTimestamp: "2026-05-02T05:07:37Z"
+    generation: 3
+    labels:
+      app: wazuh-dashboard
+      pod-template-hash: 5df995ff67
+    name: wazuh-dashboard-5df995ff67
+    namespace: security
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: wazuh-dashboard
+      uid: 9c4fe74d-6ca2-4e11-8ef3-f1f5dff4a26c
+    resourceVersion: "56959"
+    uid: 1ec7d23a-da3b-4a63-8441-50ce6ee75e22
+  spec:
+    replicas: 0
+    selector:
+      matchLabels:
+        app: wazuh-dashboard
+        pod-template-hash: 5df995ff67
+    template:
+      metadata:
+        annotations:
+          kubectl.kubernetes.io/restartedAt: "2026-05-02T05:07:37Z"
+        creationTimestamp: null
+        labels:
+          app: wazuh-dashboard
+          pod-template-hash: 5df995ff67
+        name: wazuh-dashboard
+      spec:
+        containers:
+        - env:
+          - name: OPENSEARCH_HOSTS
+            value: https://wazuh-indexer:9200
+          - name: OPENSEARCH_USERNAME
+            valueFrom:
+              secretKeyRef:
+                key: username
+                name: indexer-cred
+          - name: OPENSEARCH_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                key: password
+                name: indexer-cred
+          image: wazuh/wazuh-dashboard:4.14.5
+          imagePullPolicy: IfNotPresent
+          name: wazuh-dashboard
+          ports:
+          - containerPort: 5601
+            name: dashboard
+            protocol: TCP
+          resources:
+            limits:
+              cpu: 500m
+              memory: 1Gi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /usr/share/wazuh-dashboard/config/opensearch_dashboards.yml
+            name: config
+            subPath: opensearch_dashboards.yml
+          - mountPath: /usr/share/wazuh-dashboard/certs/cert.pem
+            name: dashboard-certs
+            readOnly: true
+            subPath: cert.pem
+          - mountPath: /usr/share/wazuh-dashboard/certs/key.pem
+            name: dashboard-certs
+            readOnly: true
+            subPath: key.pem
+          - mountPath: /usr/share/wazuh-dashboard/certs/root-ca.pem
+            name: dashboard-certs
+            readOnly: true
+            subPath: root-ca.pem
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - configMap:
+            defaultMode: 420
+            name: dashboard-conf-8c8984h96h
+          name: config
+        - name: dashboard-certs
+          secret:
+            defaultMode: 420
+            secretName: dashboard-certs-4ff4b7k55b
+  status:
+    observedGeneration: 3
+    replicas: 0
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "1"
+      deployment.kubernetes.io/max-replicas: "2"
+      deployment.kubernetes.io/revision: "4"
+    creationTimestamp: "2026-05-02T05:10:12Z"
+    generation: 2
+    labels:
+      app: wazuh-dashboard
+      pod-template-hash: 65595db88b
+    name: wazuh-dashboard-65595db88b
+    namespace: security
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: wazuh-dashboard
+      uid: 9c4fe74d-6ca2-4e11-8ef3-f1f5dff4a26c
+    resourceVersion: "60683"
+    uid: 1818bc50-6aba-4e27-83df-403bcde976d5
+  spec:
+    replicas: 0
+    selector:
+      matchLabels:
+        app: wazuh-dashboard
+        pod-template-hash: 65595db88b
+    template:
+      metadata:
+        annotations:
+          kubectl.kubernetes.io/restartedAt: "2026-05-02T05:10:12Z"
+        creationTimestamp: null
+        labels:
+          app: wazuh-dashboard
+          pod-template-hash: 65595db88b
+        name: wazuh-dashboard
+      spec:
+        containers:
+        - env:
+          - name: OPENSEARCH_HOSTS
+            value: https://wazuh-indexer:9200
+          - name: OPENSEARCH_USERNAME
+            valueFrom:
+              secretKeyRef:
+                key: username
+                name: indexer-cred
+          - name: OPENSEARCH_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                key: password
+                name: indexer-cred
+          image: wazuh/wazuh-dashboard:4.14.5
+          imagePullPolicy: IfNotPresent
+          name: wazuh-dashboard
+          ports:
+          - containerPort: 5601
+            name: dashboard
+            protocol: TCP
+          resources:
+            limits:
+              cpu: 500m
+              memory: 1Gi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /usr/share/wazuh-dashboard/config/opensearch_dashboards.yml
+            name: config
+            subPath: opensearch_dashboards.yml
+          - mountPath: /usr/share/wazuh-dashboard/certs/cert.pem
+            name: dashboard-certs
+            readOnly: true
+            subPath: cert.pem
+          - mountPath: /usr/share/wazuh-dashboard/certs/key.pem
+            name: dashboard-certs
+            readOnly: true
+            subPath: key.pem
+          - mountPath: /usr/share/wazuh-dashboard/certs/root-ca.pem
+            name: dashboard-certs
+            readOnly: true
+            subPath: root-ca.pem
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - configMap:
+            defaultMode: 420
+            name: dashboard-conf-8c8984h96h
+          name: config
+        - name: dashboard-certs
+          secret:
+            defaultMode: 420
+            secretName: dashboard-certs-4ff4b7k55b
+  status:
+    observedGeneration: 2
+    replicas: 0
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "1"
+      deployment.kubernetes.io/max-replicas: "2"
+      deployment.kubernetes.io/revision: "1"
+    creationTimestamp: "2026-05-02T04:43:09Z"
+    generation: 2
+    labels:
+      app: wazuh-dashboard
+      pod-template-hash: 67b97859c7
+    name: wazuh-dashboard-67b97859c7
+    namespace: security
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: wazuh-dashboard
+      uid: 9c4fe74d-6ca2-4e11-8ef3-f1f5dff4a26c
+    resourceVersion: "56601"
+    uid: 0adf741a-20a8-4786-b804-f4e5b6c51995
+  spec:
+    replicas: 0
+    selector:
+      matchLabels:
+        app: wazuh-dashboard
+        pod-template-hash: 67b97859c7
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          app: wazuh-dashboard
+          pod-template-hash: 67b97859c7
+        name: wazuh-dashboard
+      spec:
+        containers:
+        - env:
+          - name: INDEXER_URL
+            value: https://indexer:9200
+          - name: INDEXER_USERNAME
+            valueFrom:
+              secretKeyRef:
+                key: username
+                name: indexer-cred
+          - name: INDEXER_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                key: password
+                name: indexer-cred
+          - name: DASHBOARD_USERNAME
+            valueFrom:
+              secretKeyRef:
+                key: username
+                name: dashboard-cred
+          - name: DASHBOARD_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                key: password
+                name: dashboard-cred
+          - name: SERVER_SSL_ENABLED
+            value: "true"
+          - name: SERVER_SSL_CERTIFICATE
+            value: /usr/share/wazuh-dashboard/certs/cert.pem
+          - name: SERVER_SSL_KEY
+            value: /usr/share/wazuh-dashboard/certs/key.pem
+          - name: WAZUH_API_URL
+            value: https://wazuh-manager-master-0.wazuh-cluster
+          - name: API_USERNAME
+            valueFrom:
+              secretKeyRef:
+                key: username
+                name: wazuh-api-cred
+          - name: API_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                key: password
+                name: wazuh-api-cred
+          image: wazuh/wazuh-dashboard:4.14.5
+          imagePullPolicy: IfNotPresent
+          name: wazuh-dashboard
+          ports:
+          - containerPort: 5601
+            name: dashboard
+            protocol: TCP
+          resources:
+            limits:
+              cpu: 500m
+              memory: 1Gi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /usr/share/wazuh-dashboard/config/opensearch_dashboards.yml
+            name: config
+            subPath: opensearch_dashboards.yml
+          - mountPath: /usr/share/wazuh-dashboard/certs/cert.pem
+            name: dashboard-certs
+            readOnly: true
+            subPath: cert.pem
+          - mountPath: /usr/share/wazuh-dashboard/certs/key.pem
+            name: dashboard-certs
+            readOnly: true
+            subPath: key.pem
+          - mountPath: /usr/share/wazuh-dashboard/certs/root-ca.pem
+            name: dashboard-certs
+            readOnly: true
+            subPath: root-ca.pem
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - configMap:
+            defaultMode: 420
+            name: dashboard-conf-8c8984h96h
+          name: config
+        - name: dashboard-certs
+          secret:
+            defaultMode: 420
+            secretName: dashboard-certs-4ff4b7k55b
+  status:
+    observedGeneration: 2
+    replicas: 0
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "1"
+      deployment.kubernetes.io/max-replicas: "2"
+      deployment.kubernetes.io/revision: "2"
+    creationTimestamp: "2026-05-02T05:07:37Z"
+    generation: 2
+    labels:
+      app: wazuh-dashboard
+      pod-template-hash: 69b4cdbbf5
+    name: wazuh-dashboard-69b4cdbbf5
+    namespace: security
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: wazuh-dashboard
+      uid: 9c4fe74d-6ca2-4e11-8ef3-f1f5dff4a26c
+    resourceVersion: "56532"
+    uid: c01d7ca6-094d-4c26-bac0-c894c5b4e84a
+  spec:
+    replicas: 0
+    selector:
+      matchLabels:
+        app: wazuh-dashboard
+        pod-template-hash: 69b4cdbbf5
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          app: wazuh-dashboard
+          pod-template-hash: 69b4cdbbf5
+        name: wazuh-dashboard
+      spec:
+        containers:
+        - env:
+          - name: OPENSEARCH_HOSTS
+            value: https://wazuh-indexer:9200
+          - name: OPENSEARCH_USERNAME
+            valueFrom:
+              secretKeyRef:
+                key: username
+                name: indexer-cred
+          - name: OPENSEARCH_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                key: password
+                name: indexer-cred
+          image: wazuh/wazuh-dashboard:4.14.5
+          imagePullPolicy: IfNotPresent
+          name: wazuh-dashboard
+          ports:
+          - containerPort: 5601
+            name: dashboard
+            protocol: TCP
+          resources:
+            limits:
+              cpu: 500m
+              memory: 1Gi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /usr/share/wazuh-dashboard/config/opensearch_dashboards.yml
+            name: config
+            subPath: opensearch_dashboards.yml
+          - mountPath: /usr/share/wazuh-dashboard/certs/cert.pem
+            name: dashboard-certs
+            readOnly: true
+            subPath: cert.pem
+          - mountPath: /usr/share/wazuh-dashboard/certs/key.pem
+            name: dashboard-certs
+            readOnly: true
+            subPath: key.pem
+          - mountPath: /usr/share/wazuh-dashboard/certs/root-ca.pem
+            name: dashboard-certs
+            readOnly: true
+            subPath: root-ca.pem
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - configMap:
+            defaultMode: 420
+            name: dashboard-conf-8c8984h96h
+          name: config
+        - name: dashboard-certs
+          secret:
+            defaultMode: 420
+            secretName: dashboard-certs-4ff4b7k55b
+  status:
+    observedGeneration: 2
+    replicas: 0
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "1"
+      deployment.kubernetes.io/max-replicas: "2"
+      deployment.kubernetes.io/revision: "5"
+    creationTimestamp: "2026-05-02T05:39:18Z"
+    generation: 2
+    labels:
+      app: wazuh-dashboard
+      pod-template-hash: 78bf489f7f
+    name: wazuh-dashboard-78bf489f7f
+    namespace: security
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: wazuh-dashboard
+      uid: 9c4fe74d-6ca2-4e11-8ef3-f1f5dff4a26c
+    resourceVersion: "62279"
+    uid: 7d77105a-8d00-433d-ad0e-0008609fa073
+  spec:
+    replicas: 0
+    selector:
+      matchLabels:
+        app: wazuh-dashboard
+        pod-template-hash: 78bf489f7f
+    template:
+      metadata:
+        annotations:
+          kubectl.kubernetes.io/restartedAt: "2026-05-02T05:39:18Z"
+        creationTimestamp: null
+        labels:
+          app: wazuh-dashboard
+          pod-template-hash: 78bf489f7f
+        name: wazuh-dashboard
+      spec:
+        containers:
+        - env:
+          - name: OPENSEARCH_HOSTS
+            value: https://wazuh-indexer:9200
+          - name: OPENSEARCH_USERNAME
+            valueFrom:
+              secretKeyRef:
+                key: username
+                name: indexer-cred
+          - name: OPENSEARCH_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                key: password
+                name: indexer-cred
+          image: wazuh/wazuh-dashboard:4.14.5
+          imagePullPolicy: IfNotPresent
+          name: wazuh-dashboard
+          ports:
+          - containerPort: 5601
+            name: dashboard
+            protocol: TCP
+          resources:
+            limits:
+              cpu: 500m
+              memory: 1Gi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /usr/share/wazuh-dashboard/config/opensearch_dashboards.yml
+            name: config
+            subPath: opensearch_dashboards.yml
+          - mountPath: /usr/share/wazuh-dashboard/certs/cert.pem
+            name: dashboard-certs
+            readOnly: true
+            subPath: cert.pem
+          - mountPath: /usr/share/wazuh-dashboard/certs/key.pem
+            name: dashboard-certs
+            readOnly: true
+            subPath: key.pem
+          - mountPath: /usr/share/wazuh-dashboard/certs/root-ca.pem
+            name: dashboard-certs
+            readOnly: true
+            subPath: root-ca.pem
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - configMap:
+            defaultMode: 420
+            name: dashboard-conf-8c8984h96h
+          name: config
+        - name: dashboard-certs
+          secret:
+            defaultMode: 420
+            secretName: dashboard-certs-4ff4b7k55b
+  status:
+    observedGeneration: 2
+    replicas: 0
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "1"
+      deployment.kubernetes.io/max-replicas: "2"
+      deployment.kubernetes.io/revision: "6"
+    creationTimestamp: "2026-05-02T05:52:18Z"
+    generation: 1
+    labels:
+      app: wazuh-dashboard
+      pod-template-hash: 7d7b9bbd47
+    name: wazuh-dashboard-7d7b9bbd47
+    namespace: security
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: wazuh-dashboard
+      uid: 9c4fe74d-6ca2-4e11-8ef3-f1f5dff4a26c
+    resourceVersion: "62254"
+    uid: 292a5ce0-4536-4340-8f0c-de3a674e5ca4
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        app: wazuh-dashboard
+        pod-template-hash: 7d7b9bbd47
+    template:
+      metadata:
+        annotations:
+          kubectl.kubernetes.io/restartedAt: "2026-05-02T05:52:17Z"
+        creationTimestamp: null
+        labels:
+          app: wazuh-dashboard
+          pod-template-hash: 7d7b9bbd47
+        name: wazuh-dashboard
+      spec:
+        containers:
+        - env:
+          - name: OPENSEARCH_HOSTS
+            value: https://wazuh-indexer:9200
+          - name: OPENSEARCH_USERNAME
+            valueFrom:
+              secretKeyRef:
+                key: username
+                name: indexer-cred
+          - name: OPENSEARCH_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                key: password
+                name: indexer-cred
+          image: wazuh/wazuh-dashboard:4.14.5
+          imagePullPolicy: IfNotPresent
+          name: wazuh-dashboard
+          ports:
+          - containerPort: 5601
+            name: dashboard
+            protocol: TCP
+          resources:
+            limits:
+              cpu: 500m
+              memory: 1Gi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /usr/share/wazuh-dashboard/config/opensearch_dashboards.yml
+            name: config
+            subPath: opensearch_dashboards.yml
+          - mountPath: /usr/share/wazuh-dashboard/certs/cert.pem
+            name: dashboard-certs
+            readOnly: true
+            subPath: cert.pem
+          - mountPath: /usr/share/wazuh-dashboard/certs/key.pem
+            name: dashboard-certs
+            readOnly: true
+            subPath: key.pem
+          - mountPath: /usr/share/wazuh-dashboard/certs/root-ca.pem
+            name: dashboard-certs
+            readOnly: true
+            subPath: root-ca.pem
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - configMap:
+            defaultMode: 420
+            name: dashboard-conf-8c8984h96h
+          name: config
+        - name: dashboard-certs
+          secret:
+            defaultMode: 420
+            secretName: dashboard-certs-4ff4b7k55b
+  status:
+    availableReplicas: 1
+    fullyLabeledReplicas: 1
+    observedGeneration: 1
+    readyReplicas: 1
+    replicas: 1
+- apiVersion: apps/v1
+  kind: StatefulSet
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"apps/v1","kind":"StatefulSet","metadata":{"annotations":{},"name":"wazuh-indexer","namespace":"security"},"spec":{"replicas":1,"selector":{"matchLabels":{"app":"wazuh-indexer"}},"serviceName":"wazuh-indexer","template":{"metadata":{"labels":{"app":"wazuh-indexer"},"name":"wazuh-indexer"},"spec":{"containers":[{"env":[{"name":"OPENSEARCH_JAVA_OPTS","value":"-Xms1g -Xmx1g -Dlog4j2.formatMsgNoLookups=true"},{"name":"CLUSTER_NAME","value":"wazuh"},{"name":"NETWORK_HOST","value":"0.0.0.0"},{"name":"NODE_NAME","valueFrom":{"fieldRef":{"fieldPath":"metadata.name"}}},{"name":"DISCOVERY_SERVICE","value":"wazuh-indexer"},{"name":"KUBERNETES_NAMESPACE","valueFrom":{"fieldRef":{"fieldPath":"metadata.namespace"}}},{"name":"DISABLE_INSTALL_DEMO_CONFIG","value":"true"}],"image":"wazuh/wazuh-indexer:4.14.5","name":"wazuh-indexer","ports":[{"containerPort":9200,"name":"indexer-rest"},{"containerPort":9300,"name":"indexer-nodes"}],"resources":{"limits":{"cpu":1,"memory":"2Gi"},"requests":{"cpu":"500m","memory":"1Gi"}},"securityContext":{"capabilities":{"add":["SYS_CHROOT"]},"runAsGroup":1000,"runAsUser":1000},"volumeMounts":[{"mountPath":"/var/lib/wazuh-indexer","name":"wazuh-indexer"},{"mountPath":"/usr/share/wazuh-indexer/config/certs/node-key.pem","name":"indexer-certs","readOnly":true,"subPath":"node-key.pem"},{"mountPath":"/usr/share/wazuh-indexer/config/certs/node.pem","name":"indexer-certs","readOnly":true,"subPath":"node.pem"},{"mountPath":"/usr/share/wazuh-indexer/config/certs/root-ca.pem","name":"indexer-certs","readOnly":true,"subPath":"root-ca.pem"},{"mountPath":"/usr/share/wazuh-indexer/config/certs/admin.pem","name":"indexer-certs","readOnly":true,"subPath":"admin.pem"},{"mountPath":"/usr/share/wazuh-indexer/config/certs/admin-key.pem","name":"indexer-certs","readOnly":true,"subPath":"admin-key.pem"},{"mountPath":"/usr/share/wazuh-indexer/config/opensearch.yml","name":"indexer-conf","readOnly":true,"subPath":"opensearch.yml"},{"mountPath":"/usr/share/wazuh-indexer/config/opensearch-security/internal_users.yml","name":"indexer-conf","readOnly":true,"subPath":"internal_users.yml"}]}],"initContainers":[{"command":["sh","-c","chown -R 1000:1000 /var/lib/wazuh-indexer"],"image":"busybox","name":"volume-mount-hack","resources":{"limits":{"cpu":"100m","memory":"256Mi"},"requests":{"cpu":"50m","memory":"128Mi"}},"volumeMounts":[{"mountPath":"/var/lib/wazuh-indexer","name":"wazuh-indexer"}]},{"command":["sysctl","-w","vm.max_map_count=262144"],"image":"busybox","name":"increase-the-vm-max-map-count","securityContext":{"privileged":true}}],"securityContext":{"fsGroup":1000},"volumes":[{"name":"indexer-certs","secret":{"defaultMode":384,"secretName":"indexer-certs-628m4bd6b2"}},{"configMap":{"defaultMode":384,"name":"indexer-conf-45bbc2fk49"},"name":"indexer-conf"}]}},"volumeClaimTemplates":[{"metadata":{"name":"wazuh-indexer","namespace":"indexer-cluster"},"spec":{"accessModes":["ReadWriteOnce"],"resources":{"requests":{"storage":"500Mi"}},"storageClassName":"wazuh-storage"}}]}}
+    creationTimestamp: "2026-05-02T04:43:09Z"
+    generation: 1
+    name: wazuh-indexer
+    namespace: security
+    resourceVersion: "54003"
+    uid: d986ed72-5c13-4359-b12c-558362cdaa4b
+  spec:
+    persistentVolumeClaimRetentionPolicy:
+      whenDeleted: Retain
+      whenScaled: Retain
+    podManagementPolicy: OrderedReady
+    replicas: 1
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        app: wazuh-indexer
+    serviceName: wazuh-indexer
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          app: wazuh-indexer
+        name: wazuh-indexer
+      spec:
+        containers:
+        - env:
+          - name: OPENSEARCH_JAVA_OPTS
+            value: -Xms1g -Xmx1g -Dlog4j2.formatMsgNoLookups=true
+          - name: CLUSTER_NAME
+            value: wazuh
+          - name: NETWORK_HOST
+            value: 0.0.0.0
+          - name: NODE_NAME
+            valueFrom:
+              fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.name
+          - name: DISCOVERY_SERVICE
+            value: wazuh-indexer
+          - name: KUBERNETES_NAMESPACE
+            valueFrom:
+              fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+          - name: DISABLE_INSTALL_DEMO_CONFIG
+            value: "true"
+          image: wazuh/wazuh-indexer:4.14.5
+          imagePullPolicy: IfNotPresent
+          name: wazuh-indexer
+          ports:
+          - containerPort: 9200
+            name: indexer-rest
+            protocol: TCP
+          - containerPort: 9300
+            name: indexer-nodes
+            protocol: TCP
+          resources:
+            limits:
+              cpu: "1"
+              memory: 2Gi
+            requests:
+              cpu: 500m
+              memory: 1Gi
+          securityContext:
+            capabilities:
+              add:
+              - SYS_CHROOT
+            runAsGroup: 1000
+            runAsUser: 1000
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /var/lib/wazuh-indexer
+            name: wazuh-indexer
+          - mountPath: /usr/share/wazuh-indexer/config/certs/node-key.pem
+            name: indexer-certs
+            readOnly: true
+            subPath: node-key.pem
+          - mountPath: /usr/share/wazuh-indexer/config/certs/node.pem
+            name: indexer-certs
+            readOnly: true
+            subPath: node.pem
+          - mountPath: /usr/share/wazuh-indexer/config/certs/root-ca.pem
+            name: indexer-certs
+            readOnly: true
+            subPath: root-ca.pem
+          - mountPath: /usr/share/wazuh-indexer/config/certs/admin.pem
+            name: indexer-certs
+            readOnly: true
+            subPath: admin.pem
+          - mountPath: /usr/share/wazuh-indexer/config/certs/admin-key.pem
+            name: indexer-certs
+            readOnly: true
+            subPath: admin-key.pem
+          - mountPath: /usr/share/wazuh-indexer/config/opensearch.yml
+            name: indexer-conf
+            readOnly: true
+            subPath: opensearch.yml
+          - mountPath: /usr/share/wazuh-indexer/config/opensearch-security/internal_users.yml
+            name: indexer-conf
+            readOnly: true
+            subPath: internal_users.yml
+        dnsPolicy: ClusterFirst
+        initContainers:
+        - command:
+          - sh
+          - -c
+          - chown -R 1000:1000 /var/lib/wazuh-indexer
+          image: busybox
+          imagePullPolicy: Always
+          name: volume-mount-hack
+          resources:
+            limits:
+              cpu: 100m
+              memory: 256Mi
+            requests:
+              cpu: 50m
+              memory: 128Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /var/lib/wazuh-indexer
+            name: wazuh-indexer
+        - command:
+          - sysctl
+          - -w
+          - vm.max_map_count=262144
+          image: busybox
+          imagePullPolicy: Always
+          name: increase-the-vm-max-map-count
+          resources: {}
+          securityContext:
+            privileged: true
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext:
+          fsGroup: 1000
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - name: indexer-certs
+          secret:
+            defaultMode: 384
+            secretName: indexer-certs-628m4bd6b2
+        - configMap:
+            defaultMode: 384
+            name: indexer-conf-45bbc2fk49
+          name: indexer-conf
+    updateStrategy:
+      rollingUpdate:
+        partition: 0
+      type: RollingUpdate
+    volumeClaimTemplates:
+    - apiVersion: v1
+      kind: PersistentVolumeClaim
+      metadata:
+        creationTimestamp: null
+        name: wazuh-indexer
+        namespace: indexer-cluster
+      spec:
+        accessModes:
+        - ReadWriteOnce
+        resources:
+          requests:
+            storage: 500Mi
+        storageClassName: wazuh-storage
+        volumeMode: Filesystem
+      status:
+        phase: Pending
+  status:
+    availableReplicas: 1
+    collisionCount: 0
+    currentReplicas: 1
+    currentRevision: wazuh-indexer-9879575c9
+    observedGeneration: 1
+    readyReplicas: 1
+    replicas: 1
+    updateRevision: wazuh-indexer-9879575c9
+    updatedReplicas: 1
+- apiVersion: apps/v1
+  kind: StatefulSet
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"apps/v1","kind":"StatefulSet","metadata":{"annotations":{},"name":"wazuh-manager-master","namespace":"security"},"spec":{"podManagementPolicy":"Parallel","replicas":1,"selector":{"matchLabels":{"app":"wazuh-manager","node-type":"master"}},"serviceName":"wazuh-cluster","template":{"metadata":{"labels":{"app":"wazuh-manager","node-type":"master"},"name":"wazuh-manager-master"},"spec":{"containers":[{"env":[{"name":"INDEXER_URL","value":"https://indexer:9200"},{"name":"INDEXER_USERNAME","valueFrom":{"secretKeyRef":{"key":"username","name":"indexer-cred"}}},{"name":"INDEXER_PASSWORD","valueFrom":{"secretKeyRef":{"key":"password","name":"indexer-cred"}}},{"name":"FILEBEAT_SSL_VERIFICATION_MODE","value":"full"},{"name":"SSL_CERTIFICATE_AUTHORITIES","value":"/etc/ssl/root-ca.pem"},{"name":"SSL_CERTIFICATE","value":"/etc/ssl/filebeat.pem"},{"name":"SSL_KEY","value":"/etc/ssl/filebeat.key"},{"name":"API_USERNAME","valueFrom":{"secretKeyRef":{"key":"username","name":"wazuh-api-cred"}}},{"name":"API_PASSWORD","valueFrom":{"secretKeyRef":{"key":"password","name":"wazuh-api-cred"}}},{"name":"WAZUH_CLUSTER_KEY","valueFrom":{"secretKeyRef":{"key":"key","name":"wazuh-cluster-key"}}}],"image":"wazuh/wazuh-manager:4.14.5","name":"wazuh-manager","ports":[{"containerPort":1515,"name":"registration"},{"containerPort":1516,"name":"cluster"},{"containerPort":55000,"name":"api"}],"resources":{"limits":{"cpu":"400m","memory":"512Mi"}},"securityContext":{"capabilities":{"add":["SYS_CHROOT"]}},"volumeMounts":[{"mountPath":"/wazuh-config-mount/etc/ossec.conf","name":"config","readOnly":true,"subPath":"master.conf"},{"mountPath":"/etc/ssl/root-ca.pem","name":"filebeat-certs","readOnly":true,"subPath":"root-ca.pem"},{"mountPath":"/etc/ssl/filebeat.pem","name":"filebeat-certs","readOnly":true,"subPath":"filebeat.pem"},{"mountPath":"/etc/ssl/filebeat.key","name":"filebeat-certs","readOnly":true,"subPath":"filebeat-key.pem"},{"mountPath":"/wazuh-config-mount/etc/authd.pass","name":"wazuh-authd-pass","readOnly":true,"subPath":"authd.pass"},{"mountPath":"/var/ossec/api/configuration","name":"wazuh-manager-master","subPath":"wazuh/var/ossec/api/configuration"},{"mountPath":"/var/ossec/etc","name":"wazuh-manager-master","subPath":"wazuh/var/ossec/etc"},{"mountPath":"/var/ossec/logs","name":"wazuh-manager-master","subPath":"wazuh/var/ossec/logs"},{"mountPath":"/var/ossec/queue","name":"wazuh-manager-master","subPath":"wazuh/var/ossec/queue"},{"mountPath":"/var/ossec/var/multigroups","name":"wazuh-manager-master","subPath":"wazuh/var/ossec/var/multigroups"},{"mountPath":"/var/ossec/integrations","name":"wazuh-manager-master","subPath":"wazuh/var/ossec/integrations"},{"mountPath":"/var/ossec/active-response/bin","name":"wazuh-manager-master","subPath":"wazuh/var/ossec/active-response/bin"},{"mountPath":"/var/ossec/agentless","name":"wazuh-manager-master","subPath":"wazuh/var/ossec/agentless"},{"mountPath":"/var/ossec/wodles","name":"wazuh-manager-master","subPath":"wazuh/var/ossec/wodles"},{"mountPath":"/etc/filebeat","name":"wazuh-manager-master","subPath":"filebeat/etc/filebeat"},{"mountPath":"/var/lib/filebeat","name":"wazuh-manager-master","subPath":"filebeat/var/lib/filebeat"}]}],"securityContext":{"fsGroup":101},"volumes":[{"configMap":{"name":"wazuh-conf-m5756d8fbh"},"name":"config"},{"name":"filebeat-certs","secret":{"secretName":"indexer-certs-628m4bd6b2"}},{"name":"wazuh-authd-pass","secret":{"secretName":"wazuh-authd-pass"}}]}},"volumeClaimTemplates":[{"metadata":{"name":"wazuh-manager-master","namespace":"security"},"spec":{"accessModes":["ReadWriteOnce"],"resources":{"requests":{"storage":"500Mi"}},"storageClassName":"wazuh-storage"}}]}}
+    creationTimestamp: "2026-05-02T04:43:09Z"
+    generation: 1
+    name: wazuh-manager-master
+    namespace: security
+    resourceVersion: "62949"
+    uid: 8ce2820c-515b-4065-9b06-725f3496076c
+  spec:
+    persistentVolumeClaimRetentionPolicy:
+      whenDeleted: Retain
+      whenScaled: Retain
+    podManagementPolicy: Parallel
+    replicas: 1
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        app: wazuh-manager
+        node-type: master
+    serviceName: wazuh-cluster
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          app: wazuh-manager
+          node-type: master
+        name: wazuh-manager-master
+      spec:
+        containers:
+        - env:
+          - name: INDEXER_URL
+            value: https://indexer:9200
+          - name: INDEXER_USERNAME
+            valueFrom:
+              secretKeyRef:
+                key: username
+                name: indexer-cred
+          - name: INDEXER_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                key: password
+                name: indexer-cred
+          - name: FILEBEAT_SSL_VERIFICATION_MODE
+            value: full
+          - name: SSL_CERTIFICATE_AUTHORITIES
+            value: /etc/ssl/root-ca.pem
+          - name: SSL_CERTIFICATE
+            value: /etc/ssl/filebeat.pem
+          - name: SSL_KEY
+            value: /etc/ssl/filebeat.key
+          - name: API_USERNAME
+            valueFrom:
+              secretKeyRef:
+                key: username
+                name: wazuh-api-cred
+          - name: API_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                key: password
+                name: wazuh-api-cred
+          - name: WAZUH_CLUSTER_KEY
+            valueFrom:
+              secretKeyRef:
+                key: key
+                name: wazuh-cluster-key
+          image: wazuh/wazuh-manager:4.14.5
+          imagePullPolicy: IfNotPresent
+          name: wazuh-manager
+          ports:
+          - containerPort: 1515
+            name: registration
+            protocol: TCP
+          - containerPort: 1516
+            name: cluster
+            protocol: TCP
+          - containerPort: 55000
+            name: api
+            protocol: TCP
+          resources:
+            limits:
+              cpu: 400m
+              memory: 512Mi
+          securityContext:
+            capabilities:
+              add:
+              - SYS_CHROOT
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /wazuh-config-mount/etc/ossec.conf
+            name: config
+            readOnly: true
+            subPath: master.conf
+          - mountPath: /etc/ssl/root-ca.pem
+            name: filebeat-certs
+            readOnly: true
+            subPath: root-ca.pem
+          - mountPath: /etc/ssl/filebeat.pem
+            name: filebeat-certs
+            readOnly: true
+            subPath: filebeat.pem
+          - mountPath: /etc/ssl/filebeat.key
+            name: filebeat-certs
+            readOnly: true
+            subPath: filebeat-key.pem
+          - mountPath: /wazuh-config-mount/etc/authd.pass
+            name: wazuh-authd-pass
+            readOnly: true
+            subPath: authd.pass
+          - mountPath: /var/ossec/api/configuration
+            name: wazuh-manager-master
+            subPath: wazuh/var/ossec/api/configuration
+          - mountPath: /var/ossec/etc
+            name: wazuh-manager-master
+            subPath: wazuh/var/ossec/etc
+          - mountPath: /var/ossec/logs
+            name: wazuh-manager-master
+            subPath: wazuh/var/ossec/logs
+          - mountPath: /var/ossec/queue
+            name: wazuh-manager-master
+            subPath: wazuh/var/ossec/queue
+          - mountPath: /var/ossec/var/multigroups
+            name: wazuh-manager-master
+            subPath: wazuh/var/ossec/var/multigroups
+          - mountPath: /var/ossec/integrations
+            name: wazuh-manager-master
+            subPath: wazuh/var/ossec/integrations
+          - mountPath: /var/ossec/active-response/bin
+            name: wazuh-manager-master
+            subPath: wazuh/var/ossec/active-response/bin
+          - mountPath: /var/ossec/agentless
+            name: wazuh-manager-master
+            subPath: wazuh/var/ossec/agentless
+          - mountPath: /var/ossec/wodles
+            name: wazuh-manager-master
+            subPath: wazuh/var/ossec/wodles
+          - mountPath: /etc/filebeat
+            name: wazuh-manager-master
+            subPath: filebeat/etc/filebeat
+          - mountPath: /var/lib/filebeat
+            name: wazuh-manager-master
+            subPath: filebeat/var/lib/filebeat
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext:
+          fsGroup: 101
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - configMap:
+            defaultMode: 420
+            name: wazuh-conf-m5756d8fbh
+          name: config
+        - name: filebeat-certs
+          secret:
+            defaultMode: 420
+            secretName: indexer-certs-628m4bd6b2
+        - name: wazuh-authd-pass
+          secret:
+            defaultMode: 420
+            secretName: wazuh-authd-pass
+    updateStrategy:
+      rollingUpdate:
+        partition: 0
+      type: RollingUpdate
+    volumeClaimTemplates:
+    - apiVersion: v1
+      kind: PersistentVolumeClaim
+      metadata:
+        creationTimestamp: null
+        name: wazuh-manager-master
+        namespace: security
+      spec:
+        accessModes:
+        - ReadWriteOnce
+        resources:
+          requests:
+            storage: 500Mi
+        storageClassName: wazuh-storage
+        volumeMode: Filesystem
+      status:
+        phase: Pending
+  status:
+    availableReplicas: 0
+    collisionCount: 0
+    currentReplicas: 1
+    currentRevision: wazuh-manager-master-777d76cb9f
+    observedGeneration: 1
+    replicas: 1
+    updateRevision: wazuh-manager-master-777d76cb9f
+    updatedReplicas: 1
+kind: List
+metadata:
+  resourceVersion: ""

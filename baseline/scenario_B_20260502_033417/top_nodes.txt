@@ -1,0 +1,2 @@
+NAME           CPU(cores)   CPU%   MEMORY(bytes)   MEMORY%   
+iiot-lab-k8s   238m         2%     2573Mi          16%       

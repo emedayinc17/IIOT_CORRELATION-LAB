@@ -1,0 +1,16 @@
+attack_uid,attack_id,target_component,target_zabbix_host,real_zabbix_samples_target,real_zabbix_samples_all_hosts,nearest_zabbix_sample_delta_seconds,zabbix_history_status
+D-T0809-1,T0809,mosquitto,mqtt-broker,4,16,1552,OK
+D-T0814-1,T0814,telemetry-api,telemetry-api,4,16,1551,OK
+D-T0860-1,T0860,vulnerable-app,vulnerable-app,4,16,1550,OK
+D-T0809-2,T0809,mosquitto,mqtt-broker,4,16,1540,OK
+D-T0814-2,T0814,telemetry-api,telemetry-api,4,16,1540,OK
+D-T0860-2,T0860,vulnerable-app,vulnerable-app,4,16,1539,OK
+D-T0809-3,T0809,mosquitto,mqtt-broker,4,16,1529,OK
+D-T0814-3,T0814,telemetry-api,telemetry-api,4,16,1528,OK
+D-T0860-3,T0860,vulnerable-app,vulnerable-app,4,16,1528,OK
+D-T0809-4,T0809,mosquitto,mqtt-broker,4,16,1517,OK
+D-T0814-4,T0814,telemetry-api,telemetry-api,4,16,1517,OK
+D-T0860-4,T0860,vulnerable-app,vulnerable-app,4,16,1517,OK
+D-T0809-5,T0809,mosquitto,mqtt-broker,4,16,1506,OK
+D-T0814-5,T0814,telemetry-api,telemetry-api,4,16,1506,OK
+D-T0860-5,T0860,vulnerable-app,vulnerable-app,4,16,1505,OK

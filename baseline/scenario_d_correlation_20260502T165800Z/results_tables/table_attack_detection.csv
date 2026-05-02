@@ -1,0 +1,4 @@
+scenario,attack_id,mitre_ics,technique,executions,wazuh_detected,detection_rate_percent,strong_correlation_count,strong_correlation_percent
+SCENARIO_D,T0809,T0809,Unauthorized Command Message,5,5,100.0,5,100.0
+SCENARIO_D,T0814,T0814,Data Manipulation,5,5,100.0,5,100.0
+SCENARIO_D,T0860,T0860,Denial of Service,5,5,100.0,5,100.0

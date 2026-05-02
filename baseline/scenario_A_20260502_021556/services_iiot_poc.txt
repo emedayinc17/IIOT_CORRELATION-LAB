@@ -1,0 +1,9 @@
+NAME                TYPE           CLUSTER-IP       EXTERNAL-IP   PORT(S)          AGE   SELECTOR
+health-app          ClusterIP      10.152.183.113   <none>        8080/TCP         12m   app=health-app,project=iiot-correlation-lab,stage=foundation
+health-app-lb       LoadBalancer   10.152.183.22    10.10.0.152   8080:31855/TCP   12m   app=health-app,project=iiot-correlation-lab,stage=foundation
+mosquitto           ClusterIP      10.152.183.173   <none>        1883/TCP         12m   app=mosquitto,project=iiot-correlation-lab,stage=foundation
+mosquitto-lb        LoadBalancer   10.152.183.218   10.10.0.151   1883:31070/TCP   12m   app=mosquitto,project=iiot-correlation-lab,stage=foundation
+telemetry-api       ClusterIP      10.152.183.203   <none>        8080/TCP         12m   app=telemetry-api,project=iiot-correlation-lab,stage=foundation
+telemetry-api-lb    LoadBalancer   10.152.183.67    10.10.0.153   8080:30410/TCP   12m   app=telemetry-api,project=iiot-correlation-lab,stage=foundation
+vulnerable-app      ClusterIP      10.152.183.86    <none>        8080/TCP         12m   app=vulnerable-app,project=iiot-correlation-lab,stage=foundation
+vulnerable-app-lb   LoadBalancer   10.152.183.127   10.10.0.154   8080:30326/TCP   12m   app=vulnerable-app,project=iiot-correlation-lab,stage=foundation

@@ -1,0 +1,4 @@
+scenario,attack_id,executions,executions_with_real_zabbix_history,real_zabbix_history_percent,min_nearest_zabbix_sample_delta_s,max_nearest_zabbix_sample_delta_s,avg_nearest_zabbix_sample_delta_s
+SCENARIO_D,T0809,5,5,100.0,1506,1552,1528.8
+SCENARIO_D,T0814,5,5,100.0,1506,1551,1528.4
+SCENARIO_D,T0860,5,5,100.0,1505,1550,1527.8

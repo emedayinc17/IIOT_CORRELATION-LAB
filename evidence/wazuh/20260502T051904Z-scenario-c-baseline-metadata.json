@@ -1,0 +1,10 @@
+{
+  "timestamp_utc": "2026-05-02T05:19:20Z",
+  "scenario": "SCENARIO_C",
+  "scope": "Foundation IIoT + Zabbix + Wazuh",
+  "deployment_model": "Wazuh single-node/all-in-one laboratory deployment on MicroK8s single-node",
+  "methodological_rationale": "Prioritize reproducibility, experimental control, and reduction of non-hypothesis variables",
+  "excluded_scope": ["Kubernetes hardening", "Falco", "CIS benchmark", "runtime security", "HA Wazuh clustering", "Prometheus", "Grafana", "Loki", "Istio"],
+  "dataset": "results/raw/scenario_c/wazuh_security_baseline.csv",
+  "event_source": "Wazuh Manager localfile JSON baseline events from IIoT services"
+}

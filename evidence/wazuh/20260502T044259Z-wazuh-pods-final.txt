@@ -1,0 +1,4 @@
+NAME                               READY   STATUS    RESTARTS   AGE     IP            NODE           NOMINATED NODE   READINESS GATES
+wazuh-dashboard-67b97859c7-j52zx   1/1     Running   0          2m48s   10.1.21.170   iiot-lab-k8s   <none>           <none>
+wazuh-indexer-0                    1/1     Running   0          2m47s   10.1.21.176   iiot-lab-k8s   <none>           <none>
+wazuh-manager-master-0             1/1     Running   0          2m46s   10.1.21.175   iiot-lab-k8s   <none>           <none>

@@ -1,0 +1,3 @@
+zabbix-postgres=postgres:16
+zabbix-server=zabbix/zabbix-server-pgsql:ubuntu-7.0-latest
+zabbix-web=zabbix/zabbix-web-nginx-pgsql:ubuntu-7.0-latest

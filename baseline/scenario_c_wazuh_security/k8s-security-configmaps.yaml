@@ -1,0 +1,534 @@
+apiVersion: v1
+items:
+- apiVersion: v1
+  data:
+    opensearch_dashboards.yml: |2
+
+      server.host: 0.0.0.0
+      server.port: 5601
+      opensearch.hosts: https://indexer:9200
+      opensearch.ssl.verificationMode: none
+      opensearch.requestHeadersWhitelist: [ authorization,securitytenant ]
+      opensearch_security.multitenancy.enabled: false
+      opensearch_security.readonly_mode.roles: ["kibana_read_only"]
+      server.ssl.enabled: true
+      server.ssl.key: "/usr/share/wazuh-dashboard/certs/key.pem"
+      server.ssl.certificate: "/usr/share/wazuh-dashboard/certs/cert.pem"
+      opensearch.ssl.certificateAuthorities: ["/usr/share/wazuh-dashboard/certs/root-ca.pem"]
+      uiSettings.overrides.defaultRoute: /app/wz-home
+      # Session expiration settings
+      opensearch_security.cookie.ttl: 900000
+      opensearch_security.session.ttl: 900000
+      opensearch_security.session.keepalive: true
+  kind: ConfigMap
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"v1","data":{"opensearch_dashboards.yml":"\nserver.host: 0.0.0.0\nserver.port: 5601\nopensearch.hosts: https://indexer:9200\nopensearch.ssl.verificationMode: none\nopensearch.requestHeadersWhitelist: [ authorization,securitytenant ]\nopensearch_security.multitenancy.enabled: false\nopensearch_security.readonly_mode.roles: [\"kibana_read_only\"]\nserver.ssl.enabled: true\nserver.ssl.key: \"/usr/share/wazuh-dashboard/certs/key.pem\"\nserver.ssl.certificate: \"/usr/share/wazuh-dashboard/certs/cert.pem\"\nopensearch.ssl.certificateAuthorities: [\"/usr/share/wazuh-dashboard/certs/root-ca.pem\"]\nuiSettings.overrides.defaultRoute: /app/wz-home\n# Session expiration settings\nopensearch_security.cookie.ttl: 900000\nopensearch_security.session.ttl: 900000\nopensearch_security.session.keepalive: true\n"},"kind":"ConfigMap","metadata":{"annotations":{},"name":"dashboard-conf-8c8984h96h","namespace":"security"}}
+    creationTimestamp: "2026-05-02T04:43:05Z"
+    name: dashboard-conf-8c8984h96h
+    namespace: security
+    resourceVersion: "53474"
+    uid: 281e9d05-8056-4b8f-9be9-6f02fb35bf6c
+- apiVersion: v1
+  data:
+    internal_users.yml: |
+      ---
+      # This is the internal user database
+      # The hash value is a bcrypt hash and can be generated with plugin/tools/hash.sh
+
+      _meta:
+        type: "internalusers"
+        config_version: 2
+
+      # Define your internal users here
+
+      ## Demo users
+
+      admin:
+        hash: "$2y$12$K/SpwjtB.wOHJ/Nc6GVRDuc1h0rM1DfvziFRNPtk27P.c4yDr9njO"
+        reserved: true
+        backend_roles:
+        - "admin"
+        description: "Demo admin user"
+
+      kibanaserver:
+        hash: "$2a$12$4AcgAt3xwOWadA5s5blL6ev39OXDNhmOesEoo33eZtrq2N0YrU3H."
+        reserved: true
+        description: "Demo kibanaserver user"
+
+      kibanaro:
+        hash: "$2a$12$JJSXNfTowz7Uu5ttXfeYpeYE0arACvcwlPBStB1F.MI7f0U9Z4DGC"
+        reserved: false
+        backend_roles:
+        - "kibanauser"
+        - "readall"
+        attributes:
+          attribute1: "value1"
+          attribute2: "value2"
+          attribute3: "value3"
+        description: "Demo kibanaro user"
+
+      logstash:
+        hash: "$2a$12$u1ShR4l4uBS3Uv59Pa2y5.1uQuZBrZtmNfqB3iM/.jL0XoV9sghS2"
+        reserved: false
+        backend_roles:
+        - "logstash"
+        description: "Demo logstash user"
+
+      readall:
+        hash: "$2a$12$ae4ycwzwvLtZxwZ82RmiEunBbIPiAmGZduBAjKN0TXdwQFtCwARz2"
+        reserved: false
+        backend_roles:
+        - "readall"
+        description: "Demo readall user"
+
+      snapshotrestore:
+        hash: "$2y$12$DpwmetHKwgYnorbgdvORCenv4NAK8cPUg8AI6pxLCuWf/ALc0.v7W"
+        reserved: false
+        backend_roles:
+        - "snapshotrestore"
+        description: "Demo snapshotrestore user"
+    opensearch.yml: |-
+      cluster.name: ${CLUSTER_NAME}
+      node.name: ${NODE_NAME}
+      network.host: ${NETWORK_HOST}
+      discovery.seed_hosts: wazuh-indexer-0.wazuh-indexer
+      cluster.initial_master_nodes:
+        - wazuh-indexer-0
+
+      node.max_local_storage_nodes: "3"
+      path.data: /var/lib/wazuh-indexer
+      path.logs: /var/log/wazuh-indexer
+      plugins.security.ssl.http.pemcert_filepath: /usr/share/wazuh-indexer/config/certs/node.pem
+      plugins.security.ssl.http.pemkey_filepath: /usr/share/wazuh-indexer/config/certs/node-key.pem
+      plugins.security.ssl.http.pemtrustedcas_filepath: /usr/share/wazuh-indexer/config/certs/root-ca.pem
+      plugins.security.ssl.transport.pemcert_filepath: /usr/share/wazuh-indexer/config/certs/node.pem
+      plugins.security.ssl.transport.pemkey_filepath: /usr/share/wazuh-indexer/config/certs/node-key.pem
+      plugins.security.ssl.transport.pemtrustedcas_filepath: /usr/share/wazuh-indexer/config/certs/root-ca.pem
+      plugins.security.ssl.http.enabled: true
+      plugins.security.ssl.transport.enforce_hostname_verification: false
+      plugins.security.ssl.transport.resolve_hostname: false
+      plugins.security.authcz.admin_dn:
+        - CN=admin,O=Company,L=California,C=US
+      plugins.security.check_snapshot_restore_write_privileges: true
+      plugins.security.enable_snapshot_restore_privilege: true
+      plugins.security.nodes_dn:
+        - CN=indexer,O=Company,L=California,C=US
+      plugins.security.restapi.roles_enabled:
+      - "all_access"
+      - "security_rest_api_access"
+      plugins.security.allow_default_init_securityindex: true
+      cluster.routing.allocation.disk.threshold_enabled: false
+      compatibility.override_main_response_version: true
+  kind: ConfigMap
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"v1","data":{"internal_users.yml":"---\n# This is the internal user database\n# The hash value is a bcrypt hash and can be generated with plugin/tools/hash.sh\n\n_meta:\n  type: \"internalusers\"\n  config_version: 2\n\n# Define your internal users here\n\n## Demo users\n\nadmin:\n  hash: \"$2y$12$K/SpwjtB.wOHJ/Nc6GVRDuc1h0rM1DfvziFRNPtk27P.c4yDr9njO\"\n  reserved: true\n  backend_roles:\n  - \"admin\"\n  description: \"Demo admin user\"\n\nkibanaserver:\n  hash: \"$2a$12$4AcgAt3xwOWadA5s5blL6ev39OXDNhmOesEoo33eZtrq2N0YrU3H.\"\n  reserved: true\n  description: \"Demo kibanaserver user\"\n\nkibanaro:\n  hash: \"$2a$12$JJSXNfTowz7Uu5ttXfeYpeYE0arACvcwlPBStB1F.MI7f0U9Z4DGC\"\n  reserved: false\n  backend_roles:\n  - \"kibanauser\"\n  - \"readall\"\n  attributes:\n    attribute1: \"value1\"\n    attribute2: \"value2\"\n    attribute3: \"value3\"\n  description: \"Demo kibanaro user\"\n\nlogstash:\n  hash: \"$2a$12$u1ShR4l4uBS3Uv59Pa2y5.1uQuZBrZtmNfqB3iM/.jL0XoV9sghS2\"\n  reserved: false\n  backend_roles:\n  - \"logstash\"\n  description: \"Demo logstash user\"\n\nreadall:\n  hash: \"$2a$12$ae4ycwzwvLtZxwZ82RmiEunBbIPiAmGZduBAjKN0TXdwQFtCwARz2\"\n  reserved: false\n  backend_roles:\n  - \"readall\"\n  description: \"Demo readall user\"\n\nsnapshotrestore:\n  hash: \"$2y$12$DpwmetHKwgYnorbgdvORCenv4NAK8cPUg8AI6pxLCuWf/ALc0.v7W\"\n  reserved: false\n  backend_roles:\n  - \"snapshotrestore\"\n  description: \"Demo snapshotrestore user\"\n","opensearch.yml":"cluster.name: ${CLUSTER_NAME}\nnode.name: ${NODE_NAME}\nnetwork.host: ${NETWORK_HOST}\ndiscovery.seed_hosts: wazuh-indexer-0.wazuh-indexer\ncluster.initial_master_nodes:\n  - wazuh-indexer-0\n\nnode.max_local_storage_nodes: \"3\"\npath.data: /var/lib/wazuh-indexer\npath.logs: /var/log/wazuh-indexer\nplugins.security.ssl.http.pemcert_filepath: /usr/share/wazuh-indexer/config/certs/node.pem\nplugins.security.ssl.http.pemkey_filepath: /usr/share/wazuh-indexer/config/certs/node-key.pem\nplugins.security.ssl.http.pemtrustedcas_filepath: /usr/share/wazuh-indexer/config/certs/root-ca.pem\nplugins.security.ssl.transport.pemcert_filepath: /usr/share/wazuh-indexer/config/certs/node.pem\nplugins.security.ssl.transport.pemkey_filepath: /usr/share/wazuh-indexer/config/certs/node-key.pem\nplugins.security.ssl.transport.pemtrustedcas_filepath: /usr/share/wazuh-indexer/config/certs/root-ca.pem\nplugins.security.ssl.http.enabled: true\nplugins.security.ssl.transport.enforce_hostname_verification: false\nplugins.security.ssl.transport.resolve_hostname: false\nplugins.security.authcz.admin_dn:\n  - CN=admin,O=Company,L=California,C=US\nplugins.security.check_snapshot_restore_write_privileges: true\nplugins.security.enable_snapshot_restore_privilege: true\nplugins.security.nodes_dn:\n  - CN=indexer,O=Company,L=California,C=US\nplugins.security.restapi.roles_enabled:\n- \"all_access\"\n- \"security_rest_api_access\"\nplugins.security.allow_default_init_securityindex: true\ncluster.routing.allocation.disk.threshold_enabled: false\ncompatibility.override_main_response_version: true"},"kind":"ConfigMap","metadata":{"annotations":{},"name":"indexer-conf-45bbc2fk49","namespace":"security"}}
+    creationTimestamp: "2026-05-02T04:43:05Z"
+    name: indexer-conf-45bbc2fk49
+    namespace: security
+    resourceVersion: "53475"
+    uid: d3fc58f1-3aa0-4c55-93a7-608f7f9d5e3d
+- apiVersion: v1
+  data:
+    ca.crt: |
+      -----BEGIN CERTIFICATE-----
+      MIIDDzCCAfegAwIBAgIUEyXD8CvBnOGeZjKW9pXzIRlgWO0wDQYJKoZIhvcNAQEL
+      BQAwFzEVMBMGA1UEAwwMMTAuMTUyLjE4My4xMB4XDTI2MDUwMTIyMjkwNVoXDTM2
+      MDQyODIyMjkwNVowFzEVMBMGA1UEAwwMMTAuMTUyLjE4My4xMIIBIjANBgkqhkiG
+      9w0BAQEFAAOCAQ8AMIIBCgKCAQEAqbqvbYSkTqmKIfKRyk05HQUgmfyUCC9aPHgh
+      SKeEsJ7yZvPcL7PB/GsGfLFcrDQCrjYvKq5grqAkfsnMCNUoqkp9Tq9Oey5lEVkN
+      KIGyYQ3YoUTIA7dQnVCnApLayCy4xJjOX20YqJqDWMd4qhYK6+OD8RKmckPV0kYg
+      cCpNzrtLMYL4PNAqya69A2CmQPAE+IlJvce3ugcOqwJ69sOllA7Hy3dJm7WnsTVL
+      F8fbSfqbaEj1hmXxhAI62BIu+OJvll2nbuwj3f3vNkiUetBCpsV5z8aYb4VYpYI4
+      h9nqnRNM50tUPvNeIWhMfhS0km8MQH4XSwG7+8MvRozyvsPFhwIDAQABo1MwUTAd
+      BgNVHQ4EFgQUBWk0gYklIN4RReZbnTeaRtGiLKswHwYDVR0jBBgwFoAUBWk0gYkl
+      IN4RReZbnTeaRtGiLKswDwYDVR0TAQH/BAUwAwEB/zANBgkqhkiG9w0BAQsFAAOC
+      AQEASRYUzO3zjkvwW+RUznmfltIzxUi722oaK/DrZsQo4giOkeetqt7ihm8yRvSa
+      1bDmzOBSlRiN5MDWIB6Cni0Xn3gNB1j2HzEcwpq56p+AQb2DylukMSczlBICBtbE
+      tI2LAVSZBoGLua7A4JnnLD38CcoNPXn5bGKZxvfM/mez5XUw/cwpYz7r7AFKV2M/
+      b9PCjOapLmhlK3Jy7d7qKxDDPGLGIdER1Q0kRDt/bldxh6Xj/ujARzDCz5l9p1Tg
+      NpxvPAjY+89jGefQU8+g4iFQxkkIU46fWaZqgCw8JStgAWrJ5u4e/7+y27Slezjo
+      c2dqMwlPo/8jtKsV6Qeu1EQuOA==
+      -----END CERTIFICATE-----
+  kind: ConfigMap
+  metadata:
+    annotations:
+      kubernetes.io/description: Contains a CA bundle that can be used to verify the
+        kube-apiserver when using internal endpoints such as the internal service
+        IP or kubernetes.default.svc. No other usage is guaranteed across distributions
+        of Kubernetes clusters.
+    creationTimestamp: "2026-05-02T04:43:01Z"
+    name: kube-root-ca.crt
+    namespace: security
+    resourceVersion: "53440"
+    uid: e711a923-a6f3-4678-86a6-c007a74e2b98
+- apiVersion: v1
+  data:
+    schema.json: |
+      {
+        "timestamp_utc": "ISO-8601 UTC timestamp",
+        "scenario": "SCENARIO_C",
+        "source_namespace": "iiot-poc",
+        "component": "health-app|telemetry-api|vulnerable-app|mosquitto|iiot-sensor",
+        "event_type": "baseline_security_probe|iiot_security_event",
+        "iiot_lab": {
+          "scenario": "SCENARIO_C",
+          "attack_id": "NONE|T0809|T0814|T0860",
+          "asset": "IIoT component name",
+          "zone": "iiot-poc",
+          "iteration": "integer"
+        }
+      }
+  kind: ConfigMap
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"v1","data":{"schema.json":"{\n  \"timestamp_utc\": \"ISO-8601 UTC timestamp\",\n  \"scenario\": \"SCENARIO_C\",\n  \"source_namespace\": \"iiot-poc\",\n  \"component\": \"health-app|telemetry-api|vulnerable-app|mosquitto|iiot-sensor\",\n  \"event_type\": \"baseline_security_probe|iiot_security_event\",\n  \"iiot_lab\": {\n    \"scenario\": \"SCENARIO_C\",\n    \"attack_id\": \"NONE|T0809|T0814|T0860\",\n    \"asset\": \"IIoT component name\",\n    \"zone\": \"iiot-poc\",\n    \"iteration\": \"integer\"\n  }\n}\n"},"kind":"ConfigMap","metadata":{"annotations":{},"labels":{"app.kubernetes.io/component":"security-event-schema","app.kubernetes.io/part-of":"iiot-correlation-lab","iiot-lab/scenario":"C"},"name":"scenario-c-security-event-schema","namespace":"security"}}
+    creationTimestamp: "2026-05-02T04:43:01Z"
+    labels:
+      app.kubernetes.io/component: security-event-schema
+      app.kubernetes.io/part-of: iiot-correlation-lab
+      iiot-lab/scenario: C
+    name: scenario-c-security-event-schema
+    namespace: security
+    resourceVersion: "53441"
+    uid: bba7e4e0-e986-4661-818c-753e8f86fe4d
+- apiVersion: v1
+  data:
+    master.conf: "<!--\n  Wazuh - Manager - Default configuration for ubuntu 16.04\n
+      \ More info at: https://documentation.wazuh.com\n  Mailing list: https://groups.google.com/forum/#!forum/wazuh\n\n
+      \ Customization: TCP on port 1514\n  Customization: Cluster mode enabled, master
+      node\n-->\n<ossec_config>\n  <global>\n    <jsonout_output>yes</jsonout_output>\n
+      \   <alerts_log>yes</alerts_log>\n    <logall>no</logall>\n    <logall_json>no</logall_json>\n
+      \   <email_notification>no</email_notification>\n    <smtp_server>smtp.example.wazuh.com</smtp_server>\n
+      \   <email_from>ossecm@example.wazuh.com</email_from>\n    <email_to>recipient@example.wazuh.com</email_to>\n
+      \   <email_maxperhour>12</email_maxperhour>\n    <email_log_source>alerts.log</email_log_source>\n
+      \   <queue_size>131072</queue_size>\n    <agents_disconnection_time>20s</agents_disconnection_time>\n
+      \   <agents_disconnection_alert_time>100s</agents_disconnection_alert_time>\n
+      \ </global>\n\n  <alerts>\n    <log_alert_level>3</log_alert_level>\n    <email_alert_level>12</email_alert_level>\n
+      \ </alerts>\n\n  <!-- Choose between \"plain\", \"json\", or \"plain,json\"
+      for the format of internal logs -->\n  <logging>\n    <log_format>plain</log_format>\n
+      \ </logging>\n\n  <remote>\n    <connection>secure</connection>\n    <port>1514</port>\n
+      \   <protocol>tcp</protocol>\n    <queue_size>131072</queue_size>\n  </remote>\n\n
+      \ <!-- Policy monitoring -->\n  <rootcheck>\n    <disabled>no</disabled>\n    <check_unixaudit>yes</check_unixaudit>\n
+      \   <check_files>yes</check_files>\n    <check_trojans>yes</check_trojans>\n
+      \   <check_dev>yes</check_dev>\n    <check_sys>yes</check_sys>\n    <check_pids>yes</check_pids>\n
+      \   <check_ports>yes</check_ports>\n    <check_if>yes</check_if>\n\n    <!--
+      Frequency that rootcheck is executed - every 12 hours -->\n    <frequency>43200</frequency>\n\n
+      \   <rootkit_files>/var/ossec/etc/rootcheck/rootkit_files.txt</rootkit_files>\n
+      \   <rootkit_trojans>/var/ossec/etc/rootcheck/rootkit_trojans.txt</rootkit_trojans>\n\n
+      \   <system_audit>/var/ossec/etc/rootcheck/system_audit_rcl.txt</system_audit>\n
+      \   <system_audit>/var/ossec/etc/rootcheck/system_audit_ssh.txt</system_audit>\n\n
+      \   <skip_nfs>yes</skip_nfs>\n  </rootcheck>\n\n  <wodle name=\"open-scap\">\n
+      \   <disabled>yes</disabled>\n    <timeout>1800</timeout>\n    <interval>1d</interval>\n
+      \   <scan-on-start>yes</scan-on-start>\n  </wodle>\n\n  <wodle name=\"cis-cat\">\n
+      \   <disabled>yes</disabled>\n    <timeout>1800</timeout>\n    <interval>1d</interval>\n
+      \   <scan-on-start>yes</scan-on-start>\n\n    <java_path>wodles/java</java_path>\n
+      \   <ciscat_path>wodles/ciscat</ciscat_path>\n  </wodle>\n\n  <!-- Osquery integration
+      -->\n  <wodle name=\"osquery\">\n    <disabled>yes</disabled>\n    <run_daemon>yes</run_daemon>\n
+      \   <log_path>/var/log/osquery/osqueryd.results.log</log_path>\n    <config_path>/etc/osquery/osquery.conf</config_path>\n
+      \   <add_labels>yes</add_labels>\n  </wodle>\n\n  <!-- System inventory -->\n
+      \ <wodle name=\"syscollector\">\n    <disabled>no</disabled>\n    <interval>1h</interval>\n
+      \   <scan_on_start>yes</scan_on_start>\n    <hardware>yes</hardware>\n    <os>yes</os>\n
+      \   <network>yes</network>\n    <packages>yes</packages>\n    <ports all=\"yes\">yes</ports>\n
+      \   <processes>yes</processes>\n  </wodle>\n\n  <vulnerability-detection>\n
+      \   <enabled>yes</enabled>\n    <index-status>yes</index-status>\n    <feed-update-interval>60m</feed-update-interval>\n
+      \ </vulnerability-detection>\n\n  <indexer>\n    <enabled>yes</enabled>\n    <hosts>\n
+      \     <host>https://indexer:9200</host>\n    </hosts>\n    <ssl>\n      <certificate_authorities>\n
+      \       <ca>/etc/ssl/root-ca.pem</ca>\n      </certificate_authorities>\n      <certificate>/etc/ssl/filebeat.pem</certificate>\n
+      \     <key>/etc/ssl/filebeat.key</key>\n    </ssl>\n  </indexer>\n\n  <!-- File
+      integrity monitoring -->\n  <syscheck>\n    <disabled>no</disabled>\n\n    <!--
+      Frequency that syscheck is executed default every 12 hours -->\n    <frequency>43200</frequency>\n\n
+      \   <scan_on_start>yes</scan_on_start>\n\n    <!-- Generate alert when new file
+      detected -->\n    <alert_new_files>yes</alert_new_files>\n\n    <!-- Don't ignore
+      files that change more than 'frequency' times -->\n    <auto_ignore frequency=\"10\"
+      timeframe=\"3600\">no</auto_ignore>\n\n    <!-- Directories to check  (perform
+      all possible verifications) -->\n    <directories check_all=\"yes\">/etc,/usr/bin,/usr/sbin</directories>\n
+      \   <directories check_all=\"yes\">/bin,/sbin,/boot</directories>\n\n    <!--
+      Files/directories to ignore -->\n    <ignore>/etc/mtab</ignore>\n    <ignore>/etc/hosts.deny</ignore>\n
+      \   <ignore>/etc/mail/statistics</ignore>\n    <ignore>/etc/random-seed</ignore>\n
+      \   <ignore>/etc/random.seed</ignore>\n    <ignore>/etc/adjtime</ignore>\n    <ignore>/etc/httpd/logs</ignore>\n
+      \   <ignore>/etc/utmpx</ignore>\n    <ignore>/etc/wtmpx</ignore>\n    <ignore>/etc/cups/certs</ignore>\n
+      \   <ignore>/etc/dumpdates</ignore>\n    <ignore>/etc/svc/volatile</ignore>\n
+      \   <ignore>/sys/kernel/security</ignore>\n    <ignore>/sys/kernel/debug</ignore>\n\n
+      \   <!-- Check the file, but never compute the diff -->\n    <nodiff>/etc/ssl/private.key</nodiff>\n\n
+      \   <skip_nfs>yes</skip_nfs>\n\n    <!-- Remove not monitored files -->\n    <remove_old_diff>yes</remove_old_diff>\n\n
+      \   <!-- Allow the system to restart Auditd after installing the plugin -->\n
+      \   <restart_audit>yes</restart_audit>\n  </syscheck>\n\n  <!-- Active response
+      -->\n  <global>\n    <white_list>127.0.0.1</white_list>\n    <white_list>^localhost.localdomain$</white_list>\n
+      \   <white_list>10.66.0.2</white_list>\n  </global>\n\n  <command>\n    <name>disable-account</name>\n
+      \   <executable>disable-account.sh</executable>\n    <expect>user</expect>\n
+      \   <timeout_allowed>yes</timeout_allowed>\n  </command>\n\n  <command>\n    <name>restart-ossec</name>\n
+      \   <executable>restart-ossec.sh</executable>\n    <expect></expect>\n  </command>\n\n
+      \ <command>\n    <name>firewall-drop</name>\n    <executable>firewall-drop</executable>\n
+      \   <timeout_allowed>yes</timeout_allowed>\n  </command>\n\n  <command>\n    <name>host-deny</name>\n
+      \   <executable>host-deny.sh</executable>\n    <expect>srcip</expect>\n    <timeout_allowed>yes</timeout_allowed>\n
+      \ </command>\n\n  <command>\n    <name>route-null</name>\n    <executable>route-null.sh</executable>\n
+      \   <expect>srcip</expect>\n    <timeout_allowed>yes</timeout_allowed>\n  </command>\n\n
+      \ <command>\n    <name>win_route-null</name>\n    <executable>route-null.cmd</executable>\n
+      \   <expect>srcip</expect>\n    <timeout_allowed>yes</timeout_allowed>\n  </command>\n\n
+      \ <command>\n    <name>win_route-null-2012</name>\n    <executable>route-null-2012.cmd</executable>\n
+      \   <expect>srcip</expect>\n    <timeout_allowed>yes</timeout_allowed>\n  </command>\n\n
+      \ <command>\n    <name>netsh</name>\n    <executable>netsh.cmd</executable>\n
+      \   <expect>srcip</expect>\n    <timeout_allowed>yes</timeout_allowed>\n  </command>\n\n
+      \ <command>\n    <name>netsh-win-2016</name>\n    <executable>netsh-win-2016.cmd</executable>\n
+      \   <expect>srcip</expect>\n    <timeout_allowed>yes</timeout_allowed>\n  </command>\n\n
+      \ <!--\n  <active-response>\n    active-response options here\n  </active-response>\n
+      \ -->\n\n  <!-- Log analysis -->\n  <localfile>\n    <log_format>command</log_format>\n
+      \   <command>df -P</command>\n    <frequency>360</frequency>\n  </localfile>\n\n
+      \ <localfile>\n    <log_format>full_command</log_format>\n    <command>netstat
+      -tulpn | sed 's/\\([[:alnum:]]\\+\\)\\ \\+[[:digit:]]\\+\\ \\+[[:digit:]]\\+\\
+      \\+\\(.*\\):\\([[:digit:]]*\\)\\ \\+\\([0-9\\.\\:\\*]\\+\\).\\+\\ \\([[:digit:]]*\\/[[:alnum:]\\-]*\\).*/\\1
+      \\2 == \\3 == \\4 \\5/' | sort -k 4 -g | sed 's/ == \\(.*\\) ==/:\\1/' | sed
+      1,2d</command>\n    <alias>netstat listening ports</alias>\n    <frequency>360</frequency>\n
+      \ </localfile>\n\n  <localfile>\n    <log_format>full_command</log_format>\n
+      \   <command>last -n 20</command>\n    <frequency>360</frequency>\n  </localfile>\n\n
+      \ <ruleset>\n    <!-- Default ruleset -->\n    <decoder_dir>ruleset/decoders</decoder_dir>\n
+      \   <rule_dir>ruleset/rules</rule_dir>\n    <rule_exclude>0215-policy_rules.xml</rule_exclude>\n
+      \   <list>etc/lists/audit-keys</list>\n    <list>etc/lists/amazon/aws-sources</list>\n
+      \   <list>etc/lists/amazon/aws-eventnames</list>\n    <list>etc/lists/malicious-ioc/malicious-ip</list>\n
+      \   <list>etc/lists/malicious-ioc/malicious-domains</list>\n    <list>etc/lists/malicious-ioc/malware-hashes</list>\n\n
+      \   <!-- User-defined ruleset -->\n    <decoder_dir>etc/decoders</decoder_dir>\n
+      \   <rule_dir>etc/rules</rule_dir>\n  </ruleset>\n\n  <rule_test>\n\t    <enabled>yes</enabled>\n\t
+      \   <threads>1</threads>\n\t    <max_sessions>64</max_sessions>\n\t    <session_timeout>15m</session_timeout>\n
+      \ </rule_test>\n\n  <!-- Configuration for ossec-authd\n    To enable this service,
+      run:\n    wazuh-control enable auth\n  -->\n  <auth>\n    <disabled>no</disabled>\n
+      \   <port>1515</port>\n    <use_source_ip>no</use_source_ip>\n    <force>\n
+      \     <enabled>yes</enabled>\n      <key_mismatch>yes</key_mismatch>\n      <disconnected_time
+      enabled=\"yes\">1h</disconnected_time>\n      <after_registration_time>1h</after_registration_time>\n
+      \   </force>\n    <purge>no</purge>\n    <use_password>yes</use_password>\n
+      \   <ciphers>HIGH:!ADH:!EXP:!MD5:!RC4:!3DES:!CAMELLIA:@STRENGTH</ciphers>\n
+      \   <!-- <ssl_agent_ca></ssl_agent_ca> -->\n    <ssl_verify_host>no</ssl_verify_host>\n
+      \   <ssl_manager_cert>/var/ossec/etc/sslmanager.cert</ssl_manager_cert>\n    <ssl_manager_key>/var/ossec/etc/sslmanager.key</ssl_manager_key>\n
+      \   <ssl_auto_negotiate>no</ssl_auto_negotiate>\n  </auth>\n\n  <cluster>\n
+      \   <name>wazuh</name>\n    <node_name>wazuh-manager-master</node_name>\n    <node_type>master</node_type>\n
+      \   <key>to_be_replaced_by_cluster_key</key>\n    <port>1516</port>\n    <bind_addr>0.0.0.0</bind_addr>\n
+      \   <nodes>\n        <node>wazuh-manager-master-0.wazuh-cluster.wazuh</node>\n
+      \   </nodes>\n    <hidden>no</hidden>\n    <disabled>no</disabled>\n  </cluster>\n</ossec_config>\n\n<ossec_config>\n
+      \ <localfile>\n    <log_format>syslog</log_format>\n    <location>/var/ossec/logs/active-responses.log</location>\n
+      \ </localfile>\n\n</ossec_config>\n"
+    worker.conf: "<!--\n  Wazuh - Manager - Default configuration for ubuntu 16.04\n
+      \ More info at: https://documentation.wazuh.com\n  Mailing list: https://groups.google.com/forum/#!forum/wazuh\n\n
+      \ Customization: TCP on port 1514\n  Customization: Cluster mode enabled, worker
+      node\n-->\n<ossec_config>\n  <global>\n    <jsonout_output>yes</jsonout_output>\n
+      \   <alerts_log>yes</alerts_log>\n    <logall>no</logall>\n    <logall_json>no</logall_json>\n
+      \   <email_notification>no</email_notification>\n    <smtp_server>smtp.example.wazuh.com</smtp_server>\n
+      \   <email_from>ossecm@example.wazuh.com</email_from>\n    <email_to>recipient@example.wazuh.com</email_to>\n
+      \   <email_maxperhour>12</email_maxperhour>\n    <email_log_source>alerts.log</email_log_source>\n
+      \   <queue_size>131072</queue_size>\n    <agents_disconnection_time>20s</agents_disconnection_time>\n
+      \   <agents_disconnection_alert_time>100s</agents_disconnection_alert_time>\n
+      \ </global>\n\n  <alerts>\n    <log_alert_level>3</log_alert_level>\n    <email_alert_level>12</email_alert_level>\n
+      \ </alerts>\n\n  <!-- Choose between \"plain\", \"json\", or \"plain,json\"
+      for the format of internal logs -->\n  <logging>\n    <log_format>plain</log_format>\n
+      \ </logging>\n\n  <remote>\n    <connection>secure</connection>\n    <port>1514</port>\n
+      \   <protocol>tcp</protocol>\n    <queue_size>131072</queue_size>\n  </remote>\n\n
+      \ <!-- Policy monitoring -->\n  <rootcheck>\n    <disabled>no</disabled>\n    <check_unixaudit>yes</check_unixaudit>\n
+      \   <check_files>yes</check_files>\n    <check_trojans>yes</check_trojans>\n
+      \   <check_dev>yes</check_dev>\n    <check_sys>yes</check_sys>\n    <check_pids>yes</check_pids>\n
+      \   <check_ports>yes</check_ports>\n    <check_if>yes</check_if>\n\n    <!--
+      Frequency that rootcheck is executed - every 12 hours -->\n    <frequency>43200</frequency>\n\n
+      \   <rootkit_files>/var/ossec/etc/rootcheck/rootkit_files.txt</rootkit_files>\n
+      \   <rootkit_trojans>/var/ossec/etc/rootcheck/rootkit_trojans.txt</rootkit_trojans>\n\n
+      \   <system_audit>/var/ossec/etc/rootcheck/system_audit_rcl.txt</system_audit>\n
+      \   <system_audit>/var/ossec/etc/rootcheck/system_audit_ssh.txt</system_audit>\n\n
+      \   <skip_nfs>yes</skip_nfs>\n  </rootcheck>\n\n  <wodle name=\"open-scap\">\n
+      \   <disabled>yes</disabled>\n    <timeout>1800</timeout>\n    <interval>1d</interval>\n
+      \   <scan-on-start>yes</scan-on-start>\n  </wodle>\n\n  <wodle name=\"cis-cat\">\n
+      \   <disabled>yes</disabled>\n    <timeout>1800</timeout>\n    <interval>1d</interval>\n
+      \   <scan-on-start>yes</scan-on-start>\n\n    <java_path>wodles/java</java_path>\n
+      \   <ciscat_path>wodles/ciscat</ciscat_path>\n  </wodle>\n\n  <!-- Osquery integration
+      -->\n  <wodle name=\"osquery\">\n    <disabled>yes</disabled>\n    <run_daemon>yes</run_daemon>\n
+      \   <log_path>/var/log/osquery/osqueryd.results.log</log_path>\n    <config_path>/etc/osquery/osquery.conf</config_path>\n
+      \   <add_labels>yes</add_labels>\n  </wodle>\n\n  <!-- System inventory -->\n
+      \ <wodle name=\"syscollector\">\n    <disabled>no</disabled>\n    <interval>1h</interval>\n
+      \   <scan_on_start>yes</scan_on_start>\n    <hardware>yes</hardware>\n    <os>yes</os>\n
+      \   <network>yes</network>\n    <packages>yes</packages>\n    <ports all=\"yes\">yes</ports>\n
+      \   <processes>yes</processes>\n  </wodle>\n\n  <vulnerability-detection>\n
+      \   <enabled>yes</enabled>\n    <index-status>yes</index-status>\n    <feed-update-interval>60m</feed-update-interval>\n
+      \ </vulnerability-detection>\n\n  <indexer>\n    <enabled>yes</enabled>\n    <hosts>\n
+      \     <host>https://indexer:9200</host>\n    </hosts>\n    <ssl>\n      <certificate_authorities>\n
+      \       <ca>/etc/ssl/root-ca.pem</ca>\n      </certificate_authorities>\n      <certificate>/etc/ssl/filebeat.pem</certificate>\n
+      \     <key>/etc/ssl/filebeat.key</key>\n    </ssl>\n  </indexer>\n\n  <!-- File
+      integrity monitoring -->\n  <syscheck>\n    <disabled>no</disabled>\n\n    <!--
+      Frequency that syscheck is executed default every 12 hours -->\n    <frequency>43200</frequency>\n\n
+      \   <scan_on_start>yes</scan_on_start>\n\n    <!-- Generate alert when new file
+      detected -->\n    <alert_new_files>yes</alert_new_files>\n\n    <!-- Don't ignore
+      files that change more than 'frequency' times -->\n    <auto_ignore frequency=\"10\"
+      timeframe=\"3600\">no</auto_ignore>\n\n    <!-- Directories to check  (perform
+      all possible verifications) -->\n    <directories check_all=\"yes\">/etc,/usr/bin,/usr/sbin</directories>\n
+      \   <directories check_all=\"yes\">/bin,/sbin,/boot</directories>\n\n    <!--
+      Files/directories to ignore -->\n    <ignore>/etc/mtab</ignore>\n    <ignore>/etc/hosts.deny</ignore>\n
+      \   <ignore>/etc/mail/statistics</ignore>\n    <ignore>/etc/random-seed</ignore>\n
+      \   <ignore>/etc/random.seed</ignore>\n    <ignore>/etc/adjtime</ignore>\n    <ignore>/etc/httpd/logs</ignore>\n
+      \   <ignore>/etc/utmpx</ignore>\n    <ignore>/etc/wtmpx</ignore>\n    <ignore>/etc/cups/certs</ignore>\n
+      \   <ignore>/etc/dumpdates</ignore>\n    <ignore>/etc/svc/volatile</ignore>\n
+      \   <ignore>/sys/kernel/security</ignore>\n    <ignore>/sys/kernel/debug</ignore>\n\n
+      \   <!-- Check the file, but never compute the diff -->\n    <nodiff>/etc/ssl/private.key</nodiff>\n\n
+      \   <skip_nfs>yes</skip_nfs>\n\n    <!-- Remove not monitored files -->\n    <remove_old_diff>yes</remove_old_diff>\n\n
+      \   <!-- Allow the system to restart Auditd after installing the plugin -->\n
+      \   <restart_audit>yes</restart_audit>\n  </syscheck>\n\n  <!-- Active response
+      -->\n  <global>\n    <white_list>127.0.0.1</white_list>\n    <white_list>^localhost.localdomain$</white_list>\n
+      \   <white_list>10.66.0.2</white_list>\n  </global>\n\n  <command>\n    <name>disable-account</name>\n
+      \   <executable>disable-account.sh</executable>\n    <expect>user</expect>\n
+      \   <timeout_allowed>yes</timeout_allowed>\n  </command>\n\n  <command>\n    <name>restart-ossec</name>\n
+      \   <executable>restart-ossec.sh</executable>\n    <expect></expect>\n  </command>\n\n
+      \ <command>\n    <name>firewall-drop</name>\n    <executable>firewall-drop</executable>\n
+      \   <timeout_allowed>yes</timeout_allowed>\n  </command>\n\n  <command>\n    <name>host-deny</name>\n
+      \   <executable>host-deny.sh</executable>\n    <expect>srcip</expect>\n    <timeout_allowed>yes</timeout_allowed>\n
+      \ </command>\n\n  <command>\n    <name>route-null</name>\n    <executable>route-null.sh</executable>\n
+      \   <expect>srcip</expect>\n    <timeout_allowed>yes</timeout_allowed>\n  </command>\n\n
+      \ <command>\n    <name>win_route-null</name>\n    <executable>route-null.cmd</executable>\n
+      \   <expect>srcip</expect>\n    <timeout_allowed>yes</timeout_allowed>\n  </command>\n\n
+      \ <command>\n    <name>win_route-null-2012</name>\n    <executable>route-null-2012.cmd</executable>\n
+      \   <expect>srcip</expect>\n    <timeout_allowed>yes</timeout_allowed>\n  </command>\n\n
+      \ <command>\n    <name>netsh</name>\n    <executable>netsh.cmd</executable>\n
+      \   <expect>srcip</expect>\n    <timeout_allowed>yes</timeout_allowed>\n  </command>\n\n
+      \ <command>\n    <name>netsh-win-2016</name>\n    <executable>netsh-win-2016.cmd</executable>\n
+      \   <expect>srcip</expect>\n    <timeout_allowed>yes</timeout_allowed>\n  </command>\n\n
+      \ <!--\n  <active-response>\n    active-response options here\n  </active-response>\n
+      \ -->\n\n  <!-- Log analysis -->\n  <localfile>\n    <log_format>command</log_format>\n
+      \   <command>df -P</command>\n    <frequency>360</frequency>\n  </localfile>\n\n
+      \ <localfile>\n    <log_format>full_command</log_format>\n    <command>netstat
+      -tulpn | sed 's/\\([[:alnum:]]\\+\\)\\ \\+[[:digit:]]\\+\\ \\+[[:digit:]]\\+\\
+      \\+\\(.*\\):\\([[:digit:]]*\\)\\ \\+\\([0-9\\.\\:\\*]\\+\\).\\+\\ \\([[:digit:]]*\\/[[:alnum:]\\-]*\\).*/\\1
+      \\2 == \\3 == \\4 \\5/' | sort -k 4 -g | sed 's/ == \\(.*\\) ==/:\\1/' | sed
+      1,2d</command>\n    <alias>netstat listening ports</alias>\n    <frequency>360</frequency>\n
+      \ </localfile>\n\n  <localfile>\n    <log_format>full_command</log_format>\n
+      \   <command>last -n 20</command>\n    <frequency>360</frequency>\n  </localfile>\n\n
+      \ <ruleset>\n    <!-- Default ruleset -->\n    <decoder_dir>ruleset/decoders</decoder_dir>\n
+      \   <rule_dir>ruleset/rules</rule_dir>\n    <rule_exclude>0215-policy_rules.xml</rule_exclude>\n
+      \   <list>etc/lists/audit-keys</list>\n    <list>etc/lists/amazon/aws-sources</list>\n
+      \   <list>etc/lists/amazon/aws-eventnames</list>\n    <list>etc/lists/malicious-ioc/malicious-ip</list>\n
+      \   <list>etc/lists/malicious-ioc/malicious-domains</list>\n    <list>etc/lists/malicious-ioc/malware-hashes</list>\n\n
+      \   <!-- User-defined ruleset -->\n    <decoder_dir>etc/decoders</decoder_dir>\n
+      \   <rule_dir>etc/rules</rule_dir>\n  </ruleset>\n\n  <rule_test>\n\t    <enabled>yes</enabled>\n\t
+      \   <threads>1</threads>\n\t    <max_sessions>64</max_sessions>\n\t    <session_timeout>15m</session_timeout>\n
+      \ </rule_test>\n\n  <!-- Configuration for ossec-authd\n    To enable this service,
+      run:\n    wazuh-control enable auth\n  -->\n  <auth>\n    <disabled>no</disabled>\n
+      \   <port>1515</port>\n    <use_source_ip>no</use_source_ip>\n    <force>\n
+      \     <enabled>yes</enabled>\n      <key_mismatch>yes</key_mismatch>\n      <disconnected_time
+      enabled=\"yes\">1h</disconnected_time>\n      <after_registration_time>1h</after_registration_time>\n
+      \   </force>\n    <purge>no</purge>\n    <use_password>yes</use_password>\n
+      \   <ciphers>HIGH:!ADH:!EXP:!MD5:!RC4:!3DES:!CAMELLIA:@STRENGTH</ciphers>\n
+      \   <!-- <ssl_agent_ca></ssl_agent_ca> -->\n    <ssl_verify_host>no</ssl_verify_host>\n
+      \   <ssl_manager_cert>/var/ossec/etc/sslmanager.cert</ssl_manager_cert>\n    <ssl_manager_key>/var/ossec/etc/sslmanager.key</ssl_manager_key>\n
+      \   <ssl_auto_negotiate>no</ssl_auto_negotiate>\n  </auth>\n\n  <cluster>\n
+      \   <name>wazuh</name>\n    <node_name>to_be_replaced_by_hostname</node_name>\n
+      \   <node_type>worker</node_type>\n    <key>to_be_replaced_by_cluster_key</key>\n
+      \   <port>1516</port>\n    <bind_addr>0.0.0.0</bind_addr>\n    <nodes>\n        <node>wazuh-manager-master-0.wazuh-cluster.wazuh</node>\n
+      \   </nodes>\n    <hidden>no</hidden>\n    <disabled>no</disabled>\n  </cluster>\n</ossec_config>\n\n<ossec_config>\n
+      \ <localfile>\n    <log_format>syslog</log_format>\n    <location>/var/ossec/logs/active-responses.log</location>\n
+      \ </localfile>\n\n</ossec_config>\n"
+  kind: ConfigMap
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"v1","data":{"master.conf":"\u003c!--\n  Wazuh - Manager - Default configuration for ubuntu 16.04\n  More info at: https://documentation.wazuh.com\n  Mailing list: https://groups.google.com/forum/#!forum/wazuh\n\n  Customization: TCP on port 1514\n  Customization: Cluster mode enabled, master node\n--\u003e\n\u003cossec_config\u003e\n  \u003cglobal\u003e\n    \u003cjsonout_output\u003eyes\u003c/jsonout_output\u003e\n    \u003calerts_log\u003eyes\u003c/alerts_log\u003e\n    \u003clogall\u003eno\u003c/logall\u003e\n    \u003clogall_json\u003eno\u003c/logall_json\u003e\n    \u003cemail_notification\u003eno\u003c/email_notification\u003e\n    \u003csmtp_server\u003esmtp.example.wazuh.com\u003c/smtp_server\u003e\n    \u003cemail_from\u003eossecm@example.wazuh.com\u003c/email_from\u003e\n    \u003cemail_to\u003erecipient@example.wazuh.com\u003c/email_to\u003e\n    \u003cemail_maxperhour\u003e12\u003c/email_maxperhour\u003e\n    \u003cemail_log_source\u003ealerts.log\u003c/email_log_source\u003e\n    \u003cqueue_size\u003e131072\u003c/queue_size\u003e\n    \u003cagents_disconnection_time\u003e20s\u003c/agents_disconnection_time\u003e\n    \u003cagents_disconnection_alert_time\u003e100s\u003c/agents_disconnection_alert_time\u003e\n  \u003c/global\u003e\n\n  \u003calerts\u003e\n    \u003clog_alert_level\u003e3\u003c/log_alert_level\u003e\n    \u003cemail_alert_level\u003e12\u003c/email_alert_level\u003e\n  \u003c/alerts\u003e\n\n  \u003c!-- Choose between \"plain\", \"json\", or \"plain,json\" for the format of internal logs --\u003e\n  \u003clogging\u003e\n    \u003clog_format\u003eplain\u003c/log_format\u003e\n  \u003c/logging\u003e\n\n  \u003cremote\u003e\n    \u003cconnection\u003esecure\u003c/connection\u003e\n    \u003cport\u003e1514\u003c/port\u003e\n    \u003cprotocol\u003etcp\u003c/protocol\u003e\n    \u003cqueue_size\u003e131072\u003c/queue_size\u003e\n  \u003c/remote\u003e\n\n  \u003c!-- Policy monitoring --\u003e\n  \u003crootcheck\u003e\n    \u003cdisabled\u003eno\u003c/disabled\u003e\n    \u003ccheck_unixaudit\u003eyes\u003c/check_unixaudit\u003e\n    \u003ccheck_files\u003eyes\u003c/check_files\u003e\n    \u003ccheck_trojans\u003eyes\u003c/check_trojans\u003e\n    \u003ccheck_dev\u003eyes\u003c/check_dev\u003e\n    \u003ccheck_sys\u003eyes\u003c/check_sys\u003e\n    \u003ccheck_pids\u003eyes\u003c/check_pids\u003e\n    \u003ccheck_ports\u003eyes\u003c/check_ports\u003e\n    \u003ccheck_if\u003eyes\u003c/check_if\u003e\n\n    \u003c!-- Frequency that rootcheck is executed - every 12 hours --\u003e\n    \u003cfrequency\u003e43200\u003c/frequency\u003e\n\n    \u003crootkit_files\u003e/var/ossec/etc/rootcheck/rootkit_files.txt\u003c/rootkit_files\u003e\n    \u003crootkit_trojans\u003e/var/ossec/etc/rootcheck/rootkit_trojans.txt\u003c/rootkit_trojans\u003e\n\n    \u003csystem_audit\u003e/var/ossec/etc/rootcheck/system_audit_rcl.txt\u003c/system_audit\u003e\n    \u003csystem_audit\u003e/var/ossec/etc/rootcheck/system_audit_ssh.txt\u003c/system_audit\u003e\n\n    \u003cskip_nfs\u003eyes\u003c/skip_nfs\u003e\n  \u003c/rootcheck\u003e\n\n  \u003cwodle name=\"open-scap\"\u003e\n    \u003cdisabled\u003eyes\u003c/disabled\u003e\n    \u003ctimeout\u003e1800\u003c/timeout\u003e\n    \u003cinterval\u003e1d\u003c/interval\u003e\n    \u003cscan-on-start\u003eyes\u003c/scan-on-start\u003e\n  \u003c/wodle\u003e\n\n  \u003cwodle name=\"cis-cat\"\u003e\n    \u003cdisabled\u003eyes\u003c/disabled\u003e\n    \u003ctimeout\u003e1800\u003c/timeout\u003e\n    \u003cinterval\u003e1d\u003c/interval\u003e\n    \u003cscan-on-start\u003eyes\u003c/scan-on-start\u003e\n\n    \u003cjava_path\u003ewodles/java\u003c/java_path\u003e\n    \u003cciscat_path\u003ewodles/ciscat\u003c/ciscat_path\u003e\n  \u003c/wodle\u003e\n\n  \u003c!-- Osquery integration --\u003e\n  \u003cwodle name=\"osquery\"\u003e\n    \u003cdisabled\u003eyes\u003c/disabled\u003e\n    \u003crun_daemon\u003eyes\u003c/run_daemon\u003e\n    \u003clog_path\u003e/var/log/osquery/osqueryd.results.log\u003c/log_path\u003e\n    \u003cconfig_path\u003e/etc/osquery/osquery.conf\u003c/config_path\u003e\n    \u003cadd_labels\u003eyes\u003c/add_labels\u003e\n  \u003c/wodle\u003e\n\n  \u003c!-- System inventory --\u003e\n  \u003cwodle name=\"syscollector\"\u003e\n    \u003cdisabled\u003eno\u003c/disabled\u003e\n    \u003cinterval\u003e1h\u003c/interval\u003e\n    \u003cscan_on_start\u003eyes\u003c/scan_on_start\u003e\n    \u003chardware\u003eyes\u003c/hardware\u003e\n    \u003cos\u003eyes\u003c/os\u003e\n    \u003cnetwork\u003eyes\u003c/network\u003e\n    \u003cpackages\u003eyes\u003c/packages\u003e\n    \u003cports all=\"yes\"\u003eyes\u003c/ports\u003e\n    \u003cprocesses\u003eyes\u003c/processes\u003e\n  \u003c/wodle\u003e\n\n  \u003cvulnerability-detection\u003e\n    \u003cenabled\u003eyes\u003c/enabled\u003e\n    \u003cindex-status\u003eyes\u003c/index-status\u003e\n    \u003cfeed-update-interval\u003e60m\u003c/feed-update-interval\u003e\n  \u003c/vulnerability-detection\u003e\n\n  \u003cindexer\u003e\n    \u003cenabled\u003eyes\u003c/enabled\u003e\n    \u003chosts\u003e\n      \u003chost\u003ehttps://indexer:9200\u003c/host\u003e\n    \u003c/hosts\u003e\n    \u003cssl\u003e\n      \u003ccertificate_authorities\u003e\n        \u003cca\u003e/etc/ssl/root-ca.pem\u003c/ca\u003e\n      \u003c/certificate_authorities\u003e\n      \u003ccertificate\u003e/etc/ssl/filebeat.pem\u003c/certificate\u003e\n      \u003ckey\u003e/etc/ssl/filebeat.key\u003c/key\u003e\n    \u003c/ssl\u003e\n  \u003c/indexer\u003e\n\n  \u003c!-- File integrity monitoring --\u003e\n  \u003csyscheck\u003e\n    \u003cdisabled\u003eno\u003c/disabled\u003e\n\n    \u003c!-- Frequency that syscheck is executed default every 12 hours --\u003e\n    \u003cfrequency\u003e43200\u003c/frequency\u003e\n\n    \u003cscan_on_start\u003eyes\u003c/scan_on_start\u003e\n\n    \u003c!-- Generate alert when new file detected --\u003e\n    \u003calert_new_files\u003eyes\u003c/alert_new_files\u003e\n\n    \u003c!-- Don't ignore files that change more than 'frequency' times --\u003e\n    \u003cauto_ignore frequency=\"10\" timeframe=\"3600\"\u003eno\u003c/auto_ignore\u003e\n\n    \u003c!-- Directories to check  (perform all possible verifications) --\u003e\n    \u003cdirectories check_all=\"yes\"\u003e/etc,/usr/bin,/usr/sbin\u003c/directories\u003e\n    \u003cdirectories check_all=\"yes\"\u003e/bin,/sbin,/boot\u003c/directories\u003e\n\n    \u003c!-- Files/directories to ignore --\u003e\n    \u003cignore\u003e/etc/mtab\u003c/ignore\u003e\n    \u003cignore\u003e/etc/hosts.deny\u003c/ignore\u003e\n    \u003cignore\u003e/etc/mail/statistics\u003c/ignore\u003e\n    \u003cignore\u003e/etc/random-seed\u003c/ignore\u003e\n    \u003cignore\u003e/etc/random.seed\u003c/ignore\u003e\n    \u003cignore\u003e/etc/adjtime\u003c/ignore\u003e\n    \u003cignore\u003e/etc/httpd/logs\u003c/ignore\u003e\n    \u003cignore\u003e/etc/utmpx\u003c/ignore\u003e\n    \u003cignore\u003e/etc/wtmpx\u003c/ignore\u003e\n    \u003cignore\u003e/etc/cups/certs\u003c/ignore\u003e\n    \u003cignore\u003e/etc/dumpdates\u003c/ignore\u003e\n    \u003cignore\u003e/etc/svc/volatile\u003c/ignore\u003e\n    \u003cignore\u003e/sys/kernel/security\u003c/ignore\u003e\n    \u003cignore\u003e/sys/kernel/debug\u003c/ignore\u003e\n\n    \u003c!-- Check the file, but never compute the diff --\u003e\n    \u003cnodiff\u003e/etc/ssl/private.key\u003c/nodiff\u003e\n\n    \u003cskip_nfs\u003eyes\u003c/skip_nfs\u003e\n\n    \u003c!-- Remove not monitored files --\u003e\n    \u003cremove_old_diff\u003eyes\u003c/remove_old_diff\u003e\n\n    \u003c!-- Allow the system to restart Auditd after installing the plugin --\u003e\n    \u003crestart_audit\u003eyes\u003c/restart_audit\u003e\n  \u003c/syscheck\u003e\n\n  \u003c!-- Active response --\u003e\n  \u003cglobal\u003e\n    \u003cwhite_list\u003e127.0.0.1\u003c/white_list\u003e\n    \u003cwhite_list\u003e^localhost.localdomain$\u003c/white_list\u003e\n    \u003cwhite_list\u003e10.66.0.2\u003c/white_list\u003e\n  \u003c/global\u003e\n\n  \u003ccommand\u003e\n    \u003cname\u003edisable-account\u003c/name\u003e\n    \u003cexecutable\u003edisable-account.sh\u003c/executable\u003e\n    \u003cexpect\u003euser\u003c/expect\u003e\n    \u003ctimeout_allowed\u003eyes\u003c/timeout_allowed\u003e\n  \u003c/command\u003e\n\n  \u003ccommand\u003e\n    \u003cname\u003erestart-ossec\u003c/name\u003e\n    \u003cexecutable\u003erestart-ossec.sh\u003c/executable\u003e\n    \u003cexpect\u003e\u003c/expect\u003e\n  \u003c/command\u003e\n\n  \u003ccommand\u003e\n    \u003cname\u003efirewall-drop\u003c/name\u003e\n    \u003cexecutable\u003efirewall-drop\u003c/executable\u003e\n    \u003ctimeout_allowed\u003eyes\u003c/timeout_allowed\u003e\n  \u003c/command\u003e\n\n  \u003ccommand\u003e\n    \u003cname\u003ehost-deny\u003c/name\u003e\n    \u003cexecutable\u003ehost-deny.sh\u003c/executable\u003e\n    \u003cexpect\u003esrcip\u003c/expect\u003e\n    \u003ctimeout_allowed\u003eyes\u003c/timeout_allowed\u003e\n  \u003c/command\u003e\n\n  \u003ccommand\u003e\n    \u003cname\u003eroute-null\u003c/name\u003e\n    \u003cexecutable\u003eroute-null.sh\u003c/executable\u003e\n    \u003cexpect\u003esrcip\u003c/expect\u003e\n    \u003ctimeout_allowed\u003eyes\u003c/timeout_allowed\u003e\n  \u003c/command\u003e\n\n  \u003ccommand\u003e\n    \u003cname\u003ewin_route-null\u003c/name\u003e\n    \u003cexecutable\u003eroute-null.cmd\u003c/executable\u003e\n    \u003cexpect\u003esrcip\u003c/expect\u003e\n    \u003ctimeout_allowed\u003eyes\u003c/timeout_allowed\u003e\n  \u003c/command\u003e\n\n  \u003ccommand\u003e\n    \u003cname\u003ewin_route-null-2012\u003c/name\u003e\n    \u003cexecutable\u003eroute-null-2012.cmd\u003c/executable\u003e\n    \u003cexpect\u003esrcip\u003c/expect\u003e\n    \u003ctimeout_allowed\u003eyes\u003c/timeout_allowed\u003e\n  \u003c/command\u003e\n\n  \u003ccommand\u003e\n    \u003cname\u003enetsh\u003c/name\u003e\n    \u003cexecutable\u003enetsh.cmd\u003c/executable\u003e\n    \u003cexpect\u003esrcip\u003c/expect\u003e\n    \u003ctimeout_allowed\u003eyes\u003c/timeout_allowed\u003e\n  \u003c/command\u003e\n\n  \u003ccommand\u003e\n    \u003cname\u003enetsh-win-2016\u003c/name\u003e\n    \u003cexecutable\u003enetsh-win-2016.cmd\u003c/executable\u003e\n    \u003cexpect\u003esrcip\u003c/expect\u003e\n    \u003ctimeout_allowed\u003eyes\u003c/timeout_allowed\u003e\n  \u003c/command\u003e\n\n  \u003c!--\n  \u003cactive-response\u003e\n    active-response options here\n  \u003c/active-response\u003e\n  --\u003e\n\n  \u003c!-- Log analysis --\u003e\n  \u003clocalfile\u003e\n    \u003clog_format\u003ecommand\u003c/log_format\u003e\n    \u003ccommand\u003edf -P\u003c/command\u003e\n    \u003cfrequency\u003e360\u003c/frequency\u003e\n  \u003c/localfile\u003e\n\n  \u003clocalfile\u003e\n    \u003clog_format\u003efull_command\u003c/log_format\u003e\n    \u003ccommand\u003enetstat -tulpn | sed 's/\\([[:alnum:]]\\+\\)\\ \\+[[:digit:]]\\+\\ \\+[[:digit:]]\\+\\ \\+\\(.*\\):\\([[:digit:]]*\\)\\ \\+\\([0-9\\.\\:\\*]\\+\\).\\+\\ \\([[:digit:]]*\\/[[:alnum:]\\-]*\\).*/\\1 \\2 == \\3 == \\4 \\5/' | sort -k 4 -g | sed 's/ == \\(.*\\) ==/:\\1/' | sed 1,2d\u003c/command\u003e\n    \u003calias\u003enetstat listening ports\u003c/alias\u003e\n    \u003cfrequency\u003e360\u003c/frequency\u003e\n  \u003c/localfile\u003e\n\n  \u003clocalfile\u003e\n    \u003clog_format\u003efull_command\u003c/log_format\u003e\n    \u003ccommand\u003elast -n 20\u003c/command\u003e\n    \u003cfrequency\u003e360\u003c/frequency\u003e\n  \u003c/localfile\u003e\n\n  \u003cruleset\u003e\n    \u003c!-- Default ruleset --\u003e\n    \u003cdecoder_dir\u003eruleset/decoders\u003c/decoder_dir\u003e\n    \u003crule_dir\u003eruleset/rules\u003c/rule_dir\u003e\n    \u003crule_exclude\u003e0215-policy_rules.xml\u003c/rule_exclude\u003e\n    \u003clist\u003eetc/lists/audit-keys\u003c/list\u003e\n    \u003clist\u003eetc/lists/amazon/aws-sources\u003c/list\u003e\n    \u003clist\u003eetc/lists/amazon/aws-eventnames\u003c/list\u003e\n    \u003clist\u003eetc/lists/malicious-ioc/malicious-ip\u003c/list\u003e\n    \u003clist\u003eetc/lists/malicious-ioc/malicious-domains\u003c/list\u003e\n    \u003clist\u003eetc/lists/malicious-ioc/malware-hashes\u003c/list\u003e\n\n    \u003c!-- User-defined ruleset --\u003e\n    \u003cdecoder_dir\u003eetc/decoders\u003c/decoder_dir\u003e\n    \u003crule_dir\u003eetc/rules\u003c/rule_dir\u003e\n  \u003c/ruleset\u003e\n\n  \u003crule_test\u003e\n\t    \u003cenabled\u003eyes\u003c/enabled\u003e\n\t    \u003cthreads\u003e1\u003c/threads\u003e\n\t    \u003cmax_sessions\u003e64\u003c/max_sessions\u003e\n\t    \u003csession_timeout\u003e15m\u003c/session_timeout\u003e\n  \u003c/rule_test\u003e\n\n  \u003c!-- Configuration for ossec-authd\n    To enable this service, run:\n    wazuh-control enable auth\n  --\u003e\n  \u003cauth\u003e\n    \u003cdisabled\u003eno\u003c/disabled\u003e\n    \u003cport\u003e1515\u003c/port\u003e\n    \u003cuse_source_ip\u003eno\u003c/use_source_ip\u003e\n    \u003cforce\u003e\n      \u003cenabled\u003eyes\u003c/enabled\u003e\n      \u003ckey_mismatch\u003eyes\u003c/key_mismatch\u003e\n      \u003cdisconnected_time enabled=\"yes\"\u003e1h\u003c/disconnected_time\u003e\n      \u003cafter_registration_time\u003e1h\u003c/after_registration_time\u003e\n    \u003c/force\u003e\n    \u003cpurge\u003eno\u003c/purge\u003e\n    \u003cuse_password\u003eyes\u003c/use_password\u003e\n    \u003cciphers\u003eHIGH:!ADH:!EXP:!MD5:!RC4:!3DES:!CAMELLIA:@STRENGTH\u003c/ciphers\u003e\n    \u003c!-- \u003cssl_agent_ca\u003e\u003c/ssl_agent_ca\u003e --\u003e\n    \u003cssl_verify_host\u003eno\u003c/ssl_verify_host\u003e\n    \u003cssl_manager_cert\u003e/var/ossec/etc/sslmanager.cert\u003c/ssl_manager_cert\u003e\n    \u003cssl_manager_key\u003e/var/ossec/etc/sslmanager.key\u003c/ssl_manager_key\u003e\n    \u003cssl_auto_negotiate\u003eno\u003c/ssl_auto_negotiate\u003e\n  \u003c/auth\u003e\n\n  \u003ccluster\u003e\n    \u003cname\u003ewazuh\u003c/name\u003e\n    \u003cnode_name\u003ewazuh-manager-master\u003c/node_name\u003e\n    \u003cnode_type\u003emaster\u003c/node_type\u003e\n    \u003ckey\u003eto_be_replaced_by_cluster_key\u003c/key\u003e\n    \u003cport\u003e1516\u003c/port\u003e\n    \u003cbind_addr\u003e0.0.0.0\u003c/bind_addr\u003e\n    \u003cnodes\u003e\n        \u003cnode\u003ewazuh-manager-master-0.wazuh-cluster.wazuh\u003c/node\u003e\n    \u003c/nodes\u003e\n    \u003chidden\u003eno\u003c/hidden\u003e\n    \u003cdisabled\u003eno\u003c/disabled\u003e\n  \u003c/cluster\u003e\n\u003c/ossec_config\u003e\n\n\u003cossec_config\u003e\n  \u003clocalfile\u003e\n    \u003clog_format\u003esyslog\u003c/log_format\u003e\n    \u003clocation\u003e/var/ossec/logs/active-responses.log\u003c/location\u003e\n  \u003c/localfile\u003e\n\n\u003c/ossec_config\u003e\n","worker.conf":"\u003c!--\n  Wazuh - Manager - Default configuration for ubuntu 16.04\n  More info at: https://documentation.wazuh.com\n  Mailing list: https://groups.google.com/forum/#!forum/wazuh\n\n  Customization: TCP on port 1514\n  Customization: Cluster mode enabled, worker node\n--\u003e\n\u003cossec_config\u003e\n  \u003cglobal\u003e\n    \u003cjsonout_output\u003eyes\u003c/jsonout_output\u003e\n    \u003calerts_log\u003eyes\u003c/alerts_log\u003e\n    \u003clogall\u003eno\u003c/logall\u003e\n    \u003clogall_json\u003eno\u003c/logall_json\u003e\n    \u003cemail_notification\u003eno\u003c/email_notification\u003e\n    \u003csmtp_server\u003esmtp.example.wazuh.com\u003c/smtp_server\u003e\n    \u003cemail_from\u003eossecm@example.wazuh.com\u003c/email_from\u003e\n    \u003cemail_to\u003erecipient@example.wazuh.com\u003c/email_to\u003e\n    \u003cemail_maxperhour\u003e12\u003c/email_maxperhour\u003e\n    \u003cemail_log_source\u003ealerts.log\u003c/email_log_source\u003e\n    \u003cqueue_size\u003e131072\u003c/queue_size\u003e\n    \u003cagents_disconnection_time\u003e20s\u003c/agents_disconnection_time\u003e\n    \u003cagents_disconnection_alert_time\u003e100s\u003c/agents_disconnection_alert_time\u003e\n  \u003c/global\u003e\n\n  \u003calerts\u003e\n    \u003clog_alert_level\u003e3\u003c/log_alert_level\u003e\n    \u003cemail_alert_level\u003e12\u003c/email_alert_level\u003e\n  \u003c/alerts\u003e\n\n  \u003c!-- Choose between \"plain\", \"json\", or \"plain,json\" for the format of internal logs --\u003e\n  \u003clogging\u003e\n    \u003clog_format\u003eplain\u003c/log_format\u003e\n  \u003c/logging\u003e\n\n  \u003cremote\u003e\n    \u003cconnection\u003esecure\u003c/connection\u003e\n    \u003cport\u003e1514\u003c/port\u003e\n    \u003cprotocol\u003etcp\u003c/protocol\u003e\n    \u003cqueue_size\u003e131072\u003c/queue_size\u003e\n  \u003c/remote\u003e\n\n  \u003c!-- Policy monitoring --\u003e\n  \u003crootcheck\u003e\n    \u003cdisabled\u003eno\u003c/disabled\u003e\n    \u003ccheck_unixaudit\u003eyes\u003c/check_unixaudit\u003e\n    \u003ccheck_files\u003eyes\u003c/check_files\u003e\n    \u003ccheck_trojans\u003eyes\u003c/check_trojans\u003e\n    \u003ccheck_dev\u003eyes\u003c/check_dev\u003e\n    \u003ccheck_sys\u003eyes\u003c/check_sys\u003e\n    \u003ccheck_pids\u003eyes\u003c/check_pids\u003e\n    \u003ccheck_ports\u003eyes\u003c/check_ports\u003e\n    \u003ccheck_if\u003eyes\u003c/check_if\u003e\n\n    \u003c!-- Frequency that rootcheck is executed - every 12 hours --\u003e\n    \u003cfrequency\u003e43200\u003c/frequency\u003e\n\n    \u003crootkit_files\u003e/var/ossec/etc/rootcheck/rootkit_files.txt\u003c/rootkit_files\u003e\n    \u003crootkit_trojans\u003e/var/ossec/etc/rootcheck/rootkit_trojans.txt\u003c/rootkit_trojans\u003e\n\n    \u003csystem_audit\u003e/var/ossec/etc/rootcheck/system_audit_rcl.txt\u003c/system_audit\u003e\n    \u003csystem_audit\u003e/var/ossec/etc/rootcheck/system_audit_ssh.txt\u003c/system_audit\u003e\n\n    \u003cskip_nfs\u003eyes\u003c/skip_nfs\u003e\n  \u003c/rootcheck\u003e\n\n  \u003cwodle name=\"open-scap\"\u003e\n    \u003cdisabled\u003eyes\u003c/disabled\u003e\n    \u003ctimeout\u003e1800\u003c/timeout\u003e\n    \u003cinterval\u003e1d\u003c/interval\u003e\n    \u003cscan-on-start\u003eyes\u003c/scan-on-start\u003e\n  \u003c/wodle\u003e\n\n  \u003cwodle name=\"cis-cat\"\u003e\n    \u003cdisabled\u003eyes\u003c/disabled\u003e\n    \u003ctimeout\u003e1800\u003c/timeout\u003e\n    \u003cinterval\u003e1d\u003c/interval\u003e\n    \u003cscan-on-start\u003eyes\u003c/scan-on-start\u003e\n\n    \u003cjava_path\u003ewodles/java\u003c/java_path\u003e\n    \u003cciscat_path\u003ewodles/ciscat\u003c/ciscat_path\u003e\n  \u003c/wodle\u003e\n\n  \u003c!-- Osquery integration --\u003e\n  \u003cwodle name=\"osquery\"\u003e\n    \u003cdisabled\u003eyes\u003c/disabled\u003e\n    \u003crun_daemon\u003eyes\u003c/run_daemon\u003e\n    \u003clog_path\u003e/var/log/osquery/osqueryd.results.log\u003c/log_path\u003e\n    \u003cconfig_path\u003e/etc/osquery/osquery.conf\u003c/config_path\u003e\n    \u003cadd_labels\u003eyes\u003c/add_labels\u003e\n  \u003c/wodle\u003e\n\n  \u003c!-- System inventory --\u003e\n  \u003cwodle name=\"syscollector\"\u003e\n    \u003cdisabled\u003eno\u003c/disabled\u003e\n    \u003cinterval\u003e1h\u003c/interval\u003e\n    \u003cscan_on_start\u003eyes\u003c/scan_on_start\u003e\n    \u003chardware\u003eyes\u003c/hardware\u003e\n    \u003cos\u003eyes\u003c/os\u003e\n    \u003cnetwork\u003eyes\u003c/network\u003e\n    \u003cpackages\u003eyes\u003c/packages\u003e\n    \u003cports all=\"yes\"\u003eyes\u003c/ports\u003e\n    \u003cprocesses\u003eyes\u003c/processes\u003e\n  \u003c/wodle\u003e\n\n  \u003cvulnerability-detection\u003e\n    \u003cenabled\u003eyes\u003c/enabled\u003e\n    \u003cindex-status\u003eyes\u003c/index-status\u003e\n    \u003cfeed-update-interval\u003e60m\u003c/feed-update-interval\u003e\n  \u003c/vulnerability-detection\u003e\n\n  \u003cindexer\u003e\n    \u003cenabled\u003eyes\u003c/enabled\u003e\n    \u003chosts\u003e\n      \u003chost\u003ehttps://indexer:9200\u003c/host\u003e\n    \u003c/hosts\u003e\n    \u003cssl\u003e\n      \u003ccertificate_authorities\u003e\n        \u003cca\u003e/etc/ssl/root-ca.pem\u003c/ca\u003e\n      \u003c/certificate_authorities\u003e\n      \u003ccertificate\u003e/etc/ssl/filebeat.pem\u003c/certificate\u003e\n      \u003ckey\u003e/etc/ssl/filebeat.key\u003c/key\u003e\n    \u003c/ssl\u003e\n  \u003c/indexer\u003e\n\n  \u003c!-- File integrity monitoring --\u003e\n  \u003csyscheck\u003e\n    \u003cdisabled\u003eno\u003c/disabled\u003e\n\n    \u003c!-- Frequency that syscheck is executed default every 12 hours --\u003e\n    \u003cfrequency\u003e43200\u003c/frequency\u003e\n\n    \u003cscan_on_start\u003eyes\u003c/scan_on_start\u003e\n\n    \u003c!-- Generate alert when new file detected --\u003e\n    \u003calert_new_files\u003eyes\u003c/alert_new_files\u003e\n\n    \u003c!-- Don't ignore files that change more than 'frequency' times --\u003e\n    \u003cauto_ignore frequency=\"10\" timeframe=\"3600\"\u003eno\u003c/auto_ignore\u003e\n\n    \u003c!-- Directories to check  (perform all possible verifications) --\u003e\n    \u003cdirectories check_all=\"yes\"\u003e/etc,/usr/bin,/usr/sbin\u003c/directories\u003e\n    \u003cdirectories check_all=\"yes\"\u003e/bin,/sbin,/boot\u003c/directories\u003e\n\n    \u003c!-- Files/directories to ignore --\u003e\n    \u003cignore\u003e/etc/mtab\u003c/ignore\u003e\n    \u003cignore\u003e/etc/hosts.deny\u003c/ignore\u003e\n    \u003cignore\u003e/etc/mail/statistics\u003c/ignore\u003e\n    \u003cignore\u003e/etc/random-seed\u003c/ignore\u003e\n    \u003cignore\u003e/etc/random.seed\u003c/ignore\u003e\n    \u003cignore\u003e/etc/adjtime\u003c/ignore\u003e\n    \u003cignore\u003e/etc/httpd/logs\u003c/ignore\u003e\n    \u003cignore\u003e/etc/utmpx\u003c/ignore\u003e\n    \u003cignore\u003e/etc/wtmpx\u003c/ignore\u003e\n    \u003cignore\u003e/etc/cups/certs\u003c/ignore\u003e\n    \u003cignore\u003e/etc/dumpdates\u003c/ignore\u003e\n    \u003cignore\u003e/etc/svc/volatile\u003c/ignore\u003e\n    \u003cignore\u003e/sys/kernel/security\u003c/ignore\u003e\n    \u003cignore\u003e/sys/kernel/debug\u003c/ignore\u003e\n\n    \u003c!-- Check the file, but never compute the diff --\u003e\n    \u003cnodiff\u003e/etc/ssl/private.key\u003c/nodiff\u003e\n\n    \u003cskip_nfs\u003eyes\u003c/skip_nfs\u003e\n\n    \u003c!-- Remove not monitored files --\u003e\n    \u003cremove_old_diff\u003eyes\u003c/remove_old_diff\u003e\n\n    \u003c!-- Allow the system to restart Auditd after installing the plugin --\u003e\n    \u003crestart_audit\u003eyes\u003c/restart_audit\u003e\n  \u003c/syscheck\u003e\n\n  \u003c!-- Active response --\u003e\n  \u003cglobal\u003e\n    \u003cwhite_list\u003e127.0.0.1\u003c/white_list\u003e\n    \u003cwhite_list\u003e^localhost.localdomain$\u003c/white_list\u003e\n    \u003cwhite_list\u003e10.66.0.2\u003c/white_list\u003e\n  \u003c/global\u003e\n\n  \u003ccommand\u003e\n    \u003cname\u003edisable-account\u003c/name\u003e\n    \u003cexecutable\u003edisable-account.sh\u003c/executable\u003e\n    \u003cexpect\u003euser\u003c/expect\u003e\n    \u003ctimeout_allowed\u003eyes\u003c/timeout_allowed\u003e\n  \u003c/command\u003e\n\n  \u003ccommand\u003e\n    \u003cname\u003erestart-ossec\u003c/name\u003e\n    \u003cexecutable\u003erestart-ossec.sh\u003c/executable\u003e\n    \u003cexpect\u003e\u003c/expect\u003e\n  \u003c/command\u003e\n\n  \u003ccommand\u003e\n    \u003cname\u003efirewall-drop\u003c/name\u003e\n    \u003cexecutable\u003efirewall-drop\u003c/executable\u003e\n    \u003ctimeout_allowed\u003eyes\u003c/timeout_allowed\u003e\n  \u003c/command\u003e\n\n  \u003ccommand\u003e\n    \u003cname\u003ehost-deny\u003c/name\u003e\n    \u003cexecutable\u003ehost-deny.sh\u003c/executable\u003e\n    \u003cexpect\u003esrcip\u003c/expect\u003e\n    \u003ctimeout_allowed\u003eyes\u003c/timeout_allowed\u003e\n  \u003c/command\u003e\n\n  \u003ccommand\u003e\n    \u003cname\u003eroute-null\u003c/name\u003e\n    \u003cexecutable\u003eroute-null.sh\u003c/executable\u003e\n    \u003cexpect\u003esrcip\u003c/expect\u003e\n    \u003ctimeout_allowed\u003eyes\u003c/timeout_allowed\u003e\n  \u003c/command\u003e\n\n  \u003ccommand\u003e\n    \u003cname\u003ewin_route-null\u003c/name\u003e\n    \u003cexecutable\u003eroute-null.cmd\u003c/executable\u003e\n    \u003cexpect\u003esrcip\u003c/expect\u003e\n    \u003ctimeout_allowed\u003eyes\u003c/timeout_allowed\u003e\n  \u003c/command\u003e\n\n  \u003ccommand\u003e\n    \u003cname\u003ewin_route-null-2012\u003c/name\u003e\n    \u003cexecutable\u003eroute-null-2012.cmd\u003c/executable\u003e\n    \u003cexpect\u003esrcip\u003c/expect\u003e\n    \u003ctimeout_allowed\u003eyes\u003c/timeout_allowed\u003e\n  \u003c/command\u003e\n\n  \u003ccommand\u003e\n    \u003cname\u003enetsh\u003c/name\u003e\n    \u003cexecutable\u003enetsh.cmd\u003c/executable\u003e\n    \u003cexpect\u003esrcip\u003c/expect\u003e\n    \u003ctimeout_allowed\u003eyes\u003c/timeout_allowed\u003e\n  \u003c/command\u003e\n\n  \u003ccommand\u003e\n    \u003cname\u003enetsh-win-2016\u003c/name\u003e\n    \u003cexecutable\u003enetsh-win-2016.cmd\u003c/executable\u003e\n    \u003cexpect\u003esrcip\u003c/expect\u003e\n    \u003ctimeout_allowed\u003eyes\u003c/timeout_allowed\u003e\n  \u003c/command\u003e\n\n  \u003c!--\n  \u003cactive-response\u003e\n    active-response options here\n  \u003c/active-response\u003e\n  --\u003e\n\n  \u003c!-- Log analysis --\u003e\n  \u003clocalfile\u003e\n    \u003clog_format\u003ecommand\u003c/log_format\u003e\n    \u003ccommand\u003edf -P\u003c/command\u003e\n    \u003cfrequency\u003e360\u003c/frequency\u003e\n  \u003c/localfile\u003e\n\n  \u003clocalfile\u003e\n    \u003clog_format\u003efull_command\u003c/log_format\u003e\n    \u003ccommand\u003enetstat -tulpn | sed 's/\\([[:alnum:]]\\+\\)\\ \\+[[:digit:]]\\+\\ \\+[[:digit:]]\\+\\ \\+\\(.*\\):\\([[:digit:]]*\\)\\ \\+\\([0-9\\.\\:\\*]\\+\\).\\+\\ \\([[:digit:]]*\\/[[:alnum:]\\-]*\\).*/\\1 \\2 == \\3 == \\4 \\5/' | sort -k 4 -g | sed 's/ == \\(.*\\) ==/:\\1/' | sed 1,2d\u003c/command\u003e\n    \u003calias\u003enetstat listening ports\u003c/alias\u003e\n    \u003cfrequency\u003e360\u003c/frequency\u003e\n  \u003c/localfile\u003e\n\n  \u003clocalfile\u003e\n    \u003clog_format\u003efull_command\u003c/log_format\u003e\n    \u003ccommand\u003elast -n 20\u003c/command\u003e\n    \u003cfrequency\u003e360\u003c/frequency\u003e\n  \u003c/localfile\u003e\n\n  \u003cruleset\u003e\n    \u003c!-- Default ruleset --\u003e\n    \u003cdecoder_dir\u003eruleset/decoders\u003c/decoder_dir\u003e\n    \u003crule_dir\u003eruleset/rules\u003c/rule_dir\u003e\n    \u003crule_exclude\u003e0215-policy_rules.xml\u003c/rule_exclude\u003e\n    \u003clist\u003eetc/lists/audit-keys\u003c/list\u003e\n    \u003clist\u003eetc/lists/amazon/aws-sources\u003c/list\u003e\n    \u003clist\u003eetc/lists/amazon/aws-eventnames\u003c/list\u003e\n    \u003clist\u003eetc/lists/malicious-ioc/malicious-ip\u003c/list\u003e\n    \u003clist\u003eetc/lists/malicious-ioc/malicious-domains\u003c/list\u003e\n    \u003clist\u003eetc/lists/malicious-ioc/malware-hashes\u003c/list\u003e\n\n    \u003c!-- User-defined ruleset --\u003e\n    \u003cdecoder_dir\u003eetc/decoders\u003c/decoder_dir\u003e\n    \u003crule_dir\u003eetc/rules\u003c/rule_dir\u003e\n  \u003c/ruleset\u003e\n\n  \u003crule_test\u003e\n\t    \u003cenabled\u003eyes\u003c/enabled\u003e\n\t    \u003cthreads\u003e1\u003c/threads\u003e\n\t    \u003cmax_sessions\u003e64\u003c/max_sessions\u003e\n\t    \u003csession_timeout\u003e15m\u003c/session_timeout\u003e\n  \u003c/rule_test\u003e\n\n  \u003c!-- Configuration for ossec-authd\n    To enable this service, run:\n    wazuh-control enable auth\n  --\u003e\n  \u003cauth\u003e\n    \u003cdisabled\u003eno\u003c/disabled\u003e\n    \u003cport\u003e1515\u003c/port\u003e\n    \u003cuse_source_ip\u003eno\u003c/use_source_ip\u003e\n    \u003cforce\u003e\n      \u003cenabled\u003eyes\u003c/enabled\u003e\n      \u003ckey_mismatch\u003eyes\u003c/key_mismatch\u003e\n      \u003cdisconnected_time enabled=\"yes\"\u003e1h\u003c/disconnected_time\u003e\n      \u003cafter_registration_time\u003e1h\u003c/after_registration_time\u003e\n    \u003c/force\u003e\n    \u003cpurge\u003eno\u003c/purge\u003e\n    \u003cuse_password\u003eyes\u003c/use_password\u003e\n    \u003cciphers\u003eHIGH:!ADH:!EXP:!MD5:!RC4:!3DES:!CAMELLIA:@STRENGTH\u003c/ciphers\u003e\n    \u003c!-- \u003cssl_agent_ca\u003e\u003c/ssl_agent_ca\u003e --\u003e\n    \u003cssl_verify_host\u003eno\u003c/ssl_verify_host\u003e\n    \u003cssl_manager_cert\u003e/var/ossec/etc/sslmanager.cert\u003c/ssl_manager_cert\u003e\n    \u003cssl_manager_key\u003e/var/ossec/etc/sslmanager.key\u003c/ssl_manager_key\u003e\n    \u003cssl_auto_negotiate\u003eno\u003c/ssl_auto_negotiate\u003e\n  \u003c/auth\u003e\n\n  \u003ccluster\u003e\n    \u003cname\u003ewazuh\u003c/name\u003e\n    \u003cnode_name\u003eto_be_replaced_by_hostname\u003c/node_name\u003e\n    \u003cnode_type\u003eworker\u003c/node_type\u003e\n    \u003ckey\u003eto_be_replaced_by_cluster_key\u003c/key\u003e\n    \u003cport\u003e1516\u003c/port\u003e\n    \u003cbind_addr\u003e0.0.0.0\u003c/bind_addr\u003e\n    \u003cnodes\u003e\n        \u003cnode\u003ewazuh-manager-master-0.wazuh-cluster.wazuh\u003c/node\u003e\n    \u003c/nodes\u003e\n    \u003chidden\u003eno\u003c/hidden\u003e\n    \u003cdisabled\u003eno\u003c/disabled\u003e\n  \u003c/cluster\u003e\n\u003c/ossec_config\u003e\n\n\u003cossec_config\u003e\n  \u003clocalfile\u003e\n    \u003clog_format\u003esyslog\u003c/log_format\u003e\n    \u003clocation\u003e/var/ossec/logs/active-responses.log\u003c/location\u003e\n  \u003c/localfile\u003e\n\n\u003c/ossec_config\u003e\n"},"kind":"ConfigMap","metadata":{"annotations":{},"name":"wazuh-conf-m5756d8fbh","namespace":"security"}}
+    creationTimestamp: "2026-05-02T04:43:05Z"
+    name: wazuh-conf-m5756d8fbh
+    namespace: security
+    resourceVersion: "53476"
+    uid: e75c2d0c-e388-4ff4-af73-d80b9d05d3a9
+- apiVersion: v1
+  data:
+    local_rules.xml: |
+      <group name="iiot,ics,mining4,scenario_c,">
+        <rule id="110800" level="3">
+          <decoded_as>json</decoded_as>
+          <field name="iiot_lab.scenario">SCENARIO_C</field>
+          <field name="iiot_lab.attack_id">NONE</field>
+          <description>IIoT Scenario C structured baseline event</description>
+          <group>iiot,baseline,scenario_c,</group>
+        </rule>
+        <rule id="110809" level="7">
+          <decoded_as>json</decoded_as>
+          <field name="iiot_lab.attack_id">T0809</field>
+          <description>IIoT unauthorized command event mapped to MITRE ATT&CK for ICS T0809</description>
+          <mitre><id>T0809</id></mitre>
+          <group>iiot,ics,mitre_ics,T0809,</group>
+        </rule>
+        <rule id="110814" level="8">
+          <decoded_as>json</decoded_as>
+          <field name="iiot_lab.attack_id">T0814</field>
+          <description>IIoT telemetry manipulation event mapped to MITRE ATT&CK for ICS T0814</description>
+          <mitre><id>T0814</id></mitre>
+          <group>iiot,ics,mitre_ics,T0814,</group>
+        </rule>
+        <rule id="110860" level="9">
+          <decoded_as>json</decoded_as>
+          <field name="iiot_lab.attack_id">T0860</field>
+          <description>IIoT availability degradation event mapped to MITRE ATT&CK for ICS T0860</description>
+          <mitre><id>T0860</id></mitre>
+          <group>iiot,ics,mitre_ics,T0860,</group>
+        </rule>
+      </group>
+  kind: ConfigMap
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"v1","data":{"local_rules.xml":"\u003cgroup name=\"iiot,ics,mining4,scenario_c,\"\u003e\n  \u003crule id=\"110800\" level=\"3\"\u003e\n    \u003cdecoded_as\u003ejson\u003c/decoded_as\u003e\n    \u003cfield name=\"iiot_lab.scenario\"\u003eSCENARIO_C\u003c/field\u003e\n    \u003cfield name=\"iiot_lab.attack_id\"\u003eNONE\u003c/field\u003e\n    \u003cdescription\u003eIIoT Scenario C structured baseline event\u003c/description\u003e\n    \u003cgroup\u003eiiot,baseline,scenario_c,\u003c/group\u003e\n  \u003c/rule\u003e\n  \u003crule id=\"110809\" level=\"7\"\u003e\n    \u003cdecoded_as\u003ejson\u003c/decoded_as\u003e\n    \u003cfield name=\"iiot_lab.attack_id\"\u003eT0809\u003c/field\u003e\n    \u003cdescription\u003eIIoT unauthorized command event mapped to MITRE ATT\u0026CK for ICS T0809\u003c/description\u003e\n    \u003cmitre\u003e\u003cid\u003eT0809\u003c/id\u003e\u003c/mitre\u003e\n    \u003cgroup\u003eiiot,ics,mitre_ics,T0809,\u003c/group\u003e\n  \u003c/rule\u003e\n  \u003crule id=\"110814\" level=\"8\"\u003e\n    \u003cdecoded_as\u003ejson\u003c/decoded_as\u003e\n    \u003cfield name=\"iiot_lab.attack_id\"\u003eT0814\u003c/field\u003e\n    \u003cdescription\u003eIIoT telemetry manipulation event mapped to MITRE ATT\u0026CK for ICS T0814\u003c/description\u003e\n    \u003cmitre\u003e\u003cid\u003eT0814\u003c/id\u003e\u003c/mitre\u003e\n    \u003cgroup\u003eiiot,ics,mitre_ics,T0814,\u003c/group\u003e\n  \u003c/rule\u003e\n  \u003crule id=\"110860\" level=\"9\"\u003e\n    \u003cdecoded_as\u003ejson\u003c/decoded_as\u003e\n    \u003cfield name=\"iiot_lab.attack_id\"\u003eT0860\u003c/field\u003e\n    \u003cdescription\u003eIIoT availability degradation event mapped to MITRE ATT\u0026CK for ICS T0860\u003c/description\u003e\n    \u003cmitre\u003e\u003cid\u003eT0860\u003c/id\u003e\u003c/mitre\u003e\n    \u003cgroup\u003eiiot,ics,mitre_ics,T0860,\u003c/group\u003e\n  \u003c/rule\u003e\n\u003c/group\u003e\n"},"kind":"ConfigMap","metadata":{"annotations":{},"labels":{"app.kubernetes.io/component":"wazuh-rules","app.kubernetes.io/part-of":"iiot-correlation-lab","iiot-lab/scenario":"C"},"name":"wazuh-iiot-rules","namespace":"security"}}
+    creationTimestamp: "2026-05-02T04:43:01Z"
+    labels:
+      app.kubernetes.io/component: wazuh-rules
+      app.kubernetes.io/part-of: iiot-correlation-lab
+      iiot-lab/scenario: C
+    name: wazuh-iiot-rules
+    namespace: security
+    resourceVersion: "53443"
+    uid: bc00cf02-399c-40b0-b86d-a1e932649920
+- apiVersion: v1
+  data:
+    methodology.md: |
+      Scenario C uses a Wazuh single-node/all-in-one laboratory deployment.
+      The decision prioritizes reproducibility, experimental control, deterministic freezes,
+      and reduced operational variables.
+
+      The laboratory does not evaluate Kubernetes hardening, high availability,
+      Wazuh clustering, SIEM sizing, or runtime security. Kubernetes is used only as
+      the reproducible substrate for deploying the IIoT, Zabbix, and Wazuh layers.
+
+      The scientific focus is the correlation between operational observability
+      from Zabbix and security observability from Wazuh under IIoT/MITRE ATT&CK
+      for ICS scenarios.
+  kind: ConfigMap
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"v1","data":{"methodology.md":"Scenario C uses a Wazuh single-node/all-in-one laboratory deployment.\nThe decision prioritizes reproducibility, experimental control, deterministic freezes,\nand reduced operational variables.\n\nThe laboratory does not evaluate Kubernetes hardening, high availability,\nWazuh clustering, SIEM sizing, or runtime security. Kubernetes is used only as\nthe reproducible substrate for deploying the IIoT, Zabbix, and Wazuh layers.\n\nThe scientific focus is the correlation between operational observability\nfrom Zabbix and security observability from Wazuh under IIoT/MITRE ATT\u0026CK\nfor ICS scenarios.\n"},"kind":"ConfigMap","metadata":{"annotations":{},"labels":{"app.kubernetes.io/component":"wazuh","app.kubernetes.io/part-of":"iiot-correlation-lab","iiot-lab/scenario":"C"},"name":"wazuh-single-node-methodology","namespace":"security"}}
+    creationTimestamp: "2026-05-02T04:43:01Z"
+    labels:
+      app.kubernetes.io/component: wazuh
+      app.kubernetes.io/part-of: iiot-correlation-lab
+      iiot-lab/scenario: C
+    name: wazuh-single-node-methodology
+    namespace: security
+    resourceVersion: "53444"
+    uid: 7eefe756-e5fb-41a5-a453-78cd01bb0118
+- apiVersion: v1
+  data:
+    EXCLUDED_SCOPE: kubernetes-hardening,falco,cis-benchmark,runtime-security,ha-clustering
+    WAZUH_DASHBOARD_LB: 10.10.0.161
+    WAZUH_DEPLOYMENT_MODEL: single-node-local-lab
+    WAZUH_KUBERNETES_BRANCH: v4.14.5
+    WAZUH_MANAGER_LB: 10.10.0.162
+    WAZUH_NAMESPACE: security
+  kind: ConfigMap
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"v1","data":{"EXCLUDED_SCOPE":"kubernetes-hardening,falco,cis-benchmark,runtime-security,ha-clustering","WAZUH_DASHBOARD_LB":"10.10.0.161","WAZUH_DEPLOYMENT_MODEL":"single-node-local-lab","WAZUH_KUBERNETES_BRANCH":"v4.14.5","WAZUH_MANAGER_LB":"10.10.0.162","WAZUH_NAMESPACE":"security"},"kind":"ConfigMap","metadata":{"annotations":{},"labels":{"app.kubernetes.io/component":"wazuh","app.kubernetes.io/part-of":"iiot-correlation-lab","iiot-lab/scenario":"C"},"name":"wazuh-version-lock","namespace":"security"}}
+    creationTimestamp: "2026-05-02T04:43:01Z"
+    labels:
+      app.kubernetes.io/component: wazuh
+      app.kubernetes.io/part-of: iiot-correlation-lab
+      iiot-lab/scenario: C
+    name: wazuh-version-lock
+    namespace: security
+    resourceVersion: "53445"
+    uid: 911201af-cf8b-4967-ae65-489bd29d8ade
+kind: List
+metadata:
+  resourceVersion: ""

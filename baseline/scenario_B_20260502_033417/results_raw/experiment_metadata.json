@@ -1,0 +1,16 @@
+{
+  "scenario": "A",
+  "name": "Operational Baseline",
+  "start_timestamp_utc": "2026-05-02T02:14:59Z",
+  "iterations": "3",
+  "sleep_seconds": "2",
+  "duration_seconds": "20",
+  "services": {
+    "mqtt": "10.10.0.151:1883",
+    "health_app": "10.10.0.152:8080",
+    "telemetry_api": "10.10.0.153:8080",
+    "vulnerable_app": "10.10.0.154:8080"
+  },
+  "end_timestamp_utc": "2026-05-02T02:15:19Z",
+  "status": "completed"
+}

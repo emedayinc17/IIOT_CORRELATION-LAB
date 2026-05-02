@@ -1,0 +1,17 @@
+{
+  "timestamp_utc": "2026-05-02T17:24:05Z",
+  "scenario": "SCENARIO_D",
+  "scope": "MITRE ATT&CK for ICS controlled attacks and Zabbix/Wazuh correlation",
+  "platform": "MicroK8s single-node Ubuntu 24.04 containerd Calico MetalLB microk8s-hostpath",
+  "input_scenarios": ["A", "B", "C"],
+  "datasets": [
+    "results_raw/mitre_ics_attacks.csv",
+    "results_raw/wazuh_security_events.csv",
+    "results_raw/zabbix_correlation_metrics.csv",
+    "results_processed/correlation_dataset.csv",
+    "results_tables/table_attack_detection.csv",
+    "results_tables/table_correlation_latency.csv",
+    "results_tables/table_sla_impact.csv"
+  ],
+  "excluded_scope": ["Kubernetes security", "HA Wazuh", "Falco", "Prometheus", "Grafana", "Loki", "service mesh"]
+}

@@ -1,0 +1,3 @@
+NAME     CONTROLLER             PARAMETERS   AGE
+nginx    k8s.io/ingress-nginx   <none>       5h31m
+public   k8s.io/ingress-nginx   <none>       5h31m

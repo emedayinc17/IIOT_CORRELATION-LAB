@@ -1,0 +1,4 @@
+scenario,attack_id,executions,operational_degradation_count,operational_degradation_percent
+SCENARIO_D,T0809,5,5,100.0
+SCENARIO_D,T0814,5,5,100.0
+SCENARIO_D,T0860,5,5,100.0

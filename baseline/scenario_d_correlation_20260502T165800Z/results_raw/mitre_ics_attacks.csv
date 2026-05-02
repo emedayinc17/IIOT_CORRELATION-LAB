@@ -1,0 +1,16 @@
+attack_uid,iteration,attack_id,mitre_ics,technique,target_component,target_endpoint,start_utc,end_utc,start_epoch,end_epoch,stimulus_type,stimulus_count,status,notes
+D-T0809-1,1,T0809,T0809,Unauthorized Command Message,mosquitto,10.10.0.151:1883,2026-05-02T16:56:14Z,2026-05-02T16:56:16Z,1777740974,1777740976,mqtt_publish,1,OK,mqtt_unauthorized_command_published
+D-T0814-1,1,T0814,T0814,Data Manipulation,telemetry-api,http://10.10.0.153:8080/telemetry,2026-05-02T16:56:18Z,2026-05-02T16:56:21Z,1777740978,1777740981,http_post,1,OK,manipulated_telemetry_posted
+D-T0860-1,1,T0860,T0860,Denial of Service,vulnerable-app,http://10.10.0.154:8080/health,2026-05-02T16:56:23Z,2026-05-02T16:56:24Z,1777740983,1777740984,http_flood,40,OK,controlled_http_flood
+D-T0809-2,2,T0809,T0809,Unauthorized Command Message,mosquitto,10.10.0.151:1883,2026-05-02T16:56:26Z,2026-05-02T16:56:28Z,1777740986,1777740988,mqtt_publish,1,OK,mqtt_unauthorized_command_published
+D-T0814-2,2,T0814,T0814,Data Manipulation,telemetry-api,http://10.10.0.153:8080/telemetry,2026-05-02T16:56:30Z,2026-05-02T16:56:32Z,1777740990,1777740992,http_post,1,OK,manipulated_telemetry_posted
+D-T0860-2,2,T0860,T0860,Denial of Service,vulnerable-app,http://10.10.0.154:8080/health,2026-05-02T16:56:34Z,2026-05-02T16:56:35Z,1777740994,1777740995,http_flood,40,OK,controlled_http_flood
+D-T0809-3,3,T0809,T0809,Unauthorized Command Message,mosquitto,10.10.0.151:1883,2026-05-02T16:56:37Z,2026-05-02T16:56:39Z,1777740997,1777740999,mqtt_publish,1,OK,mqtt_unauthorized_command_published
+D-T0814-3,3,T0814,T0814,Data Manipulation,telemetry-api,http://10.10.0.153:8080/telemetry,2026-05-02T16:56:41Z,2026-05-02T16:56:44Z,1777741001,1777741004,http_post,1,OK,manipulated_telemetry_posted
+D-T0860-3,3,T0860,T0860,Denial of Service,vulnerable-app,http://10.10.0.154:8080/health,2026-05-02T16:56:46Z,2026-05-02T16:56:46Z,1777741006,1777741006,http_flood,40,OK,controlled_http_flood
+D-T0809-4,4,T0809,T0809,Unauthorized Command Message,mosquitto,10.10.0.151:1883,2026-05-02T16:56:48Z,2026-05-02T16:56:51Z,1777741008,1777741011,mqtt_publish,1,OK,mqtt_unauthorized_command_published
+D-T0814-4,4,T0814,T0814,Data Manipulation,telemetry-api,http://10.10.0.153:8080/telemetry,2026-05-02T16:56:53Z,2026-05-02T16:56:55Z,1777741013,1777741015,http_post,1,OK,manipulated_telemetry_posted
+D-T0860-4,4,T0860,T0860,Denial of Service,vulnerable-app,http://10.10.0.154:8080/health,2026-05-02T16:56:57Z,2026-05-02T16:56:57Z,1777741017,1777741017,http_flood,40,OK,controlled_http_flood
+D-T0809-5,5,T0809,T0809,Unauthorized Command Message,mosquitto,10.10.0.151:1883,2026-05-02T16:56:59Z,2026-05-02T16:57:02Z,1777741019,1777741022,mqtt_publish,1,OK,mqtt_unauthorized_command_published
+D-T0814-5,5,T0814,T0814,Data Manipulation,telemetry-api,http://10.10.0.153:8080/telemetry,2026-05-02T16:57:04Z,2026-05-02T16:57:06Z,1777741024,1777741026,http_post,1,OK,manipulated_telemetry_posted
+D-T0860-5,5,T0860,T0860,Denial of Service,vulnerable-app,http://10.10.0.154:8080/health,2026-05-02T16:57:08Z,2026-05-02T16:57:09Z,1777741028,1777741029,http_flood,40,OK,controlled_http_flood

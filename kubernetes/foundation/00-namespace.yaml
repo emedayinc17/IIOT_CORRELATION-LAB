@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: iiot-poc
+  labels:
+    project: iiot-correlation-lab
+    stage: foundation

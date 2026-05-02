@@ -1,0 +1,70 @@
+apiVersion: v1
+items:
+- apiVersion: v1
+  kind: PersistentVolumeClaim
+  metadata:
+    annotations:
+      pv.kubernetes.io/bind-completed: "yes"
+      pv.kubernetes.io/bound-by-controller: "yes"
+      volume.beta.kubernetes.io/storage-provisioner: microk8s.io/hostpath
+      volume.kubernetes.io/storage-provisioner: microk8s.io/hostpath
+    creationTimestamp: "2026-05-02T04:43:09Z"
+    finalizers:
+    - kubernetes.io/pvc-protection
+    labels:
+      app: wazuh-indexer
+    name: wazuh-indexer-wazuh-indexer-0
+    namespace: security
+    resourceVersion: "53744"
+    uid: 91aebcd7-a585-410b-bcbb-f24f5bf3008e
+  spec:
+    accessModes:
+    - ReadWriteOnce
+    resources:
+      requests:
+        storage: 500Mi
+    storageClassName: wazuh-storage
+    volumeMode: Filesystem
+    volumeName: pvc-91aebcd7-a585-410b-bcbb-f24f5bf3008e
+  status:
+    accessModes:
+    - ReadWriteOnce
+    capacity:
+      storage: 500Mi
+    phase: Bound
+- apiVersion: v1
+  kind: PersistentVolumeClaim
+  metadata:
+    annotations:
+      pv.kubernetes.io/bind-completed: "yes"
+      pv.kubernetes.io/bound-by-controller: "yes"
+      volume.beta.kubernetes.io/storage-provisioner: microk8s.io/hostpath
+      volume.kubernetes.io/storage-provisioner: microk8s.io/hostpath
+    creationTimestamp: "2026-05-02T04:43:10Z"
+    finalizers:
+    - kubernetes.io/pvc-protection
+    labels:
+      app: wazuh-manager
+      node-type: master
+    name: wazuh-manager-master-wazuh-manager-master-0
+    namespace: security
+    resourceVersion: "53724"
+    uid: 0b73ba42-1617-42bc-b13a-1d2d6f45964d
+  spec:
+    accessModes:
+    - ReadWriteOnce
+    resources:
+      requests:
+        storage: 500Mi
+    storageClassName: wazuh-storage
+    volumeMode: Filesystem
+    volumeName: pvc-0b73ba42-1617-42bc-b13a-1d2d6f45964d
+  status:
+    accessModes:
+    - ReadWriteOnce
+    capacity:
+      storage: 500Mi
+    phase: Bound
+kind: List
+metadata:
+  resourceVersion: ""

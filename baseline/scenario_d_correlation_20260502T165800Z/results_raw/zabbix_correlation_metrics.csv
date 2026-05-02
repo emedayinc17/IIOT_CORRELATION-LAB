@@ -1,0 +1,121 @@
+attack_uid,host,item,key,samples,min_value,avg_value,max_value,last_value,first_clock,last_clock
+D-T0809-1,health-app,health-app availability,net.tcp.service[http  8080],1,0.0,0.0,0.0,0.0,0,0
+D-T0809-1,health-app,health-app latency seconds,net.tcp.service.perf[http  8080],1,0.0,0.0,0.0,0.0,0,0
+D-T0809-1,mqtt-broker,mqtt-broker availability,net.tcp.service[tcp  1883],1,0.0,0.0,0.0,0.0,0,0
+D-T0809-1,mqtt-broker,mqtt-broker latency seconds,net.tcp.service.perf[tcp  1883],1,0.0,0.0,0.0,0.0,0,0
+D-T0809-1,telemetry-api,telemetry-api availability,net.tcp.service[http  8080],1,0.0,0.0,0.0,0.0,0,0
+D-T0809-1,telemetry-api,telemetry-api latency seconds,net.tcp.service.perf[http  8080],1,0.0,0.0,0.0,0.0,0,0
+D-T0809-1,vulnerable-app,vulnerable-app availability,net.tcp.service[http  8080],1,0.0,0.0,0.0,0.0,0,0
+D-T0809-1,vulnerable-app,vulnerable-app latency seconds,net.tcp.service.perf[http  8080],1,0.0,0.0,0.0,0.0,0,0
+D-T0814-1,health-app,health-app availability,net.tcp.service[http  8080],1,0.0,0.0,0.0,0.0,0,0
+D-T0814-1,health-app,health-app latency seconds,net.tcp.service.perf[http  8080],1,0.0,0.0,0.0,0.0,0,0
+D-T0814-1,mqtt-broker,mqtt-broker availability,net.tcp.service[tcp  1883],1,0.0,0.0,0.0,0.0,0,0
+D-T0814-1,mqtt-broker,mqtt-broker latency seconds,net.tcp.service.perf[tcp  1883],1,0.0,0.0,0.0,0.0,0,0
+D-T0814-1,telemetry-api,telemetry-api availability,net.tcp.service[http  8080],1,0.0,0.0,0.0,0.0,0,0
+D-T0814-1,telemetry-api,telemetry-api latency seconds,net.tcp.service.perf[http  8080],1,0.0,0.0,0.0,0.0,0,0
+D-T0814-1,vulnerable-app,vulnerable-app availability,net.tcp.service[http  8080],1,0.0,0.0,0.0,0.0,0,0
+D-T0814-1,vulnerable-app,vulnerable-app latency seconds,net.tcp.service.perf[http  8080],1,0.0,0.0,0.0,0.0,0,0
+D-T0860-1,health-app,health-app availability,net.tcp.service[http  8080],1,0.0,0.0,0.0,0.0,0,0
+D-T0860-1,health-app,health-app latency seconds,net.tcp.service.perf[http  8080],1,0.0,0.0,0.0,0.0,0,0
+D-T0860-1,mqtt-broker,mqtt-broker availability,net.tcp.service[tcp  1883],1,0.0,0.0,0.0,0.0,0,0
+D-T0860-1,mqtt-broker,mqtt-broker latency seconds,net.tcp.service.perf[tcp  1883],1,0.0,0.0,0.0,0.0,0,0
+D-T0860-1,telemetry-api,telemetry-api availability,net.tcp.service[http  8080],1,0.0,0.0,0.0,0.0,0,0
+D-T0860-1,telemetry-api,telemetry-api latency seconds,net.tcp.service.perf[http  8080],1,0.0,0.0,0.0,0.0,0,0
+D-T0860-1,vulnerable-app,vulnerable-app availability,net.tcp.service[http  8080],1,0.0,0.0,0.0,0.0,0,0
+D-T0860-1,vulnerable-app,vulnerable-app latency seconds,net.tcp.service.perf[http  8080],1,0.0,0.0,0.0,0.0,0,0
+D-T0809-2,health-app,health-app availability,net.tcp.service[http  8080],1,0.0,0.0,0.0,0.0,0,0
+D-T0809-2,health-app,health-app latency seconds,net.tcp.service.perf[http  8080],1,0.0,0.0,0.0,0.0,0,0
+D-T0809-2,mqtt-broker,mqtt-broker availability,net.tcp.service[tcp  1883],1,0.0,0.0,0.0,0.0,0,0
+D-T0809-2,mqtt-broker,mqtt-broker latency seconds,net.tcp.service.perf[tcp  1883],1,0.0,0.0,0.0,0.0,0,0
+D-T0809-2,telemetry-api,telemetry-api availability,net.tcp.service[http  8080],1,0.0,0.0,0.0,0.0,0,0
+D-T0809-2,telemetry-api,telemetry-api latency seconds,net.tcp.service.perf[http  8080],1,0.0,0.0,0.0,0.0,0,0
+D-T0809-2,vulnerable-app,vulnerable-app availability,net.tcp.service[http  8080],1,0.0,0.0,0.0,0.0,0,0
+D-T0809-2,vulnerable-app,vulnerable-app latency seconds,net.tcp.service.perf[http  8080],1,0.0,0.0,0.0,0.0,0,0
+D-T0814-2,health-app,health-app availability,net.tcp.service[http  8080],1,0.0,0.0,0.0,0.0,0,0
+D-T0814-2,health-app,health-app latency seconds,net.tcp.service.perf[http  8080],1,0.0,0.0,0.0,0.0,0,0
+D-T0814-2,mqtt-broker,mqtt-broker availability,net.tcp.service[tcp  1883],1,0.0,0.0,0.0,0.0,0,0
+D-T0814-2,mqtt-broker,mqtt-broker latency seconds,net.tcp.service.perf[tcp  1883],1,0.0,0.0,0.0,0.0,0,0
+D-T0814-2,telemetry-api,telemetry-api availability,net.tcp.service[http  8080],1,0.0,0.0,0.0,0.0,0,0
+D-T0814-2,telemetry-api,telemetry-api latency seconds,net.tcp.service.perf[http  8080],1,0.0,0.0,0.0,0.0,0,0
+D-T0814-2,vulnerable-app,vulnerable-app availability,net.tcp.service[http  8080],1,0.0,0.0,0.0,0.0,0,0
+D-T0814-2,vulnerable-app,vulnerable-app latency seconds,net.tcp.service.perf[http  8080],1,0.0,0.0,0.0,0.0,0,0
+D-T0860-2,health-app,health-app availability,net.tcp.service[http  8080],1,0.0,0.0,0.0,0.0,0,0
+D-T0860-2,health-app,health-app latency seconds,net.tcp.service.perf[http  8080],1,0.0,0.0,0.0,0.0,0,0
+D-T0860-2,mqtt-broker,mqtt-broker availability,net.tcp.service[tcp  1883],1,0.0,0.0,0.0,0.0,0,0
+D-T0860-2,mqtt-broker,mqtt-broker latency seconds,net.tcp.service.perf[tcp  1883],1,0.0,0.0,0.0,0.0,0,0
+D-T0860-2,telemetry-api,telemetry-api availability,net.tcp.service[http  8080],1,0.0,0.0,0.0,0.0,0,0
+D-T0860-2,telemetry-api,telemetry-api latency seconds,net.tcp.service.perf[http  8080],1,0.0,0.0,0.0,0.0,0,0
+D-T0860-2,vulnerable-app,vulnerable-app availability,net.tcp.service[http  8080],1,0.0,0.0,0.0,0.0,0,0
+D-T0860-2,vulnerable-app,vulnerable-app latency seconds,net.tcp.service.perf[http  8080],1,0.0,0.0,0.0,0.0,0,0
+D-T0809-3,health-app,health-app availability,net.tcp.service[http  8080],1,0.0,0.0,0.0,0.0,0,0
+D-T0809-3,health-app,health-app latency seconds,net.tcp.service.perf[http  8080],1,0.0,0.0,0.0,0.0,0,0
+D-T0809-3,mqtt-broker,mqtt-broker availability,net.tcp.service[tcp  1883],1,0.0,0.0,0.0,0.0,0,0
+D-T0809-3,mqtt-broker,mqtt-broker latency seconds,net.tcp.service.perf[tcp  1883],1,0.0,0.0,0.0,0.0,0,0
+D-T0809-3,telemetry-api,telemetry-api availability,net.tcp.service[http  8080],1,0.0,0.0,0.0,0.0,0,0
+D-T0809-3,telemetry-api,telemetry-api latency seconds,net.tcp.service.perf[http  8080],1,0.0,0.0,0.0,0.0,0,0
+D-T0809-3,vulnerable-app,vulnerable-app availability,net.tcp.service[http  8080],1,0.0,0.0,0.0,0.0,0,0
+D-T0809-3,vulnerable-app,vulnerable-app latency seconds,net.tcp.service.perf[http  8080],1,0.0,0.0,0.0,0.0,0,0
+D-T0814-3,health-app,health-app availability,net.tcp.service[http  8080],1,0.0,0.0,0.0,0.0,0,0
+D-T0814-3,health-app,health-app latency seconds,net.tcp.service.perf[http  8080],1,0.0,0.0,0.0,0.0,0,0
+D-T0814-3,mqtt-broker,mqtt-broker availability,net.tcp.service[tcp  1883],1,0.0,0.0,0.0,0.0,0,0
+D-T0814-3,mqtt-broker,mqtt-broker latency seconds,net.tcp.service.perf[tcp  1883],1,0.0,0.0,0.0,0.0,0,0
+D-T0814-3,telemetry-api,telemetry-api availability,net.tcp.service[http  8080],1,0.0,0.0,0.0,0.0,0,0
+D-T0814-3,telemetry-api,telemetry-api latency seconds,net.tcp.service.perf[http  8080],1,0.0,0.0,0.0,0.0,0,0
+D-T0814-3,vulnerable-app,vulnerable-app availability,net.tcp.service[http  8080],1,0.0,0.0,0.0,0.0,0,0
+D-T0814-3,vulnerable-app,vulnerable-app latency seconds,net.tcp.service.perf[http  8080],1,0.0,0.0,0.0,0.0,0,0
+D-T0860-3,health-app,health-app availability,net.tcp.service[http  8080],1,0.0,0.0,0.0,0.0,0,0
+D-T0860-3,health-app,health-app latency seconds,net.tcp.service.perf[http  8080],1,0.0,0.0,0.0,0.0,0,0
+D-T0860-3,mqtt-broker,mqtt-broker availability,net.tcp.service[tcp  1883],1,0.0,0.0,0.0,0.0,0,0
+D-T0860-3,mqtt-broker,mqtt-broker latency seconds,net.tcp.service.perf[tcp  1883],1,0.0,0.0,0.0,0.0,0,0
+D-T0860-3,telemetry-api,telemetry-api availability,net.tcp.service[http  8080],1,0.0,0.0,0.0,0.0,0,0
+D-T0860-3,telemetry-api,telemetry-api latency seconds,net.tcp.service.perf[http  8080],1,0.0,0.0,0.0,0.0,0,0
+D-T0860-3,vulnerable-app,vulnerable-app availability,net.tcp.service[http  8080],1,0.0,0.0,0.0,0.0,0,0
+D-T0860-3,vulnerable-app,vulnerable-app latency seconds,net.tcp.service.perf[http  8080],1,0.0,0.0,0.0,0.0,0,0
+D-T0809-4,health-app,health-app availability,net.tcp.service[http  8080],1,0.0,0.0,0.0,0.0,0,0
+D-T0809-4,health-app,health-app latency seconds,net.tcp.service.perf[http  8080],1,0.0,0.0,0.0,0.0,0,0
+D-T0809-4,mqtt-broker,mqtt-broker availability,net.tcp.service[tcp  1883],1,0.0,0.0,0.0,0.0,0,0
+D-T0809-4,mqtt-broker,mqtt-broker latency seconds,net.tcp.service.perf[tcp  1883],1,0.0,0.0,0.0,0.0,0,0
+D-T0809-4,telemetry-api,telemetry-api availability,net.tcp.service[http  8080],1,0.0,0.0,0.0,0.0,0,0
+D-T0809-4,telemetry-api,telemetry-api latency seconds,net.tcp.service.perf[http  8080],1,0.0,0.0,0.0,0.0,0,0
+D-T0809-4,vulnerable-app,vulnerable-app availability,net.tcp.service[http  8080],1,0.0,0.0,0.0,0.0,0,0
+D-T0809-4,vulnerable-app,vulnerable-app latency seconds,net.tcp.service.perf[http  8080],1,0.0,0.0,0.0,0.0,0,0
+D-T0814-4,health-app,health-app availability,net.tcp.service[http  8080],1,0.0,0.0,0.0,0.0,0,0
+D-T0814-4,health-app,health-app latency seconds,net.tcp.service.perf[http  8080],1,0.0,0.0,0.0,0.0,0,0
+D-T0814-4,mqtt-broker,mqtt-broker availability,net.tcp.service[tcp  1883],1,0.0,0.0,0.0,0.0,0,0
+D-T0814-4,mqtt-broker,mqtt-broker latency seconds,net.tcp.service.perf[tcp  1883],1,0.0,0.0,0.0,0.0,0,0
+D-T0814-4,telemetry-api,telemetry-api availability,net.tcp.service[http  8080],1,0.0,0.0,0.0,0.0,0,0
+D-T0814-4,telemetry-api,telemetry-api latency seconds,net.tcp.service.perf[http  8080],1,0.0,0.0,0.0,0.0,0,0
+D-T0814-4,vulnerable-app,vulnerable-app availability,net.tcp.service[http  8080],1,0.0,0.0,0.0,0.0,0,0
+D-T0814-4,vulnerable-app,vulnerable-app latency seconds,net.tcp.service.perf[http  8080],1,0.0,0.0,0.0,0.0,0,0
+D-T0860-4,health-app,health-app availability,net.tcp.service[http  8080],1,0.0,0.0,0.0,0.0,0,0
+D-T0860-4,health-app,health-app latency seconds,net.tcp.service.perf[http  8080],1,0.0,0.0,0.0,0.0,0,0
+D-T0860-4,mqtt-broker,mqtt-broker availability,net.tcp.service[tcp  1883],1,0.0,0.0,0.0,0.0,0,0
+D-T0860-4,mqtt-broker,mqtt-broker latency seconds,net.tcp.service.perf[tcp  1883],1,0.0,0.0,0.0,0.0,0,0
+D-T0860-4,telemetry-api,telemetry-api availability,net.tcp.service[http  8080],1,0.0,0.0,0.0,0.0,0,0
+D-T0860-4,telemetry-api,telemetry-api latency seconds,net.tcp.service.perf[http  8080],1,0.0,0.0,0.0,0.0,0,0
+D-T0860-4,vulnerable-app,vulnerable-app availability,net.tcp.service[http  8080],1,0.0,0.0,0.0,0.0,0,0
+D-T0860-4,vulnerable-app,vulnerable-app latency seconds,net.tcp.service.perf[http  8080],1,0.0,0.0,0.0,0.0,0,0
+D-T0809-5,health-app,health-app availability,net.tcp.service[http  8080],1,0.0,0.0,0.0,0.0,0,0
+D-T0809-5,health-app,health-app latency seconds,net.tcp.service.perf[http  8080],1,0.0,0.0,0.0,0.0,0,0
+D-T0809-5,mqtt-broker,mqtt-broker availability,net.tcp.service[tcp  1883],1,0.0,0.0,0.0,0.0,0,0
+D-T0809-5,mqtt-broker,mqtt-broker latency seconds,net.tcp.service.perf[tcp  1883],1,0.0,0.0,0.0,0.0,0,0
+D-T0809-5,telemetry-api,telemetry-api availability,net.tcp.service[http  8080],1,0.0,0.0,0.0,0.0,0,0
+D-T0809-5,telemetry-api,telemetry-api latency seconds,net.tcp.service.perf[http  8080],1,0.0,0.0,0.0,0.0,0,0
+D-T0809-5,vulnerable-app,vulnerable-app availability,net.tcp.service[http  8080],1,0.0,0.0,0.0,0.0,0,0
+D-T0809-5,vulnerable-app,vulnerable-app latency seconds,net.tcp.service.perf[http  8080],1,0.0,0.0,0.0,0.0,0,0
+D-T0814-5,health-app,health-app availability,net.tcp.service[http  8080],1,0.0,0.0,0.0,0.0,0,0
+D-T0814-5,health-app,health-app latency seconds,net.tcp.service.perf[http  8080],1,0.0,0.0,0.0,0.0,0,0
+D-T0814-5,mqtt-broker,mqtt-broker availability,net.tcp.service[tcp  1883],1,0.0,0.0,0.0,0.0,0,0
+D-T0814-5,mqtt-broker,mqtt-broker latency seconds,net.tcp.service.perf[tcp  1883],1,0.0,0.0,0.0,0.0,0,0
+D-T0814-5,telemetry-api,telemetry-api availability,net.tcp.service[http  8080],1,0.0,0.0,0.0,0.0,0,0
+D-T0814-5,telemetry-api,telemetry-api latency seconds,net.tcp.service.perf[http  8080],1,0.0,0.0,0.0,0.0,0,0
+D-T0814-5,vulnerable-app,vulnerable-app availability,net.tcp.service[http  8080],1,0.0,0.0,0.0,0.0,0,0
+D-T0814-5,vulnerable-app,vulnerable-app latency seconds,net.tcp.service.perf[http  8080],1,0.0,0.0,0.0,0.0,0,0
+D-T0860-5,health-app,health-app availability,net.tcp.service[http  8080],1,0.0,0.0,0.0,0.0,0,0
+D-T0860-5,health-app,health-app latency seconds,net.tcp.service.perf[http  8080],1,0.0,0.0,0.0,0.0,0,0
+D-T0860-5,mqtt-broker,mqtt-broker availability,net.tcp.service[tcp  1883],1,0.0,0.0,0.0,0.0,0,0
+D-T0860-5,mqtt-broker,mqtt-broker latency seconds,net.tcp.service.perf[tcp  1883],1,0.0,0.0,0.0,0.0,0,0
+D-T0860-5,telemetry-api,telemetry-api availability,net.tcp.service[http  8080],1,0.0,0.0,0.0,0.0,0,0
+D-T0860-5,telemetry-api,telemetry-api latency seconds,net.tcp.service.perf[http  8080],1,0.0,0.0,0.0,0.0,0,0
+D-T0860-5,vulnerable-app,vulnerable-app availability,net.tcp.service[http  8080],1,0.0,0.0,0.0,0.0,0,0
+D-T0860-5,vulnerable-app,vulnerable-app latency seconds,net.tcp.service.perf[http  8080],1,0.0,0.0,0.0,0.0,0,0

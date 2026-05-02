@@ -1,0 +1,4 @@
+scenario,attack_id,executions,avg_http_latency_delta_s,max_http_latency_delta_s,avg_post_latency_s
+SCENARIO_D,T0809,5,-3e-05,5.2e-05,0.000627
+SCENARIO_D,T0814,5,-7.2e-05,6.4e-05,0.000594
+SCENARIO_D,T0860,5,-2.5e-05,0.000219,0.000581

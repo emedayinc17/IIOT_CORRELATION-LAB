@@ -1,0 +1,6 @@
+NAME                                READY   STATUS    RESTARTS   AGE   IP            NODE           NOMINATED NODE   READINESS GATES
+health-app-54d5c8f644-p8bdq         1/1     Running   0          12m   10.1.21.154   iiot-lab-k8s   <none>           <none>
+mosquitto-5bf84bf7cb-ngxsd          1/1     Running   0          12m   10.1.21.155   iiot-lab-k8s   <none>           <none>
+sensor-simulator-58b4bbcc76-hhp62   1/1     Running   0          12m   10.1.21.156   iiot-lab-k8s   <none>           <none>
+telemetry-api-5d4cfb7ff4-9lkm2      1/1     Running   0          12m   10.1.21.157   iiot-lab-k8s   <none>           <none>
+vulnerable-app-5dd9b48766-jxttn     1/1     Running   0          12m   10.1.21.158   iiot-lab-k8s   <none>           <none>

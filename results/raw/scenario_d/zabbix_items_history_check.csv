@@ -1,0 +1,9 @@
+timestamp_utc,host,item,key,itemid,value_type,history_clock,history_utc,history_value,lastvalue,lastclock,source,samples_in_window
+2026-05-02T17:22:39Z,health-app,health-app availability,"net.tcp.service[http,10.10.0.152,8080]",50740,3,1777742530,2026-05-02T17:22:10Z,1,1,1777742530,history.get,1
+2026-05-02T17:22:39Z,health-app,health-app latency seconds,"net.tcp.service.perf[http,10.10.0.152,8080]",50741,0,1777742531,2026-05-02T17:22:11Z,0.00017333030700683594,0.00017333030700683594,1777742531,history.get,1
+2026-05-02T17:22:39Z,mqtt-broker,mqtt-broker availability,"net.tcp.service[tcp,10.10.0.151,1883]",50738,3,1777742558,2026-05-02T17:22:38Z,1,1,1777742558,history.get,1
+2026-05-02T17:22:39Z,mqtt-broker,mqtt-broker latency seconds,"net.tcp.service.perf[tcp,10.10.0.151,1883]",50739,0,1777742529,2026-05-02T17:22:09Z,0.00019216537475585938,0.00019216537475585938,1777742529,history.get,1
+2026-05-02T17:22:39Z,telemetry-api,telemetry-api availability,"net.tcp.service[http,10.10.0.153,8080]",50742,3,1777742532,2026-05-02T17:22:12Z,1,1,1777742532,history.get,1
+2026-05-02T17:22:39Z,telemetry-api,telemetry-api latency seconds,"net.tcp.service.perf[http,10.10.0.153,8080]",50743,0,1777742533,2026-05-02T17:22:13Z,0.0001785755157470703,0.0001785755157470703,1777742533,history.get,1
+2026-05-02T17:22:39Z,vulnerable-app,vulnerable-app availability,"net.tcp.service[http,10.10.0.154,8080]",50744,3,1777742534,2026-05-02T17:22:14Z,1,1,1777742534,history.get,1
+2026-05-02T17:22:39Z,vulnerable-app,vulnerable-app latency seconds,"net.tcp.service.perf[http,10.10.0.154,8080]",50745,0,1777742535,2026-05-02T17:22:15Z,0.00018334388732910156,0.00018334388732910156,1777742535,history.get,1
