@@ -2,6 +2,10 @@
 set -euo pipefail
 
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
+source "${ROOT_DIR}/scripts/lib/common.sh"
+script_start "$(basename "$0")"
+
+ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
 OUT_FILE="${1:-results/raw/zabbix_items_snapshot.csv}"
 
 ITERATIONS="${ITERATIONS:-1}"

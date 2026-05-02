@@ -3,21 +3,26 @@ set -euo pipefail
 
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
 source "${ROOT_DIR}/scripts/lib/common.sh"
+script_start "$(basename "$0")"
 
 ZABBIX_URL="${ZABBIX_URL:-http://10.10.0.160/api_jsonrpc.php}"
 ZABBIX_WEB_URL="${ZABBIX_WEB_URL:-http://10.10.0.160}"
 ZABBIX_USER="${ZABBIX_USER:-Admin}"
 ZABBIX_PASSWORD="${ZABBIX_PASSWORD:-zabbix}"
+ZABBIX_ITEM_DELAY="${ZABBIX_ITEM_DELAY:-5s}"
+ZABBIX_WAIT_SECONDS="${ZABBIX_WAIT_SECONDS:-300}"
+ZABBIX_POLL_SECONDS="${ZABBIX_POLL_SECONDS:-10}"
 ZABBIX_HISTORY_WAIT_SECONDS="${ZABBIX_HISTORY_WAIT_SECONDS:-180}"
 ZABBIX_HISTORY_POLL_SECONDS="${ZABBIX_HISTORY_POLL_SECONDS:-10}"
 
 log "Configurando Zabbix Monitoring — IIoT real history instrumentation"
 log "Zabbix API: ${ZABBIX_URL}"
 log "Zabbix Web: ${ZABBIX_WEB_URL}"
+log "Zabbix item delay: ${ZABBIX_ITEM_DELAY}; history wait=${ZABBIX_HISTORY_WAIT_SECONDS}s; poll=${ZABBIX_HISTORY_POLL_SECONDS}s"
 
 curl -fsSI --max-time 10 "${ZABBIX_WEB_URL}" >/dev/null || fail "Zabbix Web no responde en ${ZABBIX_WEB_URL}"
 
-export ZABBIX_URL ZABBIX_USER ZABBIX_PASSWORD ZABBIX_HISTORY_WAIT_SECONDS ZABBIX_HISTORY_POLL_SECONDS
+export ZABBIX_URL ZABBIX_USER ZABBIX_PASSWORD ZABBIX_HISTORY_WAIT_SECONDS ZABBIX_HISTORY_POLL_SECONDS ZABBIX_ITEM_DELAY
 
 python3 - <<'PY'
 import json
@@ -32,6 +37,7 @@ user = os.environ["ZABBIX_USER"]
 password = os.environ["ZABBIX_PASSWORD"]
 wait_seconds = int(os.environ.get("ZABBIX_HISTORY_WAIT_SECONDS", "180"))
 poll_seconds = int(os.environ.get("ZABBIX_HISTORY_POLL_SECONDS", "10"))
+item_delay = os.environ.get("ZABBIX_ITEM_DELAY", "5s")
 
 SERVICES = [
     {"host": "mqtt-broker", "ip": "10.10.0.151", "port": 1883, "service": "tcp", "display": "mqtt-broker"},
@@ -140,7 +146,7 @@ def upsert_item(hostid, name, key, value_type):
         "key_": key,
         "type": 3,                 # Zabbix simple check
         "value_type": value_type,  # 3 unsigned integer, 0 float
-        "delay": "30s",
+        "delay": item_delay,
         "history": "7d",
         "trends": "30d",
         "status": 0
@@ -342,6 +348,7 @@ echo "[OK] Zabbix API accesible"
 echo "[OK] Host group IIoT Lab Services configurado"
 echo "[OK] Hosts IIoT configurados con interfaces IP explícitas"
 echo "[OK] Items simple check corregidos con IP explícita en key_"
+echo "[OK] Polling Zabbix calibrado para campaña final: ${ZABBIX_ITEM_DELAY}"
 echo "[OK] Items legacy con parámetro IP vacío removidos/actualizados"
 echo "[OK] Items de disponibilidad generan history real"
 echo "[OK] Items de latencia generan history real"

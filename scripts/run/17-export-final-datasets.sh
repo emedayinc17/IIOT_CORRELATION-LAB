@@ -3,6 +3,7 @@ set -euo pipefail
 
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
 source "${ROOT_DIR}/scripts/lib/common.sh"
+script_start "$(basename "$0")"
 
 RAW_D="${ROOT_DIR}/results/raw/scenario_d"
 PROCESSED="${ROOT_DIR}/results/processed"

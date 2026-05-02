@@ -15,6 +15,7 @@ set -euo pipefail
 
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
 source "${ROOT_DIR}/scripts/lib/common.sh"
+script_start "$(basename "$0")"
 
 prefer_microk8s_kubectl(){
   if command -v microk8s >/dev/null 2>&1; then 

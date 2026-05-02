@@ -5,6 +5,7 @@ ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
 
 if [[ -f "${ROOT_DIR}/scripts/lib/common.sh" ]]; then
   source "${ROOT_DIR}/scripts/lib/common.sh"
+script_start "$(basename "$0")"
 else
   log(){ echo -e "\n[INFO] $1"; }
   warn(){ echo -e "\n[WARN] $1"; }

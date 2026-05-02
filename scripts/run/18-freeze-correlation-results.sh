@@ -3,6 +3,7 @@ set -euo pipefail
 
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
 source "${ROOT_DIR}/scripts/lib/common.sh"
+script_start "$(basename "$0")"
 
 prefer_microk8s_kubectl(){
   if command -v microk8s >/dev/null 2>&1; then echo "microk8s kubectl"; elif command -v kubectl >/dev/null 2>&1; then echo kubectl; else fail "No se encontró microk8s ni kubectl."; fi
@@ -13,6 +14,7 @@ TS="$(date -u +%Y%m%dT%H%M%SZ)"
 FREEZE_DIR="${ROOT_DIR}/baseline/scenario_d_correlation_${TS}"
 EVIDENCE_DIR="${ROOT_DIR}/evidence/wazuh"
 
+phase "1/2" "Congelamiento reproducible de resultados finales D." "Reproducible freeze of final Scenario D results."
 log "Congelando Escenario D — MITRE ICS + correlación Zabbix/Wazuh"
 mkdir -p "$FREEZE_DIR/results_raw" "$FREEZE_DIR/results_processed" "$FREEZE_DIR/results_tables" "$FREEZE_DIR/results_figures" "$FREEZE_DIR/evidence" "$FREEZE_DIR/k8s"
 
@@ -73,6 +75,7 @@ cat > "$EVIDENCE_DIR/${TS}-scenario-d-freeze-summary.md" <<EOF_SUMMARY
 - SHA256SUMS: generated
 EOF_SUMMARY
 
+phase "2/2" "Resumen de freeze final." "Final freeze summary."
 summary_header "Scenario D Correlation Freeze"
 summary_ok "Freeze generado: baseline/$(basename "$FREEZE_DIR")"
 summary_ok "Archivo comprimido generado: baseline/$(basename "$FREEZE_DIR").tar.gz"

@@ -7,7 +7,7 @@
     "value_type": "3",
     "type": "3",
     "status": "0",
-    "delay": "30s",
+    "delay": "5s",
     "state": "0",
     "error": "",
     "hosts": [
@@ -16,7 +16,7 @@
         "host": "mqtt-broker"
       }
     ],
-    "lastclock": "1777742528",
+    "lastclock": "1777744958",
     "lastvalue": "1"
   },
   {
@@ -27,7 +27,7 @@
     "value_type": "0",
     "type": "3",
     "status": "0",
-    "delay": "30s",
+    "delay": "5s",
     "state": "0",
     "error": "",
     "hosts": [
@@ -36,8 +36,8 @@
         "host": "mqtt-broker"
       }
     ],
-    "lastclock": "1777742529",
-    "lastvalue": "0.00019216537475585938"
+    "lastclock": "1777744959",
+    "lastvalue": "0.00014448165893554688"
   },
   {
     "itemid": "50740",
@@ -47,7 +47,7 @@
     "value_type": "3",
     "type": "3",
     "status": "0",
-    "delay": "30s",
+    "delay": "5s",
     "state": "0",
     "error": "",
     "hosts": [
@@ -56,7 +56,7 @@
         "host": "health-app"
       }
     ],
-    "lastclock": "1777742530",
+    "lastclock": "1777744960",
     "lastvalue": "1"
   },
   {
@@ -67,7 +67,7 @@
     "value_type": "0",
     "type": "3",
     "status": "0",
-    "delay": "30s",
+    "delay": "5s",
     "state": "0",
     "error": "",
     "hosts": [
@@ -76,8 +76,8 @@
         "host": "health-app"
       }
     ],
-    "lastclock": "1777742531",
-    "lastvalue": "0.00017333030700683594"
+    "lastclock": "1777744961",
+    "lastvalue": "0.00021791458129882812"
   },
   {
     "itemid": "50742",
@@ -87,7 +87,7 @@
     "value_type": "3",
     "type": "3",
     "status": "0",
-    "delay": "30s",
+    "delay": "5s",
     "state": "0",
     "error": "",
     "hosts": [
@@ -96,7 +96,7 @@
         "host": "telemetry-api"
       }
     ],
-    "lastclock": "1777742532",
+    "lastclock": "1777744962",
     "lastvalue": "1"
   },
   {
@@ -107,7 +107,7 @@
     "value_type": "0",
     "type": "3",
     "status": "0",
-    "delay": "30s",
+    "delay": "5s",
     "state": "0",
     "error": "",
     "hosts": [
@@ -116,8 +116,8 @@
         "host": "telemetry-api"
       }
     ],
-    "lastclock": "1777742533",
-    "lastvalue": "0.0001785755157470703"
+    "lastclock": "1777744963",
+    "lastvalue": "0.00020360946655273438"
   },
   {
     "itemid": "50744",
@@ -127,7 +127,7 @@
     "value_type": "3",
     "type": "3",
     "status": "0",
-    "delay": "30s",
+    "delay": "5s",
     "state": "0",
     "error": "",
     "hosts": [
@@ -136,7 +136,7 @@
         "host": "vulnerable-app"
       }
     ],
-    "lastclock": "1777742534",
+    "lastclock": "1777744964",
     "lastvalue": "1"
   },
   {
@@ -147,7 +147,7 @@
     "value_type": "0",
     "type": "3",
     "status": "0",
-    "delay": "30s",
+    "delay": "5s",
     "state": "0",
     "error": "",
     "hosts": [
@@ -156,7 +156,7 @@
         "host": "vulnerable-app"
       }
     ],
-    "lastclock": "1777742535",
-    "lastvalue": "0.00018334388732910156"
+    "lastclock": "1777744965",
+    "lastvalue": "0.00019288063049316406"
   }
 ]

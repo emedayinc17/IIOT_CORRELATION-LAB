@@ -3,6 +3,7 @@ set -euo pipefail
 
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
 source "${ROOT_DIR}/scripts/lib/common.sh"
+script_start "$(basename "$0")"
 
 prefer_microk8s_kubectl(){
   if command -v microk8s >/dev/null 2>&1; then echo "microk8s kubectl"; elif command -v kubectl >/dev/null 2>&1; then echo kubectl; else fail "No se encontró microk8s ni kubectl."; fi
@@ -15,8 +16,8 @@ PROCESSED_DIR="${ROOT_DIR}/results/processed"
 EVIDENCE_DIR="${ROOT_DIR}/evidence/wazuh"
 TS="$(date -u +%Y%m%dT%H%M%SZ)"
 CORRELATION_WINDOW_SECONDS="${CORRELATION_WINDOW_SECONDS:-120}"
-ZABBIX_HISTORY_LOOKBACK_SECONDS="${ZABBIX_HISTORY_LOOKBACK_SECONDS:-900}"
-ZABBIX_HISTORY_FORWARD_SECONDS="${ZABBIX_HISTORY_FORWARD_SECONDS:-900}"
+ZABBIX_HISTORY_LOOKBACK_SECONDS="${ZABBIX_HISTORY_LOOKBACK_SECONDS:-120}"
+ZABBIX_HISTORY_FORWARD_SECONDS="${ZABBIX_HISTORY_FORWARD_SECONDS:-120}"
 MIN_ZABBIX_REAL_SAMPLES_PER_ATTACK="${MIN_ZABBIX_REAL_SAMPLES_PER_ATTACK:-1}"
 FAIL_ON_MISSING_ZABBIX_HISTORY="${FAIL_ON_MISSING_ZABBIX_HISTORY:-1}"
 ATTACKS_FILE="${RAW_DIR}/mitre_ics_attacks.csv"
