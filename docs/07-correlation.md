@@ -51,34 +51,3 @@ La correlación deberá producir tablas comparativas por escenario y técnica, p
 | D | T0809 | variable | variable | MITRE ICS event | evaluable |
 | D | T0814 | variable | variable | MITRE ICS event | evaluable |
 | D | T0860 | variable | variable | MITRE ICS event | evaluable |
-
-<!-- SCENARIO_D_INCREMENTAL_V1 -->
-## Escenario D — correlación operacional + seguridad
-
-El Escenario D ejecuta técnicas MITRE ATT&CK for ICS bajo condiciones controladas y genera un dataset correlacionado entre impacto operacional y eventos de seguridad.
-
-### Técnicas evaluadas
-
-| Técnica | Descripción | Fuente operacional | Fuente seguridad |
-|---|---|---|---|
-| T0809 | Unauthorized Command Message | MQTT/HTTP availability probes | Wazuh localfile JSON + regla `110809` |
-| T0814 | Data Manipulation | Telemetry API probes | Wazuh localfile JSON + regla `110814` |
-| T0860 | Denial of Service / service flood | HTTP latency/error probes + Zabbix | Wazuh localfile JSON + regla `110860` |
-
-### Dataset principal
-
-El dataset principal queda en:
-
-```text
-results/processed/correlation_dataset.csv
-```
-
-La correlación se calcula por `attack_uid`, `attack_id`, timestamps UTC y una ventana configurable mediante `CORRELATION_WINDOW_SECONDS`.
-
-### Interpretación
-
-| Valor | Interpretación |
-|---|---|
-| `strong` | Evento Wazuh + degradación operacional observable |
-| `security_only` | Evento Wazuh sin degradación operacional relevante |
-| `not_detected` | Sin evento Wazuh correlacionable |

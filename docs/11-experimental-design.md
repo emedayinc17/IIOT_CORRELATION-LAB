@@ -52,24 +52,3 @@ El laboratorio reproduce comportamientos operacionales, telemetría y eventos re
 El uso de Wazuh single-node reduce fuentes de variabilidad ajenas a la hipótesis. La investigación busca observar si la combinación de métricas operacionales y eventos de seguridad mejora la trazabilidad de incidentes IIoT, no evaluar resiliencia de un SIEM distribuido.
 
 La separación entre Escenario C y D permite que el paper diferencie claramente entre instrumentación de seguridad y evaluación bajo ataque.
-
-<!-- SCENARIO_D_INCREMENTAL_V1 -->
-## Justificación experimental del Escenario D
-
-El Escenario D introduce estímulos de ataque controlados para probar la hipótesis práctica del laboratorio: la combinación Zabbix + Wazuh permite relacionar degradación operacional con eventos de seguridad en un entorno IIoT reproducible.
-
-### Control de variables
-
-- Kubernetes se mantiene como plataforma de ejecución, no como objeto de estudio.
-- No se agrega HA, clustering SIEM ni runtime security.
-- Las técnicas MITRE ICS se ejecutan con intensidad controlada.
-- La correlación se basa en timestamps UTC y ventanas temporales explícitas.
-
-### Variables observadas
-
-| Variable | Fuente |
-|---|---|
-| disponibilidad/latencia HTTP | probes del experimento y Zabbix |
-| evento MITRE ICS | Wazuh localfile JSON + reglas locales |
-| ventanas de ataque | `mitre_ics_attacks.csv` |
-| fuerza de correlación | `correlation_dataset.csv` |

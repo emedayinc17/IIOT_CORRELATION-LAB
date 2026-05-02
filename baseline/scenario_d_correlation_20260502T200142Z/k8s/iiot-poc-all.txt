@@ -1,0 +1,30 @@
+NAME                                    READY   STATUS    RESTARTS        AGE   IP            NODE           NOMINATED NODE   READINESS GATES
+pod/health-app-54d5c8f644-p8bdq         1/1     Running   1 (5h52m ago)   17h   10.1.21.188   iiot-lab-k8s   <none>           <none>
+pod/mosquitto-5bf84bf7cb-ngxsd          1/1     Running   1 (5h52m ago)   17h   10.1.21.141   iiot-lab-k8s   <none>           <none>
+pod/sensor-simulator-58b4bbcc76-hhp62   1/1     Running   1 (5h52m ago)   17h   10.1.21.184   iiot-lab-k8s   <none>           <none>
+pod/telemetry-api-5d4cfb7ff4-9lkm2      1/1     Running   2 (5h50m ago)   17h   10.1.21.185   iiot-lab-k8s   <none>           <none>
+pod/vulnerable-app-5dd9b48766-jxttn     1/1     Running   1 (5h52m ago)   17h   10.1.21.144   iiot-lab-k8s   <none>           <none>
+
+NAME                        TYPE           CLUSTER-IP       EXTERNAL-IP   PORT(S)          AGE   SELECTOR
+service/health-app          ClusterIP      10.152.183.113   <none>        8080/TCP         17h   app=health-app,project=iiot-correlation-lab,stage=foundation
+service/health-app-lb       LoadBalancer   10.152.183.22    10.10.0.152   8080:31855/TCP   17h   app=health-app,project=iiot-correlation-lab,stage=foundation
+service/mosquitto           ClusterIP      10.152.183.173   <none>        1883/TCP         17h   app=mosquitto,project=iiot-correlation-lab,stage=foundation
+service/mosquitto-lb        LoadBalancer   10.152.183.218   10.10.0.151   1883:31070/TCP   17h   app=mosquitto,project=iiot-correlation-lab,stage=foundation
+service/telemetry-api       ClusterIP      10.152.183.203   <none>        8080/TCP         17h   app=telemetry-api,project=iiot-correlation-lab,stage=foundation
+service/telemetry-api-lb    LoadBalancer   10.152.183.67    10.10.0.153   8080:30410/TCP   17h   app=telemetry-api,project=iiot-correlation-lab,stage=foundation
+service/vulnerable-app      ClusterIP      10.152.183.86    <none>        8080/TCP         17h   app=vulnerable-app,project=iiot-correlation-lab,stage=foundation
+service/vulnerable-app-lb   LoadBalancer   10.152.183.127   10.10.0.154   8080:30326/TCP   17h   app=vulnerable-app,project=iiot-correlation-lab,stage=foundation
+
+NAME                               READY   UP-TO-DATE   AVAILABLE   AGE   CONTAINERS         IMAGES                     SELECTOR
+deployment.apps/health-app         1/1     1            1           17h   health-app         python:3.11-slim           app=health-app,project=iiot-correlation-lab,stage=foundation
+deployment.apps/mosquitto          1/1     1            1           17h   mosquitto          eclipse-mosquitto:2.0.20   app=mosquitto,project=iiot-correlation-lab,stage=foundation
+deployment.apps/sensor-simulator   1/1     1            1           17h   sensor-simulator   eclipse-mosquitto:2.0.20   app=sensor-simulator,project=iiot-correlation-lab,stage=foundation
+deployment.apps/telemetry-api      1/1     1            1           17h   telemetry-api      python:3.11-slim           app=telemetry-api,project=iiot-correlation-lab,stage=foundation
+deployment.apps/vulnerable-app     1/1     1            1           17h   vulnerable-app     python:3.11-slim           app=vulnerable-app,project=iiot-correlation-lab,stage=foundation
+
+NAME                                          DESIRED   CURRENT   READY   AGE   CONTAINERS         IMAGES                     SELECTOR
+replicaset.apps/health-app-54d5c8f644         1         1         1       17h   health-app         python:3.11-slim           app=health-app,pod-template-hash=54d5c8f644,project=iiot-correlation-lab,stage=foundation
+replicaset.apps/mosquitto-5bf84bf7cb          1         1         1       17h   mosquitto          eclipse-mosquitto:2.0.20   app=mosquitto,pod-template-hash=5bf84bf7cb,project=iiot-correlation-lab,stage=foundation
+replicaset.apps/sensor-simulator-58b4bbcc76   1         1         1       17h   sensor-simulator   eclipse-mosquitto:2.0.20   app=sensor-simulator,pod-template-hash=58b4bbcc76,project=iiot-correlation-lab,stage=foundation
+replicaset.apps/telemetry-api-5d4cfb7ff4      1         1         1       17h   telemetry-api      python:3.11-slim           app=telemetry-api,pod-template-hash=5d4cfb7ff4,project=iiot-correlation-lab,stage=foundation
+replicaset.apps/vulnerable-app-5dd9b48766     1         1         1       17h   vulnerable-app     python:3.11-slim           app=vulnerable-app,pod-template-hash=5dd9b48766,project=iiot-correlation-lab,stage=foundation
