@@ -58,3 +58,17 @@ evidence/readiness/scenario_readiness_summary.md
 Un estado `WARN` en A, B o C no necesariamente invalida D/E, pero debe revisarse para garantizar que la documentación y evidencia estén completas.
 
 Un estado `WARN` en D o E sí debe resolverse antes de considerar el paquete final como paper-ready.
+
+
+## Capa de ejecución paper-final
+
+Para no obligar al usuario a escribir variables manualmente, se agregó una capa de ejecución parametrizada:
+
+| Script | Rol |
+|---|---|
+| `29-run-paper-final-campaign.sh` | Ejecuta campañas D/E y análisis usando `config/experiment.conf`. |
+| `30-validate-paper-readiness.sh` | Valida infraestructura, evidencias y readiness sin ejecutar ataques. |
+| `31-show-paper-results.sh` | Muestra tablas, figuras y rutas clave para revisión. |
+| `32-verify-final-freeze.sh` | Verifica el último freeze con `SHA256SUMS`. |
+
+Estos scripts conservan la lógica existente y llaman a los scripts `15` a `28` según corresponda.

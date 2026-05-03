@@ -79,3 +79,42 @@ Los freezes deben incluir:
 ## Archivos temporales/históricos
 
 Los documentos de implementación incremental pueden conservarse si se desea trazabilidad histórica, pero la documentación formal debe estar consolidada en los capítulos principales.
+
+
+## Configuración centralizada paper-final
+
+Los valores operativos de la campaña final se concentran en:
+
+```text
+config/experiment.conf
+```
+
+Este archivo evita repetir variables manualmente en los scripts y permite que un tercero verifique los parámetros usados para las corridas D y E.
+
+## Capa de orquestación 29–32
+
+Los scripts `29` a `32` no reemplazan los scripts existentes. Funcionan como capa de ejecución, validación y visualización:
+
+```bash
+./scripts/run/29-run-paper-final-campaign.sh
+./scripts/run/30-validate-paper-readiness.sh
+./scripts/run/31-show-paper-results.sh
+./scripts/run/32-verify-final-freeze.sh
+```
+
+## Ejecución recomendada para revisor no programador
+
+```bash
+./scripts/run/30-validate-paper-readiness.sh
+./scripts/run/31-show-paper-results.sh
+```
+
+Si se desea repetir la campaña cuantitativa completa:
+
+```bash
+./scripts/run/29-run-paper-final-campaign.sh
+```
+
+## Regla de coherencia
+
+Los valores reportados en el artículo deben coincidir con `config/experiment.conf`, `results/processed/experimental_metadata_final.json` o los metadatos congelados dentro del último `final_methodology_package_*`.

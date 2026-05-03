@@ -1,237 +1,372 @@
-# IIoT Correlation Lab
+# IIoT Correlation Lab — Zabbix + Wazuh
 
-Laboratorio reproducible para evaluar correlación entre monitoreo operacional y eventos de seguridad en entornos IIoT aplicados a Minería 4.0.
+Laboratorio IIoT reproducible sobre Kubernetes/MicroK8s para evaluar detección correlacionada de amenazas de ciberseguridad en Minería 4.0 mediante Zabbix, Wazuh y técnicas MITRE ATT&CK for ICS.
 
-El proyecto implementa un entorno controlado sobre MicroK8s para observar cómo se relacionan métricas operacionales capturadas con Zabbix y eventos de seguridad registrados por Wazuh ante técnicas MITRE ATT&CK for ICS.
+Este repositorio está organizado para que el laboratorio pueda ser revisado de dos formas:
 
-## Objetivo
+- **ejecución rápida**, usando wrappers por escenario;
+- **auditoría técnica**, revisando los scripts detallados `00–28`, datasets, evidencias y freezes.
 
-Evaluar si la integración de monitoreo operacional y seguridad permite generar evidencia correlacionada, reproducible y trazable ante eventos IIoT representativos.
+---
 
-El foco del laboratorio es:
+## 1. Propósito del laboratorio
 
-```text
-IIoT + Zabbix + Wazuh + correlación
+El laboratorio permite desplegar y evaluar una arquitectura experimental compuesta por:
+
+- servicios IIoT simulados;
+- telemetría MQTT;
+- aplicaciones HTTP observables;
+- monitoreo operacional con Zabbix;
+- detección de seguridad con Wazuh;
+- correlación temporal Zabbix–Wazuh;
+- campañas MITRE ATT&CK for ICS;
+- ruido operacional legítimo para evaluación de falsos positivos;
+- generación de datasets, tablas, figuras, evidencias y freezes verificables.
+
+La lógica metodológica se organiza en cinco escenarios:
+
+| Escenario | Propósito |
+|---|---|
+| A — Foundation IIoT | Despliegue y validación de servicios IIoT base. |
+| B — Zabbix Monitoring | Instrumentación operacional y exportación de configuración Zabbix. |
+| C — Wazuh Security | Instrumentación de seguridad, reglas y eventos Wazuh. |
+| D — MITRE ICS Correlation | Campaña cuantitativa de ataques T0809, T0814 y T0860. |
+| E — Operational Noise/FPR | Campaña de ruido operacional legítimo para evaluar falsos positivos. |
+
+---
+
+## 2. Arquitectura general
+
+```mermaid
+flowchart LR
+    U[Usuario / Investigador] --> K[Kubernetes / MicroK8s]
+
+    subgraph N1[Namespace iiot-poc]
+        H[health-app]
+        T[telemetry-api]
+        M[mosquitto / mqtt]
+        S[sensor-simulator]
+        V[vulnerable-app]
+    end
+
+    subgraph N2[Namespace monitoring]
+        ZS[Zabbix Server]
+        ZDB[PostgreSQL Zabbix]
+        ZA[Zabbix Agent/Agent2]
+        ZW[Zabbix Web]
+    end
+
+    subgraph N3[Namespace security]
+        WM[Wazuh Manager]
+        WI[Wazuh Indexer]
+        WD[Wazuh Dashboard]
+    end
+
+    subgraph OUT[Artefactos reproducibles]
+        RAW[results/raw]
+        PROC[results/processed]
+        TAB[results/tables]
+        FIG[results/figures]
+        EVI[evidence]
+        FRZ[baseline/freezes]
+    end
+
+    H --> ZS
+    T --> ZS
+    M --> ZS
+    V --> ZS
+
+    H --> WM
+    T --> WM
+    M --> WM
+    V --> WM
+
+    ZS --> RAW
+    WM --> RAW
+    RAW --> PROC
+    PROC --> TAB
+    PROC --> FIG
+    ZS --> EVI
+    WM --> EVI
+    TAB --> FRZ
+    FIG --> FRZ
+    EVI --> FRZ
 ```
 
-No se evalúa alta disponibilidad, resiliencia enterprise, hardening Kubernetes, service mesh ni seguridad del clúster Kubernetes. Kubernetes se usa únicamente como medio reproducible de laboratorio.
+La arquitectura separa la zona IIoT, la zona de monitoreo y la zona de seguridad mediante namespaces dedicados. La correlación se realiza posteriormente sobre eventos Wazuh, métricas Zabbix y datasets normalizados.
 
-## Arquitectura resumida
+---
 
-| Capa | Componentes | Propósito |
+## 3. Estructura del proyecto
+
+```text
+iiot-correlation-lab/
+├── config/        # Parámetros experimentales centralizados
+├── kubernetes/    # Manifiestos Kubernetes por componente
+├── scripts/       # Scripts técnicos, wrappers, análisis y freeze
+│   ├── lib/       # Funciones comunes de configuración y logging
+│   └── run/       # Secuencia técnica 00–28 y wrappers 29–38
+├── results/       # Datasets raw/processed, tablas y figuras
+├── evidence/      # Evidencias técnicas exportadas de Zabbix, Wazuh e inventario
+├── baseline/      # Freezes reproducibles y paquetes metodológicos
+├── docs/          # Documentación técnica detallada
+├── README.md      # Guía rápida en español
+└── README.en.md   # Guía rápida en inglés
+```
+
+### Descripción rápida
+
+| Carpeta | Qué contiene | Para qué sirve |
 |---|---|---|
-| Foundation IIoT | Mosquitto, sensor-simulator, health-app, telemetry-api, vulnerable-app | Simular servicios IIoT y telemetría |
-| Monitoreo operacional | Zabbix Server, Zabbix Web, PostgreSQL, Zabbix Agent | Medir disponibilidad, latencia e histórico operacional |
-| Seguridad | Wazuh Manager, Wazuh Indexer, Wazuh Dashboard | Registrar eventos de seguridad y reglas MITRE ICS |
-| Correlación | Scripts 15–18, datasets CSV/SVG, freezes | Relacionar eventos Wazuh con métricas Zabbix |
+| `config/` | Variables del experimento | Evita cambiar valores manualmente en varios scripts. |
+| `kubernetes/` | YAML/Kustomize de foundation, Zabbix y Wazuh | Permite redesplegar el laboratorio. |
+| `scripts/run/00–28` | Scripts técnicos detallados | Evidencia auditable paso a paso. |
+| `scripts/run/29–38` | Wrappers rápidos | Ejecución simple por escenario o campaña completa. |
+| `results/raw/` | Datos crudos | Fuente original de métricas, eventos y ruido. |
+| `results/processed/` | Datos normalizados/procesados | Base para correlación y estadística. |
+| `results/tables/` | Tablas finales | Insumos directos para resultados del artículo. |
+| `results/figures/` | Figuras generadas | Insumos gráficos del artículo. |
+| `evidence/` | Exportaciones técnicas | Sustento de Zabbix, Wazuh, inventario y readiness. |
+| `baseline/` | Freezes y paquetes SHA256 | Integridad y reproducibilidad. |
+| `docs/` | Documentación detallada | Desarrollo técnico, metodología y trazabilidad. |
 
-## Entorno esperado
+---
 
-| Elemento | Valor |
-|---|---|
-| Kubernetes | MicroK8s |
-| Nodo | single-node |
-| OS | Ubuntu 24.04 |
-| Runtime | containerd |
-| CNI | Calico |
-| Ingress | NGINX Ingress |
-| LoadBalancer | MetalLB |
-| StorageClass | microk8s-hostpath |
+## 4. Configuración y prerequisitos
 
-## Estructura principal
+Antes de ejecutar campañas, revisar el archivo:
 
 ```text
-README.md
-README.en.md
-docs/
-scripts/
-kubernetes/
-results/
+config/experiment.conf
+```
+
+Este archivo centraliza y documenta variable por variable, en español e inglés:
+
+- escenarios funcionales y cuantitativos;
+- técnicas MITRE;
+- número de repeticiones;
+- perfiles de ruido;
+- ventanas basal, ataque, recuperación y correlación;
+- parámetros de carga HTTP/MQTT;
+- endpoints del laboratorio;
+- rutas de tablas y resultados;
+- controles de ejecución y freeze.
+
+Valores metodológicos principales:
+
+```text
+MITRE_TECHNIQUES="T0809 T0814 T0860"
+RUNS_PER_TECHNIQUE=20
+NOISE_PROFILES="LOW MEDIUM HIGH"
+RUNS_PER_NOISE_PROFILE=20
+BASELINE_SECONDS=120
+ATTACK_ACTIVE_SECONDS=30
+RECOVERY_SECONDS=120
+CORRELATION_WINDOW_SECONDS=120
+ZABBIX_POLLING_SECONDS=5
+DOS_REQUESTS=500
+DOS_CONCURRENCY=30
+```
+
+Los valores reportados en metodología, resultados y respuesta a revisores deben coincidir con este archivo o con la metadata congelada en el freeze final.
+
+---
+
+## 5. Secuencia de ejecución rápida
+
+Los scripts `33–38` agrupan la secuencia técnica `00–28` para facilitar la ejecución por escenario.
+
+### Ejecutar escenario A — Foundation IIoT
+
+```bash
+./scripts/run/33-run-scenario-a-foundation.sh
+```
+
+Despliega servicios IIoT base, ejecuta baseline operacional y congela evidencia inicial.
+
+### Ejecutar escenario B — Zabbix Monitoring
+
+```bash
+./scripts/run/34-run-scenario-b-zabbix.sh
+```
+
+Despliega Zabbix, valida funcionamiento, configura monitoreo, ejecuta baseline y exporta configuración.
+
+### Ejecutar escenario C — Wazuh Security
+
+```bash
+./scripts/run/35-run-scenario-c-wazuh.sh
+```
+
+Despliega Wazuh, valida componentes, ejecuta baseline de seguridad y congela evidencia.
+
+### Ejecutar escenario D — MITRE ICS Correlation
+
+```bash
+./scripts/run/36-run-scenario-d-correlation.sh
+```
+
+Ejecuta ataques MITRE ICS, correlación temporal, exportación de datasets, normalización y análisis estadístico.
+
+### Ejecutar escenario E — Operational Noise/FPR
+
+```bash
+./scripts/run/37-run-scenario-e-noise-fpr.sh
+```
+
+Ejecuta ruido operacional legítimo, calcula FPR, congela resultados y actualiza documentación del escenario E.
+
+### Ejecutar todos los escenarios A–E
+
+```bash
+./scripts/run/38-run-all-scenarios-ae.sh
+```
+
+Ejecuta A, B, C, D y E, genera freeze final, valida readiness y muestra resultados.
+
+### Ejecutar solo campaña final paper-ready D–E
+
+```bash
+./scripts/run/29-run-paper-final-campaign.sh
+```
+
+Usar cuando A–C ya están desplegados y validados. Ejecuta solo las campañas cuantitativas principales D y E.
+
+---
+
+## 6. Secuencia de validación y revisión
+
+### Validar readiness del laboratorio
+
+```bash
+./scripts/run/30-validate-paper-readiness.sh
+```
+
+Valida nodo Kubernetes, namespaces, servicios IIoT, Zabbix, Wazuh, tablas, figuras y freeze final si existe.
+
+### Mostrar resultados principales
+
+```bash
+./scripts/run/31-show-paper-results.sh
+```
+
+Muestra una vista rápida de las tablas principales y lista figuras disponibles sin ejecutar ataques ni ruido.
+
+### Verificar integridad del último freeze
+
+```bash
+./scripts/run/32-verify-final-freeze.sh
+```
+
+Busca el último paquete `baseline/final_methodology_package_*` y valida `SHA256SUMS`.
+
+---
+
+## 7. Resultados esperados
+
+Los resultados se organizan por nivel de procesamiento:
+
+```text
+results/raw/          # Datos crudos recolectados
+results/processed/    # Datasets procesados y normalizados
+results/tables/       # Tablas consolidadas
+results/figures/      # Figuras exportadas
+```
+
+Tablas principales:
+
+| Archivo | Descripción |
+|---|---|
+| `table_attack_detection.csv` | Detección por técnica MITRE en escenario D. |
+| `table_temporal_correlation_summary.csv` | Resumen de correlación temporal Zabbix–Wazuh. |
+| `table_mttd_estimation.csv` | Estimación de delta de detección/MTTD operacionalizado. |
+| `table_bootstrap_ci.csv` | Intervalos de confianza por bootstrap. |
+| `table_detection_wilson_ci.csv` | Intervalos Wilson para detección. |
+| `table_sla_wilson_ci.csv` | Intervalos Wilson para disponibilidad/SLA. |
+| `table_noise_fpr_summary.csv` | FPR observado bajo ruido operacional legítimo. |
+| `table_noise_wilson_ci.csv` | Intervalo Wilson IC95 para FPR. |
+| `table_scenario_readiness.csv` | Estado de preparación metodológica A–E. |
+| `table_zabbix_history_quality.csv` | Calidad de muestras históricas Zabbix. |
+
+Figuras principales:
+
+| Archivo | Descripción |
+|---|---|
+| `figure_attack_timeline.svg` | Línea temporal ataque–evento–correlación. |
+| `figure_operational_vs_security.svg` | Comparación operacional y seguridad. |
+| `figure_detection_comparison.svg` | Comparación de detección por técnica/escenario. |
+| `figure_temporal_correlation_distribution.svg` | Distribución de deltas temporales. |
+| `figure_noise_fpr_by_profile.svg` | FPR por perfil de ruido operacional. |
+| `figure_zabbix_history_quality.svg` | Calidad de extracción histórica Zabbix. |
+
+---
+
+## 8. Evidencias y freezes
+
+Las evidencias técnicas se almacenan en:
+
+```text
+evidence/zabbix/       # Hosts, items, triggers y exportaciones Zabbix
+evidence/wazuh/        # Alertas, eventos, reglas, logs y exports Wazuh
+evidence/inventory/    # Inventario Kubernetes, imágenes, servicios y versiones
+evidence/readiness/    # Validaciones A–E y readiness metodológico
+```
+
+Los paquetes congelados se almacenan en:
+
+```text
 baseline/
-evidence/
 ```
 
-## Documentación
+El paquete final sigue el patrón:
 
-| Documento | Descripción |
+```text
+baseline/final_methodology_package_YYYYMMDDTHHMMSSZ/
+baseline/final_methodology_package_YYYYMMDDTHHMMSSZ.tar.gz
+```
+
+Cada paquete final incluye `SHA256SUMS`. Para verificar integridad:
+
+```bash
+./scripts/run/32-verify-final-freeze.sh
+```
+
+---
+
+## 9. Documentación detallada
+
+| Tema | Documento |
 |---|---|
-| `docs/00-overview.md` | visión general del laboratorio |
-| `docs/01-architecture.md` | arquitectura y componentes |
-| `docs/02-environment.md` | entorno y prerequisitos |
-| `docs/03-foundation-iiot.md` | despliegue Foundation IIoT |
-| `docs/04-operational-baseline.md` | baseline operacional |
-| `docs/05-zabbix-monitoring.md` | monitoreo operacional con Zabbix |
-| `docs/06-wazuh-security.md` | instrumentación de seguridad con Wazuh |
-| `docs/07-correlation.md` | correlación operacional y seguridad |
-| `docs/08-experiments.md` | escenarios experimentales |
-| `docs/09-results.md` | resultados, datasets y evidencias |
-| `docs/10-reproducibility.md` | reproducibilidad del laboratorio |
-| `docs/11-experimental-design.md` | justificación científica de parámetros experimentales |
-| `docs/12-version-matrix.md` | matriz de versiones del laboratorio |
-| `docs/13-reviewer-traceability.md` | trazabilidad entre observaciones y evidencias |
+| Visión general | `docs/00-overview.md` |
+| Arquitectura | `docs/01-architecture.md` |
+| Entorno/versiones | `docs/02-environment.md`, `docs/12-version-matrix.md` |
+| Foundation IIoT | `docs/03-foundation-iiot.md` |
+| Baseline operacional | `docs/04-operational-baseline.md` |
+| Zabbix | `docs/05-zabbix-monitoring.md` |
+| Wazuh | `docs/06-wazuh-security.md` |
+| Correlación | `docs/07-correlation.md` |
+| Experimentos | `docs/08-experiments.md` |
+| Resultados | `docs/09-results.md`, `docs/14-paper-results-synthesis.md` |
+| Reproducibilidad | `docs/10-reproducibility.md`, `docs/20-paper-final-reproducibility.md` |
+| Diseño experimental | `docs/11-experimental-design.md` |
+| Trazabilidad reviewer | `docs/13-reviewer-traceability.md` |
+| Roles A–E y evidencia | `docs/16-scenario-roles-and-evidence.md` |
+| Configuración y ejecución | `docs/17-configuration-and-execution.md` |
+| Flujo no programador | `docs/18-non-programmer-workflow.md` |
+| Estándar de mensajes | `docs/19-script-message-standard.md` |
+| Wrappers por escenario | `docs/21-scenario-wrapper-execution.md` |
 
-## Escenarios experimentales
+---
 
-| Escenario | Descripción | Resultado esperado |
-|---|---|---|
-| A | Foundation IIoT | baseline operacional sin monitoreo externo |
-| B | Foundation IIoT + Zabbix | métricas operacionales reales e histórico Zabbix |
-| C | Foundation IIoT + Zabbix + Wazuh | baseline de seguridad y eventos Wazuh |
-| D | Ataques MITRE ICS + correlación | datasets correlacionados Zabbix/Wazuh |
+## 10. Nota metodológica
 
-## Secuencia reproducible completa
+Los scripts `00–28` siguen siendo el motor técnico auditable del laboratorio. Los scripts `29–38` son una capa de ejecución rápida para facilitar reproducibilidad por terceros.
 
-Los scripts se ejecutan en orden numérico desde `scripts/run/`.
-
-### Escenario A — Foundation IIoT
-
-```bash
-./scripts/run/00-reset-lab.sh
-./scripts/run/01-deploy-foundation.sh
-ITERATIONS=3 SLEEP_SECONDS=2 DURATION_SECONDS=20 ./scripts/run/02-run-operational-baseline.sh
-./scripts/run/03-freeze-operational-baseline.sh
-```
-
-### Escenario B — Zabbix Monitoring
-
-```bash
-./scripts/run/04-deploy-zabbix.sh
-./scripts/run/05-validate-zabbix.sh
-ZABBIX_ITEM_DELAY=5s ./scripts/run/06-configure-zabbix-monitoring.sh
-ITERATIONS=3 SLEEP_SECONDS=2 DURATION_SECONDS=20 ./scripts/run/07-run-zabbix-operational-baseline.sh
-./scripts/run/08-freeze-zabbix-operational-baseline.sh
-./scripts/run/09-export-lab-inventory.sh
-./scripts/run/10-export-zabbix-configuration.sh
-```
-
-Para una corrida operacional más amplia:
-
-```bash
-ITERATIONS=900 SLEEP_SECONDS=2 DURATION_SECONDS=1800 ./scripts/run/07-run-zabbix-operational-baseline.sh
-./scripts/run/08-freeze-zabbix-operational-baseline.sh
-./scripts/run/09-export-lab-inventory.sh
-./scripts/run/10-export-zabbix-configuration.sh
-```
-
-### Escenario C — Wazuh Security Baseline
-
-```bash
-./scripts/run/11-deploy-wazuh-security.sh
-./scripts/run/12-validate-wazuh-security.sh
-ITERATIONS=3 SLEEP_SECONDS=2 ./scripts/run/13-run-wazuh-security-baseline.sh
-./scripts/run/14-freeze-wazuh-security-baseline.sh
-```
-
-### Escenario D — MITRE ATT&CK for ICS + correlación
-
-La corrida final recomendada para paper utiliza 20 iteraciones, polling Zabbix calibrado y ventanas temporales acotadas:
-
-```bash
-ITERATIONS=20 \
-SLEEP_SECONDS=5 \
-BASELINE_WARMUP_SECONDS=60 \
-INTER_ATTACK_COOLDOWN_SECONDS=10 \
-DOS_REQUESTS=500 \
-DOS_CONCURRENCY=30 \
-ATTACK_DURATION_SECONDS=30 \
-HTTP_PROBE_INTERVAL_SECONDS=2 \
-./scripts/run/15-run-mitre-ics-attacks.sh
-
-CORRELATION_WINDOW_SECONDS=120 \
-ZABBIX_HISTORY_LOOKBACK_SECONDS=120 \
-ZABBIX_HISTORY_FORWARD_SECONDS=120 \
-./scripts/run/16-run-correlation-experiment.sh
-
-./scripts/run/17-export-final-datasets.sh
-./scripts/run/18-freeze-correlation-results.sh
-```
-
-## Parámetros principales del Escenario D
-
-| Parámetro | Valor recomendado | Justificación |
-|---|---:|---|
-| `ITERATIONS` | 20 | repeticiones suficientes para corrida paper-final controlada |
-| `BASELINE_WARMUP_SECONDS` | 60 | permite alinear polling Zabbix antes de ataques |
-| `INTER_ATTACK_COOLDOWN_SECONDS` | 10 | reduce solapamiento entre iteraciones |
-| `DOS_REQUESTS` | 500 | intensidad controlada para T0860 |
-| `DOS_CONCURRENCY` | 30 | concurrencia suficiente sin destruir el laboratorio |
-| `ATTACK_DURATION_SECONDS` | 30 | ventana observable para Zabbix/Wazuh |
-| `CORRELATION_WINDOW_SECONDS` | 120 | ventana fuerte de correlación temporal |
-| `ZABBIX_HISTORY_LOOKBACK_SECONDS` | 120 | histórico operacional cercano al ataque |
-| `ZABBIX_HISTORY_FORWARD_SECONDS` | 120 | recuperación/efecto posterior cercano al ataque |
-
-## Resultados
+La separación metodológica es:
 
 ```text
-results/
-├── raw/
-├── processed/
-├── figures/
-└── tables/
+A–C = validación funcional e instrumentación
+D–E = campañas cuantitativas principales
 ```
 
-Archivos principales esperados:
-
-| Ruta | Descripción |
-|---|---|
-| `results/raw/scenario_d/mitre_ics_attacks.csv` | eventos de ataque ejecutados |
-| `results/raw/scenario_d/wazuh_security_events.csv` | eventos Wazuh exportados |
-| `results/raw/scenario_d/zabbix_correlation_metrics.csv` | métricas Zabbix reales vía `history.get` |
-| `results/processed/correlation_dataset.csv` | dataset correlacionado final |
-| `results/tables/table_attack_detection.csv` | detección por técnica |
-| `results/tables/table_correlation_latency.csv` | distancia temporal y latencia |
-| `results/tables/table_sla_impact.csv` | impacto operacional |
-| `results/tables/table_zabbix_history_quality.csv` | calidad del histórico Zabbix |
-| `results/figures/*.svg` | figuras para análisis y paper |
-
-## Evidencias y freezes
-
-```text
-baseline/
-evidence/
-├── inventory/
-├── zabbix/
-└── wazuh/
-```
-
-Cada freeze incluye datasets, snapshots Kubernetes y `SHA256SUMS` para trazabilidad.
-
-## Interpretación metodológica
-
-El objetivo principal del Escenario D no es maximizar degradación destructiva del entorno IIoT, sino evaluar:
-
-- detección de amenazas,
-- correlación temporal operacional-seguridad,
-- observabilidad reproducible,
-- integración entre métricas Zabbix y eventos Wazuh.
-
-Los ataques fueron ejecutados bajo un modelo controlado y reproducible orientado a evaluar correlación temporal y capacidad de observabilidad, no a maximizar degradación operacional destructiva ni resiliencia industrial extrema.
-
-Por ello, técnicas como T0809 y T0814 pueden comprometer integridad lógica o generar eventos de seguridad sin producir degradación operacional severa observable en SLA o disponibilidad. En cambio, T0860 está orientado explícitamente a disponibilidad y puede producir errores HTTP observables.
-
-## Estado final esperado
-
-Al completar los scripts `00` a `18`, el laboratorio debe contar con:
-
-```text
-[OK] Foundation IIoT desplegado y congelado
-[OK] Zabbix con histórico operacional real
-[OK] Wazuh con eventos MITRE ICS y dashboard/API funcionales
-[OK] Campaña D ejecutada con 20 iteraciones
-[OK] Datasets raw/processed/tables/figures generados
-[OK] Freeze final reproducible con SHA256SUMS
-```
-
-
-<!-- SCENARIO_E_NOISE_FPR_V1 -->
-
-## Escenario E — Operational Noise / False Positive Control
-
-El Escenario E ejecuta ruido operacional legítimo y controlado para medir falsos positivos frente a las técnicas MITRE ATT&CK for ICS evaluadas en el Escenario D. No introduce ataques, sabotaje, chaos engineering ni infraestructura adicional.
-
-```bash
-ITERATIONS_PER_PROFILE=20 NOISE_DURATION_SECONDS=30 INTER_NOISE_COOLDOWN_SECONDS=10 ./scripts/run/23-run-operational-noise-control.sh
-./scripts/run/24-analyze-false-positive-rate.sh
-./scripts/run/25-freeze-noise-control-results.sh
-```
-
+Esto evita interpretar tareas de despliegue como resultados estadísticos finales y permite documentar de forma clara la evidencia experimental.
