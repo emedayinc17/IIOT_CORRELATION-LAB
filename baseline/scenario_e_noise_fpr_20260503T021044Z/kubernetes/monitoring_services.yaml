@@ -1,0 +1,121 @@
+apiVersion: v1
+items:
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"v1","kind":"Service","metadata":{"annotations":{},"labels":{"app":"zabbix-postgres","project":"iiot-correlation-lab","stage":"zabbix-monitoring"},"name":"zabbix-postgres","namespace":"monitoring"},"spec":{"ports":[{"name":"postgres","port":5432,"targetPort":5432}],"selector":{"app":"zabbix-postgres","project":"iiot-correlation-lab","stage":"zabbix-monitoring"},"type":"ClusterIP"}}
+    creationTimestamp: "2026-05-02T03:12:06Z"
+    labels:
+      app: zabbix-postgres
+      project: iiot-correlation-lab
+      stage: zabbix-monitoring
+    name: zabbix-postgres
+    namespace: monitoring
+    resourceVersion: "40564"
+    uid: 614facde-0eb4-4aad-8ee9-83a807eb51c3
+  spec:
+    clusterIP: 10.152.183.92
+    clusterIPs:
+    - 10.152.183.92
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: postgres
+      port: 5432
+      protocol: TCP
+      targetPort: 5432
+    selector:
+      app: zabbix-postgres
+      project: iiot-correlation-lab
+      stage: zabbix-monitoring
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"v1","kind":"Service","metadata":{"annotations":{},"labels":{"app":"zabbix-server","project":"iiot-correlation-lab","stage":"zabbix-monitoring"},"name":"zabbix-server","namespace":"monitoring"},"spec":{"ports":[{"name":"zabbix-trapper","port":10051,"targetPort":10051}],"selector":{"app":"zabbix-server","project":"iiot-correlation-lab","stage":"zabbix-monitoring"},"type":"ClusterIP"}}
+    creationTimestamp: "2026-05-02T03:12:07Z"
+    labels:
+      app: zabbix-server
+      project: iiot-correlation-lab
+      stage: zabbix-monitoring
+    name: zabbix-server
+    namespace: monitoring
+    resourceVersion: "40569"
+    uid: e846b947-b674-447b-aa54-005ffa97aca9
+  spec:
+    clusterIP: 10.152.183.20
+    clusterIPs:
+    - 10.152.183.20
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: zabbix-trapper
+      port: 10051
+      protocol: TCP
+      targetPort: 10051
+    selector:
+      app: zabbix-server
+      project: iiot-correlation-lab
+      stage: zabbix-monitoring
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"v1","kind":"Service","metadata":{"annotations":{"metallb.io/loadBalancerIPs":"10.10.0.160"},"labels":{"app":"zabbix-web","project":"iiot-correlation-lab","stage":"zabbix-monitoring"},"name":"zabbix-web","namespace":"monitoring"},"spec":{"loadBalancerIP":"10.10.0.160","ports":[{"name":"http","port":80,"targetPort":8080}],"selector":{"app":"zabbix-web","project":"iiot-correlation-lab","stage":"zabbix-monitoring"},"type":"LoadBalancer"}}
+      metallb.io/loadBalancerIPs: 10.10.0.160
+    creationTimestamp: "2026-05-02T03:12:07Z"
+    labels:
+      app: zabbix-web
+      project: iiot-correlation-lab
+      stage: zabbix-monitoring
+    name: zabbix-web
+    namespace: monitoring
+    resourceVersion: "40576"
+    uid: b08587da-57a2-40a3-9ee1-7c2e91b5c330
+  spec:
+    allocateLoadBalancerNodePorts: true
+    clusterIP: 10.152.183.71
+    clusterIPs:
+    - 10.152.183.71
+    externalTrafficPolicy: Cluster
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    loadBalancerIP: 10.10.0.160
+    ports:
+    - name: http
+      nodePort: 30670
+      port: 80
+      protocol: TCP
+      targetPort: 8080
+    selector:
+      app: zabbix-web
+      project: iiot-correlation-lab
+      stage: zabbix-monitoring
+    sessionAffinity: None
+    type: LoadBalancer
+  status:
+    loadBalancer:
+      ingress:
+      - ip: 10.10.0.160
+        ipMode: VIP
+kind: List
+metadata:
+  resourceVersion: ""

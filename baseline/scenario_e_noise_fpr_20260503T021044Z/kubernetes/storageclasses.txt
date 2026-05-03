@@ -1,0 +1,3 @@
+NAME                          PROVISIONER            RECLAIMPOLICY   VOLUMEBINDINGMODE      ALLOWVOLUMEEXPANSION   AGE
+microk8s-hostpath (default)   microk8s.io/hostpath   Delete          WaitForFirstConsumer   false                  27h
+wazuh-storage                 microk8s.io/hostpath   Delete          Immediate              false                  21h

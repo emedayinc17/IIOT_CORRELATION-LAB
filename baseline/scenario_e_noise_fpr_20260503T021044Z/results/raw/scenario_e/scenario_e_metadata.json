@@ -1,0 +1,48 @@
+{
+  "metadata_version": "1.0",
+  "scenario": "E",
+  "scenario_name": "Operational Noise / False Positive Control",
+  "generated_utc": "2026-05-03T02:10:43Z",
+  "profiles": "LOW,MEDIUM,HIGH",
+  "iterations_per_profile": 20,
+  "noise_duration_seconds": 30,
+  "inter_noise_cooldown_seconds": 10,
+  "http_probe_interval_seconds": 2.0,
+  "profile_parameters": {
+    "LOW": {
+      "http_concurrency": 5,
+      "mqtt_messages": 20
+    },
+    "MEDIUM": {
+      "http_concurrency": 10,
+      "mqtt_messages": 40
+    },
+    "HIGH": {
+      "http_concurrency": 20,
+      "mqtt_messages": 80
+    }
+  },
+  "definition": "Legitimate operational noise without attacks; used to estimate false positive rate for MITRE ICS techniques T0809/T0814/T0860.",
+  "datasets": {
+    "noise_events": {
+      "path": "results/raw/scenario_e/noise_events.csv",
+      "rows": 60,
+      "sha256": "dd8d8ab6815ab1a08a64317d80a98f29b5ce5d2ddb2ad53be903e4a6745d4748"
+    },
+    "noise_http_observations": {
+      "path": "results/raw/scenario_e/noise_http_observations.csv",
+      "rows": 10500,
+      "sha256": "4c6f41d183c07f0853835c70f2e30e16b9a96831d279a52f9de1647f4a8adaa3"
+    },
+    "noise_mqtt_observations": {
+      "path": "results/raw/scenario_e/noise_mqtt_observations.csv",
+      "rows": 60,
+      "sha256": "37ab809af097d675c42453dc71457184cbeda1f36a08f709543ea9c6ceb6217d"
+    },
+    "wazuh_noise_events": {
+      "path": "results/raw/scenario_e/wazuh_noise_events.csv",
+      "rows": 60,
+      "sha256": "05c0e6b095f99590ab052091c926972a16d4f55cc443c5d38cc39fae013858e9"
+    }
+  }
+}

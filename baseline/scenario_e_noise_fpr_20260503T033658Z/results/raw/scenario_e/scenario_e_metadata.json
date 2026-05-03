@@ -1,0 +1,65 @@
+{
+  "metadata_version": "1.2",
+  "scenario": "E",
+  "scenario_name": "Operational Noise / False Positive Control",
+  "generated_utc": "2026-05-03T03:36:51Z",
+  "profiles": "LOW,MEDIUM,HIGH",
+  "expected_noise_executions": 60,
+  "iterations_per_profile": 20,
+  "noise_duration_seconds": 30,
+  "inter_noise_cooldown_seconds": 10,
+  "http_probe_interval_seconds": 2.0,
+  "http_urls": [
+    "http://10.10.0.152:8080/health",
+    "http://10.10.0.153:8080/health",
+    "http://10.10.0.153:8080/metrics",
+    "http://10.10.0.153:8080/telemetry",
+    "http://10.10.0.154:8080/health"
+  ],
+  "profile_parameters": {
+    "LOW": {
+      "http_concurrency": 5,
+      "mqtt_messages": 20
+    },
+    "MEDIUM": {
+      "http_concurrency": 10,
+      "mqtt_messages": 40
+    },
+    "HIGH": {
+      "http_concurrency": 20,
+      "mqtt_messages": 80
+    }
+  },
+  "definition": "Legitimate operational noise without attacks; used to estimate false positive rate for MITRE ICS techniques T0809/T0814/T0860.",
+  "resilience_note": "Benign Wazuh evidence is generated locally and appended once after the campaign to avoid fragile per-iteration kubectl exec calls.",
+  "datasets": {
+    "noise_events": {
+      "path": "results/raw/scenario_e/noise_events.csv",
+      "rows": 60,
+      "sha256": "0ee1d516f9c1a178adfd4029ca88868805819863c682329f20331f76b8f87e2a"
+    },
+    "noise_http_observations": {
+      "path": "results/raw/scenario_e/noise_http_observations.csv",
+      "rows": 10340,
+      "sha256": "ea24e65e01fac75692dd6a60585eea5705fccb376f8f69f2bc18a94bdbdf7a33"
+    },
+    "noise_mqtt_observations": {
+      "path": "results/raw/scenario_e/noise_mqtt_observations.csv",
+      "rows": 60,
+      "sha256": "e2aa4c8e307494d3c0bf4e164845be12bd9efa64d4d57410a35644eb43f2e1bc"
+    },
+    "wazuh_noise_events": {
+      "path": "results/raw/scenario_e/wazuh_noise_events.csv",
+      "rows": 60,
+      "sha256": "4285d8cae1d368a597219422a61330882ae88a7a74b84b777238c96d5b779c81"
+    },
+    "http_endpoint_validation_summary": {
+      "path": "results/raw/scenario_e/http_endpoint_validation_summary.json",
+      "sha256": "af4b321fcc14ee9edf233cf6a9c62dcb038a0bf7cd47af880633609c56b8068c"
+    },
+    "local_ndjson_batch": {
+      "path": "evidence/wazuh/scenario_e/scenario_e_noise_local_events.ndjson",
+      "sha256": "f3e24f1ec95685b9a762d66c420211a1970b2c914eee93cce3fc2011ecb807a8"
+    }
+  }
+}

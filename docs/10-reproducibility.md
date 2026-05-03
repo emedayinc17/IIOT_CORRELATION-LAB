@@ -1,21 +1,81 @@
-## Nota de corrección v1.2 — análisis temporal robusto
+# 10 — Reproducibilidad
 
-La capa 21–22 ahora maneja de forma explícita tres escenarios:
+## Principio
 
-1. deltas temporales por ejecución disponibles;
-2. fallback agregado desde `table_correlation_latency.csv`;
-3. ausencia de delta temporal, en cuyo caso se generan tablas explícitas sin fallar silenciosamente.
-
-Esto evita errores por listas vacías y deja trazabilidad del origen del delta en:
+Cada escenario debe poder reproducirse con:
 
 ```text
-results/processed/temporal_correlation_diagnostics.json
+scripts + metadata + datasets raw + evidencia + freeze + SHA256SUMS
 ```
 
+## Secuencia general
 
-<!-- SCENARIO_E_NOISE_FPR_V1 -->
+```bash
+./scripts/run/00-reset-lab.sh
+./scripts/run/01-deploy-foundation.sh
+./scripts/run/02-run-operational-baseline.sh
+./scripts/run/03-freeze-operational-baseline.sh
+./scripts/run/04-deploy-zabbix.sh
+./scripts/run/05-validate-zabbix.sh
+./scripts/run/06-configure-zabbix-monitoring.sh
+./scripts/run/07-run-zabbix-operational-baseline.sh
+./scripts/run/08-freeze-zabbix-operational-baseline.sh
+./scripts/run/09-export-lab-inventory.sh
+./scripts/run/10-export-zabbix-configuration.sh
+./scripts/run/11-deploy-wazuh-security.sh
+./scripts/run/12-validate-wazuh-security.sh
+./scripts/run/13-run-wazuh-security-baseline.sh
+./scripts/run/14-freeze-wazuh-security-baseline.sh
+./scripts/run/15-run-mitre-ics-attacks.sh
+./scripts/run/16-run-correlation-experiment.sh
+./scripts/run/17-export-final-datasets.sh
+./scripts/run/18-freeze-correlation-results.sh
+./scripts/run/19-normalize-experimental-datasets.sh
+./scripts/run/20-generate-experimental-metadata.sh
+./scripts/run/21-analyze-temporal-correlation.sh
+./scripts/run/22-run-statistical-analysis.sh
+./scripts/run/23-run-operational-noise-control.sh
+./scripts/run/24-analyze-false-positive-rate.sh
+./scripts/run/25-freeze-noise-control-results.sh
+```
 
-## Scenario E reproducibility
+## Limpieza segura para repetir Escenario E
 
-Scenario E is reproduced with scripts 23–25. The freeze includes raw noise datasets, processed FPR datasets, tables, evidence, Kubernetes snapshots, scripts, and SHA256SUMS.
+Borrar solo artefactos derivados de E:
 
+```bash
+rm -rf results/raw/scenario_e
+rm -rf results/processed/scenario_e
+rm -f results/tables/table_noise_fpr_summary.csv
+rm -f results/tables/table_noise_wilson_ci.csv
+rm -f results/tables/table_noise_profile_summary.csv
+rm -f results/tables/table_noise_zabbix_quality.csv
+rm -f results/figures/figure_noise_fpr_by_profile.svg
+rm -rf evidence/wazuh/scenario_e
+```
+
+No borrar:
+
+```text
+results/raw/scenario_d
+results/processed/correlation_dataset.csv
+baseline/
+evidence/
+```
+
+## Freeze
+
+Los freezes deben incluir:
+
+- datasets raw;
+- datasets processed;
+- tablas;
+- figuras;
+- scripts usados;
+- snapshots Kubernetes;
+- metadata;
+- `SHA256SUMS`.
+
+## Archivos temporales/históricos
+
+Los documentos de implementación incremental pueden conservarse si se desea trazabilidad histórica, pero la documentación formal debe estar consolidada en los capítulos principales.

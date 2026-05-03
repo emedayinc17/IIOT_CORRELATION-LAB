@@ -1,0 +1,247 @@
+apiVersion: v1
+items:
+- apiVersion: v1
+  data:
+    app.py: |2
+
+      from http.server import BaseHTTPRequestHandler, HTTPServer
+      from datetime import datetime, timezone
+      import json, socket, random
+      SERVICE_NAME = "health-app"
+      class Handler(BaseHTTPRequestHandler):
+          def _json(self, obj, code=200):
+              body=json.dumps(obj).encode()
+              self.send_response(code); self.send_header("Content-Type","application/json"); self.send_header("Content-Length",str(len(body))); self.end_headers(); self.wfile.write(body)
+          def do_GET(self):
+              now=datetime.now(timezone.utc).isoformat()
+              if self.path.startswith("/health") or self.path.startswith("/ready"):
+                  self._json({"status":"ok","service":SERVICE_NAME,"timestamp":now,"host":socket.gethostname()})
+              elif self.path.startswith("/telemetry"):
+                  self._json({"timestamp":now,"site":"mine-site-01","equipment":"crusher-01","temperature_c":round(random.uniform(35,72),2),"vibration_mm_s":round(random.uniform(.2,5),3),"pressure_bar":round(random.uniform(1,6.5),2),"status":"normal"})
+              elif self.path.startswith("/metrics"):
+                  body=f"iiot_{SERVICE_NAME.replace('-','_')}_up 1\n".encode()
+                  self.send_response(200); self.send_header("Content-Type","text/plain"); self.send_header("Content-Length",str(len(body))); self.end_headers(); self.wfile.write(body)
+              else:
+                  self._json({"status":"not_found","service":SERVICE_NAME,"timestamp":now},404)
+          def do_POST(self):
+              now=datetime.now(timezone.utc).isoformat()
+              length=int(self.headers.get("Content-Length","0") or 0)
+              raw=self.rfile.read(length).decode() if length else "{}"
+              try: payload=json.loads(raw)
+              except Exception: payload={"raw":raw}
+              self._json({"status":"accepted","service":SERVICE_NAME,"payload":payload,"timestamp":now})
+          def log_message(self, fmt, *args):
+              print("%s - - [%s] %s"%(self.client_address[0],self.log_date_time_string(),fmt%args), flush=True)
+      HTTPServer(("0.0.0.0",8080), Handler).serve_forever()
+  kind: ConfigMap
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"v1","data":{"app.py":"\nfrom http.server import BaseHTTPRequestHandler, HTTPServer\nfrom datetime import datetime, timezone\nimport json, socket, random\nSERVICE_NAME = \"health-app\"\nclass Handler(BaseHTTPRequestHandler):\n    def _json(self, obj, code=200):\n        body=json.dumps(obj).encode()\n        self.send_response(code); self.send_header(\"Content-Type\",\"application/json\"); self.send_header(\"Content-Length\",str(len(body))); self.end_headers(); self.wfile.write(body)\n    def do_GET(self):\n        now=datetime.now(timezone.utc).isoformat()\n        if self.path.startswith(\"/health\") or self.path.startswith(\"/ready\"):\n            self._json({\"status\":\"ok\",\"service\":SERVICE_NAME,\"timestamp\":now,\"host\":socket.gethostname()})\n        elif self.path.startswith(\"/telemetry\"):\n            self._json({\"timestamp\":now,\"site\":\"mine-site-01\",\"equipment\":\"crusher-01\",\"temperature_c\":round(random.uniform(35,72),2),\"vibration_mm_s\":round(random.uniform(.2,5),3),\"pressure_bar\":round(random.uniform(1,6.5),2),\"status\":\"normal\"})\n        elif self.path.startswith(\"/metrics\"):\n            body=f\"iiot_{SERVICE_NAME.replace('-','_')}_up 1\\n\".encode()\n            self.send_response(200); self.send_header(\"Content-Type\",\"text/plain\"); self.send_header(\"Content-Length\",str(len(body))); self.end_headers(); self.wfile.write(body)\n        else:\n            self._json({\"status\":\"not_found\",\"service\":SERVICE_NAME,\"timestamp\":now},404)\n    def do_POST(self):\n        now=datetime.now(timezone.utc).isoformat()\n        length=int(self.headers.get(\"Content-Length\",\"0\") or 0)\n        raw=self.rfile.read(length).decode() if length else \"{}\"\n        try: payload=json.loads(raw)\n        except Exception: payload={\"raw\":raw}\n        self._json({\"status\":\"accepted\",\"service\":SERVICE_NAME,\"payload\":payload,\"timestamp\":now})\n    def log_message(self, fmt, *args):\n        print(\"%s - - [%s] %s\"%(self.client_address[0],self.log_date_time_string(),fmt%args), flush=True)\nHTTPServer((\"0.0.0.0\",8080), Handler).serve_forever()\n"},"kind":"ConfigMap","metadata":{"annotations":{},"labels":{"project":"iiot-correlation-lab","stage":"foundation"},"name":"health-app-code","namespace":"iiot-poc"}}
+    creationTimestamp: "2026-05-02T02:03:36Z"
+    labels:
+      project: iiot-correlation-lab
+      stage: foundation
+    name: health-app-code
+    namespace: iiot-poc
+    resourceVersion: "30820"
+    uid: fe968518-1a50-4e93-9170-1a98fa2f86f9
+- apiVersion: v1
+  data:
+    ca.crt: |
+      -----BEGIN CERTIFICATE-----
+      MIIDDzCCAfegAwIBAgIUEyXD8CvBnOGeZjKW9pXzIRlgWO0wDQYJKoZIhvcNAQEL
+      BQAwFzEVMBMGA1UEAwwMMTAuMTUyLjE4My4xMB4XDTI2MDUwMTIyMjkwNVoXDTM2
+      MDQyODIyMjkwNVowFzEVMBMGA1UEAwwMMTAuMTUyLjE4My4xMIIBIjANBgkqhkiG
+      9w0BAQEFAAOCAQ8AMIIBCgKCAQEAqbqvbYSkTqmKIfKRyk05HQUgmfyUCC9aPHgh
+      SKeEsJ7yZvPcL7PB/GsGfLFcrDQCrjYvKq5grqAkfsnMCNUoqkp9Tq9Oey5lEVkN
+      KIGyYQ3YoUTIA7dQnVCnApLayCy4xJjOX20YqJqDWMd4qhYK6+OD8RKmckPV0kYg
+      cCpNzrtLMYL4PNAqya69A2CmQPAE+IlJvce3ugcOqwJ69sOllA7Hy3dJm7WnsTVL
+      F8fbSfqbaEj1hmXxhAI62BIu+OJvll2nbuwj3f3vNkiUetBCpsV5z8aYb4VYpYI4
+      h9nqnRNM50tUPvNeIWhMfhS0km8MQH4XSwG7+8MvRozyvsPFhwIDAQABo1MwUTAd
+      BgNVHQ4EFgQUBWk0gYklIN4RReZbnTeaRtGiLKswHwYDVR0jBBgwFoAUBWk0gYkl
+      IN4RReZbnTeaRtGiLKswDwYDVR0TAQH/BAUwAwEB/zANBgkqhkiG9w0BAQsFAAOC
+      AQEASRYUzO3zjkvwW+RUznmfltIzxUi722oaK/DrZsQo4giOkeetqt7ihm8yRvSa
+      1bDmzOBSlRiN5MDWIB6Cni0Xn3gNB1j2HzEcwpq56p+AQb2DylukMSczlBICBtbE
+      tI2LAVSZBoGLua7A4JnnLD38CcoNPXn5bGKZxvfM/mez5XUw/cwpYz7r7AFKV2M/
+      b9PCjOapLmhlK3Jy7d7qKxDDPGLGIdER1Q0kRDt/bldxh6Xj/ujARzDCz5l9p1Tg
+      NpxvPAjY+89jGefQU8+g4iFQxkkIU46fWaZqgCw8JStgAWrJ5u4e/7+y27Slezjo
+      c2dqMwlPo/8jtKsV6Qeu1EQuOA==
+      -----END CERTIFICATE-----
+  kind: ConfigMap
+  metadata:
+    annotations:
+      kubernetes.io/description: Contains a CA bundle that can be used to verify the
+        kube-apiserver when using internal endpoints such as the internal service
+        IP or kubernetes.default.svc. No other usage is guaranteed across distributions
+        of Kubernetes clusters.
+    creationTimestamp: "2026-05-02T02:03:36Z"
+    name: kube-root-ca.crt
+    namespace: iiot-poc
+    resourceVersion: "30821"
+    uid: cdc7abb1-afdb-4bf5-bc15-5a6ad4d61c95
+- apiVersion: v1
+  data:
+    mosquitto.conf: |
+      listener 1883
+      allow_anonymous true
+      persistence false
+      log_dest stdout
+      log_type error
+      log_type warning
+      log_type notice
+      log_type information
+  kind: ConfigMap
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"v1","data":{"mosquitto.conf":"listener 1883\nallow_anonymous true\npersistence false\nlog_dest stdout\nlog_type error\nlog_type warning\nlog_type notice\nlog_type information\n"},"kind":"ConfigMap","metadata":{"annotations":{},"labels":{"project":"iiot-correlation-lab","stage":"foundation"},"name":"mosquitto-config","namespace":"iiot-poc"}}
+    creationTimestamp: "2026-05-02T02:03:36Z"
+    labels:
+      project: iiot-correlation-lab
+      stage: foundation
+    name: mosquitto-config
+    namespace: iiot-poc
+    resourceVersion: "30822"
+    uid: f9081bb1-d19c-458e-a25e-4cf025d393f9
+- apiVersion: v1
+  data:
+    sensor-loop.sh: |
+      #!/bin/sh
+      set -eu
+      MQTT_HOST="${MQTT_HOST:-mosquitto.iiot-poc.svc.cluster.local}"
+      MQTT_PORT="${MQTT_PORT:-1883}"
+      SITE="${SITE:-mine-site-01}"
+      EQUIPMENT="${EQUIPMENT:-crusher-01}"
+      INTERVAL_SECONDS="${INTERVAL_SECONDS:-2}"
+
+      echo "[INFO] Waiting for MQTT broker ${MQTT_HOST}:${MQTT_PORT}"
+      until mosquitto_pub -h "$MQTT_HOST" -p "$MQTT_PORT" -t "lab/startup" -m "{\"status\":\"sensor-ready\"}" >/dev/null 2>&1; do
+        echo "[WARN] MQTT broker not ready, retrying..."
+        sleep 3
+      done
+
+      echo "[INFO] Sensor simulator started"
+      n=0
+      while true; do
+        n=$((n + 1))
+        ts="$(date -u +%Y-%m-%dT%H:%M:%SZ)"
+        temp="$(awk "BEGIN { printf \"%.2f\", 35 + (($n * 37) % 3500) / 100 }")"
+        vib="$(awk "BEGIN { printf \"%.3f\", 0.2 + (($n * 11) % 500) / 100 }")"
+        pressure="$(awk "BEGIN { printf \"%.2f\", 1 + (($n * 17) % 550) / 100 }")"
+        for sensor in temp-01 vibration-01 pressure-01; do
+          payload="{\"timestamp\":\"$ts\",\"site\":\"$SITE\",\"equipment\":\"$EQUIPMENT\",\"sensor_id\":\"$sensor\",\"temperature_c\":$temp,\"vibration_mm_s\":$vib,\"pressure_bar\":$pressure,\"status\":\"normal\",\"source\":\"$(hostname)\"}"
+          topic="sensors/$SITE/$EQUIPMENT/$sensor"
+          mosquitto_pub -h "$MQTT_HOST" -p "$MQTT_PORT" -t "$topic" -m "$payload"
+          echo "[MQTT] topic=$topic payload=$payload"
+        done
+        sleep "$INTERVAL_SECONDS"
+      done
+  kind: ConfigMap
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"v1","data":{"sensor-loop.sh":"#!/bin/sh\nset -eu\nMQTT_HOST=\"${MQTT_HOST:-mosquitto.iiot-poc.svc.cluster.local}\"\nMQTT_PORT=\"${MQTT_PORT:-1883}\"\nSITE=\"${SITE:-mine-site-01}\"\nEQUIPMENT=\"${EQUIPMENT:-crusher-01}\"\nINTERVAL_SECONDS=\"${INTERVAL_SECONDS:-2}\"\n\necho \"[INFO] Waiting for MQTT broker ${MQTT_HOST}:${MQTT_PORT}\"\nuntil mosquitto_pub -h \"$MQTT_HOST\" -p \"$MQTT_PORT\" -t \"lab/startup\" -m \"{\\\"status\\\":\\\"sensor-ready\\\"}\" \u003e/dev/null 2\u003e\u00261; do\n  echo \"[WARN] MQTT broker not ready, retrying...\"\n  sleep 3\ndone\n\necho \"[INFO] Sensor simulator started\"\nn=0\nwhile true; do\n  n=$((n + 1))\n  ts=\"$(date -u +%Y-%m-%dT%H:%M:%SZ)\"\n  temp=\"$(awk \"BEGIN { printf \\\"%.2f\\\", 35 + (($n * 37) % 3500) / 100 }\")\"\n  vib=\"$(awk \"BEGIN { printf \\\"%.3f\\\", 0.2 + (($n * 11) % 500) / 100 }\")\"\n  pressure=\"$(awk \"BEGIN { printf \\\"%.2f\\\", 1 + (($n * 17) % 550) / 100 }\")\"\n  for sensor in temp-01 vibration-01 pressure-01; do\n    payload=\"{\\\"timestamp\\\":\\\"$ts\\\",\\\"site\\\":\\\"$SITE\\\",\\\"equipment\\\":\\\"$EQUIPMENT\\\",\\\"sensor_id\\\":\\\"$sensor\\\",\\\"temperature_c\\\":$temp,\\\"vibration_mm_s\\\":$vib,\\\"pressure_bar\\\":$pressure,\\\"status\\\":\\\"normal\\\",\\\"source\\\":\\\"$(hostname)\\\"}\"\n    topic=\"sensors/$SITE/$EQUIPMENT/$sensor\"\n    mosquitto_pub -h \"$MQTT_HOST\" -p \"$MQTT_PORT\" -t \"$topic\" -m \"$payload\"\n    echo \"[MQTT] topic=$topic payload=$payload\"\n  done\n  sleep \"$INTERVAL_SECONDS\"\ndone\n"},"kind":"ConfigMap","metadata":{"annotations":{},"labels":{"project":"iiot-correlation-lab","stage":"foundation"},"name":"sensor-simulator-script","namespace":"iiot-poc"}}
+    creationTimestamp: "2026-05-02T02:03:36Z"
+    labels:
+      project: iiot-correlation-lab
+      stage: foundation
+    name: sensor-simulator-script
+    namespace: iiot-poc
+    resourceVersion: "30823"
+    uid: de80d01c-f6e0-4525-b9d4-55de025f761e
+- apiVersion: v1
+  data:
+    app.py: |2
+
+      from http.server import BaseHTTPRequestHandler, HTTPServer
+      from datetime import datetime, timezone
+      import json, socket, random
+      SERVICE_NAME = "telemetry-api"
+      class Handler(BaseHTTPRequestHandler):
+          def _json(self, obj, code=200):
+              body=json.dumps(obj).encode()
+              self.send_response(code); self.send_header("Content-Type","application/json"); self.send_header("Content-Length",str(len(body))); self.end_headers(); self.wfile.write(body)
+          def do_GET(self):
+              now=datetime.now(timezone.utc).isoformat()
+              if self.path.startswith("/health") or self.path.startswith("/ready"):
+                  self._json({"status":"ok","service":SERVICE_NAME,"timestamp":now,"host":socket.gethostname()})
+              elif self.path.startswith("/telemetry"):
+                  self._json({"timestamp":now,"site":"mine-site-01","equipment":"crusher-01","temperature_c":round(random.uniform(35,72),2),"vibration_mm_s":round(random.uniform(.2,5),3),"pressure_bar":round(random.uniform(1,6.5),2),"status":"normal"})
+              elif self.path.startswith("/metrics"):
+                  body=f"iiot_{SERVICE_NAME.replace('-','_')}_up 1\n".encode()
+                  self.send_response(200); self.send_header("Content-Type","text/plain"); self.send_header("Content-Length",str(len(body))); self.end_headers(); self.wfile.write(body)
+              else:
+                  self._json({"status":"not_found","service":SERVICE_NAME,"timestamp":now},404)
+          def do_POST(self):
+              now=datetime.now(timezone.utc).isoformat()
+              length=int(self.headers.get("Content-Length","0") or 0)
+              raw=self.rfile.read(length).decode() if length else "{}"
+              try: payload=json.loads(raw)
+              except Exception: payload={"raw":raw}
+              self._json({"status":"accepted","service":SERVICE_NAME,"payload":payload,"timestamp":now})
+          def log_message(self, fmt, *args):
+              print("%s - - [%s] %s"%(self.client_address[0],self.log_date_time_string(),fmt%args), flush=True)
+      HTTPServer(("0.0.0.0",8080), Handler).serve_forever()
+  kind: ConfigMap
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"v1","data":{"app.py":"\nfrom http.server import BaseHTTPRequestHandler, HTTPServer\nfrom datetime import datetime, timezone\nimport json, socket, random\nSERVICE_NAME = \"telemetry-api\"\nclass Handler(BaseHTTPRequestHandler):\n    def _json(self, obj, code=200):\n        body=json.dumps(obj).encode()\n        self.send_response(code); self.send_header(\"Content-Type\",\"application/json\"); self.send_header(\"Content-Length\",str(len(body))); self.end_headers(); self.wfile.write(body)\n    def do_GET(self):\n        now=datetime.now(timezone.utc).isoformat()\n        if self.path.startswith(\"/health\") or self.path.startswith(\"/ready\"):\n            self._json({\"status\":\"ok\",\"service\":SERVICE_NAME,\"timestamp\":now,\"host\":socket.gethostname()})\n        elif self.path.startswith(\"/telemetry\"):\n            self._json({\"timestamp\":now,\"site\":\"mine-site-01\",\"equipment\":\"crusher-01\",\"temperature_c\":round(random.uniform(35,72),2),\"vibration_mm_s\":round(random.uniform(.2,5),3),\"pressure_bar\":round(random.uniform(1,6.5),2),\"status\":\"normal\"})\n        elif self.path.startswith(\"/metrics\"):\n            body=f\"iiot_{SERVICE_NAME.replace('-','_')}_up 1\\n\".encode()\n            self.send_response(200); self.send_header(\"Content-Type\",\"text/plain\"); self.send_header(\"Content-Length\",str(len(body))); self.end_headers(); self.wfile.write(body)\n        else:\n            self._json({\"status\":\"not_found\",\"service\":SERVICE_NAME,\"timestamp\":now},404)\n    def do_POST(self):\n        now=datetime.now(timezone.utc).isoformat()\n        length=int(self.headers.get(\"Content-Length\",\"0\") or 0)\n        raw=self.rfile.read(length).decode() if length else \"{}\"\n        try: payload=json.loads(raw)\n        except Exception: payload={\"raw\":raw}\n        self._json({\"status\":\"accepted\",\"service\":SERVICE_NAME,\"payload\":payload,\"timestamp\":now})\n    def log_message(self, fmt, *args):\n        print(\"%s - - [%s] %s\"%(self.client_address[0],self.log_date_time_string(),fmt%args), flush=True)\nHTTPServer((\"0.0.0.0\",8080), Handler).serve_forever()\n"},"kind":"ConfigMap","metadata":{"annotations":{},"labels":{"project":"iiot-correlation-lab","stage":"foundation"},"name":"telemetry-api-code","namespace":"iiot-poc"}}
+    creationTimestamp: "2026-05-02T02:03:37Z"
+    labels:
+      project: iiot-correlation-lab
+      stage: foundation
+    name: telemetry-api-code
+    namespace: iiot-poc
+    resourceVersion: "30824"
+    uid: 0911eec2-85a1-478c-bcd2-141fe9cd2743
+- apiVersion: v1
+  data:
+    app.py: |2
+
+      from http.server import BaseHTTPRequestHandler, HTTPServer
+      from datetime import datetime, timezone
+      import json, socket, random
+      SERVICE_NAME = "vulnerable-app"
+      class Handler(BaseHTTPRequestHandler):
+          def _json(self, obj, code=200):
+              body=json.dumps(obj).encode()
+              self.send_response(code); self.send_header("Content-Type","application/json"); self.send_header("Content-Length",str(len(body))); self.end_headers(); self.wfile.write(body)
+          def do_GET(self):
+              now=datetime.now(timezone.utc).isoformat()
+              if self.path.startswith("/health") or self.path.startswith("/ready"):
+                  self._json({"status":"ok","service":SERVICE_NAME,"timestamp":now,"host":socket.gethostname()})
+              elif self.path.startswith("/telemetry"):
+                  self._json({"timestamp":now,"site":"mine-site-01","equipment":"crusher-01","temperature_c":round(random.uniform(35,72),2),"vibration_mm_s":round(random.uniform(.2,5),3),"pressure_bar":round(random.uniform(1,6.5),2),"status":"normal"})
+              elif self.path.startswith("/metrics"):
+                  body=f"iiot_{SERVICE_NAME.replace('-','_')}_up 1\n".encode()
+                  self.send_response(200); self.send_header("Content-Type","text/plain"); self.send_header("Content-Length",str(len(body))); self.end_headers(); self.wfile.write(body)
+              else:
+                  self._json({"status":"not_found","service":SERVICE_NAME,"timestamp":now},404)
+          def do_POST(self):
+              now=datetime.now(timezone.utc).isoformat()
+              length=int(self.headers.get("Content-Length","0") or 0)
+              raw=self.rfile.read(length).decode() if length else "{}"
+              try: payload=json.loads(raw)
+              except Exception: payload={"raw":raw}
+              self._json({"status":"accepted","service":SERVICE_NAME,"payload":payload,"timestamp":now})
+          def log_message(self, fmt, *args):
+              print("%s - - [%s] %s"%(self.client_address[0],self.log_date_time_string(),fmt%args), flush=True)
+      HTTPServer(("0.0.0.0",8080), Handler).serve_forever()
+  kind: ConfigMap
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"v1","data":{"app.py":"\nfrom http.server import BaseHTTPRequestHandler, HTTPServer\nfrom datetime import datetime, timezone\nimport json, socket, random\nSERVICE_NAME = \"vulnerable-app\"\nclass Handler(BaseHTTPRequestHandler):\n    def _json(self, obj, code=200):\n        body=json.dumps(obj).encode()\n        self.send_response(code); self.send_header(\"Content-Type\",\"application/json\"); self.send_header(\"Content-Length\",str(len(body))); self.end_headers(); self.wfile.write(body)\n    def do_GET(self):\n        now=datetime.now(timezone.utc).isoformat()\n        if self.path.startswith(\"/health\") or self.path.startswith(\"/ready\"):\n            self._json({\"status\":\"ok\",\"service\":SERVICE_NAME,\"timestamp\":now,\"host\":socket.gethostname()})\n        elif self.path.startswith(\"/telemetry\"):\n            self._json({\"timestamp\":now,\"site\":\"mine-site-01\",\"equipment\":\"crusher-01\",\"temperature_c\":round(random.uniform(35,72),2),\"vibration_mm_s\":round(random.uniform(.2,5),3),\"pressure_bar\":round(random.uniform(1,6.5),2),\"status\":\"normal\"})\n        elif self.path.startswith(\"/metrics\"):\n            body=f\"iiot_{SERVICE_NAME.replace('-','_')}_up 1\\n\".encode()\n            self.send_response(200); self.send_header(\"Content-Type\",\"text/plain\"); self.send_header(\"Content-Length\",str(len(body))); self.end_headers(); self.wfile.write(body)\n        else:\n            self._json({\"status\":\"not_found\",\"service\":SERVICE_NAME,\"timestamp\":now},404)\n    def do_POST(self):\n        now=datetime.now(timezone.utc).isoformat()\n        length=int(self.headers.get(\"Content-Length\",\"0\") or 0)\n        raw=self.rfile.read(length).decode() if length else \"{}\"\n        try: payload=json.loads(raw)\n        except Exception: payload={\"raw\":raw}\n        self._json({\"status\":\"accepted\",\"service\":SERVICE_NAME,\"payload\":payload,\"timestamp\":now})\n    def log_message(self, fmt, *args):\n        print(\"%s - - [%s] %s\"%(self.client_address[0],self.log_date_time_string(),fmt%args), flush=True)\nHTTPServer((\"0.0.0.0\",8080), Handler).serve_forever()\n"},"kind":"ConfigMap","metadata":{"annotations":{},"labels":{"project":"iiot-correlation-lab","stage":"foundation"},"name":"vulnerable-app-code","namespace":"iiot-poc"}}
+    creationTimestamp: "2026-05-02T02:03:37Z"
+    labels:
+      project: iiot-correlation-lab
+      stage: foundation
+    name: vulnerable-app-code
+    namespace: iiot-poc
+    resourceVersion: "30825"
+    uid: 2d0ae2e8-d30a-4d89-bc3b-83e8b9c08602
+kind: List
+metadata:
+  resourceVersion: ""

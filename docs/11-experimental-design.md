@@ -1,13 +1,67 @@
-## Corrección de trazabilidad v1.1
+# 11 — Diseño experimental
 
-La campaña final se identifica mediante los `attack_uid` presentes en `results/raw/scenario_d/mitre_ics_attacks.csv`.
+## Enfoque
 
-Todo análisis derivado debe filtrar eventos Wazuh, métricas Zabbix y correlaciones contra esa lista de identificadores. Esto evita contaminación por eventos históricos de corridas previas y mantiene trazabilidad uno-a-uno entre ejecución, evento y métrica.
+El laboratorio adopta un diseño controlado, reproducible y no destructivo.
 
+Prioridades:
 
-<!-- SCENARIO_E_NOISE_FPR_V1 -->
+- estabilidad del entorno;
+- trazabilidad por ejecución;
+- datasets comparables;
+- evidencia reproducible;
+- análisis estadístico prudente;
+- separación entre ataques y ruido legítimo.
 
-## Methodological justification for Scenario E
+## Escenario D
 
-Scenario E separates legitimate operational variability from attack behavior. It supports false-positive analysis and robustness evaluation without changing the main hypothesis or converting the study into a performance benchmark.
+Escenario D evalúa detección y correlación bajo ataques controlados MITRE ATT&CK for ICS.
 
+Parámetros recomendados:
+
+| Parámetro | Valor |
+|---|---:|
+| iteraciones por técnica | 20 |
+| técnicas | T0809, T0814, T0860 |
+| ventana correlación | 120s |
+| lookback/forward Zabbix | 120s / 120s |
+
+## Escenario E
+
+Escenario E evalúa falsos positivos bajo ruido operacional legítimo.
+
+Parámetros recomendados:
+
+| Parámetro | Valor |
+|---|---:|
+| perfiles | LOW, MEDIUM, HIGH |
+| iteraciones por perfil | 20 |
+| duración por iteración | 30s |
+| cooldown | 10s |
+| endpoints HTTP | rutas saludables 200 |
+| MQTT | publicaciones legítimas |
+
+## Justificación del Escenario E
+
+Escenario E responde a preocupaciones sobre:
+
+- falsos positivos;
+- variabilidad operacional;
+- robustez;
+- realismo IIoT;
+- separación ataque/ruido.
+
+No es un benchmark de performance ni un escenario de sabotaje.
+
+## Estadística
+
+Se reportan:
+
+- tasas;
+- Wilson CI 95%;
+- percentiles;
+- bootstrap CI cuando aplica.
+
+## Limitación del estudio
+
+Los ataques y ruidos son controlados. El estudio no maximiza degradación destructiva ni simula todos los posibles comportamientos industriales reales.

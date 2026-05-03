@@ -1,24 +1,65 @@
-# 00 — Overview
+# 00 — Visión general del laboratorio
 
 ## Propósito
 
-Este laboratorio implementa un entorno IIoT reproducible sobre Kubernetes para evaluar la correlación entre monitoreo operacional y eventos de ciberseguridad usando Zabbix y Wazuh.
+Este repositorio implementa un laboratorio reproducible para evaluar correlación temporal basada en eventos entre monitoreo operacional y eventos de seguridad en un entorno IIoT aplicado a Minería 4.0.
 
-El laboratorio se construye de forma incremental para permitir comparación entre escenarios.
+El foco del laboratorio es:
 
-## Escenarios
+```text
+IIoT + Zabbix + Wazuh + correlación temporal + control de falsos positivos
+```
 
-| Escenario | Descripción | Estado |
+Kubernetes se utiliza únicamente como medio reproducible de despliegue. No es el objeto de estudio.
+
+## Estado de escenarios
+
+| Escenario | Estado | Propósito |
 |---|---|---|
-| A | Foundation IIoT sin monitoreo | Implementado |
-| B | Foundation IIoT + Zabbix | Implementado |
-| C | Foundation IIoT + Zabbix + Wazuh | Pendiente |
-| D | Correlación + ataques MITRE ATT&CK for ICS | Pendiente |
+| A — Foundation IIoT | Implementado | Desplegar servicios IIoT base y generar baseline operacional inicial |
+| B — Zabbix Monitoring | Implementado | Capturar métricas operacionales reales con Zabbix |
+| C — Wazuh Security | Implementado | Registrar eventos de seguridad y reglas MITRE ICS en Wazuh |
+| D — MITRE ICS Correlation | Implementado | Ejecutar ataques controlados y correlacionar Wazuh/Zabbix por `attack_uid` |
+| E — Operational Noise/FPR | Implementado | Medir falsos positivos bajo ruido operacional legítimo |
 
-## Principio metodológico
+## Preguntas experimentales que responde el laboratorio
 
-Cada escenario debe ser reproducible, documentado, medible, congelado mediante snapshots y comparable con el escenario anterior.
+| Pregunta | Evidencia |
+|---|---|
+| ¿Cómo se desplegó? | YAMLs, scripts y snapshots Kubernetes |
+| ¿Cómo se ejecutó? | metadata experimental y parámetros de corrida |
+| ¿Qué versiones se usaron? | inventario y matriz de versiones |
+| ¿Qué ocurrió? | datasets raw |
+| ¿Cómo se midió? | scripts estadísticos y tablas derivadas |
+| ¿Cómo se correlacionó? | datasets por `attack_uid` y deltas temporales |
+| ¿Cómo se reproduce? | freezes `.tar.gz` y `SHA256SUMS` |
 
-## Repositorio reproducible
+## Alcance
 
-El laboratorio se apoya en manifiestos YAML, scripts numerados, documentación incremental, datasets CSV, snapshots Kubernetes, exports lógicos de Zabbix y metadata experimental.
+El laboratorio evalúa:
+
+- detección de eventos MITRE ATT&CK for ICS controlados;
+- correlación temporal operacional-seguridad;
+- observabilidad mediante Zabbix `history.get`;
+- eventos de seguridad mediante Wazuh;
+- calidad de datasets y trazabilidad;
+- falsos positivos bajo ruido operacional legítimo.
+
+## Fuera de alcance
+
+No se evalúa:
+
+- alta disponibilidad de Kubernetes;
+- SIEM distribuido o HA;
+- hardening Kubernetes;
+- service mesh;
+- chaos engineering;
+- benchmark de performance;
+- ML/anomaly detection;
+- resiliencia industrial extrema.
+
+## Política de idioma
+
+La documentación principal del repositorio se mantiene en español. El archivo `README.en.md` provee una vista ejecutiva en inglés para lectores internacionales.
+
+Los nombres técnicos, campos de datasets, técnicas MITRE ATT&CK for ICS y rutas de archivos se mantienen en inglés cuando corresponda por convención técnica.

@@ -1,80 +1,74 @@
-# 01 — Architecture
+# 01 — Arquitectura del laboratorio
 
-## Arquitectura lógica
+## Resumen
+
+La arquitectura está organizada por capas funcionales. Cada capa aporta una función experimental específica y se despliega sobre un clúster MicroK8s single-node.
+
+| Capa | Namespace | Componentes principales | Estado |
+|---|---|---|---|
+| Foundation IIoT | `iiot-poc` | Mosquitto, sensor-simulator, health-app, telemetry-api, vulnerable-app | Implementado |
+| Monitoreo operacional | `monitoring` | Zabbix Server, Zabbix Web, PostgreSQL, Zabbix Agent | Implementado |
+| Seguridad | `security` | Wazuh Manager, Wazuh Indexer, Wazuh Dashboard | Implementado |
+| Correlación y evidencia | filesystem repo | scripts, datasets, figures, freezes | Implementado |
+
+## Entorno base
+
+| Elemento | Valor esperado |
+|---|---|
+| Kubernetes | MicroK8s |
+| Nodo | single-node |
+| Sistema operativo | Ubuntu 24.04 |
+| Runtime | containerd |
+| CNI | Calico |
+| LoadBalancer | MetalLB |
+| StorageClass | microk8s-hostpath |
+
+## Flujo lógico
 
 ```text
-┌───────────────────────────────────────────────────────────────┐
-│                       Kubernetes Cluster                       │
-│                       MicroK8s / Ubuntu                        │
-│                       Node: iiot-lab-k8s                       │
-│                       IP: 10.10.0.101                          │
-├───────────────────────────────────────────────────────────────┤
-│ Namespace: iiot-poc                                            │
-│                                                               │
-│  Sensor Simulator ─────MQTT────▶ Mosquitto Broker              │
-│                                10.10.0.151:1883               │
-│                                                               │
-│  Health App        10.10.0.152:8080                            │
-│  Telemetry API     10.10.0.153:8080                            │
-│  Vulnerable App    10.10.0.154:8080                            │
-├───────────────────────────────────────────────────────────────┤
-│ Namespace: monitoring                                          │
-│                                                               │
-│  Zabbix Web UI     10.10.0.160:80                              │
-│       │                                                       │
-│       ▼                                                       │
-│  Zabbix Server     10051/TCP                                   │
-│       │                                                       │
-│       ▼                                                       │
-│  PostgreSQL + PVC  zabbix-postgres-pvc                         │
-│                                                               │
-│  Zabbix Agent2     DaemonSet                                   │
-├───────────────────────────────────────────────────────────────┤
-│ Namespace: security                                            │
-│                                                               │
-│  Wazuh Manager / Indexer / Dashboard                           │
-│  Pendiente para Escenario C                                    │
-├───────────────────────────────────────────────────────────────┤
-│ Platform services                                              │
-│                                                               │
-│  CoreDNS / Calico / MetalLB / NGINX Ingress / hostpath-storage │
-└───────────────────────────────────────────────────────────────┘
+Foundation IIoT
+  ├─ MQTT / HTTP / telemetría
+  ├─ Zabbix recopila métricas operacionales
+  ├─ Wazuh registra eventos de seguridad
+  └─ scripts de correlación generan datasets y evidencia
 ```
 
-## Direccionamiento experimental
+## Foundation IIoT
 
-| Servicio | Namespace | IP/Endpoint | Propósito |
-|---|---|---:|---|
-| MQTT Broker | `iiot-poc` | `10.10.0.151:1883` | canal de telemetría |
-| Health App | `iiot-poc` | `10.10.0.152:8080` | disponibilidad/SLA |
-| Telemetry API | `iiot-poc` | `10.10.0.153:8080` | telemetría operacional |
-| Vulnerable App | `iiot-poc` | `10.10.0.154:8080` | objetivo controlado |
-| Zabbix UI | `monitoring` | `10.10.0.160:80` | monitoreo operacional |
+La capa Foundation simula servicios IIoT básicos:
 
-## Segmentación lógica
-
-| Namespace | Función |
+| Servicio | Propósito |
 |---|---|
-| `iiot-poc` | zona IIoT simulada |
-| `monitoring` | monitoreo operacional |
-| `security` | seguridad/Wazuh |
-| `ingress` | ingress controller |
-| `kube-system` | servicios base Kubernetes |
-| `metallb-system` | LoadBalancer L2 |
+| `mqtt-broker` | punto de publicación MQTT para telemetría |
+| `sensor-simulator` | generación de telemetría simulada |
+| `health-app` | endpoint operacional de salud |
+| `telemetry-api` | API de telemetría y métricas |
+| `vulnerable-app` | servicio HTTP utilizado para pruebas controladas |
 
-## Persistencia
+## Zabbix
 
-| Componente | Persistencia | Justificación |
-|---|---|---|
-| Foundation IIoT | No crítica | servicios stateless o telemetría efímera |
-| Mosquitto | No persistente | enfoque en telemetría en tiempo real |
-| Zabbix PostgreSQL | PVC obligatorio | conserva configuración, histórico, eventos |
-| Wazuh Indexer | PVC obligatorio futuro | conserva eventos y alertas |
+Zabbix captura disponibilidad, latencia y valores históricos mediante checks `net.tcp.service` y `net.tcp.service.perf`.
 
-## Decisiones arquitectónicas
+La evidencia operacional se recupera mediante `history.get` real para evitar datasets sintéticos.
 
-- Kubernetes se usa como plataforma reproducible, no como objeto principal de investigación.
-- Las IPs de MetalLB son estáticas para asegurar repetibilidad experimental.
-- Zabbix se usa para observabilidad operacional.
-- Wazuh se incorporará como capa de seguridad sobre eventos IIoT.
-- La correlación se realizará posteriormente usando datasets exportados y timestamps normalizados.
+## Wazuh
+
+Wazuh se implementa como capa de seguridad single-node/all-in-one dentro del namespace `security`.
+
+Esta decisión evita complejidad HA que no aporta a la hipótesis principal, manteniendo reproducibilidad, control experimental y trazabilidad.
+
+## Correlación
+
+La correlación es temporal y basada en eventos. No se reporta como correlación estadística Pearson/Spearman.
+
+Una correlación se considera válida cuando:
+
+```text
+existe evento Wazuh
+existe muestra Zabbix real
+ambos se ubican dentro de la ventana temporal definida
+```
+
+## Escenario E
+
+El Escenario E agrega ruido operacional legítimo sin ataques para estimar falsos positivos. Usa perfiles LOW, MEDIUM y HIGH con endpoints HTTP saludables y mensajes MQTT válidos.

@@ -1,96 +1,87 @@
-# 08 — Experiments
+# 08 — Escenarios experimentales
 
-## Escenarios incrementales
+## Resumen
 
-| Escenario | Descripción | Objetivo |
+| Escenario | Estado | Propósito |
 |---|---|---|
-| A | Foundation IIoT | baseline operacional sin monitoreo |
-| B | Foundation IIoT + Zabbix | impacto del monitoreo operacional |
-| C | Foundation IIoT + Zabbix + Wazuh | observabilidad operacional + seguridad |
-| D | Correlación + ataques MITRE ICS | evaluación de detección correlacionada |
+| A | Implementado | Foundation IIoT |
+| B | Implementado | Zabbix Monitoring |
+| C | Implementado | Wazuh Security |
+| D | Implementado | Ataques MITRE ICS y correlación |
+| E | Implementado | Ruido operacional y FPR |
 
-## Workflow reproducible
+## Escenario A — Foundation IIoT
+
+Despliega servicios IIoT base y valida disponibilidad inicial.
+
+## Escenario B — Zabbix Monitoring
+
+Configura monitoreo operacional con Zabbix y obtiene histórico real mediante `history.get`.
+
+## Escenario C — Wazuh Security
+
+Implementa Wazuh single-node/all-in-one para registrar eventos de seguridad y reglas MITRE ICS.
+
+## Escenario D — MITRE ATT&CK for ICS
+
+Ejecuta técnicas controladas:
+
+| Técnica | Descripción |
+|---|---|
+| T0809 | Unauthorized Command Message |
+| T0814 | Data Manipulation |
+| T0860 | Denial of Service |
+
+La campaña final usa 20 iteraciones por técnica y genera 60 ejecuciones identificadas por `attack_uid`.
+
+## Escenario E — Operational Noise / False Positive Control
+
+El Escenario E ejecuta ruido operacional legítimo, no ataques.
+
+Objetivo:
 
 ```text
-Prepare Kubernetes baseline
-        ↓
-Deploy Foundation IIoT
-        ↓
-Validate MQTT / HTTP / DNS
-        ↓
-Run Scenario A baseline
-        ↓
-Freeze Scenario A
-        ↓
-Deploy persistent Zabbix
-        ↓
-Configure Zabbix hosts/items/triggers
-        ↓
-Run Scenario B baseline
-        ↓
-Freeze Scenario B
-        ↓
-Export inventory and Zabbix configuration
-        ↓
-Deploy Wazuh
-        ↓
-Integrate IIoT logs/events
-        ↓
-Run Scenario C security baseline
-        ↓
-Execute MITRE ATT&CK for ICS scenarios
-        ↓
-Collect Zabbix metrics and Wazuh alerts
-        ↓
-Correlate timestamps
-        ↓
-Export final datasets and figures
+estimar falsos positivos frente a T0809, T0814 y T0860
 ```
 
-## Corridas
+## Perfiles de ruido
 
-| Tipo | Duración | Uso |
-|---|---:|---|
-| Validation run | 20 s a 10 min | validación técnica |
-| Official run | 30 min | análisis comparativo |
-| Endurance run | 6 h | estabilidad operacional |
+| Perfil | HTTP concurrency | MQTT messages | Interpretación |
+|---|---:|---:|---|
+| LOW | 5 | 20 | operación tranquila |
+| MEDIUM | 10 | 40 | operación normal activa |
+| HIGH | 20 | 80 | operación intensa legítima |
 
+## Endpoints HTTP saludables
 
-## Escenario C — Foundation IIoT + Zabbix + Wazuh
+Escenario E usa únicamente rutas validadas con HTTP 200:
 
-El Escenario C agrega Wazuh como capa de seguridad sobre el baseline operacional con Zabbix. La corrida no introduce ataques; genera eventos estructurados de baseline para comprobar ingesta, trazabilidad y congelamiento reproducible.
-
-### Secuencia
-
-```bash
-./scripts/run/11-deploy-wazuh-security.sh
-./scripts/run/12-validate-wazuh-security.sh
-ITERATIONS=3 SLEEP_SECONDS=2 ./scripts/run/13-run-wazuh-security-baseline.sh
-./scripts/run/14-freeze-wazuh-security-baseline.sh
-```
-
-### Corrida oficial
-
-```bash
-ITERATIONS=900 SLEEP_SECONDS=2 ./scripts/run/13-run-wazuh-security-baseline.sh
-./scripts/run/14-freeze-wazuh-security-baseline.sh
-```
-
-### Criterio de éxito
-
-| Criterio | Evidencia |
+| Servicio | Endpoint |
 |---|---|
-| Wazuh operativo | `scripts/run/12-validate-wazuh-security.sh` |
-| Dashboard accesible | `https://10.10.0.161` y headers exportados |
-| Manager operativo | rollout y logs en `evidence/wazuh/` |
-| Eventos estructurados | `results/raw/scenario_c/wazuh_security_baseline.csv` |
-| Reglas IIoT/MITRE ICS preparadas | `wazuh-iiot-rules.yaml` y validación en manager |
-| Freeze reproducible | `baseline/scenario_c_wazuh_security/` |
+| health-app | `/health` |
+| telemetry-api | `/health` |
+| telemetry-api | `/metrics` |
+| telemetry-api | `/telemetry` |
+| vulnerable-app | `/health` |
 
+No se usan rutas raíz que devuelvan 404/000.
 
-<!-- SCENARIO_E_NOISE_FPR_V1 -->
+## Comandos Escenario E
 
-## Scenario E — Operational Noise / False Positive Control
+```bash
+ITERATIONS_PER_PROFILE=20 \
+NOISE_DURATION_SECONDS=30 \
+INTER_NOISE_COOLDOWN_SECONDS=10 \
+./scripts/run/23-run-operational-noise-control.sh
 
-Scenario E is a non-attack control campaign. It generates legitimate MQTT and HTTP activity under LOW, MEDIUM, and HIGH operational noise profiles to estimate false positives under normal operational variability.
+./scripts/run/24-analyze-false-positive-rate.sh
+./scripts/run/25-freeze-noise-control-results.sh
+```
 
+## Métrica FPR
+
+```text
+FPR = ejecuciones de ruido clasificadas erróneamente como ataque / total de ejecuciones de ruido
+```
+
+El FPR se reporta con intervalo Wilson 95%.

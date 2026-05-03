@@ -1,0 +1,270 @@
+apiVersion: v1
+items:
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"v1","kind":"Service","metadata":{"annotations":{"service.beta.kubernetes.io/aws-load-balancer-backend-protocol":"https","service.beta.kubernetes.io/aws-load-balancer-ssl-ports":"443"},"labels":{"app":"wazuh-dashboard"},"name":"dashboard","namespace":"security"},"spec":{"ports":[{"name":"dashboard","port":443,"targetPort":5601}],"selector":{"app":"wazuh-dashboard"},"type":"LoadBalancer"}}
+      service.beta.kubernetes.io/aws-load-balancer-backend-protocol: https
+      service.beta.kubernetes.io/aws-load-balancer-ssl-ports: "443"
+    creationTimestamp: "2026-05-02T04:43:06Z"
+    labels:
+      app: wazuh-dashboard
+    name: dashboard
+    namespace: security
+    resourceVersion: "53663"
+    uid: e3961a46-12dd-4462-a45e-7eeb78061da9
+  spec:
+    clusterIP: 10.152.183.133
+    clusterIPs:
+    - 10.152.183.133
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: dashboard
+      port: 443
+      protocol: TCP
+      targetPort: 5601
+    selector:
+      app: wazuh-dashboard
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"v1","kind":"Service","metadata":{"annotations":{},"labels":{"app":"wazuh-indexer"},"name":"indexer","namespace":"security"},"spec":{"ports":[{"name":"indexer-rest","port":9200,"targetPort":9200}],"selector":{"app":"wazuh-indexer"},"type":"LoadBalancer"}}
+    creationTimestamp: "2026-05-02T04:43:06Z"
+    labels:
+      app: wazuh-indexer
+    name: indexer
+    namespace: security
+    resourceVersion: "53676"
+    uid: c5692fe5-b795-4623-a298-91b18534d31d
+  spec:
+    clusterIP: 10.152.183.51
+    clusterIPs:
+    - 10.152.183.51
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: indexer-rest
+      port: 9200
+      protocol: TCP
+      targetPort: 9200
+    selector:
+      app: wazuh-indexer
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"v1","kind":"Service","metadata":{"annotations":{"service.beta.kubernetes.io/aws-load-balancer-backend-protocol":"tcp"},"labels":{"app":"wazuh-manager"},"name":"wazuh","namespace":"security"},"spec":{"ports":[{"name":"api","port":55000,"targetPort":55000},{"name":"registration","port":1515,"targetPort":1515}],"selector":{"app":"wazuh-manager","node-type":"master"},"type":"LoadBalancer"}}
+      service.beta.kubernetes.io/aws-load-balancer-backend-protocol: tcp
+    creationTimestamp: "2026-05-02T04:43:07Z"
+    labels:
+      app: wazuh-manager
+    name: wazuh
+    namespace: security
+    resourceVersion: "53694"
+    uid: ff13d734-c0c6-40af-9487-f87fd2861c50
+  spec:
+    clusterIP: 10.152.183.151
+    clusterIPs:
+    - 10.152.183.151
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: api
+      port: 55000
+      protocol: TCP
+      targetPort: 55000
+    - name: registration
+      port: 1515
+      protocol: TCP
+      targetPort: 1515
+    selector:
+      app: wazuh-manager
+      node-type: master
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"v1","kind":"Service","metadata":{"annotations":{},"labels":{"app":"wazuh-manager"},"name":"wazuh-cluster","namespace":"security"},"spec":{"clusterIP":"None","ports":[{"name":"cluster","port":1516,"targetPort":1516}],"selector":{"app":"wazuh-manager"}}}
+    creationTimestamp: "2026-05-02T04:43:07Z"
+    labels:
+      app: wazuh-manager
+    name: wazuh-cluster
+    namespace: security
+    resourceVersion: "53511"
+    uid: 8c3adaaf-8b20-4519-931b-e930a34243fd
+  spec:
+    clusterIP: None
+    clusterIPs:
+    - None
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: cluster
+      port: 1516
+      protocol: TCP
+      targetPort: 1516
+    selector:
+      app: wazuh-manager
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"v1","kind":"Service","metadata":{"annotations":{"metallb.io/loadBalancerIPs":"10.10.0.161","metallb.universe.tf/loadBalancerIPs":"10.10.0.161"},"labels":{"app.kubernetes.io/component":"wazuh-dashboard","app.kubernetes.io/part-of":"iiot-correlation-lab","iiot-lab/scenario":"C"},"name":"wazuh-dashboard-lb","namespace":"security"},"spec":{"ports":[{"name":"https-dashboard","port":443,"protocol":"TCP","targetPort":5601}],"selector":{"app":"wazuh-dashboard"},"type":"LoadBalancer"}}
+      metallb.io/loadBalancerIPs: 10.10.0.161
+      metallb.universe.tf/loadBalancerIPs: 10.10.0.161
+    creationTimestamp: "2026-05-02T04:43:01Z"
+    labels:
+      app.kubernetes.io/component: wazuh-dashboard
+      app.kubernetes.io/part-of: iiot-correlation-lab
+      iiot-lab/scenario: C
+    name: wazuh-dashboard-lb
+    namespace: security
+    resourceVersion: "53702"
+    uid: 0c386023-3d5d-4a1a-8b2e-0c1759cfdc02
+  spec:
+    allocateLoadBalancerNodePorts: true
+    clusterIP: 10.152.183.109
+    clusterIPs:
+    - 10.152.183.109
+    externalTrafficPolicy: Cluster
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    loadBalancerIP: 10.10.0.161
+    ports:
+    - name: https-dashboard
+      nodePort: 31607
+      port: 443
+      protocol: TCP
+      targetPort: 5601
+    selector:
+      app: wazuh-dashboard
+    sessionAffinity: None
+    type: LoadBalancer
+  status:
+    loadBalancer:
+      ingress:
+      - ip: 10.10.0.161
+        ipMode: VIP
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"v1","kind":"Service","metadata":{"annotations":{},"labels":{"app":"wazuh-indexer"},"name":"wazuh-indexer","namespace":"security"},"spec":{"clusterIP":"None","ports":[{"name":"indexer-nodes","port":9300,"targetPort":9300}],"selector":{"app":"wazuh-indexer"}}}
+    creationTimestamp: "2026-05-02T04:43:08Z"
+    labels:
+      app: wazuh-indexer
+    name: wazuh-indexer
+    namespace: security
+    resourceVersion: "53514"
+    uid: 2fd7c03c-cf5c-4924-a20f-b234d9ffb0c8
+  spec:
+    clusterIP: None
+    clusterIPs:
+    - None
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: indexer-nodes
+      port: 9300
+      protocol: TCP
+      targetPort: 9300
+    selector:
+      app: wazuh-indexer
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"v1","kind":"Service","metadata":{"annotations":{"metallb.io/loadBalancerIPs":"10.10.0.162","metallb.universe.tf/loadBalancerIPs":"10.10.0.162"},"labels":{"app.kubernetes.io/component":"wazuh-manager","app.kubernetes.io/part-of":"iiot-correlation-lab","iiot-lab/scenario":"C"},"name":"wazuh-manager-lb","namespace":"security"},"spec":{"ports":[{"name":"agent-events","port":1514,"protocol":"TCP","targetPort":1514},{"name":"agent-registration","port":1515,"protocol":"TCP","targetPort":1515},{"name":"wazuh-api","port":55000,"protocol":"TCP","targetPort":55000}],"selector":{"app":"wazuh-manager","node-type":"master"},"type":"LoadBalancer"}}
+      metallb.io/loadBalancerIPs: 10.10.0.162
+      metallb.universe.tf/loadBalancerIPs: 10.10.0.162
+    creationTimestamp: "2026-05-02T04:43:01Z"
+    labels:
+      app.kubernetes.io/component: wazuh-manager
+      app.kubernetes.io/part-of: iiot-correlation-lab
+      iiot-lab/scenario: C
+    name: wazuh-manager-lb
+    namespace: security
+    resourceVersion: "53710"
+    uid: d816f1f9-02fb-4029-b409-d03599021b5f
+  spec:
+    allocateLoadBalancerNodePorts: true
+    clusterIP: 10.152.183.45
+    clusterIPs:
+    - 10.152.183.45
+    externalTrafficPolicy: Cluster
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    loadBalancerIP: 10.10.0.162
+    ports:
+    - name: agent-events
+      nodePort: 31936
+      port: 1514
+      protocol: TCP
+      targetPort: 1514
+    - name: agent-registration
+      nodePort: 31645
+      port: 1515
+      protocol: TCP
+      targetPort: 1515
+    - name: wazuh-api
+      nodePort: 31472
+      port: 55000
+      protocol: TCP
+      targetPort: 55000
+    selector:
+      app: wazuh-manager
+      node-type: master
+    sessionAffinity: None
+    type: LoadBalancer
+  status:
+    loadBalancer:
+      ingress:
+      - ip: 10.10.0.162
+        ipMode: VIP
+kind: List
+metadata:
+  resourceVersion: ""
