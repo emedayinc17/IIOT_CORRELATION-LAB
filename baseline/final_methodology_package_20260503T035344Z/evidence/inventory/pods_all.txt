@@ -1,0 +1,18 @@
+NAMESPACE        NAME                                      READY   STATUS    RESTARTS        AGE     IP            NODE           NOMINATED NODE   READINESS GATES
+iiot-poc         health-app-54d5c8f644-p8bdq               1/1     Running   0               117m    10.1.21.154   iiot-lab-k8s   <none>           <none>
+iiot-poc         mosquitto-5bf84bf7cb-ngxsd                1/1     Running   0               117m    10.1.21.155   iiot-lab-k8s   <none>           <none>
+iiot-poc         sensor-simulator-58b4bbcc76-hhp62         1/1     Running   0               117m    10.1.21.156   iiot-lab-k8s   <none>           <none>
+iiot-poc         telemetry-api-5d4cfb7ff4-9lkm2            1/1     Running   0               117m    10.1.21.157   iiot-lab-k8s   <none>           <none>
+iiot-poc         vulnerable-app-5dd9b48766-jxttn           1/1     Running   0               117m    10.1.21.158   iiot-lab-k8s   <none>           <none>
+ingress          nginx-ingress-microk8s-controller-p68v6   1/1     Running   0               5h31m   10.1.21.134   iiot-lab-k8s   <none>           <none>
+kube-system      calico-kube-controllers-796fb75cc-g2lbv   1/1     Running   0               5h31m   10.1.21.132   iiot-lab-k8s   <none>           <none>
+kube-system      calico-node-slzhr                         1/1     Running   1 (5h30m ago)   5h31m   10.10.0.101   iiot-lab-k8s   <none>           <none>
+kube-system      coredns-5986966c54-r2jd5                  1/1     Running   0               5h31m   10.1.21.128   iiot-lab-k8s   <none>           <none>
+kube-system      hostpath-provisioner-7c8bdf94b8-8pqn9     1/1     Running   0               5h31m   10.1.21.130   iiot-lab-k8s   <none>           <none>
+kube-system      metrics-server-7cff7889bd-cj2cp           1/1     Running   0               5h31m   10.1.21.131   iiot-lab-k8s   <none>           <none>
+metallb-system   controller-bf8d56555-crjr6                1/1     Running   0               117m    10.1.21.159   iiot-lab-k8s   <none>           <none>
+metallb-system   speaker-gq77h                             1/1     Running   0               117m    10.10.0.101   iiot-lab-k8s   <none>           <none>
+monitoring       zabbix-agent-dnb2c                        1/1     Running   0               49m     10.10.0.101   iiot-lab-k8s   <none>           <none>
+monitoring       zabbix-postgres-58f59dcd95-n89h9          1/1     Running   0               49m     10.1.21.167   iiot-lab-k8s   <none>           <none>
+monitoring       zabbix-server-b5fb4666f-rfgmv             1/1     Running   1 (46m ago)     49m     10.1.21.164   iiot-lab-k8s   <none>           <none>
+monitoring       zabbix-web-897d6bc-rvr44                  1/1     Running   0               49m     10.1.21.165   iiot-lab-k8s   <none>           <none>

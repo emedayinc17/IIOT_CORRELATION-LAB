@@ -1,0 +1,4 @@
+scenario,attack_id,metric,samples,mean,bootstrap_ci95_low,bootstrap_ci95_high
+SCENARIO_D,T0809,temporal_delta_mean_seconds,20,0.15,0.0,0.3
+SCENARIO_D,T0814,temporal_delta_mean_seconds,20,0.1,0.0,0.25
+SCENARIO_D,T0860,temporal_delta_mean_seconds,20,0.55,0.35,0.75

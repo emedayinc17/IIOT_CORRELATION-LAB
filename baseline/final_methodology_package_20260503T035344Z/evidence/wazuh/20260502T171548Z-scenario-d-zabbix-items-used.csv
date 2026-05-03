@@ -1,0 +1,9 @@
+host,itemid,name,key_,value_type,lastvalue,lastclock,state,status
+health-app,50740,health-app availability,"net.tcp.service[http,,8080]",3,0,0,1,0
+health-app,50741,health-app latency seconds,"net.tcp.service.perf[http,,8080]",0,0,0,1,0
+mqtt-broker,50738,mqtt-broker availability,"net.tcp.service[tcp,,1883]",3,0,0,1,0
+mqtt-broker,50739,mqtt-broker latency seconds,"net.tcp.service.perf[tcp,,1883]",0,0,0,1,0
+telemetry-api,50742,telemetry-api availability,"net.tcp.service[http,,8080]",3,0,0,1,0
+telemetry-api,50743,telemetry-api latency seconds,"net.tcp.service.perf[http,,8080]",0,0,0,1,0
+vulnerable-app,50744,vulnerable-app availability,"net.tcp.service[http,,8080]",3,0,0,1,0
+vulnerable-app,50745,vulnerable-app latency seconds,"net.tcp.service.perf[http,,8080]",0,0,0,1,0

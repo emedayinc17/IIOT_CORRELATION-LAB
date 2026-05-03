@@ -1,0 +1,30 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: scenario-d-correlation-methodology
+  namespace: security
+  labels:
+    app.kubernetes.io/part-of: iiot-correlation-lab
+    app.kubernetes.io/component: correlation-methodology
+    iiot-lab/scenario: D
+data:
+  methodology.md: |
+    # Scenario D methodology
+
+    Scenario D executes controlled MITRE ATT&CK for ICS stimuli over the IIoT Foundation and correlates operational impact with Wazuh security events.
+
+    Techniques:
+    - T0809 Unauthorized Command Message
+    - T0814 Data Manipulation
+    - T0860 Denial of Service / service flood
+
+    Scope exclusions:
+    - Kubernetes security
+    - Wazuh HA or enterprise clustering
+    - Falco, Prometheus, Grafana, Loki, service mesh
+
+    Primary outputs:
+    - results/raw/scenario_d/mitre_ics_attacks.csv
+    - results/raw/scenario_d/wazuh_security_events.csv
+    - results/raw/scenario_d/zabbix_correlation_metrics.csv
+    - results/processed/correlation_dataset.csv

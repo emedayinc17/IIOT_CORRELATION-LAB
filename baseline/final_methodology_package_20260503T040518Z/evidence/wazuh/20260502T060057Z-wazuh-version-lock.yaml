@@ -1,0 +1,22 @@
+apiVersion: v1
+data:
+  EXCLUDED_SCOPE: kubernetes-hardening,falco,cis-benchmark,runtime-security,ha-clustering
+  WAZUH_DASHBOARD_LB: 10.10.0.161
+  WAZUH_DEPLOYMENT_MODEL: single-node-local-lab
+  WAZUH_KUBERNETES_BRANCH: v4.14.5
+  WAZUH_MANAGER_LB: 10.10.0.162
+  WAZUH_NAMESPACE: security
+kind: ConfigMap
+metadata:
+  annotations:
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"v1","data":{"EXCLUDED_SCOPE":"kubernetes-hardening,falco,cis-benchmark,runtime-security,ha-clustering","WAZUH_DASHBOARD_LB":"10.10.0.161","WAZUH_DEPLOYMENT_MODEL":"single-node-local-lab","WAZUH_KUBERNETES_BRANCH":"v4.14.5","WAZUH_MANAGER_LB":"10.10.0.162","WAZUH_NAMESPACE":"security"},"kind":"ConfigMap","metadata":{"annotations":{},"labels":{"app.kubernetes.io/component":"wazuh","app.kubernetes.io/part-of":"iiot-correlation-lab","iiot-lab/scenario":"C"},"name":"wazuh-version-lock","namespace":"security"}}
+  creationTimestamp: "2026-05-02T04:43:01Z"
+  labels:
+    app.kubernetes.io/component: wazuh
+    app.kubernetes.io/part-of: iiot-correlation-lab
+    iiot-lab/scenario: C
+  name: wazuh-version-lock
+  namespace: security
+  resourceVersion: "53445"
+  uid: 911201af-cf8b-4967-ae65-489bd29d8ade

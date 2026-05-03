@@ -1,0 +1,23 @@
+NAME                                   READY   STATUS    RESTARTS   AGE   IP            NODE           NOMINATED NODE   READINESS GATES
+pod/zabbix-agent-dnb2c                 1/1     Running   2          24h   10.10.0.101   iiot-lab-k8s   <none>           <none>
+pod/zabbix-postgres-58f59dcd95-n89h9   1/1     Running   3          24h   10.1.21.162   iiot-lab-k8s   <none>           <none>
+pod/zabbix-server-b5fb4666f-rfgmv      1/1     Running   3          24h   10.1.21.147   iiot-lab-k8s   <none>           <none>
+pod/zabbix-web-897d6bc-rvr44           1/1     Running   3          24h   10.1.21.163   iiot-lab-k8s   <none>           <none>
+
+NAME                      TYPE           CLUSTER-IP      EXTERNAL-IP   PORT(S)        AGE   SELECTOR
+service/zabbix-postgres   ClusterIP      10.152.183.92   <none>        5432/TCP       24h   app=zabbix-postgres,project=iiot-correlation-lab,stage=zabbix-monitoring
+service/zabbix-server     ClusterIP      10.152.183.20   <none>        10051/TCP      24h   app=zabbix-server,project=iiot-correlation-lab,stage=zabbix-monitoring
+service/zabbix-web        LoadBalancer   10.152.183.71   10.10.0.160   80:30670/TCP   24h   app=zabbix-web,project=iiot-correlation-lab,stage=zabbix-monitoring
+
+NAME                          DESIRED   CURRENT   READY   UP-TO-DATE   AVAILABLE   NODE SELECTOR   AGE   CONTAINERS     IMAGES                                   SELECTOR
+daemonset.apps/zabbix-agent   1         1         1       1            1           <none>          24h   zabbix-agent   zabbix/zabbix-agent2:ubuntu-7.0-latest   app=zabbix-agent,project=iiot-correlation-lab,stage=zabbix-monitoring
+
+NAME                              READY   UP-TO-DATE   AVAILABLE   AGE   CONTAINERS      IMAGES                                            SELECTOR
+deployment.apps/zabbix-postgres   1/1     1            1           24h   postgres        postgres:16                                       app=zabbix-postgres,project=iiot-correlation-lab,stage=zabbix-monitoring
+deployment.apps/zabbix-server     1/1     1            1           24h   zabbix-server   zabbix/zabbix-server-pgsql:ubuntu-7.0-latest      app=zabbix-server,project=iiot-correlation-lab,stage=zabbix-monitoring
+deployment.apps/zabbix-web        1/1     1            1           24h   zabbix-web      zabbix/zabbix-web-nginx-pgsql:ubuntu-7.0-latest   app=zabbix-web,project=iiot-correlation-lab,stage=zabbix-monitoring
+
+NAME                                         DESIRED   CURRENT   READY   AGE   CONTAINERS      IMAGES                                            SELECTOR
+replicaset.apps/zabbix-postgres-58f59dcd95   1         1         1       24h   postgres        postgres:16                                       app=zabbix-postgres,pod-template-hash=58f59dcd95,project=iiot-correlation-lab,stage=zabbix-monitoring
+replicaset.apps/zabbix-server-b5fb4666f      1         1         1       24h   zabbix-server   zabbix/zabbix-server-pgsql:ubuntu-7.0-latest      app=zabbix-server,pod-template-hash=b5fb4666f,project=iiot-correlation-lab,stage=zabbix-monitoring
+replicaset.apps/zabbix-web-897d6bc           1         1         1       24h   zabbix-web      zabbix/zabbix-web-nginx-pgsql:ubuntu-7.0-latest   app=zabbix-web,pod-template-hash=897d6bc,project=iiot-correlation-lab,stage=zabbix-monitoring

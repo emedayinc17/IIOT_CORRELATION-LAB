@@ -1,0 +1,4 @@
+scenario,profile,noise_executions,http_observations,http_error_count,http_error_rate_percent,avg_http_latency_seconds,mqtt_messages_attempted,mqtt_messages_success,mqtt_messages_failed,mqtt_success_rate_percent
+SCENARIO_E,HIGH,20,5840,0,0.0,0.025732,1600,1600,0,100.0
+SCENARIO_E,LOW,20,1500,0,0.0,0.005991,400,400,0,100.0
+SCENARIO_E,MEDIUM,20,3000,0,0.0,0.010357,800,800,0,100.0

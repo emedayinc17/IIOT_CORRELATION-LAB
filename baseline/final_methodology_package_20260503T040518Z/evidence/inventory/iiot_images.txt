@@ -1,0 +1,5 @@
+health-app=python:3.11-slim
+mosquitto=eclipse-mosquitto:2.0.20
+sensor-simulator=eclipse-mosquitto:2.0.20
+telemetry-api=python:3.11-slim
+vulnerable-app=python:3.11-slim

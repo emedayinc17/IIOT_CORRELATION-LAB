@@ -1,0 +1,4 @@
+NAME              TYPE           CLUSTER-IP      EXTERNAL-IP   PORT(S)        AGE   SELECTOR
+zabbix-postgres   ClusterIP      10.152.183.92   <none>        5432/TCP       24h   app=zabbix-postgres,project=iiot-correlation-lab,stage=zabbix-monitoring
+zabbix-server     ClusterIP      10.152.183.20   <none>        10051/TCP      24h   app=zabbix-server,project=iiot-correlation-lab,stage=zabbix-monitoring
+zabbix-web        LoadBalancer   10.152.183.71   10.10.0.160   80:30670/TCP   24h   app=zabbix-web,project=iiot-correlation-lab,stage=zabbix-monitoring

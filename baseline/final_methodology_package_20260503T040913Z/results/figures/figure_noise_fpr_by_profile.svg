@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="420">
+<rect width="100%" height="100%" fill="white"/>
+<text x="40" y="35" font-family="Arial" font-size="20">Scenario E false positive rate by noise profile</text>
+<rect x="60" y="350.0" width="90" height="0.0" fill="#777"/>
+<text x="60" y="380" font-family="Arial" font-size="14">HIGH</text>
+<text x="60" y="342.0" font-family="Arial" font-size="12">0.00%</text>
+<rect x="240" y="350.0" width="90" height="0.0" fill="#777"/>
+<text x="240" y="380" font-family="Arial" font-size="14">LOW</text>
+<text x="240" y="342.0" font-family="Arial" font-size="12">0.00%</text>
+<rect x="420" y="350.0" width="90" height="0.0" fill="#777"/>
+<text x="420" y="380" font-family="Arial" font-size="14">MEDIUM</text>
+<text x="420" y="342.0" font-family="Arial" font-size="12">0.00%</text>
+</svg>

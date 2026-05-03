@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: mosquitto-lb
+  namespace: iiot-poc
+  annotations:
+    metallb.io/loadBalancerIPs: 10.10.0.151
+spec:
+  type: LoadBalancer
+  loadBalancerIP: 10.10.0.151
+  selector:
+    app: mosquitto
+  ports:
+  - name: mqtt
+    port: 1883
+    targetPort: 1883

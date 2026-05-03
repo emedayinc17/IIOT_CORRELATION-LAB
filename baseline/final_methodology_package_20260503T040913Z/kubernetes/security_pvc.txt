@@ -1,0 +1,3 @@
+NAME                                          STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS    VOLUMEATTRIBUTESCLASS   AGE   VOLUMEMODE
+wazuh-indexer-wazuh-indexer-0                 Bound    pvc-91aebcd7-a585-410b-bcbb-f24f5bf3008e   500Mi      RWO            wazuh-storage   <unset>                 23h   Filesystem
+wazuh-manager-master-wazuh-manager-master-0   Bound    pvc-0b73ba42-1617-42bc-b13a-1d2d6f45964d   500Mi      RWO            wazuh-storage   <unset>                 23h   Filesystem

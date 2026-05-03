@@ -1,0 +1,74 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: sensor-simulator-script
+  namespace: iiot-poc
+data:
+  sensor-loop.sh: |
+    #!/bin/sh
+    set -eu
+    MQTT_HOST="${MQTT_HOST:-mosquitto.iiot-poc.svc.cluster.local}"
+    MQTT_PORT="${MQTT_PORT:-1883}"
+    SITE="${SITE:-mine-site-01}"
+    EQUIPMENT="${EQUIPMENT:-crusher-01}"
+    INTERVAL_SECONDS="${INTERVAL_SECONDS:-2}"
+
+    echo "[INFO] Waiting for MQTT broker ${MQTT_HOST}:${MQTT_PORT}"
+    until mosquitto_pub -h "$MQTT_HOST" -p "$MQTT_PORT" -t "lab/startup" -m "{\"status\":\"sensor-ready\"}" >/dev/null 2>&1; do
+      echo "[WARN] MQTT broker not ready, retrying..."
+      sleep 3
+    done
+
+    echo "[INFO] Sensor simulator started"
+    n=0
+    while true; do
+      n=$((n + 1))
+      ts="$(date -u +%Y-%m-%dT%H:%M:%SZ)"
+      temp="$(awk "BEGIN { printf \"%.2f\", 35 + (($n * 37) % 3500) / 100 }")"
+      vib="$(awk "BEGIN { printf \"%.3f\", 0.2 + (($n * 11) % 500) / 100 }")"
+      pressure="$(awk "BEGIN { printf \"%.2f\", 1 + (($n * 17) % 550) / 100 }")"
+      for sensor in temp-01 vibration-01 pressure-01; do
+        payload="{\"timestamp\":\"$ts\",\"site\":\"$SITE\",\"equipment\":\"$EQUIPMENT\",\"sensor_id\":\"$sensor\",\"temperature_c\":$temp,\"vibration_mm_s\":$vib,\"pressure_bar\":$pressure,\"status\":\"normal\",\"source\":\"$(hostname)\"}"
+        topic="sensors/$SITE/$EQUIPMENT/$sensor"
+        mosquitto_pub -h "$MQTT_HOST" -p "$MQTT_PORT" -t "$topic" -m "$payload"
+        echo "[MQTT] topic=$topic payload=$payload"
+      done
+      sleep "$INTERVAL_SECONDS"
+    done
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sensor-simulator
+  namespace: iiot-poc
+  labels:
+    app: sensor-simulator
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sensor-simulator
+  template:
+    metadata:
+      labels:
+        app: sensor-simulator
+    spec:
+      containers:
+      - name: sensor-simulator
+        image: eclipse-mosquitto:2.0.20
+        command: ["/bin/sh", "/scripts/sensor-loop.sh"]
+        env:
+        - name: MQTT_HOST
+          value: mosquitto.iiot-poc.svc.cluster.local
+        - name: MQTT_PORT
+          value: "1883"
+        - name: INTERVAL_SECONDS
+          value: "2"
+        volumeMounts:
+        - name: script
+          mountPath: /scripts
+      volumes:
+      - name: script
+        configMap:
+          name: sensor-simulator-script
+          defaultMode: 0755

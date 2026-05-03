@@ -1,0 +1,4 @@
+scenario,attack_id,executions,http_or_operational_impact_count,impact_rate_percent,wilson_ci95_low_percent,wilson_ci95_high_percent
+SCENARIO_D,T0809,20,0,0.0,0,16.11
+SCENARIO_D,T0814,20,20,100.0,83.89,100.0
+SCENARIO_D,T0860,20,20,100.0,83.89,100.0

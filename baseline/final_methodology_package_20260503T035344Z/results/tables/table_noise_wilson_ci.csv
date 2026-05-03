@@ -1,0 +1,5 @@
+scenario,profile,noise_executions,false_positive_executions,false_positive_rate_percent,wilson_ci95_low_percent,wilson_ci95_high_percent
+SCENARIO_E,HIGH,20,0,0.0,0,16.11
+SCENARIO_E,LOW,20,0,0.0,0,16.11
+SCENARIO_E,MEDIUM,20,0,0.0,0,16.11
+SCENARIO_E,ALL,60,0,0.0,0,6.02

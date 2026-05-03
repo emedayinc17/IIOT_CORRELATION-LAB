@@ -1,0 +1,4 @@
+scenario,attack_id,metric_name,note,samples,mean_seconds,p95_seconds,p99_seconds
+SCENARIO_D,T0809,event_based_detection_registration_delta_seconds,"This is event-based temporal delta, not full production MTTD.",20,0.15,1.0,1.0
+SCENARIO_D,T0814,event_based_detection_registration_delta_seconds,"This is event-based temporal delta, not full production MTTD.",20,0.1,1.0,1.0
+SCENARIO_D,T0860,event_based_detection_registration_delta_seconds,"This is event-based temporal delta, not full production MTTD.",20,0.55,1.0,1.0

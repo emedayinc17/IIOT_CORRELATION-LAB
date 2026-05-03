@@ -1,0 +1,106 @@
+[
+  {
+    "triggerid": "25230",
+    "description": "vulnerable-app unavailable",
+    "expression": "{36079}=0",
+    "priority": "4",
+    "status": "0",
+    "hosts": [
+      {
+        "hostid": "10686",
+        "host": "vulnerable-app"
+      }
+    ]
+  },
+  {
+    "triggerid": "25231",
+    "description": "vulnerable-app high latency",
+    "expression": "{36080}>1",
+    "priority": "3",
+    "status": "0",
+    "hosts": [
+      {
+        "hostid": "10686",
+        "host": "vulnerable-app"
+      }
+    ]
+  },
+  {
+    "triggerid": "25224",
+    "description": "mqtt-broker unavailable",
+    "expression": "{36073}=0",
+    "priority": "4",
+    "status": "0",
+    "hosts": [
+      {
+        "hostid": "10683",
+        "host": "mqtt-broker"
+      }
+    ]
+  },
+  {
+    "triggerid": "25225",
+    "description": "mqtt-broker high latency",
+    "expression": "{36074}>1",
+    "priority": "3",
+    "status": "0",
+    "hosts": [
+      {
+        "hostid": "10683",
+        "host": "mqtt-broker"
+      }
+    ]
+  },
+  {
+    "triggerid": "25226",
+    "description": "health-app unavailable",
+    "expression": "{36075}=0",
+    "priority": "4",
+    "status": "0",
+    "hosts": [
+      {
+        "hostid": "10684",
+        "host": "health-app"
+      }
+    ]
+  },
+  {
+    "triggerid": "25227",
+    "description": "health-app high latency",
+    "expression": "{36076}>1",
+    "priority": "3",
+    "status": "0",
+    "hosts": [
+      {
+        "hostid": "10684",
+        "host": "health-app"
+      }
+    ]
+  },
+  {
+    "triggerid": "25228",
+    "description": "telemetry-api unavailable",
+    "expression": "{36077}=0",
+    "priority": "4",
+    "status": "0",
+    "hosts": [
+      {
+        "hostid": "10685",
+        "host": "telemetry-api"
+      }
+    ]
+  },
+  {
+    "triggerid": "25229",
+    "description": "telemetry-api high latency",
+    "expression": "{36078}>1",
+    "priority": "3",
+    "status": "0",
+    "hosts": [
+      {
+        "hostid": "10685",
+        "host": "telemetry-api"
+      }
+    ]
+  }
+]

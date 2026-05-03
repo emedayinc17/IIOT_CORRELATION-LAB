@@ -1,0 +1,12 @@
+{
+  "http_observations": 10340,
+  "http_error_count": 0,
+  "http_error_rate_percent": 0.0,
+  "by_url_code": {
+    "http://10.10.0.152:8080/health 200": 2068,
+    "http://10.10.0.153:8080/health 200": 2068,
+    "http://10.10.0.153:8080/metrics 200": 2068,
+    "http://10.10.0.153:8080/telemetry 200": 2068,
+    "http://10.10.0.154:8080/health 200": 2068
+  }
+}

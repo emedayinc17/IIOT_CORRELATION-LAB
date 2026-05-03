@@ -1,0 +1,12 @@
+{
+  "generated_utc": "2026-05-03T04:08:11Z",
+  "generated_local": "2026-05-02 23:08:11 -0500 (-05)",
+  "expected_scenario_d_executions": 60,
+  "actual_scenario_d_executions": 60,
+  "expected_scenario_e_executions": 60,
+  "actual_scenario_e_executions": 60,
+  "scenario_e_http_errors": 0,
+  "scope": "IIoT + Zabbix + Wazuh + event-based temporal correlation + false positive control",
+  "methodological_status": "paper_final_candidate",
+  "sha256_policy": "SHA256SUMS is excluded from its own checksum manifest."
+}

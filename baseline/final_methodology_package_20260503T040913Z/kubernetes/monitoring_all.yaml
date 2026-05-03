@@ -1,0 +1,1493 @@
+apiVersion: v1
+items:
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    creationTimestamp: "2026-05-02T03:12:11Z"
+    generateName: zabbix-agent-
+    labels:
+      app: zabbix-agent
+      controller-revision-hash: 685b847c7d
+      pod-template-generation: "1"
+      project: iiot-correlation-lab
+      stage: zabbix-monitoring
+    name: zabbix-agent-dnb2c
+    namespace: monitoring
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: DaemonSet
+      name: zabbix-agent
+      uid: 5759cbb2-a24c-467b-a178-3b83be4ae1af
+    resourceVersion: "94858"
+    uid: eb135c06-186a-475d-87f8-9d36dcea39d2
+  spec:
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+          - matchFields:
+            - key: metadata.name
+              operator: In
+              values:
+              - iiot-lab-k8s
+    containers:
+    - env:
+      - name: ZBX_SERVER_HOST
+        value: zabbix-server.monitoring.svc.cluster.local
+      - name: ZBX_HOSTNAME
+        valueFrom:
+          fieldRef:
+            apiVersion: v1
+            fieldPath: spec.nodeName
+      image: zabbix/zabbix-agent2:ubuntu-7.0-latest
+      imagePullPolicy: IfNotPresent
+      name: zabbix-agent
+      ports:
+      - containerPort: 10050
+        hostPort: 10050
+        name: agent
+        protocol: TCP
+      resources: {}
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-kgc8m
+        readOnly: true
+    dnsPolicy: ClusterFirstWithHostNet
+    enableServiceLinks: true
+    hostNetwork: true
+    nodeName: iiot-lab-k8s
+    preemptionPolicy: PreemptLowerPriority
+    priority: 0
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext: {}
+    serviceAccount: default
+    serviceAccountName: default
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+    - effect: NoSchedule
+      key: node.kubernetes.io/disk-pressure
+      operator: Exists
+    - effect: NoSchedule
+      key: node.kubernetes.io/memory-pressure
+      operator: Exists
+    - effect: NoSchedule
+      key: node.kubernetes.io/pid-pressure
+      operator: Exists
+    - effect: NoSchedule
+      key: node.kubernetes.io/unschedulable
+      operator: Exists
+    - effect: NoSchedule
+      key: node.kubernetes.io/network-unavailable
+      operator: Exists
+    volumes:
+    - name: kube-api-access-kgc8m
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2026-05-03T00:35:42Z"
+      status: "True"
+      type: PodReadyToStartContainers
+    - lastProbeTime: null
+      lastTransitionTime: "2026-05-02T03:12:13Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2026-05-03T00:35:42Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2026-05-03T00:35:42Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2026-05-02T03:12:12Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: containerd://128b9f3b2497d4ebd72b069b921331f811e079fa6cb9fb74cdb0621d4d855cd6
+      image: docker.io/zabbix/zabbix-agent2:ubuntu-7.0-latest
+      imageID: docker.io/zabbix/zabbix-agent2@sha256:df7a58c3df812620a77e4a9880ccd8bc7178d21c8d7314ee0ed49d8f6b265a07
+      lastState: {}
+      name: zabbix-agent
+      ready: true
+      restartCount: 2
+      started: true
+      state:
+        running:
+          startedAt: "2026-05-03T00:35:41Z"
+    hostIP: 10.10.0.101
+    hostIPs:
+    - ip: 10.10.0.101
+    phase: Running
+    podIP: 10.10.0.101
+    podIPs:
+    - ip: 10.10.0.101
+    qosClass: BestEffort
+    startTime: "2026-05-02T03:12:13Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      cni.projectcalico.org/containerID: 47475dbfab0ec871af0ba279e36cbdcb1dae0af50e75281dcd1dddaf4e0817b5
+      cni.projectcalico.org/podIP: 10.1.21.162/32
+      cni.projectcalico.org/podIPs: 10.1.21.162/32
+    creationTimestamp: "2026-05-02T03:12:08Z"
+    generateName: zabbix-postgres-58f59dcd95-
+    labels:
+      app: zabbix-postgres
+      pod-template-hash: 58f59dcd95
+      project: iiot-correlation-lab
+      stage: zabbix-monitoring
+    name: zabbix-postgres-58f59dcd95-n89h9
+    namespace: monitoring
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: ReplicaSet
+      name: zabbix-postgres-58f59dcd95
+      uid: 60564b5d-a66f-4bf7-8051-1d31fa589ea9
+    resourceVersion: "95218"
+    uid: 6307389d-04af-42b0-81e3-117773c67fbe
+  spec:
+    containers:
+    - env:
+      - name: POSTGRES_USER
+        valueFrom:
+          secretKeyRef:
+            key: POSTGRES_USER
+            name: zabbix-postgres-secret
+      - name: POSTGRES_PASSWORD
+        valueFrom:
+          secretKeyRef:
+            key: POSTGRES_PASSWORD
+            name: zabbix-postgres-secret
+      - name: POSTGRES_DB
+        valueFrom:
+          secretKeyRef:
+            key: POSTGRES_DB
+            name: zabbix-postgres-secret
+      - name: PGDATA
+        value: /var/lib/postgresql/data/pgdata
+      image: postgres:16
+      imagePullPolicy: IfNotPresent
+      livenessProbe:
+        exec:
+          command:
+          - /bin/sh
+          - -c
+          - pg_isready -U "$POSTGRES_USER" -d "$POSTGRES_DB"
+        failureThreshold: 3
+        initialDelaySeconds: 30
+        periodSeconds: 20
+        successThreshold: 1
+        timeoutSeconds: 5
+      name: postgres
+      ports:
+      - containerPort: 5432
+        name: postgres
+        protocol: TCP
+      readinessProbe:
+        exec:
+          command:
+          - /bin/sh
+          - -c
+          - pg_isready -U "$POSTGRES_USER" -d "$POSTGRES_DB"
+        failureThreshold: 3
+        initialDelaySeconds: 10
+        periodSeconds: 10
+        successThreshold: 1
+        timeoutSeconds: 5
+      resources: {}
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /var/lib/postgresql/data
+        name: postgres-data
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-dkkrh
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    nodeName: iiot-lab-k8s
+    preemptionPolicy: PreemptLowerPriority
+    priority: 0
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext:
+      fsGroup: 999
+    serviceAccount: default
+    serviceAccountName: default
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    volumes:
+    - name: postgres-data
+      persistentVolumeClaim:
+        claimName: zabbix-postgres-pvc
+    - name: kube-api-access-dkkrh
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2026-05-03T00:36:26Z"
+      status: "True"
+      type: PodReadyToStartContainers
+    - lastProbeTime: null
+      lastTransitionTime: "2026-05-02T03:12:33Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2026-05-03T00:37:18Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2026-05-03T00:37:18Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2026-05-02T03:12:33Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: containerd://4254cea154b6338fce65f6f73ecca4001916b08c4a1a5f136d1f2bfdbf213ed6
+      image: docker.io/library/postgres:16
+      imageID: docker.io/library/postgres@sha256:71e27bf60b70bded003791b5573f8b808365613f341df20ffcf0c1ed7bc13ddf
+      lastState: {}
+      name: postgres
+      ready: true
+      restartCount: 3
+      started: true
+      state:
+        running:
+          startedAt: "2026-05-03T00:36:25Z"
+    hostIP: 10.10.0.101
+    hostIPs:
+    - ip: 10.10.0.101
+    phase: Running
+    podIP: 10.1.21.162
+    podIPs:
+    - ip: 10.1.21.162
+    qosClass: BestEffort
+    startTime: "2026-05-02T03:12:33Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      cni.projectcalico.org/containerID: 158ef13f413e1adda3ba26fe7621c36603c3824c9f4e555536ae3442a5fff7d8
+      cni.projectcalico.org/podIP: 10.1.21.147/32
+      cni.projectcalico.org/podIPs: 10.1.21.147/32
+    creationTimestamp: "2026-05-02T03:12:08Z"
+    generateName: zabbix-server-b5fb4666f-
+    labels:
+      app: zabbix-server
+      pod-template-hash: b5fb4666f
+      project: iiot-correlation-lab
+      stage: zabbix-monitoring
+    name: zabbix-server-b5fb4666f-rfgmv
+    namespace: monitoring
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: ReplicaSet
+      name: zabbix-server-b5fb4666f
+      uid: ce26880d-e2be-46fd-a7d5-c3b6a3dab06e
+    resourceVersion: "95255"
+    uid: ca8fc82b-6aeb-4f44-bd2d-80ed118aeda0
+  spec:
+    containers:
+    - env:
+      - name: DB_SERVER_HOST
+        value: zabbix-postgres
+      - name: POSTGRES_USER
+        valueFrom:
+          secretKeyRef:
+            key: POSTGRES_USER
+            name: zabbix-postgres-secret
+      - name: POSTGRES_PASSWORD
+        valueFrom:
+          secretKeyRef:
+            key: POSTGRES_PASSWORD
+            name: zabbix-postgres-secret
+      - name: POSTGRES_DB
+        valueFrom:
+          secretKeyRef:
+            key: POSTGRES_DB
+            name: zabbix-postgres-secret
+      image: zabbix/zabbix-server-pgsql:ubuntu-7.0-latest
+      imagePullPolicy: IfNotPresent
+      livenessProbe:
+        failureThreshold: 3
+        initialDelaySeconds: 60
+        periodSeconds: 20
+        successThreshold: 1
+        tcpSocket:
+          port: 10051
+        timeoutSeconds: 1
+      name: zabbix-server
+      ports:
+      - containerPort: 10051
+        name: zabbix-trapper
+        protocol: TCP
+      readinessProbe:
+        failureThreshold: 3
+        initialDelaySeconds: 30
+        periodSeconds: 10
+        successThreshold: 1
+        tcpSocket:
+          port: 10051
+        timeoutSeconds: 1
+      resources: {}
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-p9hfb
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    nodeName: iiot-lab-k8s
+    preemptionPolicy: PreemptLowerPriority
+    priority: 0
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext: {}
+    serviceAccount: default
+    serviceAccountName: default
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    volumes:
+    - name: kube-api-access-p9hfb
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2026-05-03T00:36:16Z"
+      status: "True"
+      type: PodReadyToStartContainers
+    - lastProbeTime: null
+      lastTransitionTime: "2026-05-02T03:12:09Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2026-05-03T00:37:38Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2026-05-03T00:37:38Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2026-05-02T03:12:09Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: containerd://61c983718cd29b6dffb21eb1b53ee65ff5d4e0071973e7919095cd2514723c47
+      image: docker.io/zabbix/zabbix-server-pgsql:ubuntu-7.0-latest
+      imageID: docker.io/zabbix/zabbix-server-pgsql@sha256:59405a4885eb087c08cdb9962a638e723d04b6947a55eb8484ee04be0e8eb57a
+      lastState: {}
+      name: zabbix-server
+      ready: true
+      restartCount: 3
+      started: true
+      state:
+        running:
+          startedAt: "2026-05-03T00:36:15Z"
+    hostIP: 10.10.0.101
+    hostIPs:
+    - ip: 10.10.0.101
+    phase: Running
+    podIP: 10.1.21.147
+    podIPs:
+    - ip: 10.1.21.147
+    qosClass: BestEffort
+    startTime: "2026-05-02T03:12:09Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      cni.projectcalico.org/containerID: 94a614e40de68aea7b36ed04d3f0b7849aceda44596b807b086697b4a9bacfb9
+      cni.projectcalico.org/podIP: 10.1.21.163/32
+      cni.projectcalico.org/podIPs: 10.1.21.163/32
+    creationTimestamp: "2026-05-02T03:12:09Z"
+    generateName: zabbix-web-897d6bc-
+    labels:
+      app: zabbix-web
+      pod-template-hash: 897d6bc
+      project: iiot-correlation-lab
+      stage: zabbix-monitoring
+    name: zabbix-web-897d6bc-rvr44
+    namespace: monitoring
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: ReplicaSet
+      name: zabbix-web-897d6bc
+      uid: dfbb2be7-b1e6-4d9c-9ccc-0a47252ab29a
+    resourceVersion: "95260"
+    uid: be5568c3-b89f-4af8-bab8-0cedd0697ce8
+  spec:
+    containers:
+    - env:
+      - name: DB_SERVER_HOST
+        value: zabbix-postgres
+      - name: POSTGRES_USER
+        valueFrom:
+          secretKeyRef:
+            key: POSTGRES_USER
+            name: zabbix-postgres-secret
+      - name: POSTGRES_PASSWORD
+        valueFrom:
+          secretKeyRef:
+            key: POSTGRES_PASSWORD
+            name: zabbix-postgres-secret
+      - name: POSTGRES_DB
+        valueFrom:
+          secretKeyRef:
+            key: POSTGRES_DB
+            name: zabbix-postgres-secret
+      - name: ZBX_SERVER_HOST
+        value: zabbix-server
+      - name: PHP_TZ
+        value: UTC
+      image: zabbix/zabbix-web-nginx-pgsql:ubuntu-7.0-latest
+      imagePullPolicy: IfNotPresent
+      livenessProbe:
+        failureThreshold: 3
+        httpGet:
+          path: /
+          port: 8080
+          scheme: HTTP
+        initialDelaySeconds: 60
+        periodSeconds: 20
+        successThreshold: 1
+        timeoutSeconds: 1
+      name: zabbix-web
+      ports:
+      - containerPort: 8080
+        name: http
+        protocol: TCP
+      readinessProbe:
+        failureThreshold: 3
+        httpGet:
+          path: /
+          port: 8080
+          scheme: HTTP
+        initialDelaySeconds: 30
+        periodSeconds: 10
+        successThreshold: 1
+        timeoutSeconds: 1
+      resources: {}
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-qz54c
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    nodeName: iiot-lab-k8s
+    preemptionPolicy: PreemptLowerPriority
+    priority: 0
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext: {}
+    serviceAccount: default
+    serviceAccountName: default
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    volumes:
+    - name: kube-api-access-qz54c
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2026-05-03T00:36:21Z"
+      status: "True"
+      type: PodReadyToStartContainers
+    - lastProbeTime: null
+      lastTransitionTime: "2026-05-02T03:12:11Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2026-05-03T00:37:39Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2026-05-03T00:37:39Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2026-05-02T03:12:10Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: containerd://8581dc7de9eeff5d1ac9c62821270ca6448a1dca88389931e1679c60046c28c4
+      image: docker.io/zabbix/zabbix-web-nginx-pgsql:ubuntu-7.0-latest
+      imageID: docker.io/zabbix/zabbix-web-nginx-pgsql@sha256:69afbac48e6e33c0a83dad651703a691dfecf5e02e67206c5f75a0e9c92a3cd7
+      lastState: {}
+      name: zabbix-web
+      ready: true
+      restartCount: 3
+      started: true
+      state:
+        running:
+          startedAt: "2026-05-03T00:36:20Z"
+    hostIP: 10.10.0.101
+    hostIPs:
+    - ip: 10.10.0.101
+    phase: Running
+    podIP: 10.1.21.163
+    podIPs:
+    - ip: 10.1.21.163
+    qosClass: BestEffort
+    startTime: "2026-05-02T03:12:11Z"
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"v1","kind":"Service","metadata":{"annotations":{},"labels":{"app":"zabbix-postgres","project":"iiot-correlation-lab","stage":"zabbix-monitoring"},"name":"zabbix-postgres","namespace":"monitoring"},"spec":{"ports":[{"name":"postgres","port":5432,"targetPort":5432}],"selector":{"app":"zabbix-postgres","project":"iiot-correlation-lab","stage":"zabbix-monitoring"},"type":"ClusterIP"}}
+    creationTimestamp: "2026-05-02T03:12:06Z"
+    labels:
+      app: zabbix-postgres
+      project: iiot-correlation-lab
+      stage: zabbix-monitoring
+    name: zabbix-postgres
+    namespace: monitoring
+    resourceVersion: "40564"
+    uid: 614facde-0eb4-4aad-8ee9-83a807eb51c3
+  spec:
+    clusterIP: 10.152.183.92
+    clusterIPs:
+    - 10.152.183.92
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: postgres
+      port: 5432
+      protocol: TCP
+      targetPort: 5432
+    selector:
+      app: zabbix-postgres
+      project: iiot-correlation-lab
+      stage: zabbix-monitoring
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"v1","kind":"Service","metadata":{"annotations":{},"labels":{"app":"zabbix-server","project":"iiot-correlation-lab","stage":"zabbix-monitoring"},"name":"zabbix-server","namespace":"monitoring"},"spec":{"ports":[{"name":"zabbix-trapper","port":10051,"targetPort":10051}],"selector":{"app":"zabbix-server","project":"iiot-correlation-lab","stage":"zabbix-monitoring"},"type":"ClusterIP"}}
+    creationTimestamp: "2026-05-02T03:12:07Z"
+    labels:
+      app: zabbix-server
+      project: iiot-correlation-lab
+      stage: zabbix-monitoring
+    name: zabbix-server
+    namespace: monitoring
+    resourceVersion: "40569"
+    uid: e846b947-b674-447b-aa54-005ffa97aca9
+  spec:
+    clusterIP: 10.152.183.20
+    clusterIPs:
+    - 10.152.183.20
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: zabbix-trapper
+      port: 10051
+      protocol: TCP
+      targetPort: 10051
+    selector:
+      app: zabbix-server
+      project: iiot-correlation-lab
+      stage: zabbix-monitoring
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"v1","kind":"Service","metadata":{"annotations":{"metallb.io/loadBalancerIPs":"10.10.0.160"},"labels":{"app":"zabbix-web","project":"iiot-correlation-lab","stage":"zabbix-monitoring"},"name":"zabbix-web","namespace":"monitoring"},"spec":{"loadBalancerIP":"10.10.0.160","ports":[{"name":"http","port":80,"targetPort":8080}],"selector":{"app":"zabbix-web","project":"iiot-correlation-lab","stage":"zabbix-monitoring"},"type":"LoadBalancer"}}
+      metallb.io/loadBalancerIPs: 10.10.0.160
+    creationTimestamp: "2026-05-02T03:12:07Z"
+    labels:
+      app: zabbix-web
+      project: iiot-correlation-lab
+      stage: zabbix-monitoring
+    name: zabbix-web
+    namespace: monitoring
+    resourceVersion: "40576"
+    uid: b08587da-57a2-40a3-9ee1-7c2e91b5c330
+  spec:
+    allocateLoadBalancerNodePorts: true
+    clusterIP: 10.152.183.71
+    clusterIPs:
+    - 10.152.183.71
+    externalTrafficPolicy: Cluster
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    loadBalancerIP: 10.10.0.160
+    ports:
+    - name: http
+      nodePort: 30670
+      port: 80
+      protocol: TCP
+      targetPort: 8080
+    selector:
+      app: zabbix-web
+      project: iiot-correlation-lab
+      stage: zabbix-monitoring
+    sessionAffinity: None
+    type: LoadBalancer
+  status:
+    loadBalancer:
+      ingress:
+      - ip: 10.10.0.160
+        ipMode: VIP
+- apiVersion: apps/v1
+  kind: DaemonSet
+  metadata:
+    annotations:
+      deprecated.daemonset.template.generation: "1"
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"apps/v1","kind":"DaemonSet","metadata":{"annotations":{},"labels":{"app":"zabbix-agent","project":"iiot-correlation-lab","stage":"zabbix-monitoring"},"name":"zabbix-agent","namespace":"monitoring"},"spec":{"selector":{"matchLabels":{"app":"zabbix-agent","project":"iiot-correlation-lab","stage":"zabbix-monitoring"}},"template":{"metadata":{"labels":{"app":"zabbix-agent","project":"iiot-correlation-lab","stage":"zabbix-monitoring"}},"spec":{"containers":[{"env":[{"name":"ZBX_SERVER_HOST","value":"zabbix-server.monitoring.svc.cluster.local"},{"name":"ZBX_HOSTNAME","valueFrom":{"fieldRef":{"fieldPath":"spec.nodeName"}}}],"image":"zabbix/zabbix-agent2:ubuntu-7.0-latest","imagePullPolicy":"IfNotPresent","name":"zabbix-agent","ports":[{"containerPort":10050,"name":"agent"}]}],"dnsPolicy":"ClusterFirstWithHostNet","hostNetwork":true}}}}
+    creationTimestamp: "2026-05-02T03:12:08Z"
+    generation: 1
+    labels:
+      app: zabbix-agent
+      project: iiot-correlation-lab
+      stage: zabbix-monitoring
+    name: zabbix-agent
+    namespace: monitoring
+    resourceVersion: "40676"
+    uid: 5759cbb2-a24c-467b-a178-3b83be4ae1af
+  spec:
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        app: zabbix-agent
+        project: iiot-correlation-lab
+        stage: zabbix-monitoring
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          app: zabbix-agent
+          project: iiot-correlation-lab
+          stage: zabbix-monitoring
+      spec:
+        containers:
+        - env:
+          - name: ZBX_SERVER_HOST
+            value: zabbix-server.monitoring.svc.cluster.local
+          - name: ZBX_HOSTNAME
+            valueFrom:
+              fieldRef:
+                apiVersion: v1
+                fieldPath: spec.nodeName
+          image: zabbix/zabbix-agent2:ubuntu-7.0-latest
+          imagePullPolicy: IfNotPresent
+          name: zabbix-agent
+          ports:
+          - containerPort: 10050
+            name: agent
+            protocol: TCP
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirstWithHostNet
+        hostNetwork: true
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+    updateStrategy:
+      rollingUpdate:
+        maxSurge: 0
+        maxUnavailable: 1
+      type: RollingUpdate
+  status:
+    currentNumberScheduled: 1
+    desiredNumberScheduled: 1
+    numberAvailable: 1
+    numberMisscheduled: 0
+    numberReady: 1
+    observedGeneration: 1
+    updatedNumberScheduled: 1
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      deployment.kubernetes.io/revision: "1"
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"apps/v1","kind":"Deployment","metadata":{"annotations":{},"labels":{"app":"zabbix-postgres","project":"iiot-correlation-lab","stage":"zabbix-monitoring"},"name":"zabbix-postgres","namespace":"monitoring"},"spec":{"replicas":1,"selector":{"matchLabels":{"app":"zabbix-postgres","project":"iiot-correlation-lab","stage":"zabbix-monitoring"}},"strategy":{"type":"Recreate"},"template":{"metadata":{"labels":{"app":"zabbix-postgres","project":"iiot-correlation-lab","stage":"zabbix-monitoring"}},"spec":{"containers":[{"env":[{"name":"POSTGRES_USER","valueFrom":{"secretKeyRef":{"key":"POSTGRES_USER","name":"zabbix-postgres-secret"}}},{"name":"POSTGRES_PASSWORD","valueFrom":{"secretKeyRef":{"key":"POSTGRES_PASSWORD","name":"zabbix-postgres-secret"}}},{"name":"POSTGRES_DB","valueFrom":{"secretKeyRef":{"key":"POSTGRES_DB","name":"zabbix-postgres-secret"}}},{"name":"PGDATA","value":"/var/lib/postgresql/data/pgdata"}],"image":"postgres:16","imagePullPolicy":"IfNotPresent","livenessProbe":{"exec":{"command":["/bin/sh","-c","pg_isready -U \"$POSTGRES_USER\" -d \"$POSTGRES_DB\""]},"initialDelaySeconds":30,"periodSeconds":20,"timeoutSeconds":5},"name":"postgres","ports":[{"containerPort":5432,"name":"postgres"}],"readinessProbe":{"exec":{"command":["/bin/sh","-c","pg_isready -U \"$POSTGRES_USER\" -d \"$POSTGRES_DB\""]},"initialDelaySeconds":10,"periodSeconds":10,"timeoutSeconds":5},"volumeMounts":[{"mountPath":"/var/lib/postgresql/data","name":"postgres-data"}]}],"securityContext":{"fsGroup":999},"volumes":[{"name":"postgres-data","persistentVolumeClaim":{"claimName":"zabbix-postgres-pvc"}}]}}}}
+    creationTimestamp: "2026-05-02T03:12:08Z"
+    generation: 1
+    labels:
+      app: zabbix-postgres
+      project: iiot-correlation-lab
+      stage: zabbix-monitoring
+    name: zabbix-postgres
+    namespace: monitoring
+    resourceVersion: "95227"
+    uid: 6396f02a-bf28-4dce-af6c-ed01e2d13e3a
+  spec:
+    progressDeadlineSeconds: 600
+    replicas: 1
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        app: zabbix-postgres
+        project: iiot-correlation-lab
+        stage: zabbix-monitoring
+    strategy:
+      type: Recreate
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          app: zabbix-postgres
+          project: iiot-correlation-lab
+          stage: zabbix-monitoring
+      spec:
+        containers:
+        - env:
+          - name: POSTGRES_USER
+            valueFrom:
+              secretKeyRef:
+                key: POSTGRES_USER
+                name: zabbix-postgres-secret
+          - name: POSTGRES_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                key: POSTGRES_PASSWORD
+                name: zabbix-postgres-secret
+          - name: POSTGRES_DB
+            valueFrom:
+              secretKeyRef:
+                key: POSTGRES_DB
+                name: zabbix-postgres-secret
+          - name: PGDATA
+            value: /var/lib/postgresql/data/pgdata
+          image: postgres:16
+          imagePullPolicy: IfNotPresent
+          livenessProbe:
+            exec:
+              command:
+              - /bin/sh
+              - -c
+              - pg_isready -U "$POSTGRES_USER" -d "$POSTGRES_DB"
+            failureThreshold: 3
+            initialDelaySeconds: 30
+            periodSeconds: 20
+            successThreshold: 1
+            timeoutSeconds: 5
+          name: postgres
+          ports:
+          - containerPort: 5432
+            name: postgres
+            protocol: TCP
+          readinessProbe:
+            exec:
+              command:
+              - /bin/sh
+              - -c
+              - pg_isready -U "$POSTGRES_USER" -d "$POSTGRES_DB"
+            failureThreshold: 3
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 5
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /var/lib/postgresql/data
+            name: postgres-data
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext:
+          fsGroup: 999
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - name: postgres-data
+          persistentVolumeClaim:
+            claimName: zabbix-postgres-pvc
+  status:
+    availableReplicas: 1
+    conditions:
+    - lastTransitionTime: "2026-05-02T03:12:08Z"
+      lastUpdateTime: "2026-05-02T03:12:53Z"
+      message: ReplicaSet "zabbix-postgres-58f59dcd95" has successfully progressed.
+      reason: NewReplicaSetAvailable
+      status: "True"
+      type: Progressing
+    - lastTransitionTime: "2026-05-03T00:37:22Z"
+      lastUpdateTime: "2026-05-03T00:37:22Z"
+      message: Deployment has minimum availability.
+      reason: MinimumReplicasAvailable
+      status: "True"
+      type: Available
+    observedGeneration: 1
+    readyReplicas: 1
+    replicas: 1
+    updatedReplicas: 1
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      deployment.kubernetes.io/revision: "1"
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"apps/v1","kind":"Deployment","metadata":{"annotations":{},"labels":{"app":"zabbix-server","project":"iiot-correlation-lab","stage":"zabbix-monitoring"},"name":"zabbix-server","namespace":"monitoring"},"spec":{"replicas":1,"selector":{"matchLabels":{"app":"zabbix-server","project":"iiot-correlation-lab","stage":"zabbix-monitoring"}},"template":{"metadata":{"labels":{"app":"zabbix-server","project":"iiot-correlation-lab","stage":"zabbix-monitoring"}},"spec":{"containers":[{"env":[{"name":"DB_SERVER_HOST","value":"zabbix-postgres"},{"name":"POSTGRES_USER","valueFrom":{"secretKeyRef":{"key":"POSTGRES_USER","name":"zabbix-postgres-secret"}}},{"name":"POSTGRES_PASSWORD","valueFrom":{"secretKeyRef":{"key":"POSTGRES_PASSWORD","name":"zabbix-postgres-secret"}}},{"name":"POSTGRES_DB","valueFrom":{"secretKeyRef":{"key":"POSTGRES_DB","name":"zabbix-postgres-secret"}}}],"image":"zabbix/zabbix-server-pgsql:ubuntu-7.0-latest","imagePullPolicy":"IfNotPresent","livenessProbe":{"initialDelaySeconds":60,"periodSeconds":20,"tcpSocket":{"port":10051}},"name":"zabbix-server","ports":[{"containerPort":10051,"name":"zabbix-trapper"}],"readinessProbe":{"initialDelaySeconds":30,"periodSeconds":10,"tcpSocket":{"port":10051}}}]}}}}
+    creationTimestamp: "2026-05-02T03:12:08Z"
+    generation: 1
+    labels:
+      app: zabbix-server
+      project: iiot-correlation-lab
+      stage: zabbix-monitoring
+    name: zabbix-server
+    namespace: monitoring
+    resourceVersion: "95263"
+    uid: 3fc00e0b-f423-4470-a6e6-b5fe14af60da
+  spec:
+    progressDeadlineSeconds: 600
+    replicas: 1
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        app: zabbix-server
+        project: iiot-correlation-lab
+        stage: zabbix-monitoring
+    strategy:
+      rollingUpdate:
+        maxSurge: 25%
+        maxUnavailable: 25%
+      type: RollingUpdate
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          app: zabbix-server
+          project: iiot-correlation-lab
+          stage: zabbix-monitoring
+      spec:
+        containers:
+        - env:
+          - name: DB_SERVER_HOST
+            value: zabbix-postgres
+          - name: POSTGRES_USER
+            valueFrom:
+              secretKeyRef:
+                key: POSTGRES_USER
+                name: zabbix-postgres-secret
+          - name: POSTGRES_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                key: POSTGRES_PASSWORD
+                name: zabbix-postgres-secret
+          - name: POSTGRES_DB
+            valueFrom:
+              secretKeyRef:
+                key: POSTGRES_DB
+                name: zabbix-postgres-secret
+          image: zabbix/zabbix-server-pgsql:ubuntu-7.0-latest
+          imagePullPolicy: IfNotPresent
+          livenessProbe:
+            failureThreshold: 3
+            initialDelaySeconds: 60
+            periodSeconds: 20
+            successThreshold: 1
+            tcpSocket:
+              port: 10051
+            timeoutSeconds: 1
+          name: zabbix-server
+          ports:
+          - containerPort: 10051
+            name: zabbix-trapper
+            protocol: TCP
+          readinessProbe:
+            failureThreshold: 3
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            successThreshold: 1
+            tcpSocket:
+              port: 10051
+            timeoutSeconds: 1
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+  status:
+    availableReplicas: 1
+    conditions:
+    - lastTransitionTime: "2026-05-02T03:12:08Z"
+      lastUpdateTime: "2026-05-02T03:15:40Z"
+      message: ReplicaSet "zabbix-server-b5fb4666f" has successfully progressed.
+      reason: NewReplicaSetAvailable
+      status: "True"
+      type: Progressing
+    - lastTransitionTime: "2026-05-03T00:37:40Z"
+      lastUpdateTime: "2026-05-03T00:37:40Z"
+      message: Deployment has minimum availability.
+      reason: MinimumReplicasAvailable
+      status: "True"
+      type: Available
+    observedGeneration: 1
+    readyReplicas: 1
+    replicas: 1
+    updatedReplicas: 1
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      deployment.kubernetes.io/revision: "1"
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"apps/v1","kind":"Deployment","metadata":{"annotations":{},"labels":{"app":"zabbix-web","project":"iiot-correlation-lab","stage":"zabbix-monitoring"},"name":"zabbix-web","namespace":"monitoring"},"spec":{"replicas":1,"selector":{"matchLabels":{"app":"zabbix-web","project":"iiot-correlation-lab","stage":"zabbix-monitoring"}},"template":{"metadata":{"labels":{"app":"zabbix-web","project":"iiot-correlation-lab","stage":"zabbix-monitoring"}},"spec":{"containers":[{"env":[{"name":"DB_SERVER_HOST","value":"zabbix-postgres"},{"name":"POSTGRES_USER","valueFrom":{"secretKeyRef":{"key":"POSTGRES_USER","name":"zabbix-postgres-secret"}}},{"name":"POSTGRES_PASSWORD","valueFrom":{"secretKeyRef":{"key":"POSTGRES_PASSWORD","name":"zabbix-postgres-secret"}}},{"name":"POSTGRES_DB","valueFrom":{"secretKeyRef":{"key":"POSTGRES_DB","name":"zabbix-postgres-secret"}}},{"name":"ZBX_SERVER_HOST","value":"zabbix-server"},{"name":"PHP_TZ","value":"UTC"}],"image":"zabbix/zabbix-web-nginx-pgsql:ubuntu-7.0-latest","imagePullPolicy":"IfNotPresent","livenessProbe":{"httpGet":{"path":"/","port":8080},"initialDelaySeconds":60,"periodSeconds":20},"name":"zabbix-web","ports":[{"containerPort":8080,"name":"http"}],"readinessProbe":{"httpGet":{"path":"/","port":8080},"initialDelaySeconds":30,"periodSeconds":10}}]}}}}
+    creationTimestamp: "2026-05-02T03:12:08Z"
+    generation: 1
+    labels:
+      app: zabbix-web
+      project: iiot-correlation-lab
+      stage: zabbix-monitoring
+    name: zabbix-web
+    namespace: monitoring
+    resourceVersion: "95272"
+    uid: 50762d7d-f4af-46d9-9335-3c96e659ab0a
+  spec:
+    progressDeadlineSeconds: 600
+    replicas: 1
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        app: zabbix-web
+        project: iiot-correlation-lab
+        stage: zabbix-monitoring
+    strategy:
+      rollingUpdate:
+        maxSurge: 25%
+        maxUnavailable: 25%
+      type: RollingUpdate
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          app: zabbix-web
+          project: iiot-correlation-lab
+          stage: zabbix-monitoring
+      spec:
+        containers:
+        - env:
+          - name: DB_SERVER_HOST
+            value: zabbix-postgres
+          - name: POSTGRES_USER
+            valueFrom:
+              secretKeyRef:
+                key: POSTGRES_USER
+                name: zabbix-postgres-secret
+          - name: POSTGRES_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                key: POSTGRES_PASSWORD
+                name: zabbix-postgres-secret
+          - name: POSTGRES_DB
+            valueFrom:
+              secretKeyRef:
+                key: POSTGRES_DB
+                name: zabbix-postgres-secret
+          - name: ZBX_SERVER_HOST
+            value: zabbix-server
+          - name: PHP_TZ
+            value: UTC
+          image: zabbix/zabbix-web-nginx-pgsql:ubuntu-7.0-latest
+          imagePullPolicy: IfNotPresent
+          livenessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /
+              port: 8080
+              scheme: HTTP
+            initialDelaySeconds: 60
+            periodSeconds: 20
+            successThreshold: 1
+            timeoutSeconds: 1
+          name: zabbix-web
+          ports:
+          - containerPort: 8080
+            name: http
+            protocol: TCP
+          readinessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /
+              port: 8080
+              scheme: HTTP
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 1
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+  status:
+    availableReplicas: 1
+    conditions:
+    - lastTransitionTime: "2026-05-02T03:12:09Z"
+      lastUpdateTime: "2026-05-02T03:13:02Z"
+      message: ReplicaSet "zabbix-web-897d6bc" has successfully progressed.
+      reason: NewReplicaSetAvailable
+      status: "True"
+      type: Progressing
+    - lastTransitionTime: "2026-05-03T00:37:43Z"
+      lastUpdateTime: "2026-05-03T00:37:43Z"
+      message: Deployment has minimum availability.
+      reason: MinimumReplicasAvailable
+      status: "True"
+      type: Available
+    observedGeneration: 1
+    readyReplicas: 1
+    replicas: 1
+    updatedReplicas: 1
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "1"
+      deployment.kubernetes.io/max-replicas: "1"
+      deployment.kubernetes.io/revision: "1"
+    creationTimestamp: "2026-05-02T03:12:08Z"
+    generation: 1
+    labels:
+      app: zabbix-postgres
+      pod-template-hash: 58f59dcd95
+      project: iiot-correlation-lab
+      stage: zabbix-monitoring
+    name: zabbix-postgres-58f59dcd95
+    namespace: monitoring
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: zabbix-postgres
+      uid: 6396f02a-bf28-4dce-af6c-ed01e2d13e3a
+    resourceVersion: "95224"
+    uid: 60564b5d-a66f-4bf7-8051-1d31fa589ea9
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        app: zabbix-postgres
+        pod-template-hash: 58f59dcd95
+        project: iiot-correlation-lab
+        stage: zabbix-monitoring
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          app: zabbix-postgres
+          pod-template-hash: 58f59dcd95
+          project: iiot-correlation-lab
+          stage: zabbix-monitoring
+      spec:
+        containers:
+        - env:
+          - name: POSTGRES_USER
+            valueFrom:
+              secretKeyRef:
+                key: POSTGRES_USER
+                name: zabbix-postgres-secret
+          - name: POSTGRES_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                key: POSTGRES_PASSWORD
+                name: zabbix-postgres-secret
+          - name: POSTGRES_DB
+            valueFrom:
+              secretKeyRef:
+                key: POSTGRES_DB
+                name: zabbix-postgres-secret
+          - name: PGDATA
+            value: /var/lib/postgresql/data/pgdata
+          image: postgres:16
+          imagePullPolicy: IfNotPresent
+          livenessProbe:
+            exec:
+              command:
+              - /bin/sh
+              - -c
+              - pg_isready -U "$POSTGRES_USER" -d "$POSTGRES_DB"
+            failureThreshold: 3
+            initialDelaySeconds: 30
+            periodSeconds: 20
+            successThreshold: 1
+            timeoutSeconds: 5
+          name: postgres
+          ports:
+          - containerPort: 5432
+            name: postgres
+            protocol: TCP
+          readinessProbe:
+            exec:
+              command:
+              - /bin/sh
+              - -c
+              - pg_isready -U "$POSTGRES_USER" -d "$POSTGRES_DB"
+            failureThreshold: 3
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 5
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /var/lib/postgresql/data
+            name: postgres-data
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext:
+          fsGroup: 999
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - name: postgres-data
+          persistentVolumeClaim:
+            claimName: zabbix-postgres-pvc
+  status:
+    availableReplicas: 1
+    fullyLabeledReplicas: 1
+    observedGeneration: 1
+    readyReplicas: 1
+    replicas: 1
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "1"
+      deployment.kubernetes.io/max-replicas: "2"
+      deployment.kubernetes.io/revision: "1"
+    creationTimestamp: "2026-05-02T03:12:08Z"
+    generation: 1
+    labels:
+      app: zabbix-server
+      pod-template-hash: b5fb4666f
+      project: iiot-correlation-lab
+      stage: zabbix-monitoring
+    name: zabbix-server-b5fb4666f
+    namespace: monitoring
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: zabbix-server
+      uid: 3fc00e0b-f423-4470-a6e6-b5fe14af60da
+    resourceVersion: "95258"
+    uid: ce26880d-e2be-46fd-a7d5-c3b6a3dab06e
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        app: zabbix-server
+        pod-template-hash: b5fb4666f
+        project: iiot-correlation-lab
+        stage: zabbix-monitoring
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          app: zabbix-server
+          pod-template-hash: b5fb4666f
+          project: iiot-correlation-lab
+          stage: zabbix-monitoring
+      spec:
+        containers:
+        - env:
+          - name: DB_SERVER_HOST
+            value: zabbix-postgres
+          - name: POSTGRES_USER
+            valueFrom:
+              secretKeyRef:
+                key: POSTGRES_USER
+                name: zabbix-postgres-secret
+          - name: POSTGRES_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                key: POSTGRES_PASSWORD
+                name: zabbix-postgres-secret
+          - name: POSTGRES_DB
+            valueFrom:
+              secretKeyRef:
+                key: POSTGRES_DB
+                name: zabbix-postgres-secret
+          image: zabbix/zabbix-server-pgsql:ubuntu-7.0-latest
+          imagePullPolicy: IfNotPresent
+          livenessProbe:
+            failureThreshold: 3
+            initialDelaySeconds: 60
+            periodSeconds: 20
+            successThreshold: 1
+            tcpSocket:
+              port: 10051
+            timeoutSeconds: 1
+          name: zabbix-server
+          ports:
+          - containerPort: 10051
+            name: zabbix-trapper
+            protocol: TCP
+          readinessProbe:
+            failureThreshold: 3
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            successThreshold: 1
+            tcpSocket:
+              port: 10051
+            timeoutSeconds: 1
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+  status:
+    availableReplicas: 1
+    fullyLabeledReplicas: 1
+    observedGeneration: 1
+    readyReplicas: 1
+    replicas: 1
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "1"
+      deployment.kubernetes.io/max-replicas: "2"
+      deployment.kubernetes.io/revision: "1"
+    creationTimestamp: "2026-05-02T03:12:08Z"
+    generation: 1
+    labels:
+      app: zabbix-web
+      pod-template-hash: 897d6bc
+      project: iiot-correlation-lab
+      stage: zabbix-monitoring
+    name: zabbix-web-897d6bc
+    namespace: monitoring
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: zabbix-web
+      uid: 50762d7d-f4af-46d9-9335-3c96e659ab0a
+    resourceVersion: "95267"
+    uid: dfbb2be7-b1e6-4d9c-9ccc-0a47252ab29a
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        app: zabbix-web
+        pod-template-hash: 897d6bc
+        project: iiot-correlation-lab
+        stage: zabbix-monitoring
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          app: zabbix-web
+          pod-template-hash: 897d6bc
+          project: iiot-correlation-lab
+          stage: zabbix-monitoring
+      spec:
+        containers:
+        - env:
+          - name: DB_SERVER_HOST
+            value: zabbix-postgres
+          - name: POSTGRES_USER
+            valueFrom:
+              secretKeyRef:
+                key: POSTGRES_USER
+                name: zabbix-postgres-secret
+          - name: POSTGRES_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                key: POSTGRES_PASSWORD
+                name: zabbix-postgres-secret
+          - name: POSTGRES_DB
+            valueFrom:
+              secretKeyRef:
+                key: POSTGRES_DB
+                name: zabbix-postgres-secret
+          - name: ZBX_SERVER_HOST
+            value: zabbix-server
+          - name: PHP_TZ
+            value: UTC
+          image: zabbix/zabbix-web-nginx-pgsql:ubuntu-7.0-latest
+          imagePullPolicy: IfNotPresent
+          livenessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /
+              port: 8080
+              scheme: HTTP
+            initialDelaySeconds: 60
+            periodSeconds: 20
+            successThreshold: 1
+            timeoutSeconds: 1
+          name: zabbix-web
+          ports:
+          - containerPort: 8080
+            name: http
+            protocol: TCP
+          readinessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /
+              port: 8080
+              scheme: HTTP
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 1
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+  status:
+    availableReplicas: 1
+    fullyLabeledReplicas: 1
+    observedGeneration: 1
+    readyReplicas: 1
+    replicas: 1
+kind: List
+metadata:
+  resourceVersion: ""

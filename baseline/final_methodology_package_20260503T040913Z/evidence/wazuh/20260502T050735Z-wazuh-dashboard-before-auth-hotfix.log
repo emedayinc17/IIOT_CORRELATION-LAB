@@ -1,0 +1,119 @@
+Created OpenSearch Dashboards keystore in /usr/share/wazuh-dashboard/config/opensearch_dashboards.keystore
+{"type":"log","@timestamp":"2026-05-02T04:43:27Z","tags":["info","plugins-service"],"pid":55,"message":"Plugin \"applicationConfig\" is disabled."}
+{"type":"log","@timestamp":"2026-05-02T04:43:27Z","tags":["info","plugins-service"],"pid":55,"message":"Plugin \"cspHandler\" is disabled."}
+{"type":"log","@timestamp":"2026-05-02T04:43:27Z","tags":["info","plugins-service"],"pid":55,"message":"Plugin \"dataSource\" is disabled."}
+{"type":"log","@timestamp":"2026-05-02T04:43:27Z","tags":["info","plugins-service"],"pid":55,"message":"Plugin \"visTypeXy\" is disabled."}
+{"type":"log","@timestamp":"2026-05-02T04:43:27Z","tags":["info","plugins-service"],"pid":55,"message":"Plugin \"workspace\" is disabled."}
+{"type":"log","@timestamp":"2026-05-02T04:43:27Z","tags":["warning","config","deprecation"],"pid":55,"message":"\"opensearch.requestHeadersWhitelist\" is deprecated and has been replaced by \"opensearch.requestHeadersAllowlist\""}
+{"type":"log","@timestamp":"2026-05-02T04:43:27Z","tags":["info","dynamic-config-service"],"pid":55,"message":"registering middleware to inject context to AsyncLocalStorage"}
+[agentkeepalive:deprecated] options.freeSocketKeepAliveTimeout is deprecated, please use options.freeSocketTimeout instead
+{"type":"log","@timestamp":"2026-05-02T04:43:27Z","tags":["info","plugins-system"],"pid":55,"message":"Setting up [51] plugins: [usageCollection,opensearchDashboardsUsageCollection,opensearchDashboardsLegacy,mapsLegacy,share,opensearchUiShared,legacyExport,embeddable,expressions,data,savedObjects,queryEnhancements,home,dashboard,visualizations,visTypeVega,visTypeTimeline,visTypeTable,visTypeMarkdown,visBuilder,visAugmenter,tileMap,regionMap,inputControlVis,ganttChartDashboards,visualize,apmOss,management,indexPatternManagement,dataSourceManagement,reportsDashboards,anomalyDetectionDashboards,indexManagementDashboards,customImportMapDashboards,alertingDashboards,notificationsDashboards,console,advancedSettings,dataExplorer,charts,visTypeVislib,visTypeTimeseries,visTypeTagcloud,visTypeMetric,discover,savedObjectsManagement,securityDashboards,wazuhCore,wazuhCheckUpdates,wazuh,bfetch]"}
+[agentkeepalive:deprecated] options.freeSocketKeepAliveTimeout is deprecated, please use options.freeSocketTimeout instead
+{"type":"log","@timestamp":"2026-05-02T04:43:27Z","tags":["info","plugins","queryEnhancements"],"pid":55,"message":"queryEnhancements: Setup complete"}
+[agentkeepalive:deprecated] options.freeSocketKeepAliveTimeout is deprecated, please use options.freeSocketTimeout instead
+[agentkeepalive:deprecated] options.freeSocketKeepAliveTimeout is deprecated, please use options.freeSocketTimeout instead
+[agentkeepalive:deprecated] options.freeSocketKeepAliveTimeout is deprecated, please use options.freeSocketTimeout instead
+[agentkeepalive:deprecated] options.freeSocketKeepAliveTimeout is deprecated, please use options.freeSocketTimeout instead
+[agentkeepalive:deprecated] options.freeSocketKeepAliveTimeout is deprecated, please use options.freeSocketTimeout instead
+[agentkeepalive:deprecated] options.freeSocketKeepAliveTimeout is deprecated, please use options.freeSocketTimeout instead
+[agentkeepalive:deprecated] options.freeSocketKeepAliveTimeout is deprecated, please use options.freeSocketTimeout instead
+[agentkeepalive:deprecated] options.freeSocketKeepAliveTimeout is deprecated, please use options.freeSocketTimeout instead
+[agentkeepalive:deprecated] options.freeSocketKeepAliveTimeout is deprecated, please use options.freeSocketTimeout instead
+[agentkeepalive:deprecated] options.freeSocketKeepAliveTimeout is deprecated, please use options.freeSocketTimeout instead
+{"type":"log","@timestamp":"2026-05-02T04:43:27Z","tags":["info","dynamic-config-service"],"pid":55,"message":"initiating start()"}
+{"type":"log","@timestamp":"2026-05-02T04:43:27Z","tags":["info","dynamic-config-service"],"pid":55,"message":"finished start()"}
+{"type":"log","@timestamp":"2026-05-02T04:43:28Z","tags":["info","savedobjects-service"],"pid":55,"message":"Waiting until all OpenSearch nodes are compatible with OpenSearch Dashboards before starting saved objects migrations..."}
+{"type":"log","@timestamp":"2026-05-02T04:43:28Z","tags":["error","opensearch","data"],"pid":55,"message":"[ConnectionError]: connect ECONNREFUSED 10.152.183.51:9200"}
+{"type":"log","@timestamp":"2026-05-02T04:43:28Z","tags":["error","savedobjects-service"],"pid":55,"message":"Unable to retrieve version information from OpenSearch nodes."}
+{"type":"log","@timestamp":"2026-05-02T04:43:30Z","tags":["error","opensearch","data"],"pid":55,"message":"[ConnectionError]: connect ECONNREFUSED 10.152.183.51:9200"}
+{"type":"log","@timestamp":"2026-05-02T04:43:34Z","tags":["error","opensearch","data"],"pid":55,"message":"[ConnectionError]: connect ECONNREFUSED 10.152.183.51:9200"}
+{"type":"log","@timestamp":"2026-05-02T04:43:38Z","tags":["error","opensearch","data"],"pid":55,"message":"[ConnectionError]: connect ECONNREFUSED 10.152.183.51:9200"}
+{"type":"log","@timestamp":"2026-05-02T04:43:42Z","tags":["error","opensearch","data"],"pid":55,"message":"[ConnectionError]: connect ECONNREFUSED 10.152.183.51:9200"}
+{"type":"log","@timestamp":"2026-05-02T04:43:46Z","tags":["error","opensearch","data"],"pid":55,"message":"[ConnectionError]: connect ECONNREFUSED 10.152.183.51:9200"}
+{"type":"log","@timestamp":"2026-05-02T04:43:50Z","tags":["error","opensearch","data"],"pid":55,"message":"[ConnectionError]: connect ECONNREFUSED 10.152.183.51:9200"}
+{"type":"log","@timestamp":"2026-05-02T04:43:54Z","tags":["error","opensearch","data"],"pid":55,"message":"[ConnectionError]: connect ECONNREFUSED 10.152.183.51:9200"}
+{"type":"log","@timestamp":"2026-05-02T04:43:58Z","tags":["error","opensearch","data"],"pid":55,"message":"[ConnectionError]: connect ECONNREFUSED 10.152.183.51:9200"}
+{"type":"log","@timestamp":"2026-05-02T04:44:02Z","tags":["error","opensearch","data"],"pid":55,"message":"[ConnectionError]: connect ECONNREFUSED 10.152.183.51:9200"}
+{"type":"log","@timestamp":"2026-05-02T04:44:06Z","tags":["error","opensearch","data"],"pid":55,"message":"[ConnectionError]: connect ECONNREFUSED 10.152.183.51:9200"}
+{"type":"log","@timestamp":"2026-05-02T04:44:10Z","tags":["error","opensearch","data"],"pid":55,"message":"[ConnectionError]: connect ECONNREFUSED 10.152.183.51:9200"}
+{"type":"log","@timestamp":"2026-05-02T04:44:14Z","tags":["error","opensearch","data"],"pid":55,"message":"[ConnectionError]: connect ECONNREFUSED 10.152.183.51:9200"}
+{"type":"log","@timestamp":"2026-05-02T04:44:18Z","tags":["error","opensearch","data"],"pid":55,"message":"[ConnectionError]: connect ECONNREFUSED 10.152.183.51:9200"}
+{"type":"log","@timestamp":"2026-05-02T04:44:22Z","tags":["error","opensearch","data"],"pid":55,"message":"[ConnectionError]: connect ECONNREFUSED 10.152.183.51:9200"}
+{"type":"log","@timestamp":"2026-05-02T04:44:26Z","tags":["error","opensearch","data"],"pid":55,"message":"[ConnectionError]: connect ECONNREFUSED 10.152.183.51:9200"}
+{"type":"log","@timestamp":"2026-05-02T04:44:30Z","tags":["error","opensearch","data"],"pid":55,"message":"[ConnectionError]: connect ECONNREFUSED 10.152.183.51:9200"}
+{"type":"log","@timestamp":"2026-05-02T04:44:34Z","tags":["error","opensearch","data"],"pid":55,"message":"[ConnectionError]: connect ECONNREFUSED 10.152.183.51:9200"}
+{"type":"log","@timestamp":"2026-05-02T04:44:38Z","tags":["error","opensearch","data"],"pid":55,"message":"[ConnectionError]: connect ECONNREFUSED 10.152.183.51:9200"}
+{"type":"log","@timestamp":"2026-05-02T04:44:42Z","tags":["error","opensearch","data"],"pid":55,"message":"[ConnectionError]: connect ECONNREFUSED 10.152.183.51:9200"}
+{"type":"log","@timestamp":"2026-05-02T04:44:46Z","tags":["error","opensearch","data"],"pid":55,"message":"[ConnectionError]: connect ECONNREFUSED 10.152.183.51:9200"}
+{"type":"log","@timestamp":"2026-05-02T04:44:50Z","tags":["error","opensearch","data"],"pid":55,"message":"[ConnectionError]: connect ECONNREFUSED 10.152.183.51:9200"}
+{"type":"log","@timestamp":"2026-05-02T04:44:54Z","tags":["error","opensearch","data"],"pid":55,"message":"[ConnectionError]: connect ECONNREFUSED 10.152.183.51:9200"}
+{"type":"log","@timestamp":"2026-05-02T04:44:58Z","tags":["error","opensearch","data"],"pid":55,"message":"[ConnectionError]: connect ECONNREFUSED 10.152.183.51:9200"}
+{"type":"log","@timestamp":"2026-05-02T04:45:02Z","tags":["error","opensearch","data"],"pid":55,"message":"[ConnectionError]: connect ECONNREFUSED 10.152.183.51:9200"}
+{"type":"log","@timestamp":"2026-05-02T04:45:06Z","tags":["error","opensearch","data"],"pid":55,"message":"[ConnectionError]: connect ECONNREFUSED 10.152.183.51:9200"}
+{"type":"log","@timestamp":"2026-05-02T04:45:10Z","tags":["error","opensearch","data"],"pid":55,"message":"[ConnectionError]: connect ECONNREFUSED 10.152.183.51:9200"}
+{"type":"log","@timestamp":"2026-05-02T04:45:14Z","tags":["error","opensearch","data"],"pid":55,"message":"[ConnectionError]: connect ECONNREFUSED 10.152.183.51:9200"}
+{"type":"log","@timestamp":"2026-05-02T04:45:18Z","tags":["error","opensearch","data"],"pid":55,"message":"[ConnectionError]: connect ECONNREFUSED 10.152.183.51:9200"}
+{"type":"log","@timestamp":"2026-05-02T04:45:22Z","tags":["error","opensearch","data"],"pid":55,"message":"[ConnectionError]: connect ECONNREFUSED 10.152.183.51:9200"}
+{"type":"log","@timestamp":"2026-05-02T04:45:26Z","tags":["error","opensearch","data"],"pid":55,"message":"[ConnectionError]: connect ECONNREFUSED 10.152.183.51:9200"}
+{"type":"log","@timestamp":"2026-05-02T04:45:30Z","tags":["error","opensearch","data"],"pid":55,"message":"[ConnectionError]: connect ECONNREFUSED 10.152.183.51:9200"}
+{"type":"log","@timestamp":"2026-05-02T04:45:34Z","tags":["error","opensearch","data"],"pid":55,"message":"[ConnectionError]: connect ECONNREFUSED 10.152.183.51:9200"}
+{"type":"log","@timestamp":"2026-05-02T04:45:38Z","tags":["error","opensearch","data"],"pid":55,"message":"[ConnectionError]: connect ECONNREFUSED 10.152.183.51:9200"}
+{"type":"log","@timestamp":"2026-05-02T04:45:40Z","tags":["error","opensearch","data"],"pid":55,"message":"[ConnectionError]: connect ECONNREFUSED 10.152.183.51:9200"}
+{"type":"log","@timestamp":"2026-05-02T04:45:43Z","tags":["error","opensearch","data"],"pid":55,"message":"[ConnectionError]: connect ECONNREFUSED 10.152.183.51:9200"}
+{"type":"log","@timestamp":"2026-05-02T04:45:45Z","tags":["error","opensearch","data"],"pid":55,"message":"[ConnectionError]: connect ECONNREFUSED 10.152.183.51:9200"}
+{"type":"log","@timestamp":"2026-05-02T04:45:48Z","tags":["error","opensearch","data"],"pid":55,"message":"[ConnectionError]: connect ECONNREFUSED 10.152.183.51:9200"}
+{"type":"log","@timestamp":"2026-05-02T04:45:50Z","tags":["error","opensearch","data"],"pid":55,"message":"[ConnectionError]: connect ECONNREFUSED 10.152.183.51:9200"}
+{"type":"log","@timestamp":"2026-05-02T04:45:53Z","tags":["error","opensearch","data"],"pid":55,"message":"[ConnectionError]: connect ECONNREFUSED 10.152.183.51:9200"}
+{"type":"log","@timestamp":"2026-05-02T04:45:55Z","tags":["error","opensearch","data"],"pid":55,"message":"[ConnectionError]: connect ECONNREFUSED 10.152.183.51:9200"}
+{"type":"log","@timestamp":"2026-05-02T04:45:58Z","tags":["error","opensearch","data"],"pid":55,"message":"[ConnectionError]: connect ECONNREFUSED 10.152.183.51:9200"}
+{"type":"log","@timestamp":"2026-05-02T04:46:00Z","tags":["error","opensearch","data"],"pid":55,"message":"[ConnectionError]: connect ECONNREFUSED 10.152.183.51:9200"}
+{"type":"log","@timestamp":"2026-05-02T04:46:03Z","tags":["error","opensearch","data"],"pid":55,"message":"[ConnectionError]: connect ECONNREFUSED 10.152.183.51:9200"}
+{"type":"log","@timestamp":"2026-05-02T04:46:05Z","tags":["error","opensearch","data"],"pid":55,"message":"[ConnectionError]: connect ECONNREFUSED 10.152.183.51:9200"}
+{"type":"log","@timestamp":"2026-05-02T04:46:08Z","tags":["error","opensearch","data"],"pid":55,"message":"[ConnectionError]: connect ECONNREFUSED 10.152.183.51:9200"}
+{"type":"log","@timestamp":"2026-05-02T04:46:10Z","tags":["error","opensearch","data"],"pid":55,"message":"[ConnectionError]: connect ECONNREFUSED 10.152.183.51:9200"}
+{"type":"log","@timestamp":"2026-05-02T04:46:13Z","tags":["error","opensearch","data"],"pid":55,"message":"[ConnectionError]: connect ECONNREFUSED 10.152.183.51:9200"}
+{"type":"log","@timestamp":"2026-05-02T04:46:15Z","tags":["error","opensearch","data"],"pid":55,"message":"[ResponseError]: Response Error"}
+{"type":"log","@timestamp":"2026-05-02T04:46:18Z","tags":["error","opensearch","data"],"pid":55,"message":"[ResponseError]: Response Error"}
+{"type":"log","@timestamp":"2026-05-02T04:46:20Z","tags":["error","opensearch","data"],"pid":55,"message":"[ResponseError]: Response Error"}
+{"type":"log","@timestamp":"2026-05-02T04:46:23Z","tags":["error","opensearch","data"],"pid":55,"message":"[ResponseError]: Response Error"}
+{"type":"log","@timestamp":"2026-05-02T04:46:25Z","tags":["error","opensearch","data"],"pid":55,"message":"[ResponseError]: Response Error"}
+{"type":"log","@timestamp":"2026-05-02T04:46:28Z","tags":["error","opensearch","data"],"pid":55,"message":"[ResponseError]: Response Error"}
+{"type":"log","@timestamp":"2026-05-02T04:46:30Z","tags":["error","opensearch","data"],"pid":55,"message":"[ResponseError]: Response Error"}
+{"type":"log","@timestamp":"2026-05-02T04:46:33Z","tags":["error","opensearch","data"],"pid":55,"message":"[ResponseError]: Response Error"}
+{"type":"log","@timestamp":"2026-05-02T04:46:35Z","tags":["error","opensearch","data"],"pid":55,"message":"[ResponseError]: Response Error"}
+{"type":"log","@timestamp":"2026-05-02T04:46:38Z","tags":["error","opensearch","data"],"pid":55,"message":"[ResponseError]: Response Error"}
+{"type":"log","@timestamp":"2026-05-02T04:46:40Z","tags":["error","opensearch","data"],"pid":55,"message":"[ResponseError]: Response Error"}
+{"type":"log","@timestamp":"2026-05-02T04:46:43Z","tags":["error","opensearch","data"],"pid":55,"message":"[ResponseError]: Response Error"}
+{"type":"log","@timestamp":"2026-05-02T04:46:45Z","tags":["error","opensearch","data"],"pid":55,"message":"[ResponseError]: Response Error"}
+{"type":"log","@timestamp":"2026-05-02T04:46:48Z","tags":["error","opensearch","data"],"pid":55,"message":"[ResponseError]: Response Error"}
+{"type":"log","@timestamp":"2026-05-02T04:46:50Z","tags":["error","opensearch","data"],"pid":55,"message":"[ResponseError]: Response Error"}
+{"type":"log","@timestamp":"2026-05-02T04:46:53Z","tags":["error","opensearch","data"],"pid":55,"message":"[ResponseError]: Response Error"}
+{"type":"log","@timestamp":"2026-05-02T04:46:55Z","tags":["error","opensearch","data"],"pid":55,"message":"[ResponseError]: Response Error"}
+{"type":"log","@timestamp":"2026-05-02T04:46:58Z","tags":["error","opensearch","data"],"pid":55,"message":"[ResponseError]: Response Error"}
+{"type":"log","@timestamp":"2026-05-02T04:47:00Z","tags":["error","opensearch","data"],"pid":55,"message":"[ResponseError]: Response Error"}
+{"type":"log","@timestamp":"2026-05-02T04:47:03Z","tags":["error","opensearch","data"],"pid":55,"message":"[ResponseError]: Response Error"}
+{"type":"log","@timestamp":"2026-05-02T04:47:05Z","tags":["error","opensearch","data"],"pid":55,"message":"[ResponseError]: Response Error"}
+{"type":"log","@timestamp":"2026-05-02T04:47:08Z","tags":["error","opensearch","data"],"pid":55,"message":"[ResponseError]: Response Error"}
+{"type":"log","@timestamp":"2026-05-02T04:47:10Z","tags":["error","opensearch","data"],"pid":55,"message":"[ResponseError]: Response Error"}
+{"type":"log","@timestamp":"2026-05-02T04:47:13Z","tags":["error","opensearch","data"],"pid":55,"message":"[ResponseError]: Response Error"}
+{"type":"log","@timestamp":"2026-05-02T04:47:15Z","tags":["error","opensearch","data"],"pid":55,"message":"[ResponseError]: Response Error"}
+{"type":"log","@timestamp":"2026-05-02T04:47:18Z","tags":["error","opensearch","data"],"pid":55,"message":"[ResponseError]: Response Error"}
+{"type":"log","@timestamp":"2026-05-02T04:47:20Z","tags":["error","opensearch","data"],"pid":55,"message":"[ResponseError]: Response Error"}
+{"type":"log","@timestamp":"2026-05-02T04:47:23Z","tags":["error","opensearch","data"],"pid":55,"message":"[ResponseError]: Response Error"}
+{"type":"log","@timestamp":"2026-05-02T04:47:25Z","tags":["error","opensearch","data"],"pid":55,"message":"[ResponseError]: Response Error"}
+{"type":"log","@timestamp":"2026-05-02T04:47:28Z","tags":["error","opensearch","data"],"pid":55,"message":"[ResponseError]: Response Error"}
+{"type":"log","@timestamp":"2026-05-02T04:47:30Z","tags":["error","opensearch","data"],"pid":55,"message":"[ResponseError]: Response Error"}
+{"type":"log","@timestamp":"2026-05-02T04:47:33Z","tags":["error","opensearch","data"],"pid":55,"message":"[ResponseError]: Response Error"}
+{"type":"log","@timestamp":"2026-05-02T04:47:35Z","tags":["error","opensearch","data"],"pid":55,"message":"[ResponseError]: Response Error"}
+{"type":"log","@timestamp":"2026-05-02T04:47:38Z","tags":["error","opensearch","data"],"pid":55,"message":"[ResponseError]: Response Error"}
+{"type":"log","@timestamp":"2026-05-02T04:47:40Z","tags":["error","opensearch","data"],"pid":55,"message":"[ResponseError]: Response Error"}
+{"type":"log","@timestamp":"2026-05-02T04:47:43Z","tags":["error","opensearch","data"],"pid":55,"message":"[ResponseError]: Response Error"}
+{"type":"log","@timestamp":"2026-05-02T04:47:45Z","tags":["error","opensearch","data"],"pid":55,"message":"[ResponseError]: Response Error"}
+{"type":"log","@timestamp":"2026-05-02T04:47:48Z","tags":["error","opensearch","data"],"pid":55,"message":"[ResponseError]: Response Error"}
+{"type":"log","@timestamp":"2026-05-02T04:47:50Z","tags":["info","savedobjects-service"],"pid":55,"message":"Starting saved objects migrations"}
+{"type":"log","@timestamp":"2026-05-02T04:47:50Z","tags":["info","savedobjects-service"],"pid":55,"message":"Creating index .kibana_1."}
+{"type":"log","@timestamp":"2026-05-02T04:48:20Z","tags":["error","opensearch","data"],"pid":55,"message":"[TimeoutError]: Request timed out"}
+{"type":"log","@timestamp":"2026-05-02T04:48:20Z","tags":["warning","savedobjects-service"],"pid":55,"message":"Unable to connect to OpenSearch. Error: Request timed out"}
+{"type":"log","@timestamp":"2026-05-02T04:48:24Z","tags":["error","opensearch","data"],"pid":55,"message":"[resource_already_exists_exception]: index [.kibana_1/ptxnAbw0RdSFcKreh2bdPA] already exists"}
+{"type":"log","@timestamp":"2026-05-02T04:48:24Z","tags":["warning","savedobjects-service"],"pid":55,"message":"Unable to connect to OpenSearch. Error: resource_already_exists_exception: [resource_already_exists_exception] Reason: index [.kibana_1/ptxnAbw0RdSFcKreh2bdPA] already exists"}
+{"type":"log","@timestamp":"2026-05-02T04:48:24Z","tags":["warning","savedobjects-service"],"pid":55,"message":"Another OpenSearch Dashboards instance appears to be migrating the index. Waiting for that migration to complete. If no other OpenSearch Dashboards instance is attempting migrations, you can get past this message by deleting index .kibana_1 and restarting OpenSearchDashboards."}

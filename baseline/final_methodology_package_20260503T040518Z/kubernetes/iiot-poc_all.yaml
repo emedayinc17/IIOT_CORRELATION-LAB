@@ -1,0 +1,2008 @@
+apiVersion: v1
+items:
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      cni.projectcalico.org/containerID: 4ca80b103686db4fc6555ed76916de93317a3315b11550f730e92db62fe592de
+      cni.projectcalico.org/podIP: 10.1.21.151/32
+      cni.projectcalico.org/podIPs: 10.1.21.151/32
+    creationTimestamp: "2026-05-02T02:03:40Z"
+    generateName: health-app-54d5c8f644-
+    labels:
+      app: health-app
+      pod-template-hash: 54d5c8f644
+      project: iiot-correlation-lab
+      stage: foundation
+    name: health-app-54d5c8f644-p8bdq
+    namespace: iiot-poc
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: ReplicaSet
+      name: health-app-54d5c8f644
+      uid: 80037370-7be9-4a43-a8c8-c34a354547f4
+    resourceVersion: "95003"
+    uid: 3e37dbe9-0744-44f5-8898-b40de520c44a
+  spec:
+    containers:
+    - command:
+      - python
+      - /app/app.py
+      image: python:3.11-slim
+      imagePullPolicy: IfNotPresent
+      livenessProbe:
+        failureThreshold: 3
+        httpGet:
+          path: /health
+          port: 8080
+          scheme: HTTP
+        initialDelaySeconds: 10
+        periodSeconds: 10
+        successThreshold: 1
+        timeoutSeconds: 1
+      name: health-app
+      ports:
+      - containerPort: 8080
+        name: http
+        protocol: TCP
+      readinessProbe:
+        failureThreshold: 3
+        httpGet:
+          path: /health
+          port: 8080
+          scheme: HTTP
+        initialDelaySeconds: 5
+        periodSeconds: 5
+        successThreshold: 1
+        timeoutSeconds: 1
+      resources: {}
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /app
+        name: code
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-fqv2j
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    nodeName: iiot-lab-k8s
+    preemptionPolicy: PreemptLowerPriority
+    priority: 0
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext: {}
+    serviceAccount: default
+    serviceAccountName: default
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    volumes:
+    - configMap:
+        defaultMode: 420
+        name: health-app-code
+      name: code
+    - name: kube-api-access-fqv2j
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2026-05-03T00:36:08Z"
+      status: "True"
+      type: PodReadyToStartContainers
+    - lastProbeTime: null
+      lastTransitionTime: "2026-05-02T02:03:40Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2026-05-03T00:36:17Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2026-05-03T00:36:17Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2026-05-02T02:03:40Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: containerd://75bbfcf770fdca3b8d9610adca1b9e6922229ea876f6082b7cc146eb8ab43427
+      image: docker.io/library/python:3.11-slim
+      imageID: docker.io/library/python@sha256:6d85378d88a19cd4d76079817532d62232be95757cb45945a99fec8e8084b9c2
+      lastState: {}
+      name: health-app
+      ready: true
+      restartCount: 2
+      started: true
+      state:
+        running:
+          startedAt: "2026-05-03T00:36:07Z"
+    hostIP: 10.10.0.101
+    hostIPs:
+    - ip: 10.10.0.101
+    phase: Running
+    podIP: 10.1.21.151
+    podIPs:
+    - ip: 10.1.21.151
+    qosClass: BestEffort
+    startTime: "2026-05-02T02:03:40Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      cni.projectcalico.org/containerID: 85e3e26fde49a8d3727a07c8cf61f0408ac933d02fec98a3cbba8c9fec51eba7
+      cni.projectcalico.org/podIP: 10.1.21.138/32
+      cni.projectcalico.org/podIPs: 10.1.21.138/32
+    creationTimestamp: "2026-05-02T02:03:40Z"
+    generateName: mosquitto-5bf84bf7cb-
+    labels:
+      app: mosquitto
+      pod-template-hash: 5bf84bf7cb
+      project: iiot-correlation-lab
+      stage: foundation
+    name: mosquitto-5bf84bf7cb-ngxsd
+    namespace: iiot-poc
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: ReplicaSet
+      name: mosquitto-5bf84bf7cb
+      uid: 56eb1a10-0351-4626-9f75-716eea2b984f
+    resourceVersion: "94934"
+    uid: 6fcd2e7e-263a-42c8-83cb-28a6cd3d9e19
+  spec:
+    containers:
+    - image: eclipse-mosquitto:2.0.20
+      imagePullPolicy: IfNotPresent
+      livenessProbe:
+        failureThreshold: 3
+        initialDelaySeconds: 10
+        periodSeconds: 10
+        successThreshold: 1
+        tcpSocket:
+          port: 1883
+        timeoutSeconds: 1
+      name: mosquitto
+      ports:
+      - containerPort: 1883
+        name: mqtt
+        protocol: TCP
+      readinessProbe:
+        failureThreshold: 3
+        initialDelaySeconds: 5
+        periodSeconds: 5
+        successThreshold: 1
+        tcpSocket:
+          port: 1883
+        timeoutSeconds: 1
+      resources: {}
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /mosquitto/config/mosquitto.conf
+        name: config
+        subPath: mosquitto.conf
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-bn78t
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    nodeName: iiot-lab-k8s
+    preemptionPolicy: PreemptLowerPriority
+    priority: 0
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext: {}
+    serviceAccount: default
+    serviceAccountName: default
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    volumes:
+    - configMap:
+        defaultMode: 420
+        name: mosquitto-config
+      name: config
+    - name: kube-api-access-bn78t
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2026-05-03T00:35:54Z"
+      status: "True"
+      type: PodReadyToStartContainers
+    - lastProbeTime: null
+      lastTransitionTime: "2026-05-02T02:03:41Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2026-05-03T00:36:02Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2026-05-03T00:36:02Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2026-05-02T02:03:41Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: containerd://6e18f8aa32a49f7483f64579222a4cf922193bee9ea35bd45bb6aa02181149d0
+      image: docker.io/library/eclipse-mosquitto:2.0.20
+      imageID: docker.io/library/eclipse-mosquitto@sha256:21421af7b32bf9ce508e9090c8eb13bb81f410ca778dc205506180a6f862d0eb
+      lastState: {}
+      name: mosquitto
+      ready: true
+      restartCount: 2
+      started: true
+      state:
+        running:
+          startedAt: "2026-05-03T00:35:53Z"
+    hostIP: 10.10.0.101
+    hostIPs:
+    - ip: 10.10.0.101
+    phase: Running
+    podIP: 10.1.21.138
+    podIPs:
+    - ip: 10.1.21.138
+    qosClass: BestEffort
+    startTime: "2026-05-02T02:03:41Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      cni.projectcalico.org/containerID: 1e284e095eed9171e8d457dce21b61a681456d016ebb72a3b5ccfd5d9f88a2eb
+      cni.projectcalico.org/podIP: 10.1.21.136/32
+      cni.projectcalico.org/podIPs: 10.1.21.136/32
+    creationTimestamp: "2026-05-02T02:03:41Z"
+    generateName: sensor-simulator-58b4bbcc76-
+    labels:
+      app: sensor-simulator
+      pod-template-hash: 58b4bbcc76
+      project: iiot-correlation-lab
+      stage: foundation
+    name: sensor-simulator-58b4bbcc76-hhp62
+    namespace: iiot-poc
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: ReplicaSet
+      name: sensor-simulator-58b4bbcc76
+      uid: 8d159178-68f0-4b82-bde7-d6c93be44157
+    resourceVersion: "94880"
+    uid: 9489ac75-7b19-4ee2-a4ed-866a6d974097
+  spec:
+    containers:
+    - command:
+      - /bin/sh
+      - /scripts/sensor-loop.sh
+      env:
+      - name: MQTT_HOST
+        value: mosquitto.iiot-poc.svc.cluster.local
+      - name: MQTT_PORT
+        value: "1883"
+      - name: INTERVAL_SECONDS
+        value: "2"
+      image: eclipse-mosquitto:2.0.20
+      imagePullPolicy: IfNotPresent
+      name: sensor-simulator
+      resources: {}
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /scripts
+        name: script
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-8qkx9
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    nodeName: iiot-lab-k8s
+    preemptionPolicy: PreemptLowerPriority
+    priority: 0
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext: {}
+    serviceAccount: default
+    serviceAccountName: default
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    volumes:
+    - configMap:
+        defaultMode: 493
+        name: sensor-simulator-script
+      name: script
+    - name: kube-api-access-8qkx9
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2026-05-03T00:35:48Z"
+      status: "True"
+      type: PodReadyToStartContainers
+    - lastProbeTime: null
+      lastTransitionTime: "2026-05-02T02:03:43Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2026-05-03T00:35:48Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2026-05-03T00:35:48Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2026-05-02T02:03:42Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: containerd://561eeefd76d2fef0c57453d8c2622ec6d1e9e5f11dfa49d59469560fc46b4caf
+      image: docker.io/library/eclipse-mosquitto:2.0.20
+      imageID: docker.io/library/eclipse-mosquitto@sha256:21421af7b32bf9ce508e9090c8eb13bb81f410ca778dc205506180a6f862d0eb
+      lastState: {}
+      name: sensor-simulator
+      ready: true
+      restartCount: 2
+      started: true
+      state:
+        running:
+          startedAt: "2026-05-03T00:35:47Z"
+    hostIP: 10.10.0.101
+    hostIPs:
+    - ip: 10.10.0.101
+    phase: Running
+    podIP: 10.1.21.136
+    podIPs:
+    - ip: 10.1.21.136
+    qosClass: BestEffort
+    startTime: "2026-05-02T02:03:43Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      cni.projectcalico.org/containerID: 637aa67bbe1e0eac3e3ce366e86dd73a964a57ac94a21c811682f5dda779dbb9
+      cni.projectcalico.org/podIP: 10.1.21.149/32
+      cni.projectcalico.org/podIPs: 10.1.21.149/32
+    creationTimestamp: "2026-05-02T02:03:42Z"
+    generateName: telemetry-api-5d4cfb7ff4-
+    labels:
+      app: telemetry-api
+      pod-template-hash: 5d4cfb7ff4
+      project: iiot-correlation-lab
+      stage: foundation
+    name: telemetry-api-5d4cfb7ff4-9lkm2
+    namespace: iiot-poc
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: ReplicaSet
+      name: telemetry-api-5d4cfb7ff4
+      uid: 75444beb-5e36-40ff-b4c7-1dec7beb1196
+    resourceVersion: "94981"
+    uid: 82bf27f8-2886-4d4d-bac5-26fe40d8809f
+  spec:
+    containers:
+    - command:
+      - python
+      - /app/app.py
+      image: python:3.11-slim
+      imagePullPolicy: IfNotPresent
+      livenessProbe:
+        failureThreshold: 3
+        httpGet:
+          path: /health
+          port: 8080
+          scheme: HTTP
+        initialDelaySeconds: 10
+        periodSeconds: 10
+        successThreshold: 1
+        timeoutSeconds: 1
+      name: telemetry-api
+      ports:
+      - containerPort: 8080
+        name: http
+        protocol: TCP
+      readinessProbe:
+        failureThreshold: 3
+        httpGet:
+          path: /health
+          port: 8080
+          scheme: HTTP
+        initialDelaySeconds: 5
+        periodSeconds: 5
+        successThreshold: 1
+        timeoutSeconds: 1
+      resources: {}
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /app
+        name: code
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-98hph
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    nodeName: iiot-lab-k8s
+    preemptionPolicy: PreemptLowerPriority
+    priority: 0
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext: {}
+    serviceAccount: default
+    serviceAccountName: default
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    volumes:
+    - configMap:
+        defaultMode: 420
+        name: telemetry-api-code
+      name: code
+    - name: kube-api-access-98hph
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2026-05-03T00:36:05Z"
+      status: "True"
+      type: PodReadyToStartContainers
+    - lastProbeTime: null
+      lastTransitionTime: "2026-05-02T02:03:44Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2026-05-03T00:36:14Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2026-05-03T00:36:14Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2026-05-02T02:03:43Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: containerd://983d9b6a5c1dc4d0ed50460a7fa48a6571cb7deb7723c01d9aba40bccfdd51a8
+      image: docker.io/library/python:3.11-slim
+      imageID: docker.io/library/python@sha256:6d85378d88a19cd4d76079817532d62232be95757cb45945a99fec8e8084b9c2
+      lastState: {}
+      name: telemetry-api
+      ready: true
+      restartCount: 3
+      started: true
+      state:
+        running:
+          startedAt: "2026-05-03T00:36:04Z"
+    hostIP: 10.10.0.101
+    hostIPs:
+    - ip: 10.10.0.101
+    phase: Running
+    podIP: 10.1.21.149
+    podIPs:
+    - ip: 10.1.21.149
+    qosClass: BestEffort
+    startTime: "2026-05-02T02:03:44Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      cni.projectcalico.org/containerID: 600bd6ff03f28a5d133ba6a59f6279bcea3ebdde229a1c58cdca0a5d2123ded2
+      cni.projectcalico.org/podIP: 10.1.21.148/32
+      cni.projectcalico.org/podIPs: 10.1.21.148/32
+    creationTimestamp: "2026-05-02T02:03:43Z"
+    generateName: vulnerable-app-5dd9b48766-
+    labels:
+      app: vulnerable-app
+      pod-template-hash: 5dd9b48766
+      project: iiot-correlation-lab
+      stage: foundation
+    name: vulnerable-app-5dd9b48766-jxttn
+    namespace: iiot-poc
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: ReplicaSet
+      name: vulnerable-app-5dd9b48766
+      uid: 9a77f281-bfdf-4002-b6b6-30c54a2c8736
+    resourceVersion: "94941"
+    uid: 3b0fce75-1ca1-4826-ae20-b81b967664aa
+  spec:
+    containers:
+    - command:
+      - python
+      - /app/app.py
+      image: python:3.11-slim
+      imagePullPolicy: IfNotPresent
+      livenessProbe:
+        failureThreshold: 3
+        httpGet:
+          path: /health
+          port: 8080
+          scheme: HTTP
+        initialDelaySeconds: 10
+        periodSeconds: 10
+        successThreshold: 1
+        timeoutSeconds: 1
+      name: vulnerable-app
+      ports:
+      - containerPort: 8080
+        name: http
+        protocol: TCP
+      readinessProbe:
+        failureThreshold: 3
+        httpGet:
+          path: /health
+          port: 8080
+          scheme: HTTP
+        initialDelaySeconds: 5
+        periodSeconds: 5
+        successThreshold: 1
+        timeoutSeconds: 1
+      resources: {}
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /app
+        name: code
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-226bn
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    nodeName: iiot-lab-k8s
+    preemptionPolicy: PreemptLowerPriority
+    priority: 0
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext: {}
+    serviceAccount: default
+    serviceAccountName: default
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    volumes:
+    - configMap:
+        defaultMode: 420
+        name: vulnerable-app-code
+      name: code
+    - name: kube-api-access-226bn
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2026-05-03T00:35:45Z"
+      status: "True"
+      type: PodReadyToStartContainers
+    - lastProbeTime: null
+      lastTransitionTime: "2026-05-02T02:03:47Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2026-05-03T00:36:01Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2026-05-03T00:36:01Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2026-05-02T02:03:45Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: containerd://e6ba03d81ea33912c59b1ec155b016622ccd923d79c811fccd3dd3b9f6e6ff75
+      image: docker.io/library/python:3.11-slim
+      imageID: docker.io/library/python@sha256:6d85378d88a19cd4d76079817532d62232be95757cb45945a99fec8e8084b9c2
+      lastState: {}
+      name: vulnerable-app
+      ready: true
+      restartCount: 2
+      started: true
+      state:
+        running:
+          startedAt: "2026-05-03T00:35:44Z"
+    hostIP: 10.10.0.101
+    hostIPs:
+    - ip: 10.10.0.101
+    phase: Running
+    podIP: 10.1.21.148
+    podIPs:
+    - ip: 10.1.21.148
+    qosClass: BestEffort
+    startTime: "2026-05-02T02:03:47Z"
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"v1","kind":"Service","metadata":{"annotations":{},"labels":{"project":"iiot-correlation-lab","stage":"foundation"},"name":"health-app","namespace":"iiot-poc"},"spec":{"ports":[{"name":"http","port":8080,"targetPort":8080}],"selector":{"app":"health-app","project":"iiot-correlation-lab","stage":"foundation"},"type":"ClusterIP"}}
+    creationTimestamp: "2026-05-02T02:03:37Z"
+    labels:
+      project: iiot-correlation-lab
+      stage: foundation
+    name: health-app
+    namespace: iiot-poc
+    resourceVersion: "30827"
+    uid: 177b2890-bd0a-4e47-a9e2-b013b1f318f8
+  spec:
+    clusterIP: 10.152.183.113
+    clusterIPs:
+    - 10.152.183.113
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: http
+      port: 8080
+      protocol: TCP
+      targetPort: 8080
+    selector:
+      app: health-app
+      project: iiot-correlation-lab
+      stage: foundation
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"v1","kind":"Service","metadata":{"annotations":{"metallb.io/loadBalancerIPs":"10.10.0.152"},"labels":{"project":"iiot-correlation-lab","stage":"foundation"},"name":"health-app-lb","namespace":"iiot-poc"},"spec":{"loadBalancerIP":"10.10.0.152","ports":[{"name":"http","port":8080,"targetPort":8080}],"selector":{"app":"health-app","project":"iiot-correlation-lab","stage":"foundation"},"type":"LoadBalancer"}}
+      metallb.io/loadBalancerIPs: 10.10.0.152
+    creationTimestamp: "2026-05-02T02:03:37Z"
+    labels:
+      project: iiot-correlation-lab
+      stage: foundation
+    name: health-app-lb
+    namespace: iiot-poc
+    resourceVersion: "30837"
+    uid: e87b0a6c-0dd9-4799-81a8-b9920ef09c51
+  spec:
+    allocateLoadBalancerNodePorts: true
+    clusterIP: 10.152.183.22
+    clusterIPs:
+    - 10.152.183.22
+    externalTrafficPolicy: Cluster
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    loadBalancerIP: 10.10.0.152
+    ports:
+    - name: http
+      nodePort: 31855
+      port: 8080
+      protocol: TCP
+      targetPort: 8080
+    selector:
+      app: health-app
+      project: iiot-correlation-lab
+      stage: foundation
+    sessionAffinity: None
+    type: LoadBalancer
+  status:
+    loadBalancer:
+      ingress:
+      - ip: 10.10.0.152
+        ipMode: VIP
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"v1","kind":"Service","metadata":{"annotations":{},"labels":{"project":"iiot-correlation-lab","stage":"foundation"},"name":"mosquitto","namespace":"iiot-poc"},"spec":{"ports":[{"name":"mqtt","port":1883,"targetPort":1883}],"selector":{"app":"mosquitto","project":"iiot-correlation-lab","stage":"foundation"},"type":"ClusterIP"}}
+    creationTimestamp: "2026-05-02T02:03:37Z"
+    labels:
+      project: iiot-correlation-lab
+      stage: foundation
+    name: mosquitto
+    namespace: iiot-poc
+    resourceVersion: "30840"
+    uid: 889957d2-b5bd-4116-89ab-848762cb4c73
+  spec:
+    clusterIP: 10.152.183.173
+    clusterIPs:
+    - 10.152.183.173
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: mqtt
+      port: 1883
+      protocol: TCP
+      targetPort: 1883
+    selector:
+      app: mosquitto
+      project: iiot-correlation-lab
+      stage: foundation
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"v1","kind":"Service","metadata":{"annotations":{"metallb.io/loadBalancerIPs":"10.10.0.151"},"labels":{"project":"iiot-correlation-lab","stage":"foundation"},"name":"mosquitto-lb","namespace":"iiot-poc"},"spec":{"loadBalancerIP":"10.10.0.151","ports":[{"name":"mqtt","port":1883,"targetPort":1883}],"selector":{"app":"mosquitto","project":"iiot-correlation-lab","stage":"foundation"},"type":"LoadBalancer"}}
+      metallb.io/loadBalancerIPs: 10.10.0.151
+    creationTimestamp: "2026-05-02T02:03:38Z"
+    labels:
+      project: iiot-correlation-lab
+      stage: foundation
+    name: mosquitto-lb
+    namespace: iiot-poc
+    resourceVersion: "30851"
+    uid: 23113809-c6a5-4cdf-8a97-6b296e09b2c9
+  spec:
+    allocateLoadBalancerNodePorts: true
+    clusterIP: 10.152.183.218
+    clusterIPs:
+    - 10.152.183.218
+    externalTrafficPolicy: Cluster
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    loadBalancerIP: 10.10.0.151
+    ports:
+    - name: mqtt
+      nodePort: 31070
+      port: 1883
+      protocol: TCP
+      targetPort: 1883
+    selector:
+      app: mosquitto
+      project: iiot-correlation-lab
+      stage: foundation
+    sessionAffinity: None
+    type: LoadBalancer
+  status:
+    loadBalancer:
+      ingress:
+      - ip: 10.10.0.151
+        ipMode: VIP
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"v1","kind":"Service","metadata":{"annotations":{},"labels":{"project":"iiot-correlation-lab","stage":"foundation"},"name":"telemetry-api","namespace":"iiot-poc"},"spec":{"ports":[{"name":"http","port":8080,"targetPort":8080}],"selector":{"app":"telemetry-api","project":"iiot-correlation-lab","stage":"foundation"},"type":"ClusterIP"}}
+    creationTimestamp: "2026-05-02T02:03:38Z"
+    labels:
+      project: iiot-correlation-lab
+      stage: foundation
+    name: telemetry-api
+    namespace: iiot-poc
+    resourceVersion: "30853"
+    uid: 8e3f4b46-a429-4463-97c6-5a7104f44068
+  spec:
+    clusterIP: 10.152.183.203
+    clusterIPs:
+    - 10.152.183.203
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: http
+      port: 8080
+      protocol: TCP
+      targetPort: 8080
+    selector:
+      app: telemetry-api
+      project: iiot-correlation-lab
+      stage: foundation
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"v1","kind":"Service","metadata":{"annotations":{"metallb.io/loadBalancerIPs":"10.10.0.153"},"labels":{"project":"iiot-correlation-lab","stage":"foundation"},"name":"telemetry-api-lb","namespace":"iiot-poc"},"spec":{"loadBalancerIP":"10.10.0.153","ports":[{"name":"http","port":8080,"targetPort":8080}],"selector":{"app":"telemetry-api","project":"iiot-correlation-lab","stage":"foundation"},"type":"LoadBalancer"}}
+      metallb.io/loadBalancerIPs: 10.10.0.153
+    creationTimestamp: "2026-05-02T02:03:38Z"
+    labels:
+      project: iiot-correlation-lab
+      stage: foundation
+    name: telemetry-api-lb
+    namespace: iiot-poc
+    resourceVersion: "30862"
+    uid: 9211b2ed-e0e6-4d3c-9a95-922cf7981a91
+  spec:
+    allocateLoadBalancerNodePorts: true
+    clusterIP: 10.152.183.67
+    clusterIPs:
+    - 10.152.183.67
+    externalTrafficPolicy: Cluster
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    loadBalancerIP: 10.10.0.153
+    ports:
+    - name: http
+      nodePort: 30410
+      port: 8080
+      protocol: TCP
+      targetPort: 8080
+    selector:
+      app: telemetry-api
+      project: iiot-correlation-lab
+      stage: foundation
+    sessionAffinity: None
+    type: LoadBalancer
+  status:
+    loadBalancer:
+      ingress:
+      - ip: 10.10.0.153
+        ipMode: VIP
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"v1","kind":"Service","metadata":{"annotations":{},"labels":{"project":"iiot-correlation-lab","stage":"foundation"},"name":"vulnerable-app","namespace":"iiot-poc"},"spec":{"ports":[{"name":"http","port":8080,"targetPort":8080}],"selector":{"app":"vulnerable-app","project":"iiot-correlation-lab","stage":"foundation"},"type":"ClusterIP"}}
+    creationTimestamp: "2026-05-02T02:03:39Z"
+    labels:
+      project: iiot-correlation-lab
+      stage: foundation
+    name: vulnerable-app
+    namespace: iiot-poc
+    resourceVersion: "30864"
+    uid: c878fbd4-b588-4d61-8d9d-13cc652c4d2f
+  spec:
+    clusterIP: 10.152.183.86
+    clusterIPs:
+    - 10.152.183.86
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: http
+      port: 8080
+      protocol: TCP
+      targetPort: 8080
+    selector:
+      app: vulnerable-app
+      project: iiot-correlation-lab
+      stage: foundation
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"v1","kind":"Service","metadata":{"annotations":{"metallb.io/loadBalancerIPs":"10.10.0.154"},"labels":{"project":"iiot-correlation-lab","stage":"foundation"},"name":"vulnerable-app-lb","namespace":"iiot-poc"},"spec":{"loadBalancerIP":"10.10.0.154","ports":[{"name":"http","port":8080,"targetPort":8080}],"selector":{"app":"vulnerable-app","project":"iiot-correlation-lab","stage":"foundation"},"type":"LoadBalancer"}}
+      metallb.io/loadBalancerIPs: 10.10.0.154
+    creationTimestamp: "2026-05-02T02:03:39Z"
+    labels:
+      project: iiot-correlation-lab
+      stage: foundation
+    name: vulnerable-app-lb
+    namespace: iiot-poc
+    resourceVersion: "30872"
+    uid: 4eca5159-d9f1-4bfe-aa5e-e0906dc5fe13
+  spec:
+    allocateLoadBalancerNodePorts: true
+    clusterIP: 10.152.183.127
+    clusterIPs:
+    - 10.152.183.127
+    externalTrafficPolicy: Cluster
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    loadBalancerIP: 10.10.0.154
+    ports:
+    - name: http
+      nodePort: 30326
+      port: 8080
+      protocol: TCP
+      targetPort: 8080
+    selector:
+      app: vulnerable-app
+      project: iiot-correlation-lab
+      stage: foundation
+    sessionAffinity: None
+    type: LoadBalancer
+  status:
+    loadBalancer:
+      ingress:
+      - ip: 10.10.0.154
+        ipMode: VIP
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      deployment.kubernetes.io/revision: "1"
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"apps/v1","kind":"Deployment","metadata":{"annotations":{},"labels":{"app":"health-app","project":"iiot-correlation-lab","stage":"foundation"},"name":"health-app","namespace":"iiot-poc"},"spec":{"replicas":1,"selector":{"matchLabels":{"app":"health-app","project":"iiot-correlation-lab","stage":"foundation"}},"template":{"metadata":{"labels":{"app":"health-app","project":"iiot-correlation-lab","stage":"foundation"}},"spec":{"containers":[{"command":["python","/app/app.py"],"image":"python:3.11-slim","livenessProbe":{"httpGet":{"path":"/health","port":8080},"initialDelaySeconds":10,"periodSeconds":10},"name":"health-app","ports":[{"containerPort":8080,"name":"http"}],"readinessProbe":{"httpGet":{"path":"/health","port":8080},"initialDelaySeconds":5,"periodSeconds":5},"volumeMounts":[{"mountPath":"/app","name":"code"}]}],"volumes":[{"configMap":{"name":"health-app-code"},"name":"code"}]}}}}
+    creationTimestamp: "2026-05-02T02:03:39Z"
+    generation: 1
+    labels:
+      app: health-app
+      project: iiot-correlation-lab
+      stage: foundation
+    name: health-app
+    namespace: iiot-poc
+    resourceVersion: "63661"
+    uid: c62fe86f-c780-4165-8ee5-10950451a8df
+  spec:
+    progressDeadlineSeconds: 600
+    replicas: 1
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        app: health-app
+        project: iiot-correlation-lab
+        stage: foundation
+    strategy:
+      rollingUpdate:
+        maxSurge: 25%
+        maxUnavailable: 25%
+      type: RollingUpdate
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          app: health-app
+          project: iiot-correlation-lab
+          stage: foundation
+      spec:
+        containers:
+        - command:
+          - python
+          - /app/app.py
+          image: python:3.11-slim
+          imagePullPolicy: IfNotPresent
+          livenessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /health
+              port: 8080
+              scheme: HTTP
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 1
+          name: health-app
+          ports:
+          - containerPort: 8080
+            name: http
+            protocol: TCP
+          readinessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /health
+              port: 8080
+              scheme: HTTP
+            initialDelaySeconds: 5
+            periodSeconds: 5
+            successThreshold: 1
+            timeoutSeconds: 1
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /app
+            name: code
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - configMap:
+            defaultMode: 420
+            name: health-app-code
+          name: code
+  status:
+    availableReplicas: 1
+    conditions:
+    - lastTransitionTime: "2026-05-02T02:03:40Z"
+      lastUpdateTime: "2026-05-02T02:04:00Z"
+      message: ReplicaSet "health-app-54d5c8f644" has successfully progressed.
+      reason: NewReplicaSetAvailable
+      status: "True"
+      type: Progressing
+    - lastTransitionTime: "2026-05-02T14:10:52Z"
+      lastUpdateTime: "2026-05-02T14:10:52Z"
+      message: Deployment has minimum availability.
+      reason: MinimumReplicasAvailable
+      status: "True"
+      type: Available
+    observedGeneration: 1
+    readyReplicas: 1
+    replicas: 1
+    updatedReplicas: 1
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      deployment.kubernetes.io/revision: "1"
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"apps/v1","kind":"Deployment","metadata":{"annotations":{},"labels":{"app":"mosquitto","project":"iiot-correlation-lab","stage":"foundation"},"name":"mosquitto","namespace":"iiot-poc"},"spec":{"replicas":1,"selector":{"matchLabels":{"app":"mosquitto","project":"iiot-correlation-lab","stage":"foundation"}},"template":{"metadata":{"labels":{"app":"mosquitto","project":"iiot-correlation-lab","stage":"foundation"}},"spec":{"containers":[{"image":"eclipse-mosquitto:2.0.20","livenessProbe":{"initialDelaySeconds":10,"periodSeconds":10,"tcpSocket":{"port":1883}},"name":"mosquitto","ports":[{"containerPort":1883,"name":"mqtt"}],"readinessProbe":{"initialDelaySeconds":5,"periodSeconds":5,"tcpSocket":{"port":1883}},"volumeMounts":[{"mountPath":"/mosquitto/config/mosquitto.conf","name":"config","subPath":"mosquitto.conf"}]}],"volumes":[{"configMap":{"name":"mosquitto-config"},"name":"config"}]}}}}
+    creationTimestamp: "2026-05-02T02:03:39Z"
+    generation: 1
+    labels:
+      app: mosquitto
+      project: iiot-correlation-lab
+      stage: foundation
+    name: mosquitto
+    namespace: iiot-poc
+    resourceVersion: "63695"
+    uid: 4b059d66-c6b0-4bf4-9ef2-4b3c2671dc35
+  spec:
+    progressDeadlineSeconds: 600
+    replicas: 1
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        app: mosquitto
+        project: iiot-correlation-lab
+        stage: foundation
+    strategy:
+      rollingUpdate:
+        maxSurge: 25%
+        maxUnavailable: 25%
+      type: RollingUpdate
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          app: mosquitto
+          project: iiot-correlation-lab
+          stage: foundation
+      spec:
+        containers:
+        - image: eclipse-mosquitto:2.0.20
+          imagePullPolicy: IfNotPresent
+          livenessProbe:
+            failureThreshold: 3
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            successThreshold: 1
+            tcpSocket:
+              port: 1883
+            timeoutSeconds: 1
+          name: mosquitto
+          ports:
+          - containerPort: 1883
+            name: mqtt
+            protocol: TCP
+          readinessProbe:
+            failureThreshold: 3
+            initialDelaySeconds: 5
+            periodSeconds: 5
+            successThreshold: 1
+            tcpSocket:
+              port: 1883
+            timeoutSeconds: 1
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /mosquitto/config/mosquitto.conf
+            name: config
+            subPath: mosquitto.conf
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - configMap:
+            defaultMode: 420
+            name: mosquitto-config
+          name: config
+  status:
+    availableReplicas: 1
+    conditions:
+    - lastTransitionTime: "2026-05-02T02:03:40Z"
+      lastUpdateTime: "2026-05-02T02:04:05Z"
+      message: ReplicaSet "mosquitto-5bf84bf7cb" has successfully progressed.
+      reason: NewReplicaSetAvailable
+      status: "True"
+      type: Progressing
+    - lastTransitionTime: "2026-05-02T14:11:03Z"
+      lastUpdateTime: "2026-05-02T14:11:03Z"
+      message: Deployment has minimum availability.
+      reason: MinimumReplicasAvailable
+      status: "True"
+      type: Available
+    observedGeneration: 1
+    readyReplicas: 1
+    replicas: 1
+    updatedReplicas: 1
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      deployment.kubernetes.io/revision: "1"
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"apps/v1","kind":"Deployment","metadata":{"annotations":{},"labels":{"app":"sensor-simulator","project":"iiot-correlation-lab","stage":"foundation"},"name":"sensor-simulator","namespace":"iiot-poc"},"spec":{"replicas":1,"selector":{"matchLabels":{"app":"sensor-simulator","project":"iiot-correlation-lab","stage":"foundation"}},"template":{"metadata":{"labels":{"app":"sensor-simulator","project":"iiot-correlation-lab","stage":"foundation"}},"spec":{"containers":[{"command":["/bin/sh","/scripts/sensor-loop.sh"],"env":[{"name":"MQTT_HOST","value":"mosquitto.iiot-poc.svc.cluster.local"},{"name":"MQTT_PORT","value":"1883"},{"name":"INTERVAL_SECONDS","value":"2"}],"image":"eclipse-mosquitto:2.0.20","name":"sensor-simulator","volumeMounts":[{"mountPath":"/scripts","name":"script"}]}],"volumes":[{"configMap":{"defaultMode":493,"name":"sensor-simulator-script"},"name":"script"}]}}}}
+    creationTimestamp: "2026-05-02T02:03:40Z"
+    generation: 1
+    labels:
+      app: sensor-simulator
+      project: iiot-correlation-lab
+      stage: foundation
+    name: sensor-simulator
+    namespace: iiot-poc
+    resourceVersion: "31073"
+    uid: 9ac4ac31-534d-4ef4-9fe3-a8fa1b00d469
+  spec:
+    progressDeadlineSeconds: 600
+    replicas: 1
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        app: sensor-simulator
+        project: iiot-correlation-lab
+        stage: foundation
+    strategy:
+      rollingUpdate:
+        maxSurge: 25%
+        maxUnavailable: 25%
+      type: RollingUpdate
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          app: sensor-simulator
+          project: iiot-correlation-lab
+          stage: foundation
+      spec:
+        containers:
+        - command:
+          - /bin/sh
+          - /scripts/sensor-loop.sh
+          env:
+          - name: MQTT_HOST
+            value: mosquitto.iiot-poc.svc.cluster.local
+          - name: MQTT_PORT
+            value: "1883"
+          - name: INTERVAL_SECONDS
+            value: "2"
+          image: eclipse-mosquitto:2.0.20
+          imagePullPolicy: IfNotPresent
+          name: sensor-simulator
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /scripts
+            name: script
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - configMap:
+            defaultMode: 493
+            name: sensor-simulator-script
+          name: script
+  status:
+    availableReplicas: 1
+    conditions:
+    - lastTransitionTime: "2026-05-02T02:04:06Z"
+      lastUpdateTime: "2026-05-02T02:04:06Z"
+      message: Deployment has minimum availability.
+      reason: MinimumReplicasAvailable
+      status: "True"
+      type: Available
+    - lastTransitionTime: "2026-05-02T02:03:41Z"
+      lastUpdateTime: "2026-05-02T02:04:06Z"
+      message: ReplicaSet "sensor-simulator-58b4bbcc76" has successfully progressed.
+      reason: NewReplicaSetAvailable
+      status: "True"
+      type: Progressing
+    observedGeneration: 1
+    readyReplicas: 1
+    replicas: 1
+    updatedReplicas: 1
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      deployment.kubernetes.io/revision: "1"
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"apps/v1","kind":"Deployment","metadata":{"annotations":{},"labels":{"app":"telemetry-api","project":"iiot-correlation-lab","stage":"foundation"},"name":"telemetry-api","namespace":"iiot-poc"},"spec":{"replicas":1,"selector":{"matchLabels":{"app":"telemetry-api","project":"iiot-correlation-lab","stage":"foundation"}},"template":{"metadata":{"labels":{"app":"telemetry-api","project":"iiot-correlation-lab","stage":"foundation"}},"spec":{"containers":[{"command":["python","/app/app.py"],"image":"python:3.11-slim","livenessProbe":{"httpGet":{"path":"/health","port":8080},"initialDelaySeconds":10,"periodSeconds":10},"name":"telemetry-api","ports":[{"containerPort":8080,"name":"http"}],"readinessProbe":{"httpGet":{"path":"/health","port":8080},"initialDelaySeconds":5,"periodSeconds":5},"volumeMounts":[{"mountPath":"/app","name":"code"}]}],"volumes":[{"configMap":{"name":"telemetry-api-code"},"name":"code"}]}}}}
+    creationTimestamp: "2026-05-02T02:03:40Z"
+    generation: 1
+    labels:
+      app: telemetry-api
+      project: iiot-correlation-lab
+      stage: foundation
+    name: telemetry-api
+    namespace: iiot-poc
+    resourceVersion: "63777"
+    uid: cd08fbe9-4036-43cb-b44b-f2ba4e2ca0b9
+  spec:
+    progressDeadlineSeconds: 600
+    replicas: 1
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        app: telemetry-api
+        project: iiot-correlation-lab
+        stage: foundation
+    strategy:
+      rollingUpdate:
+        maxSurge: 25%
+        maxUnavailable: 25%
+      type: RollingUpdate
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          app: telemetry-api
+          project: iiot-correlation-lab
+          stage: foundation
+      spec:
+        containers:
+        - command:
+          - python
+          - /app/app.py
+          image: python:3.11-slim
+          imagePullPolicy: IfNotPresent
+          livenessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /health
+              port: 8080
+              scheme: HTTP
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 1
+          name: telemetry-api
+          ports:
+          - containerPort: 8080
+            name: http
+            protocol: TCP
+          readinessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /health
+              port: 8080
+              scheme: HTTP
+            initialDelaySeconds: 5
+            periodSeconds: 5
+            successThreshold: 1
+            timeoutSeconds: 1
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /app
+            name: code
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - configMap:
+            defaultMode: 420
+            name: telemetry-api-code
+          name: code
+  status:
+    availableReplicas: 1
+    conditions:
+    - lastTransitionTime: "2026-05-02T02:03:42Z"
+      lastUpdateTime: "2026-05-02T02:04:07Z"
+      message: ReplicaSet "telemetry-api-5d4cfb7ff4" has successfully progressed.
+      reason: NewReplicaSetAvailable
+      status: "True"
+      type: Progressing
+    - lastTransitionTime: "2026-05-02T14:11:23Z"
+      lastUpdateTime: "2026-05-02T14:11:23Z"
+      message: Deployment has minimum availability.
+      reason: MinimumReplicasAvailable
+      status: "True"
+      type: Available
+    observedGeneration: 1
+    readyReplicas: 1
+    replicas: 1
+    updatedReplicas: 1
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      deployment.kubernetes.io/revision: "1"
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"apps/v1","kind":"Deployment","metadata":{"annotations":{},"labels":{"app":"vulnerable-app","project":"iiot-correlation-lab","stage":"foundation"},"name":"vulnerable-app","namespace":"iiot-poc"},"spec":{"replicas":1,"selector":{"matchLabels":{"app":"vulnerable-app","project":"iiot-correlation-lab","stage":"foundation"}},"template":{"metadata":{"labels":{"app":"vulnerable-app","project":"iiot-correlation-lab","stage":"foundation"}},"spec":{"containers":[{"command":["python","/app/app.py"],"image":"python:3.11-slim","livenessProbe":{"httpGet":{"path":"/health","port":8080},"initialDelaySeconds":10,"periodSeconds":10},"name":"vulnerable-app","ports":[{"containerPort":8080,"name":"http"}],"readinessProbe":{"httpGet":{"path":"/health","port":8080},"initialDelaySeconds":5,"periodSeconds":5},"volumeMounts":[{"mountPath":"/app","name":"code"}]}],"volumes":[{"configMap":{"name":"vulnerable-app-code"},"name":"code"}]}}}}
+    creationTimestamp: "2026-05-02T02:03:41Z"
+    generation: 1
+    labels:
+      app: vulnerable-app
+      project: iiot-correlation-lab
+      stage: foundation
+    name: vulnerable-app
+    namespace: iiot-poc
+    resourceVersion: "63766"
+    uid: 9aedd66a-1c99-4e2d-a643-c69bbb36f13b
+  spec:
+    progressDeadlineSeconds: 600
+    replicas: 1
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        app: vulnerable-app
+        project: iiot-correlation-lab
+        stage: foundation
+    strategy:
+      rollingUpdate:
+        maxSurge: 25%
+        maxUnavailable: 25%
+      type: RollingUpdate
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          app: vulnerable-app
+          project: iiot-correlation-lab
+          stage: foundation
+      spec:
+        containers:
+        - command:
+          - python
+          - /app/app.py
+          image: python:3.11-slim
+          imagePullPolicy: IfNotPresent
+          livenessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /health
+              port: 8080
+              scheme: HTTP
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 1
+          name: vulnerable-app
+          ports:
+          - containerPort: 8080
+            name: http
+            protocol: TCP
+          readinessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /health
+              port: 8080
+              scheme: HTTP
+            initialDelaySeconds: 5
+            periodSeconds: 5
+            successThreshold: 1
+            timeoutSeconds: 1
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /app
+            name: code
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - configMap:
+            defaultMode: 420
+            name: vulnerable-app-code
+          name: code
+  status:
+    availableReplicas: 1
+    conditions:
+    - lastTransitionTime: "2026-05-02T02:03:43Z"
+      lastUpdateTime: "2026-05-02T02:04:08Z"
+      message: ReplicaSet "vulnerable-app-5dd9b48766" has successfully progressed.
+      reason: NewReplicaSetAvailable
+      status: "True"
+      type: Progressing
+    - lastTransitionTime: "2026-05-02T14:11:22Z"
+      lastUpdateTime: "2026-05-02T14:11:22Z"
+      message: Deployment has minimum availability.
+      reason: MinimumReplicasAvailable
+      status: "True"
+      type: Available
+    observedGeneration: 1
+    readyReplicas: 1
+    replicas: 1
+    updatedReplicas: 1
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "1"
+      deployment.kubernetes.io/max-replicas: "2"
+      deployment.kubernetes.io/revision: "1"
+    creationTimestamp: "2026-05-02T02:03:39Z"
+    generation: 1
+    labels:
+      app: health-app
+      pod-template-hash: 54d5c8f644
+      project: iiot-correlation-lab
+      stage: foundation
+    name: health-app-54d5c8f644
+    namespace: iiot-poc
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: health-app
+      uid: c62fe86f-c780-4165-8ee5-10950451a8df
+    resourceVersion: "63650"
+    uid: 80037370-7be9-4a43-a8c8-c34a354547f4
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        app: health-app
+        pod-template-hash: 54d5c8f644
+        project: iiot-correlation-lab
+        stage: foundation
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          app: health-app
+          pod-template-hash: 54d5c8f644
+          project: iiot-correlation-lab
+          stage: foundation
+      spec:
+        containers:
+        - command:
+          - python
+          - /app/app.py
+          image: python:3.11-slim
+          imagePullPolicy: IfNotPresent
+          livenessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /health
+              port: 8080
+              scheme: HTTP
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 1
+          name: health-app
+          ports:
+          - containerPort: 8080
+            name: http
+            protocol: TCP
+          readinessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /health
+              port: 8080
+              scheme: HTTP
+            initialDelaySeconds: 5
+            periodSeconds: 5
+            successThreshold: 1
+            timeoutSeconds: 1
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /app
+            name: code
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - configMap:
+            defaultMode: 420
+            name: health-app-code
+          name: code
+  status:
+    availableReplicas: 1
+    fullyLabeledReplicas: 1
+    observedGeneration: 1
+    readyReplicas: 1
+    replicas: 1
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "1"
+      deployment.kubernetes.io/max-replicas: "2"
+      deployment.kubernetes.io/revision: "1"
+    creationTimestamp: "2026-05-02T02:03:40Z"
+    generation: 1
+    labels:
+      app: mosquitto
+      pod-template-hash: 5bf84bf7cb
+      project: iiot-correlation-lab
+      stage: foundation
+    name: mosquitto-5bf84bf7cb
+    namespace: iiot-poc
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: mosquitto
+      uid: 4b059d66-c6b0-4bf4-9ef2-4b3c2671dc35
+    resourceVersion: "63684"
+    uid: 56eb1a10-0351-4626-9f75-716eea2b984f
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        app: mosquitto
+        pod-template-hash: 5bf84bf7cb
+        project: iiot-correlation-lab
+        stage: foundation
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          app: mosquitto
+          pod-template-hash: 5bf84bf7cb
+          project: iiot-correlation-lab
+          stage: foundation
+      spec:
+        containers:
+        - image: eclipse-mosquitto:2.0.20
+          imagePullPolicy: IfNotPresent
+          livenessProbe:
+            failureThreshold: 3
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            successThreshold: 1
+            tcpSocket:
+              port: 1883
+            timeoutSeconds: 1
+          name: mosquitto
+          ports:
+          - containerPort: 1883
+            name: mqtt
+            protocol: TCP
+          readinessProbe:
+            failureThreshold: 3
+            initialDelaySeconds: 5
+            periodSeconds: 5
+            successThreshold: 1
+            tcpSocket:
+              port: 1883
+            timeoutSeconds: 1
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /mosquitto/config/mosquitto.conf
+            name: config
+            subPath: mosquitto.conf
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - configMap:
+            defaultMode: 420
+            name: mosquitto-config
+          name: config
+  status:
+    availableReplicas: 1
+    fullyLabeledReplicas: 1
+    observedGeneration: 1
+    readyReplicas: 1
+    replicas: 1
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "1"
+      deployment.kubernetes.io/max-replicas: "2"
+      deployment.kubernetes.io/revision: "1"
+    creationTimestamp: "2026-05-02T02:03:40Z"
+    generation: 1
+    labels:
+      app: sensor-simulator
+      pod-template-hash: 58b4bbcc76
+      project: iiot-correlation-lab
+      stage: foundation
+    name: sensor-simulator-58b4bbcc76
+    namespace: iiot-poc
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: sensor-simulator
+      uid: 9ac4ac31-534d-4ef4-9fe3-a8fa1b00d469
+    resourceVersion: "31070"
+    uid: 8d159178-68f0-4b82-bde7-d6c93be44157
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        app: sensor-simulator
+        pod-template-hash: 58b4bbcc76
+        project: iiot-correlation-lab
+        stage: foundation
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          app: sensor-simulator
+          pod-template-hash: 58b4bbcc76
+          project: iiot-correlation-lab
+          stage: foundation
+      spec:
+        containers:
+        - command:
+          - /bin/sh
+          - /scripts/sensor-loop.sh
+          env:
+          - name: MQTT_HOST
+            value: mosquitto.iiot-poc.svc.cluster.local
+          - name: MQTT_PORT
+            value: "1883"
+          - name: INTERVAL_SECONDS
+            value: "2"
+          image: eclipse-mosquitto:2.0.20
+          imagePullPolicy: IfNotPresent
+          name: sensor-simulator
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /scripts
+            name: script
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - configMap:
+            defaultMode: 493
+            name: sensor-simulator-script
+          name: script
+  status:
+    availableReplicas: 1
+    fullyLabeledReplicas: 1
+    observedGeneration: 1
+    readyReplicas: 1
+    replicas: 1
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "1"
+      deployment.kubernetes.io/max-replicas: "2"
+      deployment.kubernetes.io/revision: "1"
+    creationTimestamp: "2026-05-02T02:03:41Z"
+    generation: 1
+    labels:
+      app: telemetry-api
+      pod-template-hash: 5d4cfb7ff4
+      project: iiot-correlation-lab
+      stage: foundation
+    name: telemetry-api-5d4cfb7ff4
+    namespace: iiot-poc
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: telemetry-api
+      uid: cd08fbe9-4036-43cb-b44b-f2ba4e2ca0b9
+    resourceVersion: "63770"
+    uid: 75444beb-5e36-40ff-b4c7-1dec7beb1196
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        app: telemetry-api
+        pod-template-hash: 5d4cfb7ff4
+        project: iiot-correlation-lab
+        stage: foundation
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          app: telemetry-api
+          pod-template-hash: 5d4cfb7ff4
+          project: iiot-correlation-lab
+          stage: foundation
+      spec:
+        containers:
+        - command:
+          - python
+          - /app/app.py
+          image: python:3.11-slim
+          imagePullPolicy: IfNotPresent
+          livenessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /health
+              port: 8080
+              scheme: HTTP
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 1
+          name: telemetry-api
+          ports:
+          - containerPort: 8080
+            name: http
+            protocol: TCP
+          readinessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /health
+              port: 8080
+              scheme: HTTP
+            initialDelaySeconds: 5
+            periodSeconds: 5
+            successThreshold: 1
+            timeoutSeconds: 1
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /app
+            name: code
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - configMap:
+            defaultMode: 420
+            name: telemetry-api-code
+          name: code
+  status:
+    availableReplicas: 1
+    fullyLabeledReplicas: 1
+    observedGeneration: 1
+    readyReplicas: 1
+    replicas: 1
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "1"
+      deployment.kubernetes.io/max-replicas: "2"
+      deployment.kubernetes.io/revision: "1"
+    creationTimestamp: "2026-05-02T02:03:42Z"
+    generation: 1
+    labels:
+      app: vulnerable-app
+      pod-template-hash: 5dd9b48766
+      project: iiot-correlation-lab
+      stage: foundation
+    name: vulnerable-app-5dd9b48766
+    namespace: iiot-poc
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: vulnerable-app
+      uid: 9aedd66a-1c99-4e2d-a643-c69bbb36f13b
+    resourceVersion: "63759"
+    uid: 9a77f281-bfdf-4002-b6b6-30c54a2c8736
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        app: vulnerable-app
+        pod-template-hash: 5dd9b48766
+        project: iiot-correlation-lab
+        stage: foundation
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          app: vulnerable-app
+          pod-template-hash: 5dd9b48766
+          project: iiot-correlation-lab
+          stage: foundation
+      spec:
+        containers:
+        - command:
+          - python
+          - /app/app.py
+          image: python:3.11-slim
+          imagePullPolicy: IfNotPresent
+          livenessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /health
+              port: 8080
+              scheme: HTTP
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 1
+          name: vulnerable-app
+          ports:
+          - containerPort: 8080
+            name: http
+            protocol: TCP
+          readinessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /health
+              port: 8080
+              scheme: HTTP
+            initialDelaySeconds: 5
+            periodSeconds: 5
+            successThreshold: 1
+            timeoutSeconds: 1
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /app
+            name: code
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - configMap:
+            defaultMode: 420
+            name: vulnerable-app-code
+          name: code
+  status:
+    availableReplicas: 1
+    fullyLabeledReplicas: 1
+    observedGeneration: 1
+    readyReplicas: 1
+    replicas: 1
+kind: List
+metadata:
+  resourceVersion: ""

@@ -1,0 +1,61 @@
+scenario,attack_uid,iteration,attack_id,mitre_ics,technique,target_component,start_utc,end_utc,duration_s,parameters,status
+SCENARIO_D,D-T0809-1,1,T0809,T0809,Unauthorized Command Message,mosquitto,2026-05-02T19:43:05Z,2026-05-02T19:43:06Z,5,tcp_probe_10.10.0.151:1883,executed
+SCENARIO_D,D-T0814-1,1,T0814,T0814,Data Manipulation,telemetry-api,2026-05-02T19:43:11Z,2026-05-02T19:43:13Z,5,http_probe_http://10.10.0.153:8080/,executed
+SCENARIO_D,D-T0860-1,1,T0860,T0860,Denial of Service,vulnerable-app,2026-05-02T19:43:18Z,2026-05-02T19:43:21Z,30,requests=500;concurrency=30,executed
+SCENARIO_D,D-T0809-2,2,T0809,T0809,Unauthorized Command Message,mosquitto,2026-05-02T19:43:31Z,2026-05-02T19:43:33Z,5,tcp_probe_10.10.0.151:1883,executed
+SCENARIO_D,D-T0814-2,2,T0814,T0814,Data Manipulation,telemetry-api,2026-05-02T19:43:38Z,2026-05-02T19:43:39Z,5,http_probe_http://10.10.0.153:8080/,executed
+SCENARIO_D,D-T0860-2,2,T0860,T0860,Denial of Service,vulnerable-app,2026-05-02T19:43:44Z,2026-05-02T19:43:48Z,30,requests=500;concurrency=30,executed
+SCENARIO_D,D-T0809-3,3,T0809,T0809,Unauthorized Command Message,mosquitto,2026-05-02T19:43:58Z,2026-05-02T19:44:00Z,5,tcp_probe_10.10.0.151:1883,executed
+SCENARIO_D,D-T0814-3,3,T0814,T0814,Data Manipulation,telemetry-api,2026-05-02T19:44:05Z,2026-05-02T19:44:06Z,5,http_probe_http://10.10.0.153:8080/,executed
+SCENARIO_D,D-T0860-3,3,T0860,T0860,Denial of Service,vulnerable-app,2026-05-02T19:44:11Z,2026-05-02T19:44:15Z,30,requests=500;concurrency=30,executed
+SCENARIO_D,D-T0809-4,4,T0809,T0809,Unauthorized Command Message,mosquitto,2026-05-02T19:44:25Z,2026-05-02T19:44:26Z,5,tcp_probe_10.10.0.151:1883,executed
+SCENARIO_D,D-T0814-4,4,T0814,T0814,Data Manipulation,telemetry-api,2026-05-02T19:44:31Z,2026-05-02T19:44:33Z,5,http_probe_http://10.10.0.153:8080/,executed
+SCENARIO_D,D-T0860-4,4,T0860,T0860,Denial of Service,vulnerable-app,2026-05-02T19:44:38Z,2026-05-02T19:44:43Z,30,requests=500;concurrency=30,executed
+SCENARIO_D,D-T0809-5,5,T0809,T0809,Unauthorized Command Message,mosquitto,2026-05-02T19:44:53Z,2026-05-02T19:44:55Z,5,tcp_probe_10.10.0.151:1883,executed
+SCENARIO_D,D-T0814-5,5,T0814,T0814,Data Manipulation,telemetry-api,2026-05-02T19:45:00Z,2026-05-02T19:45:03Z,5,http_probe_http://10.10.0.153:8080/,executed
+SCENARIO_D,D-T0860-5,5,T0860,T0860,Denial of Service,vulnerable-app,2026-05-02T19:45:08Z,2026-05-02T19:45:14Z,30,requests=500;concurrency=30,executed
+SCENARIO_D,D-T0809-6,6,T0809,T0809,Unauthorized Command Message,mosquitto,2026-05-02T19:45:24Z,2026-05-02T19:45:26Z,5,tcp_probe_10.10.0.151:1883,executed
+SCENARIO_D,D-T0814-6,6,T0814,T0814,Data Manipulation,telemetry-api,2026-05-02T19:45:31Z,2026-05-02T19:45:35Z,5,http_probe_http://10.10.0.153:8080/,executed
+SCENARIO_D,D-T0860-6,6,T0860,T0860,Denial of Service,vulnerable-app,2026-05-02T19:45:40Z,2026-05-02T19:45:44Z,30,requests=500;concurrency=30,executed
+SCENARIO_D,D-T0809-7,7,T0809,T0809,Unauthorized Command Message,mosquitto,2026-05-02T19:45:54Z,2026-05-02T19:45:56Z,5,tcp_probe_10.10.0.151:1883,executed
+SCENARIO_D,D-T0814-7,7,T0814,T0814,Data Manipulation,telemetry-api,2026-05-02T19:46:01Z,2026-05-02T19:46:03Z,5,http_probe_http://10.10.0.153:8080/,executed
+SCENARIO_D,D-T0860-7,7,T0860,T0860,Denial of Service,vulnerable-app,2026-05-02T19:46:08Z,2026-05-02T19:46:11Z,30,requests=500;concurrency=30,executed
+SCENARIO_D,D-T0809-8,8,T0809,T0809,Unauthorized Command Message,mosquitto,2026-05-02T19:46:21Z,2026-05-02T19:46:23Z,5,tcp_probe_10.10.0.151:1883,executed
+SCENARIO_D,D-T0814-8,8,T0814,T0814,Data Manipulation,telemetry-api,2026-05-02T19:46:28Z,2026-05-02T19:46:30Z,5,http_probe_http://10.10.0.153:8080/,executed
+SCENARIO_D,D-T0860-8,8,T0860,T0860,Denial of Service,vulnerable-app,2026-05-02T19:46:35Z,2026-05-02T19:46:39Z,30,requests=500;concurrency=30,executed
+SCENARIO_D,D-T0809-9,9,T0809,T0809,Unauthorized Command Message,mosquitto,2026-05-02T19:46:49Z,2026-05-02T19:46:51Z,5,tcp_probe_10.10.0.151:1883,executed
+SCENARIO_D,D-T0814-9,9,T0814,T0814,Data Manipulation,telemetry-api,2026-05-02T19:46:56Z,2026-05-02T19:46:58Z,5,http_probe_http://10.10.0.153:8080/,executed
+SCENARIO_D,D-T0860-9,9,T0860,T0860,Denial of Service,vulnerable-app,2026-05-02T19:47:03Z,2026-05-02T19:47:06Z,30,requests=500;concurrency=30,executed
+SCENARIO_D,D-T0809-10,10,T0809,T0809,Unauthorized Command Message,mosquitto,2026-05-02T19:47:16Z,2026-05-02T19:47:20Z,5,tcp_probe_10.10.0.151:1883,executed
+SCENARIO_D,D-T0814-10,10,T0814,T0814,Data Manipulation,telemetry-api,2026-05-02T19:47:25Z,2026-05-02T19:47:27Z,5,http_probe_http://10.10.0.153:8080/,executed
+SCENARIO_D,D-T0860-10,10,T0860,T0860,Denial of Service,vulnerable-app,2026-05-02T19:47:32Z,2026-05-02T19:47:38Z,30,requests=500;concurrency=30,executed
+SCENARIO_D,D-T0809-11,11,T0809,T0809,Unauthorized Command Message,mosquitto,2026-05-02T19:47:48Z,2026-05-02T19:47:51Z,5,tcp_probe_10.10.0.151:1883,executed
+SCENARIO_D,D-T0814-11,11,T0814,T0814,Data Manipulation,telemetry-api,2026-05-02T19:47:56Z,2026-05-02T19:47:58Z,5,http_probe_http://10.10.0.153:8080/,executed
+SCENARIO_D,D-T0860-11,11,T0860,T0860,Denial of Service,vulnerable-app,2026-05-02T19:48:03Z,2026-05-02T19:48:07Z,30,requests=500;concurrency=30,executed
+SCENARIO_D,D-T0809-12,12,T0809,T0809,Unauthorized Command Message,mosquitto,2026-05-02T19:48:17Z,2026-05-02T19:48:20Z,5,tcp_probe_10.10.0.151:1883,executed
+SCENARIO_D,D-T0814-12,12,T0814,T0814,Data Manipulation,telemetry-api,2026-05-02T19:48:25Z,2026-05-02T19:48:28Z,5,http_probe_http://10.10.0.153:8080/,executed
+SCENARIO_D,D-T0860-12,12,T0860,T0860,Denial of Service,vulnerable-app,2026-05-02T19:48:33Z,2026-05-02T19:48:37Z,30,requests=500;concurrency=30,executed
+SCENARIO_D,D-T0809-13,13,T0809,T0809,Unauthorized Command Message,mosquitto,2026-05-02T19:48:47Z,2026-05-02T19:48:50Z,5,tcp_probe_10.10.0.151:1883,executed
+SCENARIO_D,D-T0814-13,13,T0814,T0814,Data Manipulation,telemetry-api,2026-05-02T19:48:55Z,2026-05-02T19:48:57Z,5,http_probe_http://10.10.0.153:8080/,executed
+SCENARIO_D,D-T0860-13,13,T0860,T0860,Denial of Service,vulnerable-app,2026-05-02T19:49:02Z,2026-05-02T19:49:05Z,30,requests=500;concurrency=30,executed
+SCENARIO_D,D-T0809-14,14,T0809,T0809,Unauthorized Command Message,mosquitto,2026-05-02T19:49:15Z,2026-05-02T19:49:18Z,5,tcp_probe_10.10.0.151:1883,executed
+SCENARIO_D,D-T0814-14,14,T0814,T0814,Data Manipulation,telemetry-api,2026-05-02T19:49:23Z,2026-05-02T19:49:24Z,5,http_probe_http://10.10.0.153:8080/,executed
+SCENARIO_D,D-T0860-14,14,T0860,T0860,Denial of Service,vulnerable-app,2026-05-02T19:49:29Z,2026-05-02T19:49:32Z,30,requests=500;concurrency=30,executed
+SCENARIO_D,D-T0809-15,15,T0809,T0809,Unauthorized Command Message,mosquitto,2026-05-02T19:49:42Z,2026-05-02T19:49:43Z,5,tcp_probe_10.10.0.151:1883,executed
+SCENARIO_D,D-T0814-15,15,T0814,T0814,Data Manipulation,telemetry-api,2026-05-02T19:49:48Z,2026-05-02T19:49:51Z,5,http_probe_http://10.10.0.153:8080/,executed
+SCENARIO_D,D-T0860-15,15,T0860,T0860,Denial of Service,vulnerable-app,2026-05-02T19:49:56Z,2026-05-02T19:49:59Z,30,requests=500;concurrency=30,executed
+SCENARIO_D,D-T0809-16,16,T0809,T0809,Unauthorized Command Message,mosquitto,2026-05-02T19:50:09Z,2026-05-02T19:50:12Z,5,tcp_probe_10.10.0.151:1883,executed
+SCENARIO_D,D-T0814-16,16,T0814,T0814,Data Manipulation,telemetry-api,2026-05-02T19:50:17Z,2026-05-02T19:50:19Z,5,http_probe_http://10.10.0.153:8080/,executed
+SCENARIO_D,D-T0860-16,16,T0860,T0860,Denial of Service,vulnerable-app,2026-05-02T19:50:24Z,2026-05-02T19:50:28Z,30,requests=500;concurrency=30,executed
+SCENARIO_D,D-T0809-17,17,T0809,T0809,Unauthorized Command Message,mosquitto,2026-05-02T19:50:38Z,2026-05-02T19:50:40Z,5,tcp_probe_10.10.0.151:1883,executed
+SCENARIO_D,D-T0814-17,17,T0814,T0814,Data Manipulation,telemetry-api,2026-05-02T19:50:45Z,2026-05-02T19:50:46Z,5,http_probe_http://10.10.0.153:8080/,executed
+SCENARIO_D,D-T0860-17,17,T0860,T0860,Denial of Service,vulnerable-app,2026-05-02T19:50:51Z,2026-05-02T19:50:55Z,30,requests=500;concurrency=30,executed
+SCENARIO_D,D-T0809-18,18,T0809,T0809,Unauthorized Command Message,mosquitto,2026-05-02T19:51:05Z,2026-05-02T19:51:07Z,5,tcp_probe_10.10.0.151:1883,executed
+SCENARIO_D,D-T0814-18,18,T0814,T0814,Data Manipulation,telemetry-api,2026-05-02T19:51:12Z,2026-05-02T19:51:13Z,5,http_probe_http://10.10.0.153:8080/,executed
+SCENARIO_D,D-T0860-18,18,T0860,T0860,Denial of Service,vulnerable-app,2026-05-02T19:51:18Z,2026-05-02T19:51:21Z,30,requests=500;concurrency=30,executed
+SCENARIO_D,D-T0809-19,19,T0809,T0809,Unauthorized Command Message,mosquitto,2026-05-02T19:51:31Z,2026-05-02T19:51:34Z,5,tcp_probe_10.10.0.151:1883,executed
+SCENARIO_D,D-T0814-19,19,T0814,T0814,Data Manipulation,telemetry-api,2026-05-02T19:51:39Z,2026-05-02T19:51:42Z,5,http_probe_http://10.10.0.153:8080/,executed
+SCENARIO_D,D-T0860-19,19,T0860,T0860,Denial of Service,vulnerable-app,2026-05-02T19:51:47Z,2026-05-02T19:51:51Z,30,requests=500;concurrency=30,executed
+SCENARIO_D,D-T0809-20,20,T0809,T0809,Unauthorized Command Message,mosquitto,2026-05-02T19:52:01Z,2026-05-02T19:52:04Z,5,tcp_probe_10.10.0.151:1883,executed
+SCENARIO_D,D-T0814-20,20,T0814,T0814,Data Manipulation,telemetry-api,2026-05-02T19:52:09Z,2026-05-02T19:52:11Z,5,http_probe_http://10.10.0.153:8080/,executed
+SCENARIO_D,D-T0860-20,20,T0860,T0860,Denial of Service,vulnerable-app,2026-05-02T19:52:16Z,2026-05-02T19:52:20Z,30,requests=500;concurrency=30,executed

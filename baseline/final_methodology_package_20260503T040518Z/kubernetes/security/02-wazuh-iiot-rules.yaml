@@ -1,0 +1,41 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: wazuh-iiot-rules
+  namespace: security
+  labels:
+    app.kubernetes.io/part-of: iiot-correlation-lab
+    app.kubernetes.io/component: wazuh-rules
+    iiot-lab/scenario: C
+data:
+  local_rules.xml: |
+    <group name="iiot,ics,mining4,scenario_c,">
+      <rule id="110800" level="3">
+        <decoded_as>json</decoded_as>
+        <field name="iiot_lab.scenario">SCENARIO_C</field>
+        <field name="iiot_lab.attack_id">NONE</field>
+        <description>IIoT Scenario C structured baseline event</description>
+        <group>iiot,baseline,scenario_c,</group>
+      </rule>
+      <rule id="110809" level="7">
+        <decoded_as>json</decoded_as>
+        <field name="iiot_lab.attack_id">T0809</field>
+        <description>IIoT unauthorized command event mapped to MITRE ATT&CK for ICS T0809</description>
+        <mitre><id>T0809</id></mitre>
+        <group>iiot,ics,mitre_ics,T0809,</group>
+      </rule>
+      <rule id="110814" level="8">
+        <decoded_as>json</decoded_as>
+        <field name="iiot_lab.attack_id">T0814</field>
+        <description>IIoT telemetry manipulation event mapped to MITRE ATT&CK for ICS T0814</description>
+        <mitre><id>T0814</id></mitre>
+        <group>iiot,ics,mitre_ics,T0814,</group>
+      </rule>
+      <rule id="110860" level="9">
+        <decoded_as>json</decoded_as>
+        <field name="iiot_lab.attack_id">T0860</field>
+        <description>IIoT availability degradation event mapped to MITRE ATT&CK for ICS T0860</description>
+        <mitre><id>T0860</id></mitre>
+        <group>iiot,ics,mitre_ics,T0860,</group>
+      </rule>
+    </group>

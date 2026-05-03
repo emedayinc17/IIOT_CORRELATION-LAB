@@ -1,0 +1,13 @@
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  annotations:
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"storage.k8s.io/v1","kind":"StorageClass","metadata":{"annotations":{},"name":"wazuh-storage"},"provisioner":"microk8s.io/hostpath"}
+  creationTimestamp: "2026-05-02T04:43:05Z"
+  name: wazuh-storage
+  resourceVersion: "53473"
+  uid: 0c5542a2-0af7-4393-aedd-d7b414525cac
+provisioner: microk8s.io/hostpath
+reclaimPolicy: Delete
+volumeBindingMode: Immediate

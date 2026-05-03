@@ -1,0 +1,2 @@
+timestamp_utc,namespace,microk8s_single_node,storage_class,indexer_ready,manager_ready,dashboard_ready,dashboard_http,manager_api_port,rules_ready,localfile_ready,worker_present,pvc_pending,image_pull_errors,dashboard_ip,manager_ip
+2026-05-02T05:16:47Z,security,YES,microk8s-hostpath,YES,YES,YES,YES,YES,YES,YES,"NO","NONE","NONE",10.10.0.161,10.10.0.162

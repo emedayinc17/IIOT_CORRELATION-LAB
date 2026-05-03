@@ -1,0 +1,15 @@
+D-T0809-1 target=mqtt-broker samples=0
+D-T0814-1 target=telemetry-api samples=0
+D-T0860-1 target=vulnerable-app samples=0
+D-T0809-2 target=mqtt-broker samples=0
+D-T0814-2 target=telemetry-api samples=0
+D-T0860-2 target=vulnerable-app samples=0
+D-T0809-3 target=mqtt-broker samples=0
+D-T0814-3 target=telemetry-api samples=0
+D-T0860-3 target=vulnerable-app samples=0
+D-T0809-4 target=mqtt-broker samples=0
+D-T0814-4 target=telemetry-api samples=0
+D-T0860-4 target=vulnerable-app samples=0
+D-T0809-5 target=mqtt-broker samples=0
+D-T0814-5 target=telemetry-api samples=0
+D-T0860-5 target=vulnerable-app samples=0

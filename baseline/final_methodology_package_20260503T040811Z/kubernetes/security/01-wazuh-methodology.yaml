@@ -1,0 +1,39 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: wazuh-single-node-methodology
+  namespace: security
+  labels:
+    app.kubernetes.io/part-of: iiot-correlation-lab
+    app.kubernetes.io/component: wazuh
+    iiot-lab/scenario: C
+data:
+  methodology.md: |
+    Scenario C uses a Wazuh single-node/all-in-one laboratory deployment.
+    The decision prioritizes reproducibility, experimental control, deterministic freezes,
+    and reduced operational variables.
+
+    The laboratory does not evaluate Kubernetes hardening, high availability,
+    Wazuh clustering, SIEM sizing, or runtime security. Kubernetes is used only as
+    the reproducible substrate for deploying the IIoT, Zabbix, and Wazuh layers.
+
+    The scientific focus is the correlation between operational observability
+    from Zabbix and security observability from Wazuh under IIoT/MITRE ATT&CK
+    for ICS scenarios.
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: wazuh-version-lock
+  namespace: security
+  labels:
+    app.kubernetes.io/part-of: iiot-correlation-lab
+    app.kubernetes.io/component: wazuh
+    iiot-lab/scenario: C
+data:
+  WAZUH_KUBERNETES_BRANCH: "v4.14.5"
+  WAZUH_NAMESPACE: "security"
+  WAZUH_DEPLOYMENT_MODEL: "single-node-local-lab"
+  WAZUH_DASHBOARD_LB: "10.10.0.161"
+  WAZUH_MANAGER_LB: "10.10.0.162"
+  EXCLUDED_SCOPE: "kubernetes-hardening,falco,cis-benchmark,runtime-security,ha-clustering"

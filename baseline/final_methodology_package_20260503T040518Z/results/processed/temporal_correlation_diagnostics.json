@@ -1,0 +1,9 @@
+{
+  "campaign_uids": 60,
+  "per_uid_deltas_found": 60,
+  "aggregate_delta_fallbacks_available": 3,
+  "delta_source_counts": {
+    "zabbix_history_validation": 60
+  },
+  "warning": ""
+}

@@ -1,0 +1,2 @@
+NAME           STATUS   ROLES    AGE     VERSION    INTERNAL-IP   EXTERNAL-IP   OS-IMAGE             KERNEL-VERSION     CONTAINER-RUNTIME
+iiot-lab-k8s   Ready    <none>   6h28m   v1.30.14   10.10.0.101   <none>        Ubuntu 24.04.3 LTS   6.8.0-79-generic   containerd://1.6.28

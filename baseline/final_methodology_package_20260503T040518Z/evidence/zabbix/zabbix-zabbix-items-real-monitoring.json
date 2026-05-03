@@ -1,0 +1,162 @@
+[
+  {
+    "itemid": "50738",
+    "hostid": "10683",
+    "name": "mqtt-broker availability",
+    "key_": "net.tcp.service[tcp,10.10.0.151,1883]",
+    "value_type": "3",
+    "type": "3",
+    "status": "0",
+    "delay": "5s",
+    "state": "0",
+    "error": "",
+    "hosts": [
+      {
+        "hostid": "10683",
+        "host": "mqtt-broker"
+      }
+    ],
+    "lastclock": "1777744958",
+    "lastvalue": "1"
+  },
+  {
+    "itemid": "50739",
+    "hostid": "10683",
+    "name": "mqtt-broker latency seconds",
+    "key_": "net.tcp.service.perf[tcp,10.10.0.151,1883]",
+    "value_type": "0",
+    "type": "3",
+    "status": "0",
+    "delay": "5s",
+    "state": "0",
+    "error": "",
+    "hosts": [
+      {
+        "hostid": "10683",
+        "host": "mqtt-broker"
+      }
+    ],
+    "lastclock": "1777744959",
+    "lastvalue": "0.00014448165893554688"
+  },
+  {
+    "itemid": "50740",
+    "hostid": "10684",
+    "name": "health-app availability",
+    "key_": "net.tcp.service[http,10.10.0.152,8080]",
+    "value_type": "3",
+    "type": "3",
+    "status": "0",
+    "delay": "5s",
+    "state": "0",
+    "error": "",
+    "hosts": [
+      {
+        "hostid": "10684",
+        "host": "health-app"
+      }
+    ],
+    "lastclock": "1777744960",
+    "lastvalue": "1"
+  },
+  {
+    "itemid": "50741",
+    "hostid": "10684",
+    "name": "health-app latency seconds",
+    "key_": "net.tcp.service.perf[http,10.10.0.152,8080]",
+    "value_type": "0",
+    "type": "3",
+    "status": "0",
+    "delay": "5s",
+    "state": "0",
+    "error": "",
+    "hosts": [
+      {
+        "hostid": "10684",
+        "host": "health-app"
+      }
+    ],
+    "lastclock": "1777744961",
+    "lastvalue": "0.00021791458129882812"
+  },
+  {
+    "itemid": "50742",
+    "hostid": "10685",
+    "name": "telemetry-api availability",
+    "key_": "net.tcp.service[http,10.10.0.153,8080]",
+    "value_type": "3",
+    "type": "3",
+    "status": "0",
+    "delay": "5s",
+    "state": "0",
+    "error": "",
+    "hosts": [
+      {
+        "hostid": "10685",
+        "host": "telemetry-api"
+      }
+    ],
+    "lastclock": "1777744962",
+    "lastvalue": "1"
+  },
+  {
+    "itemid": "50743",
+    "hostid": "10685",
+    "name": "telemetry-api latency seconds",
+    "key_": "net.tcp.service.perf[http,10.10.0.153,8080]",
+    "value_type": "0",
+    "type": "3",
+    "status": "0",
+    "delay": "5s",
+    "state": "0",
+    "error": "",
+    "hosts": [
+      {
+        "hostid": "10685",
+        "host": "telemetry-api"
+      }
+    ],
+    "lastclock": "1777744963",
+    "lastvalue": "0.00020360946655273438"
+  },
+  {
+    "itemid": "50744",
+    "hostid": "10686",
+    "name": "vulnerable-app availability",
+    "key_": "net.tcp.service[http,10.10.0.154,8080]",
+    "value_type": "3",
+    "type": "3",
+    "status": "0",
+    "delay": "5s",
+    "state": "0",
+    "error": "",
+    "hosts": [
+      {
+        "hostid": "10686",
+        "host": "vulnerable-app"
+      }
+    ],
+    "lastclock": "1777744964",
+    "lastvalue": "1"
+  },
+  {
+    "itemid": "50745",
+    "hostid": "10686",
+    "name": "vulnerable-app latency seconds",
+    "key_": "net.tcp.service.perf[http,10.10.0.154,8080]",
+    "value_type": "0",
+    "type": "3",
+    "status": "0",
+    "delay": "5s",
+    "state": "0",
+    "error": "",
+    "hosts": [
+      {
+        "hostid": "10686",
+        "host": "vulnerable-app"
+      }
+    ],
+    "lastclock": "1777744965",
+    "lastvalue": "0.00019288063049316406"
+  }
+]

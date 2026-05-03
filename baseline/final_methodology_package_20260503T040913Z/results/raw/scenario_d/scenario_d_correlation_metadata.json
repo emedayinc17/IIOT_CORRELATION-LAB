@@ -1,0 +1,13 @@
+{
+  "timestamp_utc": "2026-05-02T16:57:33Z",
+  "scenario": "SCENARIO_D",
+  "correlation_window_seconds": 120,
+  "input_datasets": [
+    "/home/emeday/iiot-correlation-lab/results/raw/scenario_d/mitre_ics_attacks.csv",
+    "/home/emeday/iiot-correlation-lab/results/raw/scenario_d/attack_http_observations.csv",
+    "/home/emeday/iiot-correlation-lab/results/raw/scenario_d/wazuh_security_events.csv",
+    "/home/emeday/iiot-correlation-lab/results/raw/scenario_d/zabbix_correlation_metrics.csv"
+  ],
+  "output_dataset": "/home/emeday/iiot-correlation-lab/results/processed/correlation_dataset.csv",
+  "zabbix_error": ""
+}

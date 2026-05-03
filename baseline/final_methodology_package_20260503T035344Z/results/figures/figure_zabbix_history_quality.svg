@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="420">
+<rect width="100%" height="100%" fill="white"/>
+<text x="40" y="35" font-family="Arial" font-size="20">Zabbix history quality by technique</text>
+<rect x="60" y="90.0" width="90" height="260.0" fill="#777"/>
+<text x="60" y="380" font-family="Arial" font-size="14">T0809</text>
+<text x="60" y="82.0" font-family="Arial" font-size="12">100.000</text>
+<rect x="240" y="90.0" width="90" height="260.0" fill="#777"/>
+<text x="240" y="380" font-family="Arial" font-size="14">T0814</text>
+<text x="240" y="82.0" font-family="Arial" font-size="12">100.000</text>
+<rect x="420" y="90.0" width="90" height="260.0" fill="#777"/>
+<text x="420" y="380" font-family="Arial" font-size="14">T0860</text>
+<text x="420" y="82.0" font-family="Arial" font-size="12">100.000</text>
+</svg>

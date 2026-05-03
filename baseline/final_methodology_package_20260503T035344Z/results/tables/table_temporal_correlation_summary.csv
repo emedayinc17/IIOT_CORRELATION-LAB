@@ -1,0 +1,4 @@
+scenario,attack_id,executions_with_delta,valid_temporal_correlations,failed_temporal_correlations,valid_temporal_correlation_percent,avg_delta_seconds,median_delta_seconds,max_delta_seconds,p95_delta_seconds,p99_delta_seconds
+SCENARIO_D,T0809,20,20,0,100.0,0.15,0.0,1.0,1.0,1.0
+SCENARIO_D,T0814,20,20,0,100.0,0.1,0.0,1.0,1.0,1.0
+SCENARIO_D,T0860,20,20,0,100.0,0.55,1.0,1.0,1.0,1.0

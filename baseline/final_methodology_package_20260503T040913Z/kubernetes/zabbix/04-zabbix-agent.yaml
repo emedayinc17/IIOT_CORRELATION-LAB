@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: zabbix-agent
+  namespace: monitoring
+spec:
+  selector:
+    matchLabels:
+      app: zabbix-agent
+  template:
+    metadata:
+      labels:
+        app: zabbix-agent
+    spec:
+      hostNetwork: true
+      containers:
+      - name: zabbix-agent
+        image: zabbix/zabbix-agent2:ubuntu-7.0-latest
+        env:
+        - name: ZBX_SERVER_HOST
+          value: zabbix-server.monitoring.svc.cluster.local
+        ports:
+        - containerPort: 10050

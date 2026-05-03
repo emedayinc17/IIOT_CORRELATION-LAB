@@ -1,0 +1,11 @@
+{
+  "generated_utc": "2026-05-03T03:53:51Z",
+  "generated_local": "2026-05-02 22:53:51 -0500 (-05)",
+  "expected_scenario_d_executions": 60,
+  "actual_scenario_d_executions": 60,
+  "expected_scenario_e_executions": 60,
+  "actual_scenario_e_executions": 60,
+  "scenario_e_http_errors": 0,
+  "scope": "IIoT + Zabbix + Wazuh + event-based temporal correlation + false positive control",
+  "methodological_status": "paper_final_candidate"
+}

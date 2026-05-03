@@ -1,0 +1,1 @@
+zabbix-agent=zabbix/zabbix-agent2:ubuntu-7.0-latest

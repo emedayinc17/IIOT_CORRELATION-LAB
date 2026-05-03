@@ -1,0 +1,8 @@
+NAME                 TYPE           CLUSTER-IP       EXTERNAL-IP   PORT(S)                                         AGE     SELECTOR
+dashboard            ClusterIP      10.152.183.133   <none>        443/TCP                                         2m51s   app=wazuh-dashboard
+indexer              ClusterIP      10.152.183.51    <none>        9200/TCP                                        2m51s   app=wazuh-indexer
+wazuh                ClusterIP      10.152.183.151   <none>        55000/TCP,1515/TCP                              2m50s   app=wazuh-manager,node-type=master
+wazuh-cluster        ClusterIP      None             <none>        1516/TCP                                        2m50s   app=wazuh-manager
+wazuh-dashboard-lb   LoadBalancer   10.152.183.109   10.10.0.161   443:31607/TCP                                   2m56s   app=wazuh-dashboard
+wazuh-indexer        ClusterIP      None             <none>        9300/TCP                                        2m49s   app=wazuh-indexer
+wazuh-manager-lb     LoadBalancer   10.152.183.45    10.10.0.162   1514:31936/TCP,1515:31645/TCP,55000:31472/TCP   2m56s   app=wazuh-manager,node-type=master

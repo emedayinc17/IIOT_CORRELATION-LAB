@@ -1,0 +1,200 @@
+Updating /var/ossec/agentless/su.exp
+Updating /var/ossec/agentless/ssh_integrity_check_linux
+Updating /var/ossec/agentless/register_host.sh
+Updating /var/ossec/agentless/ssh_generic_diff
+Updating /var/ossec/agentless/ssh_foundry_diff
+Updating /var/ossec/agentless/ssh_nopass.exp
+Updating /var/ossec/agentless/ssh.exp
+Updating /var/ossec/wodles/utils.py
+Updating /var/ossec/wodles/aws/aws-s3
+Updating /var/ossec/wodles/aws/aws-s3.py
+Updating /var/ossec/wodles/aws/__init__.py
+Updating /var/ossec/wodles/aws/aws_tools.py
+Updating /var/ossec/wodles/aws/wazuh_integration.py
+Updating /var/ossec/wodles/aws/buckets_s3/__init__.py
+Updating /var/ossec/wodles/aws/buckets_s3/aws_bucket.py
+Updating /var/ossec/wodles/aws/buckets_s3/cloudtrail.py
+Updating /var/ossec/wodles/aws/buckets_s3/config.py
+Updating /var/ossec/wodles/aws/buckets_s3/guardduty.py
+Updating /var/ossec/wodles/aws/buckets_s3/load_balancers.py
+Updating /var/ossec/wodles/aws/buckets_s3/server_access.py
+Updating /var/ossec/wodles/aws/buckets_s3/umbrella.py
+Updating /var/ossec/wodles/aws/buckets_s3/vpcflow.py
+Updating /var/ossec/wodles/aws/buckets_s3/waf.py
+Updating /var/ossec/wodles/aws/services/__init__.py
+Updating /var/ossec/wodles/aws/services/aws_service.py
+Updating /var/ossec/wodles/aws/services/cloudwatchlogs.py
+Updating /var/ossec/wodles/aws/services/inspector.py
+Updating /var/ossec/wodles/aws/subscribers/__init__.py
+Updating /var/ossec/wodles/aws/subscribers/s3_log_handler.py
+Updating /var/ossec/wodles/aws/subscribers/sqs_message_processor.py
+Updating /var/ossec/wodles/aws/subscribers/sqs_queue.py
+Updating /var/ossec/wodles/azure/azure-logs
+Updating /var/ossec/wodles/azure/azure-logs.py
+Updating /var/ossec/wodles/azure/db/orm.py
+Updating /var/ossec/wodles/azure/db/utils.py
+Updating /var/ossec/wodles/azure/db/__init__.py
+Updating /var/ossec/wodles/azure/azure_utils.py
+Updating /var/ossec/wodles/azure/azure_services/__init__.py
+Updating /var/ossec/wodles/azure/azure_services/analytics.py
+Updating /var/ossec/wodles/azure/azure_services/graph.py
+Updating /var/ossec/wodles/azure/azure_services/storage.py
+Updating /var/ossec/wodles/docker/DockerListener
+Updating /var/ossec/wodles/docker/DockerListener.py
+Updating /var/ossec/wodles/gcloud/gcloud
+Updating /var/ossec/wodles/gcloud/gcloud.py
+Updating /var/ossec/wodles/gcloud/integration.py
+Updating /var/ossec/wodles/gcloud/tools.py
+Updating /var/ossec/wodles/gcloud/exceptions.py
+Updating /var/ossec/wodles/gcloud/buckets/bucket.py
+Updating /var/ossec/wodles/gcloud/buckets/access_logs.py
+Updating /var/ossec/wodles/gcloud/pubsub/subscriber.py
+Updating /var/ossec/etc/lists/malicious-ioc/malicious-ip
+Updating /var/ossec/etc/lists/malicious-ioc/malicious-domains
+Updating /var/ossec/etc/lists/malicious-ioc/malware-hashes
+Updating /etc/filebeat/wazuh-template.json
+Updating /etc/filebeat/filebeat.yml
+find: '/proc/397/task/397/fd/6': No such file or directory
+find: '/proc/397/task/397/fdinfo/6': No such file or directory
+find: '/proc/397/fd/5': No such file or directory
+find: '/proc/397/fdinfo/5': No such file or directory
+find: '/proc/398/task/398/fd/6': No such file or directory
+find: '/proc/398/task/398/fdinfo/6': No such file or directory
+find: '/proc/398/fd/5': No such file or directory
+find: '/proc/398/fdinfo/5': No such file or directory
+chown: changing group of '/run/secrets/kubernetes.io/serviceaccount': Read-only file system
+chown: changing group of '/run/secrets/kubernetes.io/serviceaccount/..data': Read-only file system
+chown: changing group of '/run/secrets/kubernetes.io/serviceaccount/..2026_05_02_18_43_56.3341808163': Read-only file system
+chown: changing group of '/run/secrets/kubernetes.io/serviceaccount/..2026_05_02_18_43_56.3341808163/namespace': Read-only file system
+chown: changing group of '/run/secrets/kubernetes.io/serviceaccount/..2026_05_02_18_43_56.3341808163/ca.crt': Read-only file system
+chown: changing group of '/run/secrets/kubernetes.io/serviceaccount/..2026_05_02_18_43_56.3341808163/token': Read-only file system
+chown: changing group of '/run/secrets/kubernetes.io/serviceaccount/ca.crt': Read-only file system
+chown: changing group of '/run/secrets/kubernetes.io/serviceaccount/token': Read-only file system
+chown: changing group of '/run/secrets/kubernetes.io/serviceaccount/namespace': Read-only file system
+chown: changing group of '/etc/ssl/filebeat.pem': Read-only file system
+chown: changing group of '/etc/ssl/filebeat.key': Read-only file system
+chown: changing group of '/etc/ssl/root-ca.pem': Read-only file system
+chown: changing group of '/wazuh-config-mount/etc/authd.pass': Read-only file system
+chown: changing group of '/wazuh-config-mount/etc/ossec.conf': Read-only file system
+find: '/proc/400/task/400/fd/6': No such file or directory
+find: '/proc/400/task/400/fdinfo/6': No such file or directory
+find: '/proc/400/fd/5': No such file or directory
+find: '/proc/400/fdinfo/5': No such file or directory
+Removing /var/ossec/queue/db/.template.db
+Identified Wazuh configuration files to mount...
+'/wazuh-config-mount/etc/ossec.conf' -> '/var/ossec/etc/ossec.conf'
+'/wazuh-config-mount/etc/authd.pass' -> '/var/ossec/etc/authd.pass'
+[cont-init.d] 0-wazuh-init: exited 0.
+[cont-init.d] 1-config-filebeat: executing... 
+Customize Elasticsearch output IP
+Configuring username.
+Configuring password.
+Configuring SSL verification mode.
+Configuring Certificate Authorities.
+Configuring SSL Certificate.
+Configuring SSL Key.
+[cont-init.d] 1-config-filebeat: exited 0.
+[cont-init.d] 2-manager: executing... 
+Configuring password.
+2026/05/02 18:50:17 wazuh-analysisd: ERROR: Could not set resource limit for file descriptors to 458752: Operation not permitted (1)
+2026/05/02 18:50:24 wazuh-modulesd:router: INFO: Loaded router module.
+2026/05/02 18:50:24 wazuh-modulesd:content_manager: INFO: Loaded content_manager module.
+2026/05/02 18:50:24 wazuh-modulesd:inventory-harvester: INFO: Loaded Inventory harvester module.
+Starting Wazuh v4.14.5...
+Started wazuh-apid...
+Started wazuh-csyslogd...
+Started wazuh-dbd...
+2026/05/02 18:50:29 wazuh-integratord: INFO: Remote integrations not configured. Clean exit.
+Started wazuh-integratord...
+Started wazuh-agentlessd...
+Started wazuh-authd...
+Started wazuh-db...
+Started wazuh-execd...
+2026/05/02 18:50:32 wazuh-analysisd: ERROR: Could not set resource limit for file descriptors to 458752: Operation not permitted (1)
+Started wazuh-analysisd...
+2026/05/02 18:50:32 wazuh-syscheckd: WARNING: The check_unixaudit option is deprecated in favor of the SCA module.
+Started wazuh-syscheckd...
+Started wazuh-remoted...
+Started wazuh-logcollector...
+Started wazuh-monitord...
+2026/05/02 18:50:34 wazuh-modulesd:router: INFO: Loaded router module.
+2026/05/02 18:50:34 wazuh-modulesd:content_manager: INFO: Loaded content_manager module.
+2026/05/02 18:50:34 wazuh-modulesd:inventory-harvester: INFO: Loaded Inventory harvester module.
+Started wazuh-modulesd...
+Started wazuh-clusterd...
+Completed.
+[cont-init.d] 2-manager: exited 0.
+[cont-init.d] done.
+[services.d] starting services
+[services.d] done.
+starting Filebeat
+2026/05/02 18:50:34 wazuh-modulesd:download: INFO: Module started.
+2026/05/02 18:50:34 wazuh-modulesd:control: INFO: Starting control thread.
+2026/05/02 18:50:34 wazuh-modulesd:inventory-harvester: INFO: Starting inventory_harvester module.
+2026/05/02 18:50:34 wazuh-analysisd: INFO: Total rules enabled: '8455'
+2026/05/02 18:50:34 wazuh-analysisd: INFO: The option <queue_size> is deprecated and won't apply. Set up each queue size in the internal_options file.
+2026/05/02 18:50:34 wazuh-analysisd: INFO: Started (pid: 687).
+2026/05/02 18:50:35 wazuh-modulesd:syscollector: INFO: Module started.
+2026/05/02 18:50:35 wazuh-modulesd:syscollector: INFO: Starting evaluation.
+2026/05/02 18:50:40 wazuh-analysisd: INFO: (7200): Logtest started
+2026/05/02 18:50:41 wazuh-analysisd: INFO: EPS limit disabled
+2026/05/02 18:50:44 wazuh-modulesd:syscollector: INFO: Evaluation finished.
+2026/05/02 18:50:46 indexer-connector: INFO: IndexerConnector initialized successfully for index: wazuh-states-inventory-packages-wazuh.
+2026/05/02 18:50:46 indexer-connector: INFO: IndexerConnector initialized successfully for index: wazuh-states-vulnerabilities-wazuh.
+2026/05/02 18:50:50 indexer-connector: INFO: IndexerConnector initialized successfully for index: wazuh-states-inventory-system-wazuh.
+2026/05/02 18:50:53 wazuh-modulesd:vulnerability-scanner: ERROR: Error opening the database: Vendor map can not be found in DB..
+2026/05/02 18:50:53 indexer-connector: INFO: IndexerConnector initialized successfully for index: wazuh-states-inventory-processes-wazuh.
+2026-05-02T18:50:55.981Z	INFO	instance/beat.go:645	Home path: [/usr/share/filebeat] Config path: [/etc/filebeat] Data path: [/var/lib/filebeat] Logs path: [/var/log/filebeat]
+2026-05-02T18:50:56.067Z	INFO	instance/beat.go:653	Beat ID: d0f37a3a-832f-457c-a69c-96a62d475dc7
+2026-05-02T18:50:56.068Z	INFO	[seccomp]	seccomp/seccomp.go:124	Syscall filter successfully installed
+2026-05-02T18:50:56.114Z	INFO	[beat]	instance/beat.go:981	Beat info	{"system_info": {"beat": {"path": {"config": "/etc/filebeat", "data": "/var/lib/filebeat", "home": "/usr/share/filebeat", "logs": "/var/log/filebeat"}, "type": "filebeat", "uuid": "d0f37a3a-832f-457c-a69c-96a62d475dc7"}}}
+2026-05-02T18:50:56.114Z	INFO	[beat]	instance/beat.go:990	Build info	{"system_info": {"build": {"commit": "aacf9ecd9c494aa0908f61fbca82c906b16562a8", "libbeat": "7.10.2", "time": "2025-10-17T12:05:34.000Z", "version": "7.10.2"}}}
+2026-05-02T18:50:56.114Z	INFO	[beat]	instance/beat.go:993	Go runtime info	{"system_info": {"go": {"os":"linux","arch":"amd64","max_procs":8,"version":"go1.14.12"}}}
+2026-05-02T18:50:56.115Z	INFO	[beat]	instance/beat.go:997	Host info	{"system_info": {"host": {"architecture":"x86_64","boot_time":"2026-05-02T15:44:13Z","containerized":false,"name":"wazuh-manager-master-0","ip":["127.0.0.1/8","::1/128","10.1.21.142/32","fe80::43b:28ff:fe0d:c0ef/64"],"kernel_version":"6.8.0-79-generic","mac":["06:3b:28:0d:c0:ef"],"os":{"family":"redhat","platform":"amzn","name":"Amazon Linux","version":"2023","major":2023,"minor":11,"patch":20260406},"timezone":"UTC","timezone_offset_sec":0}}}
+2026-05-02T18:50:56.115Z	INFO	[beat]	instance/beat.go:1026	Process info	{"system_info": {"process": {"capabilities": {"inheritable":null,"permitted":["chown","dac_override","fowner","fsetid","kill","setgid","setuid","setpcap","net_bind_service","net_raw","sys_chroot","mknod","audit_write","setfcap"],"effective":["chown","dac_override","fowner","fsetid","kill","setgid","setuid","setpcap","net_bind_service","net_raw","sys_chroot","mknod","audit_write","setfcap"],"bounding":["chown","dac_override","fowner","fsetid","kill","setgid","setuid","setpcap","net_bind_service","net_raw","sys_chroot","mknod","audit_write","setfcap"],"ambient":null}, "cwd": "/run/s6/services/filebeat", "exe": "/usr/share/filebeat/bin/filebeat", "name": "filebeat", "pid": 1371, "ppid": 1367, "seccomp": {"mode":"filter","no_new_privs":true}, "start_time": "2026-05-02T18:50:41.960Z"}}}
+2026-05-02T18:50:56.115Z	INFO	instance/beat.go:299	Setup Beat: filebeat; Version: 7.10.2
+2026-05-02T18:50:56.288Z	INFO	eslegclient/connection.go:99	elasticsearch url: https://indexer:9200
+2026-05-02T18:50:56.319Z	INFO	[publisher]	pipeline/module.go:113	Beat name: wazuh-manager-master-0
+2026-05-02T18:50:56.509Z	INFO	beater/filebeat.go:117	Enabled modules/filesets: wazuh (alerts),  ()
+2026-05-02T18:50:56.552Z	INFO	instance/beat.go:455	filebeat start running.
+2026-05-02T18:50:56.593Z	INFO	memlog/store.go:119	Loading data file of '/var/lib/filebeat/registry/filebeat' succeeded. Active transaction id=0
+2026-05-02T18:50:56.667Z	INFO	memlog/store.go:124	Finished loading transaction log file for '/var/lib/filebeat/registry/filebeat'. Active transaction id=52
+2026-05-02T18:50:56.721Z	INFO	[registrar]	registrar/registrar.go:109	States Loaded from registrar: 1
+2026-05-02T18:50:56.722Z	INFO	[crawler]	beater/crawler.go:71	Loading Inputs: 1
+2026-05-02T18:50:56.767Z	INFO	log/input.go:157	Configured paths: [/var/ossec/logs/alerts/alerts.json]
+2026-05-02T18:50:56.767Z	INFO	[crawler]	beater/crawler.go:141	Starting input (ID: 9132358592892857476)
+2026-05-02T18:50:56.767Z	INFO	[crawler]	beater/crawler.go:108	Loading and starting Inputs completed. Enabled inputs: 1
+2026-05-02T18:50:56.768Z	INFO	log/harvester.go:302	Harvester started for file: /var/ossec/logs/alerts/alerts.json
+2026-05-02T18:50:57.888Z	INFO	[publisher]	pipeline/retry.go:219	retryer: send unwait signal to consumer
+2026-05-02T18:50:57.888Z	INFO	[publisher]	pipeline/retry.go:223	  done
+2026-05-02T18:50:58.014Z	INFO	[publisher_pipeline_output]	pipeline/output.go:143	Connecting to backoff(elasticsearch(https://indexer:9200))
+2026-05-02T18:50:58.605Z	INFO	[esclientleg]	eslegclient/connection.go:314	Attempting to connect to Elasticsearch version 7.10.2
+2026-05-02T18:50:58.606Z	INFO	[esclientleg]	eslegclient/connection.go:314	Attempting to connect to Elasticsearch version 7.10.2
+2026-05-02T18:50:58.607Z	INFO	template/load.go:183	Existing template will be overwritten, as overwrite is enabled.
+2026-05-02T18:50:58.639Z	INFO	template/load.go:117	Try loading template wazuh to Elasticsearch
+2026/05/02 18:50:59 wazuh-syscheckd: INFO: (6009): File integrity monitoring scan ended.
+2026/05/02 18:50:59 wazuh-syscheckd: INFO: FIM sync module started.
+2026-05-02T18:51:01.222Z	INFO	template/load.go:109	template with name 'wazuh' loaded.
+2026-05-02T18:51:01.244Z	INFO	[index-management]	idxmgmt/std.go:298	Loaded index template.
+2026-05-02T18:51:01.351Z	INFO	[publisher_pipeline_output]	pipeline/output.go:151	Connection to backoff(elasticsearch(https://indexer:9200)) established
+2026/05/02 18:51:01 indexer-connector: INFO: IndexerConnector initialized successfully for index: wazuh-states-inventory-ports-wazuh.
+2026/05/02 18:51:06 indexer-connector: INFO: IndexerConnector initialized successfully for index: wazuh-states-inventory-hotfixes-wazuh.
+2026/05/02 18:51:08 wazuh-modulesd:vulnerability-scanner: INFO: Vulnerability scanner module started.
+2026/05/02 18:51:13 indexer-connector: INFO: IndexerConnector initialized successfully for index: wazuh-states-inventory-hardware-wazuh.
+2026/05/02 18:51:17 indexer-connector: INFO: IndexerConnector initialized successfully for index: wazuh-states-inventory-protocols-wazuh.
+2026/05/02 18:51:23 indexer-connector: INFO: IndexerConnector initialized successfully for index: wazuh-states-inventory-interfaces-wazuh.
+2026/05/02 18:51:28 indexer-connector: INFO: IndexerConnector initialized successfully for index: wazuh-states-inventory-networks-wazuh.
+2026/05/02 18:51:33 indexer-connector: INFO: IndexerConnector initialized successfully for index: wazuh-states-inventory-users-wazuh.
+2026/05/02 18:51:36 wazuh-syscheckd: INFO: netstat not available. Skipping port check.
+2026/05/02 18:51:38 indexer-connector: INFO: IndexerConnector initialized successfully for index: wazuh-states-inventory-groups-wazuh.
+2026/05/02 18:51:41 rootcheck: INFO: Ending rootcheck scan.
+2026/05/02 18:51:44 indexer-connector: INFO: IndexerConnector initialized successfully for index: wazuh-states-inventory-browser-extensions-wazuh.
+2026/05/02 18:51:50 indexer-connector: INFO: IndexerConnector initialized successfully for index: wazuh-states-inventory-services-wazuh.
+2026/05/02 18:51:50 logger-helper: INFO: InventoryHarvesterFacade module started.
+2026/05/02 18:52:42 wazuh-modulesd:vulnerability-scanner: INFO: Initiating update feed process.
+2026/05/02 18:54:27 wazuh-analysisd: ERROR: Could not set resource limit for file descriptors to 458752: Operation not permitted (1)
+2026-05-02T18:58:19.266Z	INFO	log/harvester.go:333	File is inactive: /var/ossec/logs/alerts/alerts.json. Closing because close_inactive of 5m0s reached.
+2026/05/02 19:20:40 wazuh-modulesd:router: INFO: Loaded router module.
+2026/05/02 19:20:40 wazuh-modulesd:content_manager: INFO: Loaded content_manager module.
+2026/05/02 19:20:40 wazuh-modulesd:inventory-harvester: INFO: Loaded Inventory harvester module.
+2026/05/02 19:50:47 wazuh-modulesd:syscollector: INFO: Starting evaluation.

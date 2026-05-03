@@ -1,0 +1,94 @@
+[
+  {
+    "hostid": "10683",
+    "host": "mqtt-broker",
+    "name": "mqtt-broker",
+    "status": "0",
+    "interfaces": [
+      {
+        "interfaceid": "31",
+        "hostid": "10683",
+        "main": "1",
+        "type": "1",
+        "useip": "1",
+        "ip": "10.10.0.151",
+        "dns": "",
+        "port": "10050",
+        "available": "0",
+        "error": "",
+        "errors_from": "0",
+        "disable_until": "0",
+        "details": []
+      }
+    ]
+  },
+  {
+    "hostid": "10684",
+    "host": "health-app",
+    "name": "health-app",
+    "status": "0",
+    "interfaces": [
+      {
+        "interfaceid": "32",
+        "hostid": "10684",
+        "main": "1",
+        "type": "1",
+        "useip": "1",
+        "ip": "10.10.0.152",
+        "dns": "",
+        "port": "10050",
+        "available": "0",
+        "error": "",
+        "errors_from": "0",
+        "disable_until": "0",
+        "details": []
+      }
+    ]
+  },
+  {
+    "hostid": "10685",
+    "host": "telemetry-api",
+    "name": "telemetry-api",
+    "status": "0",
+    "interfaces": [
+      {
+        "interfaceid": "33",
+        "hostid": "10685",
+        "main": "1",
+        "type": "1",
+        "useip": "1",
+        "ip": "10.10.0.153",
+        "dns": "",
+        "port": "10050",
+        "available": "0",
+        "error": "",
+        "errors_from": "0",
+        "disable_until": "0",
+        "details": []
+      }
+    ]
+  },
+  {
+    "hostid": "10686",
+    "host": "vulnerable-app",
+    "name": "vulnerable-app",
+    "status": "0",
+    "interfaces": [
+      {
+        "interfaceid": "34",
+        "hostid": "10686",
+        "main": "1",
+        "type": "1",
+        "useip": "1",
+        "ip": "10.10.0.154",
+        "dns": "",
+        "port": "10050",
+        "available": "0",
+        "error": "",
+        "errors_from": "0",
+        "disable_until": "0",
+        "details": []
+      }
+    ]
+  }
+]

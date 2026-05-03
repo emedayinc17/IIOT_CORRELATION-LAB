@@ -1,0 +1,9 @@
+{
+  "generated_utc": "2026-05-03T03:36:58Z",
+  "noise_executions": 60,
+  "false_positive_executions": 0,
+  "false_positive_rate_percent": 0.0,
+  "wilson_ci95_low_percent": 0,
+  "wilson_ci95_high_percent": 6.02,
+  "alerts_lines_with_scenario_e": 0
+}

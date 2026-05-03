@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: security
+  labels:
+    app.kubernetes.io/part-of: iiot-correlation-lab
+    iiot-lab/component: security
+    iiot-lab/scenario: C

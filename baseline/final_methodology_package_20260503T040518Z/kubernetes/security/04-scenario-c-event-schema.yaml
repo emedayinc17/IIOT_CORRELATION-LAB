@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: scenario-c-security-event-schema
+  namespace: security
+  labels:
+    app.kubernetes.io/part-of: iiot-correlation-lab
+    app.kubernetes.io/component: security-event-schema
+    iiot-lab/scenario: C
+data:
+  schema.json: |
+    {
+      "timestamp_utc": "ISO-8601 UTC timestamp",
+      "scenario": "SCENARIO_C",
+      "source_namespace": "iiot-poc",
+      "component": "health-app|telemetry-api|vulnerable-app|mosquitto|iiot-sensor",
+      "event_type": "baseline_security_probe|iiot_security_event",
+      "iiot_lab": {
+        "scenario": "SCENARIO_C",
+        "attack_id": "NONE|T0809|T0814|T0860",
+        "asset": "IIoT component name",
+        "zone": "iiot-poc",
+        "iteration": "integer"
+      }
+    }

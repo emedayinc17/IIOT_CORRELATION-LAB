@@ -1,0 +1,101 @@
+{
+  "metadata_version": "1.1",
+  "generated_utc": "2026-05-02T21:14:05Z",
+  "experiment_id": "scenario_d_final",
+  "dataset_version": "1.1",
+  "laboratory_scope": "IIoT + Zabbix + Wazuh + event-based temporal correlation",
+  "scenario": "D",
+  "techniques": [
+    "T0809",
+    "T0814",
+    "T0860"
+  ],
+  "iterations_by_attack": {
+    "T0809": 20,
+    "T0814": 20,
+    "T0860": 20
+  },
+  "total_attack_executions": 60,
+  "configured_parameters": {
+    "iterations_recommended": 20,
+    "baseline_warmup_seconds": 60,
+    "inter_attack_cooldown_seconds": 10,
+    "dos_requests": 500,
+    "dos_concurrency": 30,
+    "attack_duration_seconds": 30,
+    "http_probe_interval_seconds": 2,
+    "zabbix_polling_seconds": 5,
+    "correlation_window_seconds": 120,
+    "zabbix_history_lookback_seconds": 120,
+    "zabbix_history_forward_seconds": 120
+  },
+  "environment": {
+    "node": "iiot-lab-k8s   Ready   <none>   22h   v1.30.14   10.10.0.101   <none>   Ubuntu 24.04.3 LTS   6.8.0-79-generic   containerd://1.6.28",
+    "kubernetes_version": "Client Version: v1.30.14\nKustomize Version: v5.0.4-0.20230601165947-6ce0bf390ce3",
+    "storageclasses": "microk8s-hostpath (default)   microk8s.io/hostpath   Delete   WaitForFirstConsumer   false   22h\nwazuh-storage                 microk8s.io/hostpath   Delete   Immediate              false   16h",
+    "os_release": "Ubuntu 24.04.3 LTS",
+    "python_version": "Python 3.12.3"
+  },
+  "tool_versions": {
+    "wazuh_images": "wazuh/wazuh-dashboard:4.14.5\nwazuh/wazuh-indexer:4.14.5\nwazuh/wazuh-manager:4.14.5",
+    "zabbix_images": "postgres:16\nzabbix/zabbix-agent2:ubuntu-7.0-latest\nzabbix/zabbix-server-pgsql:ubuntu-7.0-latest\nzabbix/zabbix-web-nginx-pgsql:ubuntu-7.0-latest",
+    "iiot_images": "eclipse-mosquitto:2.0.20\npython:3.11-slim"
+  },
+  "raw_datasets": {
+    "mitre_ics_attacks": {
+      "path": "results/raw/scenario_d/mitre_ics_attacks.csv",
+      "rows": 60,
+      "sha256": "511e64d644e69402b270318f7955e4263b4bc894890ab0b350624c530b4d7740"
+    },
+    "wazuh_security_events": {
+      "path": "results/raw/scenario_d/wazuh_security_events.csv",
+      "rows": 139,
+      "sha256": "eee28500a923b572eb62cca94aedd52f23fc5dab3bc8ca257a6c5dca5cd57080"
+    },
+    "zabbix_correlation_metrics": {
+      "path": "results/raw/scenario_d/zabbix_correlation_metrics.csv",
+      "rows": 11566,
+      "sha256": "4497f657e2feb1d2d35f6569271dae2c4a20c06ace8a50eaa7df21092ba41eab"
+    },
+    "correlation_dataset": {
+      "path": "results/processed/correlation_dataset.csv",
+      "rows": 60,
+      "sha256": "bc45bbea07c15c77a9d5d235304aba7929719f2af49e7ab5a90b1d05982f02c4"
+    }
+  },
+  "normalized_datasets": {
+    "events_normalized": {
+      "path": "results/processed/normalized/events_normalized.csv",
+      "rows": 199,
+      "sha256": "e8034da377369453f4ed64fd5cceed87d8b4c4e955bc927cf0d54c8dc949f938"
+    },
+    "metrics_normalized": {
+      "path": "results/processed/normalized/metrics_normalized.csv",
+      "rows": 11566,
+      "sha256": "f6eb7a563ef819f028459e54c1e8d60f331b8bfa57ebe149e9bce39f8c423882"
+    },
+    "correlation_normalized": {
+      "path": "results/processed/normalized/correlation_normalized.csv",
+      "rows": 60,
+      "sha256": "c90cc350c4be970d1df0d771100e87f16cd0a8b92d17401b19da35e66cfc10cc"
+    },
+    "dataset_schema": {
+      "path": "results/processed/normalized/dataset_schema.json",
+      "rows": null,
+      "sha256": "5e84d0a4e2418f381bb9ac89d5e6b71a9c538653eba211e7805640f88c067608"
+    }
+  },
+  "normalization_summary": {
+    "generated_utc": "2026-05-02T21:14:05Z",
+    "campaign_attack_uids": 60,
+    "events_normalized_rows": 199,
+    "metrics_normalized_rows": 11566,
+    "correlation_normalized_rows": 60,
+    "excluded_wazuh_events_not_in_final_campaign": 0,
+    "events_missing_required_fields": 0,
+    "metrics_missing_required_fields": 0,
+    "correlation_missing_required_fields": 0,
+    "schema_file": "results/processed/normalized/dataset_schema.json"
+  },
+  "methodological_note": "Correlation is event-based temporal correlation within a predefined window, not Pearson/Spearman statistical correlation."
+}

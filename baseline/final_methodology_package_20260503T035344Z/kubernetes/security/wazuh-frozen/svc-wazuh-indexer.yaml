@@ -1,0 +1,32 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"v1","kind":"Service","metadata":{"annotations":{},"labels":{"app":"wazuh-indexer"},"name":"wazuh-indexer","namespace":"security"},"spec":{"clusterIP":"None","ports":[{"name":"indexer-nodes","port":9300,"targetPort":9300}],"selector":{"app":"wazuh-indexer"}}}
+  creationTimestamp: "2026-05-02T04:43:08Z"
+  labels:
+    app: wazuh-indexer
+  name: wazuh-indexer
+  namespace: security
+  resourceVersion: "53514"
+  uid: 2fd7c03c-cf5c-4924-a20f-b234d9ffb0c8
+spec:
+  clusterIP: None
+  clusterIPs:
+  - None
+  internalTrafficPolicy: Cluster
+  ipFamilies:
+  - IPv4
+  ipFamilyPolicy: SingleStack
+  ports:
+  - name: indexer-nodes
+    port: 9300
+    protocol: TCP
+    targetPort: 9300
+  selector:
+    app: wazuh-indexer
+  sessionAffinity: None
+  type: ClusterIP
+status:
+  loadBalancer: {}

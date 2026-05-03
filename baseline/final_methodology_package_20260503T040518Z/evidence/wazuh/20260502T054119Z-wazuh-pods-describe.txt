@@ -1,0 +1,318 @@
+Name:             wazuh-dashboard-78bf489f7f-kdlqj
+Namespace:        security
+Priority:         0
+Service Account:  default
+Node:             iiot-lab-k8s/10.10.0.101
+Start Time:       Sat, 02 May 2026 05:39:20 +0000
+Labels:           app=wazuh-dashboard
+                  pod-template-hash=78bf489f7f
+Annotations:      cni.projectcalico.org/containerID: 0141db15d96dac2e92eadf0f847b47bf491e92bb34f0590975ea86a7a345297a
+                  cni.projectcalico.org/podIP: 10.1.21.180/32
+                  cni.projectcalico.org/podIPs: 10.1.21.180/32
+                  kubectl.kubernetes.io/restartedAt: 2026-05-02T05:39:18Z
+Status:           Running
+IP:               10.1.21.180
+IPs:
+  IP:           10.1.21.180
+Controlled By:  ReplicaSet/wazuh-dashboard-78bf489f7f
+Containers:
+  wazuh-dashboard:
+    Container ID:   containerd://ad1f760d843178366f11bada90b01b2225b3ec66928b334e8e7c7d5214805ada
+    Image:          wazuh/wazuh-dashboard:4.14.5
+    Image ID:       docker.io/wazuh/wazuh-dashboard@sha256:75437f4fb347db2d040863801f9eb73b0ca16c8b3fb4d93a07df34b7313b16af
+    Port:           5601/TCP
+    Host Port:      0/TCP
+    State:          Running
+      Started:      Sat, 02 May 2026 05:39:31 +0000
+    Ready:          True
+    Restart Count:  0
+    Limits:
+      cpu:     500m
+      memory:  1Gi
+    Requests:
+      cpu:     500m
+      memory:  1Gi
+    Environment:
+      OPENSEARCH_HOSTS:     https://wazuh-indexer:9200
+      OPENSEARCH_USERNAME:  <set to the key 'username' in secret 'indexer-cred'>  Optional: false
+      OPENSEARCH_PASSWORD:  <set to the key 'password' in secret 'indexer-cred'>  Optional: false
+    Mounts:
+      /usr/share/wazuh-dashboard/certs/cert.pem from dashboard-certs (ro,path="cert.pem")
+      /usr/share/wazuh-dashboard/certs/key.pem from dashboard-certs (ro,path="key.pem")
+      /usr/share/wazuh-dashboard/certs/root-ca.pem from dashboard-certs (ro,path="root-ca.pem")
+      /usr/share/wazuh-dashboard/config/opensearch_dashboards.yml from config (rw,path="opensearch_dashboards.yml")
+      /var/run/secrets/kubernetes.io/serviceaccount from kube-api-access-rv96k (ro)
+Conditions:
+  Type                        Status
+  PodReadyToStartContainers   True 
+  Initialized                 True 
+  Ready                       True 
+  ContainersReady             True 
+  PodScheduled                True 
+Volumes:
+  config:
+    Type:      ConfigMap (a volume populated by a ConfigMap)
+    Name:      dashboard-conf-8c8984h96h
+    Optional:  false
+  dashboard-certs:
+    Type:        Secret (a volume populated by a Secret)
+    SecretName:  dashboard-certs-4ff4b7k55b
+    Optional:    false
+  kube-api-access-rv96k:
+    Type:                    Projected (a volume that contains injected data from multiple sources)
+    TokenExpirationSeconds:  3607
+    ConfigMapName:           kube-root-ca.crt
+    ConfigMapOptional:       <nil>
+    DownwardAPI:             true
+QoS Class:                   Guaranteed
+Node-Selectors:              <none>
+Tolerations:                 node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
+                             node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
+Events:
+  Type    Reason     Age   From               Message
+  ----    ------     ----  ----               -------
+  Normal  Scheduled  119s  default-scheduler  Successfully assigned security/wazuh-dashboard-78bf489f7f-kdlqj to iiot-lab-k8s
+  Normal  Pulled     113s  kubelet            Container image "wazuh/wazuh-dashboard:4.14.5" already present on machine
+  Normal  Created    112s  kubelet            Created container: wazuh-dashboard
+  Normal  Started    109s  kubelet            Started container wazuh-dashboard
+
+
+Name:             wazuh-indexer-0
+Namespace:        security
+Priority:         0
+Service Account:  default
+Node:             iiot-lab-k8s/10.10.0.101
+Start Time:       Sat, 02 May 2026 04:43:45 +0000
+Labels:           app=wazuh-indexer
+                  apps.kubernetes.io/pod-index=0
+                  controller-revision-hash=wazuh-indexer-9879575c9
+                  statefulset.kubernetes.io/pod-name=wazuh-indexer-0
+Annotations:      cni.projectcalico.org/containerID: 782e8a7320b49fb84b33b5d72144e96bf60e18c18e61d120577933d87fc32860
+                  cni.projectcalico.org/podIP: 10.1.21.176/32
+                  cni.projectcalico.org/podIPs: 10.1.21.176/32
+Status:           Running
+IP:               10.1.21.176
+IPs:
+  IP:           10.1.21.176
+Controlled By:  StatefulSet/wazuh-indexer
+Init Containers:
+  volume-mount-hack:
+    Container ID:  containerd://6afe2661abd03487764e8d61091ad78ddf2a9a325188cabb26b8c45473dfb5b6
+    Image:         busybox
+    Image ID:      docker.io/library/busybox@sha256:1487d0af5f52b4ba31c7e465126ee2123fe3f2305d638e7827681e7cf6c83d5e
+    Port:          <none>
+    Host Port:     <none>
+    Command:
+      sh
+      -c
+      chown -R 1000:1000 /var/lib/wazuh-indexer
+    State:          Terminated
+      Reason:       Completed
+      Exit Code:    0
+      Started:      Sat, 02 May 2026 04:44:04 +0000
+      Finished:     Sat, 02 May 2026 04:44:04 +0000
+    Ready:          True
+    Restart Count:  0
+    Limits:
+      cpu:     100m
+      memory:  256Mi
+    Requests:
+      cpu:        50m
+      memory:     128Mi
+    Environment:  <none>
+    Mounts:
+      /var/lib/wazuh-indexer from wazuh-indexer (rw)
+      /var/run/secrets/kubernetes.io/serviceaccount from kube-api-access-rhgh4 (ro)
+  increase-the-vm-max-map-count:
+    Container ID:  containerd://87a921e1bca108c35da1ee020f265f9ac5d04ffc270331033026059a7dda6f0f
+    Image:         busybox
+    Image ID:      docker.io/library/busybox@sha256:1487d0af5f52b4ba31c7e465126ee2123fe3f2305d638e7827681e7cf6c83d5e
+    Port:          <none>
+    Host Port:     <none>
+    Command:
+      sysctl
+      -w
+      vm.max_map_count=262144
+    State:          Terminated
+      Reason:       Completed
+      Exit Code:    0
+      Started:      Sat, 02 May 2026 04:44:30 +0000
+      Finished:     Sat, 02 May 2026 04:44:30 +0000
+    Ready:          True
+    Restart Count:  0
+    Environment:    <none>
+    Mounts:
+      /var/run/secrets/kubernetes.io/serviceaccount from kube-api-access-rhgh4 (ro)
+Containers:
+  wazuh-indexer:
+    Container ID:   containerd://f3786b525fc092cdd8aae39e45c685fc8e2f0c7ca3078e23277612bd2797195d
+    Image:          wazuh/wazuh-indexer:4.14.5
+    Image ID:       docker.io/wazuh/wazuh-indexer@sha256:bcba58b3fe756114249b8834bcae8f852d277ffc6b9695d3de5989f5fe94d36c
+    Ports:          9200/TCP, 9300/TCP
+    Host Ports:     0/TCP, 0/TCP
+    State:          Running
+      Started:      Sat, 02 May 2026 04:45:35 +0000
+    Ready:          True
+    Restart Count:  0
+    Limits:
+      cpu:     1
+      memory:  2Gi
+    Requests:
+      cpu:     500m
+      memory:  1Gi
+    Environment:
+      OPENSEARCH_JAVA_OPTS:         -Xms1g -Xmx1g -Dlog4j2.formatMsgNoLookups=true
+      CLUSTER_NAME:                 wazuh
+      NETWORK_HOST:                 0.0.0.0
+      NODE_NAME:                    wazuh-indexer-0 (v1:metadata.name)
+      DISCOVERY_SERVICE:            wazuh-indexer
+      KUBERNETES_NAMESPACE:         security (v1:metadata.namespace)
+      DISABLE_INSTALL_DEMO_CONFIG:  true
+    Mounts:
+      /usr/share/wazuh-indexer/config/certs/admin-key.pem from indexer-certs (ro,path="admin-key.pem")
+      /usr/share/wazuh-indexer/config/certs/admin.pem from indexer-certs (ro,path="admin.pem")
+      /usr/share/wazuh-indexer/config/certs/node-key.pem from indexer-certs (ro,path="node-key.pem")
+      /usr/share/wazuh-indexer/config/certs/node.pem from indexer-certs (ro,path="node.pem")
+      /usr/share/wazuh-indexer/config/certs/root-ca.pem from indexer-certs (ro,path="root-ca.pem")
+      /usr/share/wazuh-indexer/config/opensearch-security/internal_users.yml from indexer-conf (ro,path="internal_users.yml")
+      /usr/share/wazuh-indexer/config/opensearch.yml from indexer-conf (ro,path="opensearch.yml")
+      /var/lib/wazuh-indexer from wazuh-indexer (rw)
+      /var/run/secrets/kubernetes.io/serviceaccount from kube-api-access-rhgh4 (ro)
+Conditions:
+  Type                        Status
+  PodReadyToStartContainers   True 
+  Initialized                 True 
+  Ready                       True 
+  ContainersReady             True 
+  PodScheduled                True 
+Volumes:
+  wazuh-indexer:
+    Type:       PersistentVolumeClaim (a reference to a PersistentVolumeClaim in the same namespace)
+    ClaimName:  wazuh-indexer-wazuh-indexer-0
+    ReadOnly:   false
+  indexer-certs:
+    Type:        Secret (a volume populated by a Secret)
+    SecretName:  indexer-certs-628m4bd6b2
+    Optional:    false
+  indexer-conf:
+    Type:      ConfigMap (a volume populated by a ConfigMap)
+    Name:      indexer-conf-45bbc2fk49
+    Optional:  false
+  kube-api-access-rhgh4:
+    Type:                    Projected (a volume that contains injected data from multiple sources)
+    TokenExpirationSeconds:  3607
+    ConfigMapName:           kube-root-ca.crt
+    ConfigMapOptional:       <nil>
+    DownwardAPI:             true
+QoS Class:                   Burstable
+Node-Selectors:              <none>
+Tolerations:                 node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
+                             node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
+Events:                      <none>
+
+
+Name:             wazuh-manager-master-0
+Namespace:        security
+Priority:         0
+Service Account:  default
+Node:             iiot-lab-k8s/10.10.0.101
+Start Time:       Sat, 02 May 2026 04:43:43 +0000
+Labels:           app=wazuh-manager
+                  apps.kubernetes.io/pod-index=0
+                  controller-revision-hash=wazuh-manager-master-777d76cb9f
+                  node-type=master
+                  statefulset.kubernetes.io/pod-name=wazuh-manager-master-0
+Annotations:      cni.projectcalico.org/containerID: 35fc350a144b8fb0ab7335f4ab6804efcf3f18f646581d36bd33c627b3f44024
+                  cni.projectcalico.org/podIP: 10.1.21.175/32
+                  cni.projectcalico.org/podIPs: 10.1.21.175/32
+Status:           Running
+IP:               10.1.21.175
+IPs:
+  IP:           10.1.21.175
+Controlled By:  StatefulSet/wazuh-manager-master
+Containers:
+  wazuh-manager:
+    Container ID:   containerd://f4d7ca8f247e4f6d1206fae756095572a5153a370d8f8d42af0619ebd7a09f47
+    Image:          wazuh/wazuh-manager:4.14.5
+    Image ID:       docker.io/wazuh/wazuh-manager@sha256:3b2b7aae2daf696071ecc8b32a5d1e65e5c2a625291afc434bd20171a9d41109
+    Ports:          1515/TCP, 1516/TCP, 55000/TCP
+    Host Ports:     0/TCP, 0/TCP, 0/TCP
+    State:          Running
+      Started:      Sat, 02 May 2026 05:28:58 +0000
+    Last State:     Terminated
+      Reason:       OOMKilled
+      Exit Code:    137
+      Started:      Sat, 02 May 2026 04:44:49 +0000
+      Finished:     Sat, 02 May 2026 05:28:55 +0000
+    Ready:          True
+    Restart Count:  1
+    Limits:
+      cpu:     400m
+      memory:  512Mi
+    Requests:
+      cpu:     400m
+      memory:  512Mi
+    Environment:
+      INDEXER_URL:                     https://indexer:9200
+      INDEXER_USERNAME:                <set to the key 'username' in secret 'indexer-cred'>  Optional: false
+      INDEXER_PASSWORD:                <set to the key 'password' in secret 'indexer-cred'>  Optional: false
+      FILEBEAT_SSL_VERIFICATION_MODE:  full
+      SSL_CERTIFICATE_AUTHORITIES:     /etc/ssl/root-ca.pem
+      SSL_CERTIFICATE:                 /etc/ssl/filebeat.pem
+      SSL_KEY:                         /etc/ssl/filebeat.key
+      API_USERNAME:                    <set to the key 'username' in secret 'wazuh-api-cred'>  Optional: false
+      API_PASSWORD:                    <set to the key 'password' in secret 'wazuh-api-cred'>  Optional: false
+      WAZUH_CLUSTER_KEY:               <set to the key 'key' in secret 'wazuh-cluster-key'>    Optional: false
+    Mounts:
+      /etc/filebeat from wazuh-manager-master (rw,path="filebeat/etc/filebeat")
+      /etc/ssl/filebeat.key from filebeat-certs (ro,path="filebeat-key.pem")
+      /etc/ssl/filebeat.pem from filebeat-certs (ro,path="filebeat.pem")
+      /etc/ssl/root-ca.pem from filebeat-certs (ro,path="root-ca.pem")
+      /var/lib/filebeat from wazuh-manager-master (rw,path="filebeat/var/lib/filebeat")
+      /var/ossec/active-response/bin from wazuh-manager-master (rw,path="wazuh/var/ossec/active-response/bin")
+      /var/ossec/agentless from wazuh-manager-master (rw,path="wazuh/var/ossec/agentless")
+      /var/ossec/api/configuration from wazuh-manager-master (rw,path="wazuh/var/ossec/api/configuration")
+      /var/ossec/etc from wazuh-manager-master (rw,path="wazuh/var/ossec/etc")
+      /var/ossec/integrations from wazuh-manager-master (rw,path="wazuh/var/ossec/integrations")
+      /var/ossec/logs from wazuh-manager-master (rw,path="wazuh/var/ossec/logs")
+      /var/ossec/queue from wazuh-manager-master (rw,path="wazuh/var/ossec/queue")
+      /var/ossec/var/multigroups from wazuh-manager-master (rw,path="wazuh/var/ossec/var/multigroups")
+      /var/ossec/wodles from wazuh-manager-master (rw,path="wazuh/var/ossec/wodles")
+      /var/run/secrets/kubernetes.io/serviceaccount from kube-api-access-jc2wz (ro)
+      /wazuh-config-mount/etc/authd.pass from wazuh-authd-pass (ro,path="authd.pass")
+      /wazuh-config-mount/etc/ossec.conf from config (ro,path="master.conf")
+Conditions:
+  Type                        Status
+  PodReadyToStartContainers   True 
+  Initialized                 True 
+  Ready                       True 
+  ContainersReady             True 
+  PodScheduled                True 
+Volumes:
+  wazuh-manager-master:
+    Type:       PersistentVolumeClaim (a reference to a PersistentVolumeClaim in the same namespace)
+    ClaimName:  wazuh-manager-master-wazuh-manager-master-0
+    ReadOnly:   false
+  config:
+    Type:      ConfigMap (a volume populated by a ConfigMap)
+    Name:      wazuh-conf-m5756d8fbh
+    Optional:  false
+  filebeat-certs:
+    Type:        Secret (a volume populated by a Secret)
+    SecretName:  indexer-certs-628m4bd6b2
+    Optional:    false
+  wazuh-authd-pass:
+    Type:        Secret (a volume populated by a Secret)
+    SecretName:  wazuh-authd-pass
+    Optional:    false
+  kube-api-access-jc2wz:
+    Type:                    Projected (a volume that contains injected data from multiple sources)
+    TokenExpirationSeconds:  3607
+    ConfigMapName:           kube-root-ca.crt
+    ConfigMapOptional:       <nil>
+    DownwardAPI:             true
+QoS Class:                   Guaranteed
+Node-Selectors:              <none>
+Tolerations:                 node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
+                             node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
+Events:                      <none>

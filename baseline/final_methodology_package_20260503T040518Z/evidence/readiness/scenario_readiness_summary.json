@@ -1,0 +1,76 @@
+{
+  "generated_utc": "2026-05-03T04:04:02Z",
+  "overall_status": "OK",
+  "scenarios": [
+    {
+      "scenario": "A",
+      "role": "Functional foundation",
+      "status": "OK",
+      "required_evidence": "namespace, pods, services, healthy IIoT endpoints",
+      "observed_evidence": "namespace iiot-poc;running pods;services exported;http://10.10.0.152:8080/health=200;http://10.10.0.153:8080/health=200;http://10.10.0.154:8080/health=200",
+      "notes": "A is a construction/functional validation scenario, not a statistical campaign."
+    },
+    {
+      "scenario": "B",
+      "role": "Operational instrumentation",
+      "status": "OK",
+      "required_evidence": "Zabbix namespace/pods, hosts/items/triggers export, history evidence, history quality table, scenario B freeze",
+      "observed_evidence": "namespace monitoring;zabbix pods present;zabbix history validation rows=60;history quality table;zabbix config/runtime exports found=21;scenario B freeze present",
+      "notes": "B validates monitoring instrumentation; quantitative attack analysis is performed in D."
+    },
+    {
+      "scenario": "C",
+      "role": "Security instrumentation",
+      "status": "OK",
+      "required_evidence": "Wazuh namespace/pods/services, dashboard/API, baseline/evidence, scenario C freeze",
+      "observed_evidence": "namespace security;wazuh pods present;wazuh dashboard service;wazuh api service;scenario C baseline dataset;wazuh evidence directory;scenario C freeze present",
+      "notes": "C validates security instrumentation; attack campaign evidence is produced in D."
+    },
+    {
+      "scenario": "D",
+      "role": "Quantitative attack/correlation campaign",
+      "status": "OK",
+      "required_evidence": "60 attack executions, correlation dataset, temporal deltas, statistical tables, scenario D freeze",
+      "observed_evidence": "correlation rows=60;table_attack_detection.csv;table_temporal_correlation_summary.csv;table_bootstrap_ci.csv;table_mttd_estimation.csv;paper-final scenario D freeze present",
+      "notes": "D is the main attack detection and event-based temporal correlation campaign."
+    },
+    {
+      "scenario": "E",
+      "role": "Quantitative operational-noise/FPR control campaign",
+      "status": "OK",
+      "required_evidence": "60 legitimate noise executions, 0 HTTP errors, FPR table, Wilson CI, scenario E freeze",
+      "observed_evidence": "noise rows=60;http_errors=0;table_noise_fpr_summary.csv;table_noise_wilson_ci.csv;table_noise_profile_summary.csv;paper-final scenario E freeze present",
+      "notes": "E is the false-positive control campaign under legitimate operational variability."
+    }
+  ],
+  "zabbix_export_files_detected": [
+    "baseline/final_methodology_package_20260503T035344Z/evidence/zabbix/zabbix_configuration_summary.md",
+    "baseline/final_methodology_package_20260503T035344Z/evidence/zabbix/zabbix_hostgroups.json",
+    "baseline/final_methodology_package_20260503T035344Z/evidence/zabbix/zabbix_hosts.json",
+    "baseline/final_methodology_package_20260503T035344Z/evidence/zabbix/zabbix_items.json",
+    "baseline/final_methodology_package_20260503T035344Z/evidence/zabbix/zabbix_triggers.json",
+    "baseline/final_methodology_package_20260503T035344Z/evidence/zabbix/zabbix-zabbix-hosts-real-monitoring.json",
+    "baseline/final_methodology_package_20260503T035344Z/evidence/zabbix/zabbix-zabbix-items-real-monitoring.json",
+    "baseline/final_methodology_package_20260503T035344Z/evidence/zabbix/zabbix-zabbix-real-monitoring-summary.csv",
+    "baseline/final_methodology_package_20260503T035344Z/evidence/zabbix/zabbix-zabbix-triggers-real-monitoring.json",
+    "baseline/scenario_B_20260502_033417/zabbix_hosts.json",
+    "baseline/scenario_B_20260502_033417/zabbix_items.json",
+    "baseline/scenario_B_20260502_033417/zabbix_triggers.json",
+    "evidence/zabbix/zabbix_configuration_summary.md",
+    "evidence/zabbix/zabbix_hostgroups.json",
+    "evidence/zabbix/zabbix_hosts.json",
+    "evidence/zabbix/zabbix_items.json",
+    "evidence/zabbix/zabbix_triggers.json",
+    "evidence/zabbix/zabbix-zabbix-hosts-real-monitoring.json",
+    "evidence/zabbix/zabbix-zabbix-items-real-monitoring.json",
+    "evidence/zabbix/zabbix-zabbix-real-monitoring-summary.csv",
+    "evidence/zabbix/zabbix-zabbix-triggers-real-monitoring.json"
+  ],
+  "methodological_positioning": {
+    "A": "functional foundation",
+    "B": "operational instrumentation",
+    "C": "security instrumentation",
+    "D": "quantitative attack/correlation campaign",
+    "E": "quantitative operational-noise/FPR control campaign"
+  }
+}

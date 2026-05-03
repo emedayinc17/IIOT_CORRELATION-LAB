@@ -1,0 +1,11 @@
+HTTP/1.1 302 Found
+location: /app/login?
+osd-name: wazuh-dashboard-7d7b9bbd47-wx6jx
+x-frame-options: sameorigin
+cache-control: private, no-cache, no-store, must-revalidate
+set-cookie: security_authentication=; Max-Age=0; Expires=Thu, 01 Jan 1970 00:00:00 GMT; HttpOnly; Path=/
+content-length: 0
+Date: Sat, 02 May 2026 06:01:00 GMT
+Connection: keep-alive
+Keep-Alive: timeout=120
+

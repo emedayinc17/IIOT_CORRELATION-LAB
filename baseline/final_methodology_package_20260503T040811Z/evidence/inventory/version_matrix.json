@@ -1,0 +1,12 @@
+{
+  "generated_utc": "2026-05-02T04:01:38Z",
+  "hostname": "iiot-lab-k8s",
+  "os": "Ubuntu 24.04.3 LTS",
+  "kernel": "6.8.0-79-generic",
+  "node": "iiot-lab-k8s",
+  "kubernetes": "v1.30.14",
+  "microk8s": "MicroK8s v1.30.14 revision 8566",
+  "container_runtime": "containerd://1.6.28",
+  "os_image": "Ubuntu 24.04.3 LTS",
+  "architecture": "amd64"
+}
