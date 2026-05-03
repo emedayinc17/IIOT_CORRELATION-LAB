@@ -1,0 +1,4 @@
+scenario,attack_id,samples,mean_seconds,median_seconds,stddev_seconds,p50_seconds,p95_seconds,p99_seconds,bootstrap_ci95_mean_low_seconds,bootstrap_ci95_mean_high_seconds
+SCENARIO_D,T0809,20,0.15,0.0,0.366348,0.0,1.0,1.0,0.0,0.3
+SCENARIO_D,T0814,20,0.1,0.0,0.307794,0.0,1.0,1.0,0.0,0.25
+SCENARIO_D,T0860,20,0.55,1.0,0.510418,1.0,1.0,1.0,0.35,0.75

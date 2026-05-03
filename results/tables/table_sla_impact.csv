@@ -1,4 +1,4 @@
 scenario,attack_id,executions,zabbix_operational_degradation_count,zabbix_operational_degradation_percent,http_error_observed_count,http_error_observed_percent
 SCENARIO_D,T0809,20,0,0.0,0,0.0
-SCENARIO_D,T0814,20,0,0.0,0,0.0
+SCENARIO_D,T0814,20,0,0.0,20,100.0
 SCENARIO_D,T0860,20,0,0.0,20,100.0

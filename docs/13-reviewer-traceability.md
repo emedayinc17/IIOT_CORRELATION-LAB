@@ -1,55 +1,24 @@
-# 13 — Reviewer Traceability
+## Evidencia de correlación por ejecución
 
-## Objetivo
+Para cerrar la brecha estadística, la correlación final se basa en deltas por ejecución (`attack_uid`) y no únicamente en promedios agregados.
 
-Relacionar observaciones de revisión con evidencias concretas del laboratorio.
-
-## Matriz de trazabilidad
-
-| Observación | Evidencia generada |
+| Campo | Propósito |
 |---|---|
-| Especificar Kubernetes specs | `docs/02-environment.md`, `evidence/inventory/version_matrix.md` |
-| Documentar arquitectura | `docs/01-architecture.md` |
-| Proveer scripts/configs | `scripts/run/`, `kubernetes/` |
-| Proveer versiones | `docs/12-version-matrix.md`, `evidence/inventory/` |
-| Justificar configuración experimental | `docs/11-experimental-design.md` |
-| Documentar workflow reproducible | `docs/08-experiments.md`, `docs/10-reproducibility.md` |
-| Diferenciar simulado vs real | `docs/11-experimental-design.md` |
-| Evidenciar monitoreo Zabbix | `evidence/zabbix/`, `baseline/scenario_B_*` |
-| Congelar escenarios | `baseline/scenario_A_*`, `baseline/scenario_B_*` |
-
-## Estado previo a Wazuh
-
-Antes de iniciar Escenario C, el laboratorio debe tener:
-
-- Escenario A congelado.
-- Escenario B congelado.
-- inventario exportado.
-- configuración Zabbix exportada.
-- matriz de versiones generada.
-- diseño experimental documentado.
+| `nearest_zabbix_sample_delta_s` | distancia temporal ataque → muestra Zabbix |
+| `wazuh_event_delta_s` | distancia temporal ataque → evento Wazuh |
+| `strong_temporal_correlation` | validez dentro de la ventana definida |
+| `correlation_window_seconds` | ventana usada para clasificación |
 
 
-## Trazabilidad agregada — Escenario C
+<!-- SCENARIO_E_NOISE_FPR_V1 -->
 
-| Observación | Evidencia generada |
+## Reviewer traceability — Scenario E
+
+| Reviewer concern | Scenario E evidence |
 |---|---|
-| Documentar capa de seguridad | `docs/06-wazuh-security.md` |
-| Justificar Wazuh single-node | `docs/11-experimental-design.md` |
-| Evitar scope creep Kubernetes security | `docs/06-wazuh-security.md`, `docs/11-experimental-design.md` |
-| Proveer scripts automatizados Wazuh | `scripts/run/11-*.sh` a `14-*.sh` |
-| Proveer manifiestos reproducibles | `kubernetes/security/`, `kubernetes/security/` |
-| Evidenciar validación de Wazuh | `evidence/wazuh/*-wazuh-validation-summary.csv` |
-| Evidenciar baseline de seguridad | `results/raw/scenario_c/wazuh_security_baseline.csv` |
-| Congelar Escenario C | `baseline/scenario_c_wazuh_security/` |
-| Mantener diferenciación real vs simulado | `docs/11-experimental-design.md` |
+| False positives | `table_noise_fpr_summary.csv` |
+| Operational variability | LOW/MEDIUM/HIGH noise profiles |
+| Statistical confidence | Wilson CI for FPR |
+| Reproducibility | `baseline/scenario_e_noise_fpr_*.tar.gz` |
+| Separation between attacks and noise | `noise_uid` and `scenario=SCENARIO_E` |
 
-## Estado esperado después de Escenario C
-
-- Escenario A congelado.
-- Escenario B congelado.
-- Zabbix operativo y exportado.
-- Wazuh operativo en namespace `security`.
-- Eventos de baseline de seguridad generados.
-- Freeze reproducible de Escenario C disponible.
-- Laboratorio listo para Escenario D con ataques MITRE ATT&CK for ICS y correlación.

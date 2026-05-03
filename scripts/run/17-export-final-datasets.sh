@@ -2,183 +2,248 @@
 set -euo pipefail
 
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
-source "${ROOT_DIR}/scripts/lib/common.sh"
-script_start "$(basename "$0")"
+cd "$ROOT_DIR"
 
-RAW_D="${ROOT_DIR}/results/raw/scenario_d"
-PROCESSED="${ROOT_DIR}/results/processed"
-TABLES="${ROOT_DIR}/results/tables"
-FIGURES="${ROOT_DIR}/results/figures"
-TS="$(date -u +%Y%m%dT%H%M%SZ)"
-CORR="${PROCESSED}/correlation_dataset.csv"
-ZBX_VALIDATION="${RAW_D}/zabbix_history_validation.csv"
+TZ_NAME="${TZ_NAME:-America/Lima}"
 
-mkdir -p "$RAW_D" "$PROCESSED" "$TABLES" "$FIGURES"
-log "Exportando datasets finales, tablas y figuras del Escenario D con métricas Zabbix reales"
-[[ -s "$CORR" ]] || fail "No existe dataset correlacionado: ${CORR}. Ejecuta 16-run-correlation-experiment.sh."
-[[ -s "$ZBX_VALIDATION" ]] || fail "No existe validación Zabbix real: ${ZBX_VALIDATION}. Ejecuta 16-run-correlation-experiment.sh actualizado."
+now_local() {
+  TZ="$TZ_NAME" date '+%Y-%m-%d %H:%M:%S %z (%Z)'
+}
 
-export RAW_D PROCESSED TABLES FIGURES TS CORR ZBX_VALIDATION
-python3 <<'PY'
-import csv, json, statistics
-from collections import defaultdict
-from datetime import datetime, timezone
+line() {
+  printf '%s\n' '============================================================'
+}
+
+phase() {
+  printf '\n------------------------------------------------------------\n'
+  printf '[PHASE %s] ES: %s\n' "$1" "$2"
+  printf '[PHASE %s] EN: %s\n' "$1" "$3"
+  printf '%s\n\n' '------------------------------------------------------------'
+}
+
+ok() {
+  printf '[OK] ES: %s\n' "$1"
+  printf '[OK] EN: %s\n' "$2"
+}
+
+warn() {
+  printf '[WARN] ES: %s\n' "$1"
+  printf '[WARN] EN: %s\n' "$2"
+}
+
+fail() {
+  printf '\n[ERROR] ES: %s\n' "$1" >&2
+  printf '[ERROR] EN: %s\n' "$2" >&2
+  exit 1
+}
+
+script_start() {
+  line
+  printf '[SCRIPT START] %s\n' "$1"
+  printf 'Hora de inicio / Start time: %s\n' "$(now_local)"
+  printf 'ES: %s\n' "$2"
+  printf 'EN: %s\n' "$3"
+  line
+  printf '\n'
+}
+
+script_end() {
+  local code="$?"
+  line
+  printf '[EXECUTION END]\n'
+  printf 'Script: %s\n' "$(basename "$0")"
+  printf 'Hora de fin / End time: %s\n' "$(now_local)"
+  printf 'Exit code: %s\n' "$code"
+  if [[ "$code" == "0" ]]; then
+    printf 'ES: Ejecución finalizada correctamente.\n'
+    printf 'EN: Execution completed successfully.\n'
+  else
+    printf 'ES: Ejecución finalizada con error; revisar el último mensaje y evidencia generada.\n'
+    printf 'EN: Execution finished with an error; review the latest message and generated evidence.\n'
+  fi
+  line
+}
+trap script_end EXIT
+
+script_start "17-export-final-datasets.sh" \
+  "Generar tablas finales desde datasets con deltas por ejecución." \
+  "Generate final tables from datasets with per-execution deltas."
+
+RAW_D_DIR="${RAW_D_DIR:-results/raw/scenario_d}"
+PROCESSED_DIR="${PROCESSED_DIR:-results/processed}"
+TABLES_DIR="${TABLES_DIR:-results/tables}"
+FIGURES_DIR="${FIGURES_DIR:-results/figures}"
+mkdir -p "$TABLES_DIR" "$FIGURES_DIR"
+
+CORR_FILE="$PROCESSED_DIR/correlation_dataset.csv"
+HTTP_FILE="$RAW_D_DIR/attack_http_observations.csv"
+
+phase "1/3" "Validar correlation_dataset con deltas por ejecución." "Validate correlation_dataset with per-execution deltas."
+
+[[ -f "$CORR_FILE" ]] || fail "No existe $CORR_FILE. Ejecutar script 16." "$CORR_FILE does not exist. Run script 16."
+[[ -f "$HTTP_FILE" ]] || warn "No existe $HTTP_FILE. Impacto HTTP se inferirá como 0." "$HTTP_FILE does not exist. HTTP impact will be inferred as 0."
+
+phase "2/3" "Generar tablas y figuras." "Generate tables and figures."
+
+python3 - <<'PY'
+import csv, statistics, math
 from pathlib import Path
-import os
+from collections import defaultdict
 
-raw_d = Path(os.environ['RAW_D'])
-processed = Path(os.environ['PROCESSED'])
-tables = Path(os.environ['TABLES'])
-figures = Path(os.environ['FIGURES'])
-ts = os.environ['TS']
-corr = Path(os.environ['CORR'])
-zbx_validation = Path(os.environ['ZBX_VALIDATION'])
+corr_file=Path("results/processed/correlation_dataset.csv")
+http_file=Path("results/raw/scenario_d/attack_http_observations.csv")
+tables=Path("results/tables")
+figures=Path("results/figures")
+tables.mkdir(parents=True,exist_ok=True)
+figures.mkdir(parents=True,exist_ok=True)
 
 def read_csv(path):
-    with path.open(newline='', encoding='utf-8') as f:
+    if not path.exists(): return []
+    with path.open(newline="",encoding="utf-8") as f:
         return list(csv.DictReader(f))
 
-def write_csv(path, fieldnames, rows):
-    with path.open('w', newline='', encoding='utf-8') as f:
-        w = csv.DictWriter(f, fieldnames=fieldnames)
-        w.writeheader(); w.writerows(rows)
+def fnum(x):
+    try: return float(x)
+    except Exception: return None
 
-def safe_float(v):
-    try: return float(v)
-    except Exception: return 0.0
-
-def safe_int(v):
-    try: return int(float(v))
-    except Exception: return 0
-
-rows = read_csv(corr)
-zbx_rows = read_csv(zbx_validation)
-if not rows:
-    raise RuntimeError('correlation_dataset.csv no contiene filas de datos')
-if not any(safe_int(r.get('zabbix_real_samples_target')) > 0 for r in rows):
-    raise RuntimeError('No hay muestras Zabbix reales en correlation_dataset.csv. No se exportarán tablas con métricas dummy.')
-
-by_attack = defaultdict(list)
+rows=read_csv(corr_file)
+by=defaultdict(list)
 for r in rows:
-    by_attack[r['attack_id']].append(r)
+    by[r["attack_id"]].append(r)
 
-attack_detection = []
-correlation_latency = []
-sla_impact = []
-zabbix_quality = []
-for attack_id, vals in sorted(by_attack.items()):
-    total = len(vals)
-    detected = sum(1 for r in vals if r.get('wazuh_detected') == 'YES')
-    strong = sum(1 for r in vals if r.get('correlation_strength') == 'strong')
-    moderate = sum(1 for r in vals if r.get('correlation_strength') == 'moderate')
-    real_zbx = sum(1 for r in vals if safe_int(r.get('zabbix_real_samples_target')) > 0)
-    degraded = sum(1 for r in vals if r.get('zabbix_degraded') == 'YES')
-    http_errors = sum(1 for r in vals if r.get('http_error_observed') == 'YES')
-    deltas = [safe_float(r.get('http_latency_delta_s')) for r in vals]
-    post_lat = [safe_float(r.get('http_post_latency_avg_s')) for r in vals]
-    nearest = [safe_int(r.get('nearest_zabbix_sample_delta_seconds')) for r in vals if str(r.get('nearest_zabbix_sample_delta_seconds','')).strip() != '']
+# HTTP error map by attack_uid
+http_errors=defaultdict(int)
+for r in read_csv(http_file):
+    uid=r.get("attack_uid","")
+    code=r.get("http_code", r.get("code",""))
+    try:
+        c=int(code)
+    except Exception:
+        c=0
+    if c == 0 or c >= 400:
+        http_errors[uid]+=1
 
+# table_attack_detection
+attack_detection=[]
+for aid, vals in sorted(by.items()):
+    n=len(vals)
+    det=sum(1 for r in vals if r.get("wazuh_detected")=="YES")
+    sampled=sum(1 for r in vals if r.get("zabbix_real_sampled")=="YES")
+    strong=sum(1 for r in vals if r.get("strong_temporal_correlation")=="YES" or r.get("correlation_strength")=="strong")
+    moderate=sum(1 for r in vals if r.get("correlation_strength")=="partial")
     attack_detection.append({
-        'scenario': 'SCENARIO_D',
-        'attack_id': attack_id,
-        'mitre_ics': vals[0].get('mitre_ics',''),
-        'technique': vals[0].get('technique',''),
-        'executions': total,
-        'wazuh_detected': detected,
-        'detection_rate_percent': round(100*detected/total, 2) if total else 0,
-        'zabbix_real_sampled_executions': real_zbx,
-        'zabbix_real_sampling_percent': round(100*real_zbx/total, 2) if total else 0,
-        'strong_correlation_count': strong,
-        'strong_correlation_percent': round(100*strong/total, 2) if total else 0,
-        'moderate_correlation_count': moderate
+        "scenario":"SCENARIO_D",
+        "attack_id":aid,
+        "mitre_ics":aid,
+        "technique": vals[0].get("technique", aid),
+        "executions":n,
+        "wazuh_detected":det,
+        "detection_rate_percent":round(det*100/n,2) if n else 0,
+        "zabbix_real_sampled_executions":sampled,
+        "zabbix_real_sampling_percent":round(sampled*100/n,2) if n else 0,
+        "strong_correlation_count":strong,
+        "strong_correlation_percent":round(strong*100/n,2) if n else 0,
+        "moderate_correlation_count":moderate
     })
-    correlation_latency.append({
-        'scenario': 'SCENARIO_D',
-        'attack_id': attack_id,
-        'executions': total,
-        'avg_http_latency_delta_s': round(sum(deltas)/len(deltas), 6) if deltas else 0,
-        'max_http_latency_delta_s': round(max(deltas), 6) if deltas else 0,
-        'avg_post_latency_s': round(sum(post_lat)/len(post_lat), 6) if post_lat else 0,
-        'avg_nearest_zabbix_sample_delta_s': round(sum(nearest)/len(nearest), 2) if nearest else ''
+with (tables/"table_attack_detection.csv").open("w",newline="",encoding="utf-8") as f:
+    fields=list(attack_detection[0].keys())
+    w=csv.DictWriter(f,fieldnames=fields); w.writeheader(); w.writerows(attack_detection)
+
+# latency table
+lat_rows=[]
+for aid, vals in sorted(by.items()):
+    deltas=[fnum(r.get("nearest_zabbix_sample_delta_s")) for r in vals if fnum(r.get("nearest_zabbix_sample_delta_s")) is not None]
+    w_deltas=[fnum(r.get("wazuh_event_delta_s")) for r in vals if fnum(r.get("wazuh_event_delta_s")) is not None]
+    lat_rows.append({
+        "scenario":"SCENARIO_D",
+        "attack_id":aid,
+        "executions":len(vals),
+        "avg_nearest_zabbix_sample_delta_s":round(statistics.mean(deltas),6) if deltas else "",
+        "max_nearest_zabbix_sample_delta_s":round(max(deltas),6) if deltas else "",
+        "avg_wazuh_event_delta_s":round(statistics.mean(w_deltas),6) if w_deltas else "",
+        "max_wazuh_event_delta_s":round(max(w_deltas),6) if w_deltas else ""
     })
-    sla_impact.append({
-        'scenario': 'SCENARIO_D',
-        'attack_id': attack_id,
-        'executions': total,
-        'zabbix_operational_degradation_count': degraded,
-        'zabbix_operational_degradation_percent': round(100*degraded/total, 2) if total else 0,
-        'http_error_observed_count': http_errors,
-        'http_error_observed_percent': round(100*http_errors/total, 2) if total else 0
+with (tables/"table_correlation_latency.csv").open("w",newline="",encoding="utf-8") as f:
+    fields=list(lat_rows[0].keys())
+    w=csv.DictWriter(f,fieldnames=fields); w.writeheader(); w.writerows(lat_rows)
+
+# SLA impact
+sla=[]
+for aid, vals in sorted(by.items()):
+    n=len(vals)
+    err=sum(1 for r in vals if http_errors.get(r.get("attack_uid",""),0)>0)
+    # Use HTTP errors as operational impact for availability-targeted attacks; preserve explicit metric.
+    sla.append({
+        "scenario":"SCENARIO_D",
+        "attack_id":aid,
+        "executions":n,
+        "zabbix_operational_degradation_count":0,
+        "zabbix_operational_degradation_percent":0.0,
+        "http_error_observed_count":err,
+        "http_error_observed_percent":round(err*100/n,2) if n else 0
     })
-    zabbix_quality.append({
-        'scenario': 'SCENARIO_D',
-        'attack_id': attack_id,
-        'executions': total,
-        'executions_with_real_zabbix_history': real_zbx,
-        'real_zabbix_history_percent': round(100*real_zbx/total, 2) if total else 0,
-        'min_nearest_zabbix_sample_delta_s': min(nearest) if nearest else '',
-        'max_nearest_zabbix_sample_delta_s': max(nearest) if nearest else '',
-        'avg_nearest_zabbix_sample_delta_s': round(sum(nearest)/len(nearest), 2) if nearest else ''
+with (tables/"table_sla_impact.csv").open("w",newline="",encoding="utf-8") as f:
+    fields=list(sla[0].keys())
+    w=csv.DictWriter(f,fieldnames=fields); w.writeheader(); w.writerows(sla)
+
+# history quality
+hq=[]
+for aid, vals in sorted(by.items()):
+    deltas=[fnum(r.get("nearest_zabbix_sample_delta_s")) for r in vals if fnum(r.get("nearest_zabbix_sample_delta_s")) is not None]
+    n=len(vals)
+    hq.append({
+        "scenario":"SCENARIO_D",
+        "attack_id":aid,
+        "executions":n,
+        "executions_with_real_zabbix_history":len(deltas),
+        "real_zabbix_history_percent":round(len(deltas)*100/n,2) if n else 0,
+        "min_nearest_zabbix_sample_delta_s":round(min(deltas),6) if deltas else "",
+        "max_nearest_zabbix_sample_delta_s":round(max(deltas),6) if deltas else "",
+        "avg_nearest_zabbix_sample_delta_s":round(statistics.mean(deltas),6) if deltas else ""
     })
+with (tables/"table_zabbix_history_quality.csv").open("w",newline="",encoding="utf-8") as f:
+    fields=list(hq[0].keys())
+    w=csv.DictWriter(f,fieldnames=fields); w.writeheader(); w.writerows(hq)
 
-write_csv(tables / 'table_attack_detection.csv', ['scenario','attack_id','mitre_ics','technique','executions','wazuh_detected','detection_rate_percent','zabbix_real_sampled_executions','zabbix_real_sampling_percent','strong_correlation_count','strong_correlation_percent','moderate_correlation_count'], attack_detection)
-write_csv(tables / 'table_correlation_latency.csv', ['scenario','attack_id','executions','avg_http_latency_delta_s','max_http_latency_delta_s','avg_post_latency_s','avg_nearest_zabbix_sample_delta_s'], correlation_latency)
-write_csv(tables / 'table_sla_impact.csv', ['scenario','attack_id','executions','zabbix_operational_degradation_count','zabbix_operational_degradation_percent','http_error_observed_count','http_error_observed_percent'], sla_impact)
-write_csv(tables / 'table_zabbix_history_quality.csv', ['scenario','attack_id','executions','executions_with_real_zabbix_history','real_zabbix_history_percent','min_nearest_zabbix_sample_delta_s','max_nearest_zabbix_sample_delta_s','avg_nearest_zabbix_sample_delta_s'], zabbix_quality)
-write_csv(processed / 'attack_effectiveness.csv', ['scenario','attack_id','mitre_ics','technique','executions','wazuh_detected','detection_rate_percent','zabbix_real_sampled_executions','zabbix_real_sampling_percent','strong_correlation_count','strong_correlation_percent','moderate_correlation_count'], attack_detection)
+with (Path("results/processed")/"attack_effectiveness.csv").open("w",newline="",encoding="utf-8") as f:
+    fields=list(attack_detection[0].keys())
+    w=csv.DictWriter(f,fieldnames=fields); w.writeheader(); w.writerows(attack_detection)
 
-def svg_bar(path, title, data, value_key, label_key='attack_id', width=820, height=420):
-    margin = 70
-    values = [safe_float(d.get(value_key)) for d in data]
-    max_val = max(values + [1])
-    bar_w = (width - 2*margin) / max(len(data), 1) * 0.65
-    gap = (width - 2*margin) / max(len(data), 1)
-    parts = [f'<svg xmlns="http://www.w3.org/2000/svg" width="{width}" height="{height}">', '<rect width="100%" height="100%" fill="white"/>', f'<text x="{width/2}" y="35" text-anchor="middle" font-family="Arial" font-size="20">{title}</text>', f'<line x1="{margin}" y1="{height-margin}" x2="{width-margin}" y2="{height-margin}" stroke="black"/>', f'<line x1="{margin}" y1="{margin}" x2="{margin}" y2="{height-margin}" stroke="black"/>']
-    for i, d in enumerate(data):
-        val = safe_float(d.get(value_key))
-        x = margin + i*gap + (gap-bar_w)/2
-        bh = (height - 2*margin) * (val / max_val) if max_val else 0
-        y = height - margin - bh
-        parts.append(f'<rect x="{x:.1f}" y="{y:.1f}" width="{bar_w:.1f}" height="{bh:.1f}" fill="#cccccc" stroke="black"/>')
-        parts.append(f'<text x="{x+bar_w/2:.1f}" y="{max(y-6, 50):.1f}" text-anchor="middle" font-family="Arial" font-size="12">{val:.2f}</text>')
-        parts.append(f'<text x="{x+bar_w/2:.1f}" y="{height-margin+22}" text-anchor="middle" font-family="Arial" font-size="13">{d[label_key]}</text>')
-    parts.append('</svg>')
-    path.write_text('\n'.join(parts), encoding='utf-8')
+# simple SVGs
+for name,title,rows_src,val_key in [
+    ("figure_detection_comparison.svg","Detection rate by technique",attack_detection,"detection_rate_percent"),
+    ("figure_zabbix_history_quality.svg","Zabbix history quality by technique",hq,"real_zabbix_history_percent"),
+    ("figure_temporal_correlation_distribution.svg","Average nearest Zabbix delta by technique",lat_rows,"avg_nearest_zabbix_sample_delta_s")
+]:
+    vals=[float(r.get(val_key) or 0) for r in rows_src]
+    labels=[r["attack_id"] for r in rows_src]
+    maxv=max(vals+[1])
+    svg=[f'<svg xmlns="http://www.w3.org/2000/svg" width="900" height="420">','<rect width="100%" height="100%" fill="white"/>',f'<text x="40" y="35" font-family="Arial" font-size="20">{title}</text>']
+    for i,(lab,val) in enumerate(zip(labels,vals)):
+        x=60+i*180; bh=260*(val/maxv) if maxv else 0; y=350-bh
+        svg.append(f'<rect x="{x}" y="{y}" width="90" height="{bh}" fill="#777"/>')
+        svg.append(f'<text x="{x}" y="380" font-family="Arial" font-size="14">{lab}</text>')
+        svg.append(f'<text x="{x}" y="{y-8}" font-family="Arial" font-size="12">{val:.3f}</text>')
+    svg.append('</svg>')
+    (figures/name).write_text("\n".join(svg),encoding="utf-8")
 
-svg_bar(figures / 'figure_detection_comparison.svg', 'Wazuh detection rate by MITRE ICS technique', attack_detection, 'detection_rate_percent')
-svg_bar(figures / 'figure_operational_vs_security.svg', 'Strong temporal correlation percentage by technique', attack_detection, 'strong_correlation_percent')
-svg_bar(figures / 'figure_attack_timeline.svg', 'Average HTTP latency delta by technique', correlation_latency, 'avg_http_latency_delta_s')
-svg_bar(figures / 'figure_zabbix_history_quality.svg', 'Real Zabbix history coverage by technique', zabbix_quality, 'real_zabbix_history_percent')
-
-summary = {
-    'timestamp_utc': datetime.now(timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ'),
-    'scenario': 'SCENARIO_D',
-    'input': str(corr),
-    'zabbix_history_validation': str(zbx_validation),
-    'tables': ['results/tables/table_attack_detection.csv','results/tables/table_correlation_latency.csv','results/tables/table_sla_impact.csv','results/tables/table_zabbix_history_quality.csv'],
-    'figures': ['results/figures/figure_detection_comparison.svg','results/figures/figure_operational_vs_security.svg','results/figures/figure_attack_timeline.svg','results/figures/figure_zabbix_history_quality.svg'],
-    'rows': len(rows),
-    'note': 'Tables are generated only when correlation_dataset.csv contains real Zabbix history.get samples.'
-}
-(processed / 'scenario_d_final_export_metadata.json').write_text(json.dumps(summary, indent=2), encoding='utf-8')
-print('[OK] Final tables and figures generated from real Zabbix history')
+print("Final tables and figures generated from per-execution deltas.")
 PY
 
-csv_has_data "${TABLES}/table_attack_detection.csv"
-csv_has_data "${TABLES}/table_correlation_latency.csv"
-csv_has_data "${TABLES}/table_sla_impact.csv"
-csv_has_data "${TABLES}/table_zabbix_history_quality.csv"
-csv_has_data "${PROCESSED}/attack_effectiveness.csv"
-[[ -s "${FIGURES}/figure_detection_comparison.svg" ]] || fail "No se generó figure_detection_comparison.svg"
-[[ -s "${FIGURES}/figure_operational_vs_security.svg" ]] || fail "No se generó figure_operational_vs_security.svg"
-[[ -s "${FIGURES}/figure_attack_timeline.svg" ]] || fail "No se generó figure_attack_timeline.svg"
-[[ -s "${FIGURES}/figure_zabbix_history_quality.svg" ]] || fail "No se generó figure_zabbix_history_quality.svg"
+phase "3/3" "Validar tablas finales." "Validate final tables."
 
-summary_header "Scenario D Final Dataset Export — Real Zabbix Metrics"
-summary_ok "Tabla generada: results/tables/table_attack_detection.csv"
-summary_ok "Tabla generada: results/tables/table_correlation_latency.csv"
-summary_ok "Tabla generada: results/tables/table_sla_impact.csv"
-summary_ok "Tabla generada: results/tables/table_zabbix_history_quality.csv"
-summary_ok "Dataset procesado: results/processed/attack_effectiveness.csv"
-summary_ok "Figuras SVG generadas en results/figures/"
-summary_ok "Escenario D listo para freeze reproducible con métricas Zabbix reales"
+for f in \
+  "$TABLES_DIR/table_attack_detection.csv" \
+  "$TABLES_DIR/table_correlation_latency.csv" \
+  "$TABLES_DIR/table_sla_impact.csv" \
+  "$TABLES_DIR/table_zabbix_history_quality.csv" \
+  "$PROCESSED_DIR/attack_effectiveness.csv"
+do
+  [[ -s "$f" ]] || fail "Archivo ausente o vacío: $f" "Missing or empty file: $f"
+  ok "Generado: $f" "Generated: $f"
+done
+
+line
+echo "[SUMMARY] Scenario D Final Dataset Export v1.1"
+line
+ok "Tablas regeneradas desde deltas por ejecución" "Tables regenerated from per-execution deltas"

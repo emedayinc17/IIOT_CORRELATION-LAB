@@ -1,140 +1,140 @@
-timestamp_utc,attack_uid,attack_id,mitre_ics,component,event_type,source
-2026-05-02T16:56:14Z,D-T0809-1,T0809,T0809,mosquitto,unauthorized_command_message,wazuh_localfile_json
-2026-05-02T16:56:18Z,D-T0814-1,T0814,T0814,telemetry-api,telemetry_manipulation,wazuh_localfile_json
-2026-05-02T16:56:23Z,D-T0860-1,T0860,T0860,vulnerable-app,availability_degradation_http_flood,wazuh_localfile_json
-2026-05-02T16:56:26Z,D-T0809-2,T0809,T0809,mosquitto,unauthorized_command_message,wazuh_localfile_json
-2026-05-02T16:56:30Z,D-T0814-2,T0814,T0814,telemetry-api,telemetry_manipulation,wazuh_localfile_json
-2026-05-02T16:56:34Z,D-T0860-2,T0860,T0860,vulnerable-app,availability_degradation_http_flood,wazuh_localfile_json
-2026-05-02T16:56:37Z,D-T0809-3,T0809,T0809,mosquitto,unauthorized_command_message,wazuh_localfile_json
-2026-05-02T16:56:41Z,D-T0814-3,T0814,T0814,telemetry-api,telemetry_manipulation,wazuh_localfile_json
-2026-05-02T16:56:46Z,D-T0860-3,T0860,T0860,vulnerable-app,availability_degradation_http_flood,wazuh_localfile_json
-2026-05-02T16:56:48Z,D-T0809-4,T0809,T0809,mosquitto,unauthorized_command_message,wazuh_localfile_json
-2026-05-02T16:56:53Z,D-T0814-4,T0814,T0814,telemetry-api,telemetry_manipulation,wazuh_localfile_json
-2026-05-02T16:56:57Z,D-T0860-4,T0860,T0860,vulnerable-app,availability_degradation_http_flood,wazuh_localfile_json
-2026-05-02T16:56:59Z,D-T0809-5,T0809,T0809,mosquitto,unauthorized_command_message,wazuh_localfile_json
-2026-05-02T16:57:04Z,D-T0814-5,T0814,T0814,telemetry-api,telemetry_manipulation,wazuh_localfile_json
-2026-05-02T16:57:08Z,D-T0860-5,T0860,T0860,vulnerable-app,availability_degradation_http_flood,wazuh_localfile_json
-2026-05-02T18:05:07Z,D-T0809-1,T0809,T0809,mosquitto,unauthorized_command_message,wazuh_localfile_json
-2026-05-02T18:05:24Z,D-T0814-1,T0814,T0814,telemetry-api,telemetry_manipulation,wazuh_localfile_json
-2026-05-02T18:05:39Z,D-T0860-1,T0860,T0860,vulnerable-app,availability_degradation_http_flood,wazuh_localfile_json
-2026-05-02T18:06:20Z,D-T0809-2,T0809,T0809,mosquitto,unauthorized_command_message,wazuh_localfile_json
-2026-05-02T18:06:36Z,D-T0814-2,T0814,T0814,telemetry-api,telemetry_manipulation,wazuh_localfile_json
-2026-05-02T18:06:52Z,D-T0860-2,T0860,T0860,vulnerable-app,availability_degradation_http_flood,wazuh_localfile_json
-2026-05-02T18:07:32Z,D-T0809-3,T0809,T0809,mosquitto,unauthorized_command_message,wazuh_localfile_json
-2026-05-02T18:07:51Z,D-T0814-3,T0814,T0814,telemetry-api,telemetry_manipulation,wazuh_localfile_json
-2026-05-02T18:08:08Z,D-T0860-3,T0860,T0860,vulnerable-app,availability_degradation_http_flood,wazuh_localfile_json
-2026-05-02T18:08:53Z,D-T0809-4,T0809,T0809,mosquitto,unauthorized_command_message,wazuh_localfile_json
-2026-05-02T18:09:11Z,D-T0814-4,T0814,T0814,telemetry-api,telemetry_manipulation,wazuh_localfile_json
-2026-05-02T18:09:30Z,D-T0860-4,T0860,T0860,vulnerable-app,availability_degradation_http_flood,wazuh_localfile_json
-2026-05-02T18:10:15Z,D-T0809-5,T0809,T0809,mosquitto,unauthorized_command_message,wazuh_localfile_json
-2026-05-02T18:10:34Z,D-T0814-5,T0814,T0814,telemetry-api,telemetry_manipulation,wazuh_localfile_json
-2026-05-02T18:10:50Z,D-T0860-5,T0860,T0860,vulnerable-app,availability_degradation_http_flood,wazuh_localfile_json
-2026-05-02T18:11:33Z,D-T0809-6,T0809,T0809,mosquitto,unauthorized_command_message,wazuh_localfile_json
-2026-05-02T18:11:51Z,D-T0814-6,T0814,T0814,telemetry-api,telemetry_manipulation,wazuh_localfile_json
-2026-05-02T18:12:10Z,D-T0860-6,T0860,T0860,vulnerable-app,availability_degradation_http_flood,wazuh_localfile_json
-2026-05-02T18:12:52Z,D-T0809-7,T0809,T0809,mosquitto,unauthorized_command_message,wazuh_localfile_json
-2026-05-02T18:13:11Z,D-T0814-7,T0814,T0814,telemetry-api,telemetry_manipulation,wazuh_localfile_json
-2026-05-02T18:13:29Z,D-T0860-7,T0860,T0860,vulnerable-app,availability_degradation_http_flood,wazuh_localfile_json
-2026-05-02T18:14:12Z,D-T0809-8,T0809,T0809,mosquitto,unauthorized_command_message,wazuh_localfile_json
-2026-05-02T18:14:30Z,D-T0814-8,T0814,T0814,telemetry-api,telemetry_manipulation,wazuh_localfile_json
-2026-05-02T18:14:48Z,D-T0860-8,T0860,T0860,vulnerable-app,availability_degradation_http_flood,wazuh_localfile_json
-2026-05-02T18:15:32Z,D-T0809-9,T0809,T0809,mosquitto,unauthorized_command_message,wazuh_localfile_json
-2026-05-02T18:15:50Z,D-T0814-9,T0814,T0814,telemetry-api,telemetry_manipulation,wazuh_localfile_json
-2026-05-02T18:16:09Z,D-T0860-9,T0860,T0860,vulnerable-app,availability_degradation_http_flood,wazuh_localfile_json
-2026-05-02T18:16:52Z,D-T0809-10,T0809,T0809,mosquitto,unauthorized_command_message,wazuh_localfile_json
-2026-05-02T18:17:11Z,D-T0814-10,T0814,T0814,telemetry-api,telemetry_manipulation,wazuh_localfile_json
-2026-05-02T18:17:29Z,D-T0860-10,T0860,T0860,vulnerable-app,availability_degradation_http_flood,wazuh_localfile_json
-2026-05-02T18:18:14Z,D-T0809-11,T0809,T0809,mosquitto,unauthorized_command_message,wazuh_localfile_json
-2026-05-02T18:18:32Z,D-T0814-11,T0814,T0814,telemetry-api,telemetry_manipulation,wazuh_localfile_json
-2026-05-02T18:18:51Z,D-T0860-11,T0860,T0860,vulnerable-app,availability_degradation_http_flood,wazuh_localfile_json
-2026-05-02T18:19:36Z,D-T0809-12,T0809,T0809,mosquitto,unauthorized_command_message,wazuh_localfile_json
-2026-05-02T18:19:54Z,D-T0814-12,T0814,T0814,telemetry-api,telemetry_manipulation,wazuh_localfile_json
-2026-05-02T18:20:13Z,D-T0860-12,T0860,T0860,vulnerable-app,availability_degradation_http_flood,wazuh_localfile_json
-2026-05-02T18:21:04Z,D-T0809-13,T0809,T0809,mosquitto,unauthorized_command_message,wazuh_localfile_json
-2026-05-02T18:21:23Z,D-T0814-13,T0814,T0814,telemetry-api,telemetry_manipulation,wazuh_localfile_json
-2026-05-02T18:21:42Z,D-T0860-13,T0860,T0860,vulnerable-app,availability_degradation_http_flood,wazuh_localfile_json
-2026-05-02T18:22:26Z,D-T0809-14,T0809,T0809,mosquitto,unauthorized_command_message,wazuh_localfile_json
-2026-05-02T18:22:49Z,D-T0814-14,T0814,T0814,telemetry-api,telemetry_manipulation,wazuh_localfile_json
-2026-05-02T18:23:08Z,D-T0860-14,T0860,T0860,vulnerable-app,availability_degradation_http_flood,wazuh_localfile_json
-2026-05-02T18:23:52Z,D-T0809-15,T0809,T0809,mosquitto,unauthorized_command_message,wazuh_localfile_json
-2026-05-02T18:24:10Z,D-T0814-15,T0814,T0814,telemetry-api,telemetry_manipulation,wazuh_localfile_json
-2026-05-02T18:24:28Z,D-T0860-15,T0860,T0860,vulnerable-app,availability_degradation_http_flood,wazuh_localfile_json
-2026-05-02T18:25:11Z,D-T0809-16,T0809,T0809,mosquitto,unauthorized_command_message,wazuh_localfile_json
-2026-05-02T18:25:29Z,D-T0814-16,T0814,T0814,telemetry-api,telemetry_manipulation,wazuh_localfile_json
-2026-05-02T18:25:47Z,D-T0860-16,T0860,T0860,vulnerable-app,availability_degradation_http_flood,wazuh_localfile_json
-2026-05-02T18:26:30Z,D-T0809-17,T0809,T0809,mosquitto,unauthorized_command_message,wazuh_localfile_json
-2026-05-02T18:26:48Z,D-T0814-17,T0814,T0814,telemetry-api,telemetry_manipulation,wazuh_localfile_json
-2026-05-02T18:27:06Z,D-T0860-17,T0860,T0860,vulnerable-app,availability_degradation_http_flood,wazuh_localfile_json
-2026-05-02T18:27:50Z,D-T0809-18,T0809,T0809,mosquitto,unauthorized_command_message,wazuh_localfile_json
-2026-05-02T18:28:08Z,D-T0814-18,T0814,T0814,telemetry-api,telemetry_manipulation,wazuh_localfile_json
-2026-05-02T18:28:26Z,D-T0860-18,T0860,T0860,vulnerable-app,availability_degradation_http_flood,wazuh_localfile_json
-2026-05-02T18:29:09Z,D-T0809-19,T0809,T0809,mosquitto,unauthorized_command_message,wazuh_localfile_json
-2026-05-02T18:29:25Z,D-T0814-19,T0814,T0814,telemetry-api,telemetry_manipulation,wazuh_localfile_json
-2026-05-02T18:29:42Z,D-T0860-19,T0860,T0860,vulnerable-app,availability_degradation_http_flood,wazuh_localfile_json
-2026-05-02T18:30:24Z,D-T0809-20,T0809,T0809,mosquitto,unauthorized_command_message,wazuh_localfile_json
-2026-05-02T18:30:42Z,D-T0814-20,T0814,T0814,telemetry-api,telemetry_manipulation,wazuh_localfile_json
-2026-05-02T18:30:58Z,D-T0860-20,T0860,T0860,vulnerable-app,availability_degradation_http_flood,wazuh_localfile_json
-2026-05-02T19:32:37Z,D-T0809-1,T0809,T0809,,,wazuh_localfile_json
-2026-05-02T19:32:45Z,D-T0814-1,T0814,T0814,,,wazuh_localfile_json
-2026-05-02T19:38:53Z,D-T0809-1,T0809,T0809,,,wazuh_localfile_json
-2026-05-02T19:38:59Z,D-T0814-1,T0814,T0814,,,wazuh_localfile_json
-2026-05-02T19:43:05Z,D-T0809-1,T0809,T0809,,,wazuh_localfile_json
-2026-05-02T19:43:11Z,D-T0814-1,T0814,T0814,,,wazuh_localfile_json
-2026-05-02T19:43:18Z,D-T0860-1,T0860,T0860,,,wazuh_localfile_json
-2026-05-02T19:43:31Z,D-T0809-2,T0809,T0809,,,wazuh_localfile_json
-2026-05-02T19:43:38Z,D-T0814-2,T0814,T0814,,,wazuh_localfile_json
-2026-05-02T19:43:44Z,D-T0860-2,T0860,T0860,,,wazuh_localfile_json
-2026-05-02T19:43:58Z,D-T0809-3,T0809,T0809,,,wazuh_localfile_json
-2026-05-02T19:44:05Z,D-T0814-3,T0814,T0814,,,wazuh_localfile_json
-2026-05-02T19:44:11Z,D-T0860-3,T0860,T0860,,,wazuh_localfile_json
-2026-05-02T19:44:25Z,D-T0809-4,T0809,T0809,,,wazuh_localfile_json
-2026-05-02T19:44:31Z,D-T0814-4,T0814,T0814,,,wazuh_localfile_json
-2026-05-02T19:44:38Z,D-T0860-4,T0860,T0860,,,wazuh_localfile_json
-2026-05-02T19:44:53Z,D-T0809-5,T0809,T0809,,,wazuh_localfile_json
-2026-05-02T19:45:00Z,D-T0814-5,T0814,T0814,,,wazuh_localfile_json
-2026-05-02T19:45:08Z,D-T0860-5,T0860,T0860,,,wazuh_localfile_json
-2026-05-02T19:45:24Z,D-T0809-6,T0809,T0809,,,wazuh_localfile_json
-2026-05-02T19:45:31Z,D-T0814-6,T0814,T0814,,,wazuh_localfile_json
-2026-05-02T19:45:40Z,D-T0860-6,T0860,T0860,,,wazuh_localfile_json
-2026-05-02T19:45:54Z,D-T0809-7,T0809,T0809,,,wazuh_localfile_json
-2026-05-02T19:46:01Z,D-T0814-7,T0814,T0814,,,wazuh_localfile_json
-2026-05-02T19:46:08Z,D-T0860-7,T0860,T0860,,,wazuh_localfile_json
-2026-05-02T19:46:21Z,D-T0809-8,T0809,T0809,,,wazuh_localfile_json
-2026-05-02T19:46:28Z,D-T0814-8,T0814,T0814,,,wazuh_localfile_json
-2026-05-02T19:46:35Z,D-T0860-8,T0860,T0860,,,wazuh_localfile_json
-2026-05-02T19:46:49Z,D-T0809-9,T0809,T0809,,,wazuh_localfile_json
-2026-05-02T19:46:56Z,D-T0814-9,T0814,T0814,,,wazuh_localfile_json
-2026-05-02T19:47:03Z,D-T0860-9,T0860,T0860,,,wazuh_localfile_json
-2026-05-02T19:47:16Z,D-T0809-10,T0809,T0809,,,wazuh_localfile_json
-2026-05-02T19:47:25Z,D-T0814-10,T0814,T0814,,,wazuh_localfile_json
-2026-05-02T19:47:32Z,D-T0860-10,T0860,T0860,,,wazuh_localfile_json
-2026-05-02T19:47:48Z,D-T0809-11,T0809,T0809,,,wazuh_localfile_json
-2026-05-02T19:47:56Z,D-T0814-11,T0814,T0814,,,wazuh_localfile_json
-2026-05-02T19:48:03Z,D-T0860-11,T0860,T0860,,,wazuh_localfile_json
-2026-05-02T19:48:17Z,D-T0809-12,T0809,T0809,,,wazuh_localfile_json
-2026-05-02T19:48:25Z,D-T0814-12,T0814,T0814,,,wazuh_localfile_json
-2026-05-02T19:48:33Z,D-T0860-12,T0860,T0860,,,wazuh_localfile_json
-2026-05-02T19:48:47Z,D-T0809-13,T0809,T0809,,,wazuh_localfile_json
-2026-05-02T19:48:55Z,D-T0814-13,T0814,T0814,,,wazuh_localfile_json
-2026-05-02T19:49:02Z,D-T0860-13,T0860,T0860,,,wazuh_localfile_json
-2026-05-02T19:49:15Z,D-T0809-14,T0809,T0809,,,wazuh_localfile_json
-2026-05-02T19:49:23Z,D-T0814-14,T0814,T0814,,,wazuh_localfile_json
-2026-05-02T19:49:29Z,D-T0860-14,T0860,T0860,,,wazuh_localfile_json
-2026-05-02T19:49:42Z,D-T0809-15,T0809,T0809,,,wazuh_localfile_json
-2026-05-02T19:49:48Z,D-T0814-15,T0814,T0814,,,wazuh_localfile_json
-2026-05-02T19:49:56Z,D-T0860-15,T0860,T0860,,,wazuh_localfile_json
-2026-05-02T19:50:09Z,D-T0809-16,T0809,T0809,,,wazuh_localfile_json
-2026-05-02T19:50:17Z,D-T0814-16,T0814,T0814,,,wazuh_localfile_json
-2026-05-02T19:50:24Z,D-T0860-16,T0860,T0860,,,wazuh_localfile_json
-2026-05-02T19:50:38Z,D-T0809-17,T0809,T0809,,,wazuh_localfile_json
-2026-05-02T19:50:45Z,D-T0814-17,T0814,T0814,,,wazuh_localfile_json
-2026-05-02T19:50:51Z,D-T0860-17,T0860,T0860,,,wazuh_localfile_json
-2026-05-02T19:51:05Z,D-T0809-18,T0809,T0809,,,wazuh_localfile_json
-2026-05-02T19:51:12Z,D-T0814-18,T0814,T0814,,,wazuh_localfile_json
-2026-05-02T19:51:18Z,D-T0860-18,T0860,T0860,,,wazuh_localfile_json
-2026-05-02T19:51:31Z,D-T0809-19,T0809,T0809,,,wazuh_localfile_json
-2026-05-02T19:51:39Z,D-T0814-19,T0814,T0814,,,wazuh_localfile_json
-2026-05-02T19:51:47Z,D-T0860-19,T0860,T0860,,,wazuh_localfile_json
-2026-05-02T19:52:01Z,D-T0809-20,T0809,T0809,,,wazuh_localfile_json
-2026-05-02T19:52:09Z,D-T0814-20,T0814,T0814,,,wazuh_localfile_json
-2026-05-02T19:52:16Z,D-T0860-20,T0860,T0860,,,wazuh_localfile_json
+timestamp_utc,scenario,attack_uid,iteration,attack_id,mitre_ics,component,event_type,severity,source,rule_id,rule_description
+2026-05-02T19:43:05Z,SCENARIO_D,D-T0809-1,1,T0809,T0809,mosquitto,Unauthorized Command Message,security,wazuh_localfile_json,,
+2026-05-02T19:43:11Z,SCENARIO_D,D-T0814-1,1,T0814,T0814,telemetry-api,Data Manipulation,security,wazuh_localfile_json,,
+2026-05-02T19:43:18Z,SCENARIO_D,D-T0860-1,1,T0860,T0860,vulnerable-app,Denial of Service,security,wazuh_localfile_json,,
+2026-05-02T19:43:31Z,SCENARIO_D,D-T0809-2,2,T0809,T0809,mosquitto,Unauthorized Command Message,security,wazuh_localfile_json,,
+2026-05-02T19:43:38Z,SCENARIO_D,D-T0814-2,2,T0814,T0814,telemetry-api,Data Manipulation,security,wazuh_localfile_json,,
+2026-05-02T19:43:44Z,SCENARIO_D,D-T0860-2,2,T0860,T0860,vulnerable-app,Denial of Service,security,wazuh_localfile_json,,
+2026-05-02T19:43:58Z,SCENARIO_D,D-T0809-3,3,T0809,T0809,mosquitto,Unauthorized Command Message,security,wazuh_localfile_json,,
+2026-05-02T19:44:05Z,SCENARIO_D,D-T0814-3,3,T0814,T0814,telemetry-api,Data Manipulation,security,wazuh_localfile_json,,
+2026-05-02T19:44:11Z,SCENARIO_D,D-T0860-3,3,T0860,T0860,vulnerable-app,Denial of Service,security,wazuh_localfile_json,,
+2026-05-02T19:44:25Z,SCENARIO_D,D-T0809-4,4,T0809,T0809,mosquitto,Unauthorized Command Message,security,wazuh_localfile_json,,
+2026-05-02T19:44:31Z,SCENARIO_D,D-T0814-4,4,T0814,T0814,telemetry-api,Data Manipulation,security,wazuh_localfile_json,,
+2026-05-02T19:44:38Z,SCENARIO_D,D-T0860-4,4,T0860,T0860,vulnerable-app,Denial of Service,security,wazuh_localfile_json,,
+2026-05-02T19:44:53Z,SCENARIO_D,D-T0809-5,5,T0809,T0809,mosquitto,Unauthorized Command Message,security,wazuh_localfile_json,,
+2026-05-02T19:45:00Z,SCENARIO_D,D-T0814-5,5,T0814,T0814,telemetry-api,Data Manipulation,security,wazuh_localfile_json,,
+2026-05-02T19:45:08Z,SCENARIO_D,D-T0860-5,5,T0860,T0860,vulnerable-app,Denial of Service,security,wazuh_localfile_json,,
+2026-05-02T19:43:05Z,SCENARIO_D,D-T0809-1,1,T0809,T0809,mosquitto,Unauthorized Command Message,security,wazuh_localfile_json,,
+2026-05-02T19:43:11Z,SCENARIO_D,D-T0814-1,1,T0814,T0814,telemetry-api,Data Manipulation,security,wazuh_localfile_json,,
+2026-05-02T19:43:18Z,SCENARIO_D,D-T0860-1,1,T0860,T0860,vulnerable-app,Denial of Service,security,wazuh_localfile_json,,
+2026-05-02T19:43:31Z,SCENARIO_D,D-T0809-2,2,T0809,T0809,mosquitto,Unauthorized Command Message,security,wazuh_localfile_json,,
+2026-05-02T19:43:38Z,SCENARIO_D,D-T0814-2,2,T0814,T0814,telemetry-api,Data Manipulation,security,wazuh_localfile_json,,
+2026-05-02T19:43:44Z,SCENARIO_D,D-T0860-2,2,T0860,T0860,vulnerable-app,Denial of Service,security,wazuh_localfile_json,,
+2026-05-02T19:43:58Z,SCENARIO_D,D-T0809-3,3,T0809,T0809,mosquitto,Unauthorized Command Message,security,wazuh_localfile_json,,
+2026-05-02T19:44:05Z,SCENARIO_D,D-T0814-3,3,T0814,T0814,telemetry-api,Data Manipulation,security,wazuh_localfile_json,,
+2026-05-02T19:44:11Z,SCENARIO_D,D-T0860-3,3,T0860,T0860,vulnerable-app,Denial of Service,security,wazuh_localfile_json,,
+2026-05-02T19:44:25Z,SCENARIO_D,D-T0809-4,4,T0809,T0809,mosquitto,Unauthorized Command Message,security,wazuh_localfile_json,,
+2026-05-02T19:44:31Z,SCENARIO_D,D-T0814-4,4,T0814,T0814,telemetry-api,Data Manipulation,security,wazuh_localfile_json,,
+2026-05-02T19:44:38Z,SCENARIO_D,D-T0860-4,4,T0860,T0860,vulnerable-app,Denial of Service,security,wazuh_localfile_json,,
+2026-05-02T19:44:53Z,SCENARIO_D,D-T0809-5,5,T0809,T0809,mosquitto,Unauthorized Command Message,security,wazuh_localfile_json,,
+2026-05-02T19:45:00Z,SCENARIO_D,D-T0814-5,5,T0814,T0814,telemetry-api,Data Manipulation,security,wazuh_localfile_json,,
+2026-05-02T19:45:08Z,SCENARIO_D,D-T0860-5,5,T0860,T0860,vulnerable-app,Denial of Service,security,wazuh_localfile_json,,
+2026-05-02T19:45:24Z,SCENARIO_D,D-T0809-6,6,T0809,T0809,mosquitto,Unauthorized Command Message,security,wazuh_localfile_json,,
+2026-05-02T19:45:31Z,SCENARIO_D,D-T0814-6,6,T0814,T0814,telemetry-api,Data Manipulation,security,wazuh_localfile_json,,
+2026-05-02T19:45:40Z,SCENARIO_D,D-T0860-6,6,T0860,T0860,vulnerable-app,Denial of Service,security,wazuh_localfile_json,,
+2026-05-02T19:45:54Z,SCENARIO_D,D-T0809-7,7,T0809,T0809,mosquitto,Unauthorized Command Message,security,wazuh_localfile_json,,
+2026-05-02T19:46:01Z,SCENARIO_D,D-T0814-7,7,T0814,T0814,telemetry-api,Data Manipulation,security,wazuh_localfile_json,,
+2026-05-02T19:46:08Z,SCENARIO_D,D-T0860-7,7,T0860,T0860,vulnerable-app,Denial of Service,security,wazuh_localfile_json,,
+2026-05-02T19:46:21Z,SCENARIO_D,D-T0809-8,8,T0809,T0809,mosquitto,Unauthorized Command Message,security,wazuh_localfile_json,,
+2026-05-02T19:46:28Z,SCENARIO_D,D-T0814-8,8,T0814,T0814,telemetry-api,Data Manipulation,security,wazuh_localfile_json,,
+2026-05-02T19:46:35Z,SCENARIO_D,D-T0860-8,8,T0860,T0860,vulnerable-app,Denial of Service,security,wazuh_localfile_json,,
+2026-05-02T19:46:49Z,SCENARIO_D,D-T0809-9,9,T0809,T0809,mosquitto,Unauthorized Command Message,security,wazuh_localfile_json,,
+2026-05-02T19:46:56Z,SCENARIO_D,D-T0814-9,9,T0814,T0814,telemetry-api,Data Manipulation,security,wazuh_localfile_json,,
+2026-05-02T19:47:03Z,SCENARIO_D,D-T0860-9,9,T0860,T0860,vulnerable-app,Denial of Service,security,wazuh_localfile_json,,
+2026-05-02T19:47:16Z,SCENARIO_D,D-T0809-10,10,T0809,T0809,mosquitto,Unauthorized Command Message,security,wazuh_localfile_json,,
+2026-05-02T19:47:25Z,SCENARIO_D,D-T0814-10,10,T0814,T0814,telemetry-api,Data Manipulation,security,wazuh_localfile_json,,
+2026-05-02T19:47:32Z,SCENARIO_D,D-T0860-10,10,T0860,T0860,vulnerable-app,Denial of Service,security,wazuh_localfile_json,,
+2026-05-02T19:47:48Z,SCENARIO_D,D-T0809-11,11,T0809,T0809,mosquitto,Unauthorized Command Message,security,wazuh_localfile_json,,
+2026-05-02T19:47:56Z,SCENARIO_D,D-T0814-11,11,T0814,T0814,telemetry-api,Data Manipulation,security,wazuh_localfile_json,,
+2026-05-02T19:48:03Z,SCENARIO_D,D-T0860-11,11,T0860,T0860,vulnerable-app,Denial of Service,security,wazuh_localfile_json,,
+2026-05-02T19:48:17Z,SCENARIO_D,D-T0809-12,12,T0809,T0809,mosquitto,Unauthorized Command Message,security,wazuh_localfile_json,,
+2026-05-02T19:48:25Z,SCENARIO_D,D-T0814-12,12,T0814,T0814,telemetry-api,Data Manipulation,security,wazuh_localfile_json,,
+2026-05-02T19:48:33Z,SCENARIO_D,D-T0860-12,12,T0860,T0860,vulnerable-app,Denial of Service,security,wazuh_localfile_json,,
+2026-05-02T19:48:47Z,SCENARIO_D,D-T0809-13,13,T0809,T0809,mosquitto,Unauthorized Command Message,security,wazuh_localfile_json,,
+2026-05-02T19:48:55Z,SCENARIO_D,D-T0814-13,13,T0814,T0814,telemetry-api,Data Manipulation,security,wazuh_localfile_json,,
+2026-05-02T19:49:02Z,SCENARIO_D,D-T0860-13,13,T0860,T0860,vulnerable-app,Denial of Service,security,wazuh_localfile_json,,
+2026-05-02T19:49:15Z,SCENARIO_D,D-T0809-14,14,T0809,T0809,mosquitto,Unauthorized Command Message,security,wazuh_localfile_json,,
+2026-05-02T19:49:23Z,SCENARIO_D,D-T0814-14,14,T0814,T0814,telemetry-api,Data Manipulation,security,wazuh_localfile_json,,
+2026-05-02T19:49:29Z,SCENARIO_D,D-T0860-14,14,T0860,T0860,vulnerable-app,Denial of Service,security,wazuh_localfile_json,,
+2026-05-02T19:49:42Z,SCENARIO_D,D-T0809-15,15,T0809,T0809,mosquitto,Unauthorized Command Message,security,wazuh_localfile_json,,
+2026-05-02T19:49:48Z,SCENARIO_D,D-T0814-15,15,T0814,T0814,telemetry-api,Data Manipulation,security,wazuh_localfile_json,,
+2026-05-02T19:49:56Z,SCENARIO_D,D-T0860-15,15,T0860,T0860,vulnerable-app,Denial of Service,security,wazuh_localfile_json,,
+2026-05-02T19:50:09Z,SCENARIO_D,D-T0809-16,16,T0809,T0809,mosquitto,Unauthorized Command Message,security,wazuh_localfile_json,,
+2026-05-02T19:50:17Z,SCENARIO_D,D-T0814-16,16,T0814,T0814,telemetry-api,Data Manipulation,security,wazuh_localfile_json,,
+2026-05-02T19:50:24Z,SCENARIO_D,D-T0860-16,16,T0860,T0860,vulnerable-app,Denial of Service,security,wazuh_localfile_json,,
+2026-05-02T19:50:38Z,SCENARIO_D,D-T0809-17,17,T0809,T0809,mosquitto,Unauthorized Command Message,security,wazuh_localfile_json,,
+2026-05-02T19:50:45Z,SCENARIO_D,D-T0814-17,17,T0814,T0814,telemetry-api,Data Manipulation,security,wazuh_localfile_json,,
+2026-05-02T19:50:51Z,SCENARIO_D,D-T0860-17,17,T0860,T0860,vulnerable-app,Denial of Service,security,wazuh_localfile_json,,
+2026-05-02T19:51:05Z,SCENARIO_D,D-T0809-18,18,T0809,T0809,mosquitto,Unauthorized Command Message,security,wazuh_localfile_json,,
+2026-05-02T19:51:12Z,SCENARIO_D,D-T0814-18,18,T0814,T0814,telemetry-api,Data Manipulation,security,wazuh_localfile_json,,
+2026-05-02T19:51:18Z,SCENARIO_D,D-T0860-18,18,T0860,T0860,vulnerable-app,Denial of Service,security,wazuh_localfile_json,,
+2026-05-02T19:51:31Z,SCENARIO_D,D-T0809-19,19,T0809,T0809,mosquitto,Unauthorized Command Message,security,wazuh_localfile_json,,
+2026-05-02T19:51:39Z,SCENARIO_D,D-T0814-19,19,T0814,T0814,telemetry-api,Data Manipulation,security,wazuh_localfile_json,,
+2026-05-02T19:51:47Z,SCENARIO_D,D-T0860-19,19,T0860,T0860,vulnerable-app,Denial of Service,security,wazuh_localfile_json,,
+2026-05-02T19:52:01Z,SCENARIO_D,D-T0809-20,20,T0809,T0809,mosquitto,Unauthorized Command Message,security,wazuh_localfile_json,,
+2026-05-02T19:52:09Z,SCENARIO_D,D-T0814-20,20,T0814,T0814,telemetry-api,Data Manipulation,security,wazuh_localfile_json,,
+2026-05-02T19:52:16Z,SCENARIO_D,D-T0860-20,20,T0860,T0860,vulnerable-app,Denial of Service,security,wazuh_localfile_json,,
+2026-05-02T19:32:37Z,SCENARIO_D,D-T0809-1,1,T0809,T0809,mosquitto,unauthorized_command_message,medium,wazuh_localfile_json,,
+2026-05-02T19:32:45Z,SCENARIO_D,D-T0814-1,1,T0814,T0814,telemetry-api,telemetry_manipulation,medium,wazuh_localfile_json,,
+2026-05-02T19:38:53Z,SCENARIO_D,D-T0809-1,1,T0809,T0809,mosquitto,unauthorized_command_message,medium,wazuh_localfile_json,,
+2026-05-02T19:38:59Z,SCENARIO_D,D-T0814-1,1,T0814,T0814,telemetry-api,telemetry_manipulation,medium,wazuh_localfile_json,,
+2026-05-02T19:43:05Z,SCENARIO_D,D-T0809-1,1,T0809,T0809,mosquitto,unauthorized_command_message,medium,wazuh_localfile_json,,
+2026-05-02T19:43:11Z,SCENARIO_D,D-T0814-1,1,T0814,T0814,telemetry-api,telemetry_manipulation,medium,wazuh_localfile_json,,
+2026-05-02T19:43:18Z,SCENARIO_D,D-T0860-1,1,T0860,T0860,vulnerable-app,availability_degradation_http_flood,high,wazuh_localfile_json,,
+2026-05-02T19:43:31Z,SCENARIO_D,D-T0809-2,2,T0809,T0809,mosquitto,unauthorized_command_message,medium,wazuh_localfile_json,,
+2026-05-02T19:43:38Z,SCENARIO_D,D-T0814-2,2,T0814,T0814,telemetry-api,telemetry_manipulation,medium,wazuh_localfile_json,,
+2026-05-02T19:43:44Z,SCENARIO_D,D-T0860-2,2,T0860,T0860,vulnerable-app,availability_degradation_http_flood,high,wazuh_localfile_json,,
+2026-05-02T19:43:58Z,SCENARIO_D,D-T0809-3,3,T0809,T0809,mosquitto,unauthorized_command_message,medium,wazuh_localfile_json,,
+2026-05-02T19:44:05Z,SCENARIO_D,D-T0814-3,3,T0814,T0814,telemetry-api,telemetry_manipulation,medium,wazuh_localfile_json,,
+2026-05-02T19:44:11Z,SCENARIO_D,D-T0860-3,3,T0860,T0860,vulnerable-app,availability_degradation_http_flood,high,wazuh_localfile_json,,
+2026-05-02T19:44:25Z,SCENARIO_D,D-T0809-4,4,T0809,T0809,mosquitto,unauthorized_command_message,medium,wazuh_localfile_json,,
+2026-05-02T19:44:31Z,SCENARIO_D,D-T0814-4,4,T0814,T0814,telemetry-api,telemetry_manipulation,medium,wazuh_localfile_json,,
+2026-05-02T19:44:38Z,SCENARIO_D,D-T0860-4,4,T0860,T0860,vulnerable-app,availability_degradation_http_flood,high,wazuh_localfile_json,,
+2026-05-02T19:44:53Z,SCENARIO_D,D-T0809-5,5,T0809,T0809,mosquitto,unauthorized_command_message,medium,wazuh_localfile_json,,
+2026-05-02T19:45:00Z,SCENARIO_D,D-T0814-5,5,T0814,T0814,telemetry-api,telemetry_manipulation,medium,wazuh_localfile_json,,
+2026-05-02T19:45:08Z,SCENARIO_D,D-T0860-5,5,T0860,T0860,vulnerable-app,availability_degradation_http_flood,high,wazuh_localfile_json,,
+2026-05-02T19:45:24Z,SCENARIO_D,D-T0809-6,6,T0809,T0809,mosquitto,unauthorized_command_message,medium,wazuh_localfile_json,,
+2026-05-02T19:45:31Z,SCENARIO_D,D-T0814-6,6,T0814,T0814,telemetry-api,telemetry_manipulation,medium,wazuh_localfile_json,,
+2026-05-02T19:45:40Z,SCENARIO_D,D-T0860-6,6,T0860,T0860,vulnerable-app,availability_degradation_http_flood,high,wazuh_localfile_json,,
+2026-05-02T19:45:54Z,SCENARIO_D,D-T0809-7,7,T0809,T0809,mosquitto,unauthorized_command_message,medium,wazuh_localfile_json,,
+2026-05-02T19:46:01Z,SCENARIO_D,D-T0814-7,7,T0814,T0814,telemetry-api,telemetry_manipulation,medium,wazuh_localfile_json,,
+2026-05-02T19:46:08Z,SCENARIO_D,D-T0860-7,7,T0860,T0860,vulnerable-app,availability_degradation_http_flood,high,wazuh_localfile_json,,
+2026-05-02T19:46:21Z,SCENARIO_D,D-T0809-8,8,T0809,T0809,mosquitto,unauthorized_command_message,medium,wazuh_localfile_json,,
+2026-05-02T19:46:28Z,SCENARIO_D,D-T0814-8,8,T0814,T0814,telemetry-api,telemetry_manipulation,medium,wazuh_localfile_json,,
+2026-05-02T19:46:35Z,SCENARIO_D,D-T0860-8,8,T0860,T0860,vulnerable-app,availability_degradation_http_flood,high,wazuh_localfile_json,,
+2026-05-02T19:46:49Z,SCENARIO_D,D-T0809-9,9,T0809,T0809,mosquitto,unauthorized_command_message,medium,wazuh_localfile_json,,
+2026-05-02T19:46:56Z,SCENARIO_D,D-T0814-9,9,T0814,T0814,telemetry-api,telemetry_manipulation,medium,wazuh_localfile_json,,
+2026-05-02T19:47:03Z,SCENARIO_D,D-T0860-9,9,T0860,T0860,vulnerable-app,availability_degradation_http_flood,high,wazuh_localfile_json,,
+2026-05-02T19:47:16Z,SCENARIO_D,D-T0809-10,10,T0809,T0809,mosquitto,unauthorized_command_message,medium,wazuh_localfile_json,,
+2026-05-02T19:47:25Z,SCENARIO_D,D-T0814-10,10,T0814,T0814,telemetry-api,telemetry_manipulation,medium,wazuh_localfile_json,,
+2026-05-02T19:47:32Z,SCENARIO_D,D-T0860-10,10,T0860,T0860,vulnerable-app,availability_degradation_http_flood,high,wazuh_localfile_json,,
+2026-05-02T19:47:48Z,SCENARIO_D,D-T0809-11,11,T0809,T0809,mosquitto,unauthorized_command_message,medium,wazuh_localfile_json,,
+2026-05-02T19:47:56Z,SCENARIO_D,D-T0814-11,11,T0814,T0814,telemetry-api,telemetry_manipulation,medium,wazuh_localfile_json,,
+2026-05-02T19:48:03Z,SCENARIO_D,D-T0860-11,11,T0860,T0860,vulnerable-app,availability_degradation_http_flood,high,wazuh_localfile_json,,
+2026-05-02T19:48:17Z,SCENARIO_D,D-T0809-12,12,T0809,T0809,mosquitto,unauthorized_command_message,medium,wazuh_localfile_json,,
+2026-05-02T19:48:25Z,SCENARIO_D,D-T0814-12,12,T0814,T0814,telemetry-api,telemetry_manipulation,medium,wazuh_localfile_json,,
+2026-05-02T19:48:33Z,SCENARIO_D,D-T0860-12,12,T0860,T0860,vulnerable-app,availability_degradation_http_flood,high,wazuh_localfile_json,,
+2026-05-02T19:48:47Z,SCENARIO_D,D-T0809-13,13,T0809,T0809,mosquitto,unauthorized_command_message,medium,wazuh_localfile_json,,
+2026-05-02T19:48:55Z,SCENARIO_D,D-T0814-13,13,T0814,T0814,telemetry-api,telemetry_manipulation,medium,wazuh_localfile_json,,
+2026-05-02T19:49:02Z,SCENARIO_D,D-T0860-13,13,T0860,T0860,vulnerable-app,availability_degradation_http_flood,high,wazuh_localfile_json,,
+2026-05-02T19:49:15Z,SCENARIO_D,D-T0809-14,14,T0809,T0809,mosquitto,unauthorized_command_message,medium,wazuh_localfile_json,,
+2026-05-02T19:49:23Z,SCENARIO_D,D-T0814-14,14,T0814,T0814,telemetry-api,telemetry_manipulation,medium,wazuh_localfile_json,,
+2026-05-02T19:49:29Z,SCENARIO_D,D-T0860-14,14,T0860,T0860,vulnerable-app,availability_degradation_http_flood,high,wazuh_localfile_json,,
+2026-05-02T19:49:42Z,SCENARIO_D,D-T0809-15,15,T0809,T0809,mosquitto,unauthorized_command_message,medium,wazuh_localfile_json,,
+2026-05-02T19:49:48Z,SCENARIO_D,D-T0814-15,15,T0814,T0814,telemetry-api,telemetry_manipulation,medium,wazuh_localfile_json,,
+2026-05-02T19:49:56Z,SCENARIO_D,D-T0860-15,15,T0860,T0860,vulnerable-app,availability_degradation_http_flood,high,wazuh_localfile_json,,
+2026-05-02T19:50:09Z,SCENARIO_D,D-T0809-16,16,T0809,T0809,mosquitto,unauthorized_command_message,medium,wazuh_localfile_json,,
+2026-05-02T19:50:17Z,SCENARIO_D,D-T0814-16,16,T0814,T0814,telemetry-api,telemetry_manipulation,medium,wazuh_localfile_json,,
+2026-05-02T19:50:24Z,SCENARIO_D,D-T0860-16,16,T0860,T0860,vulnerable-app,availability_degradation_http_flood,high,wazuh_localfile_json,,
+2026-05-02T19:50:38Z,SCENARIO_D,D-T0809-17,17,T0809,T0809,mosquitto,unauthorized_command_message,medium,wazuh_localfile_json,,
+2026-05-02T19:50:45Z,SCENARIO_D,D-T0814-17,17,T0814,T0814,telemetry-api,telemetry_manipulation,medium,wazuh_localfile_json,,
+2026-05-02T19:50:51Z,SCENARIO_D,D-T0860-17,17,T0860,T0860,vulnerable-app,availability_degradation_http_flood,high,wazuh_localfile_json,,
+2026-05-02T19:51:05Z,SCENARIO_D,D-T0809-18,18,T0809,T0809,mosquitto,unauthorized_command_message,medium,wazuh_localfile_json,,
+2026-05-02T19:51:12Z,SCENARIO_D,D-T0814-18,18,T0814,T0814,telemetry-api,telemetry_manipulation,medium,wazuh_localfile_json,,
+2026-05-02T19:51:18Z,SCENARIO_D,D-T0860-18,18,T0860,T0860,vulnerable-app,availability_degradation_http_flood,high,wazuh_localfile_json,,
+2026-05-02T19:51:31Z,SCENARIO_D,D-T0809-19,19,T0809,T0809,mosquitto,unauthorized_command_message,medium,wazuh_localfile_json,,
+2026-05-02T19:51:39Z,SCENARIO_D,D-T0814-19,19,T0814,T0814,telemetry-api,telemetry_manipulation,medium,wazuh_localfile_json,,
+2026-05-02T19:51:47Z,SCENARIO_D,D-T0860-19,19,T0860,T0860,vulnerable-app,availability_degradation_http_flood,high,wazuh_localfile_json,,
+2026-05-02T19:52:01Z,SCENARIO_D,D-T0809-20,20,T0809,T0809,mosquitto,unauthorized_command_message,medium,wazuh_localfile_json,,
+2026-05-02T19:52:09Z,SCENARIO_D,D-T0814-20,20,T0814,T0814,telemetry-api,telemetry_manipulation,medium,wazuh_localfile_json,,
+2026-05-02T19:52:16Z,SCENARIO_D,D-T0860-20,20,T0860,T0860,vulnerable-app,availability_degradation_http_flood,high,wazuh_localfile_json,,

@@ -1,4 +1,4 @@
-scenario,attack_id,executions,avg_http_latency_delta_s,max_http_latency_delta_s,avg_post_latency_s,avg_nearest_zabbix_sample_delta_s
-SCENARIO_D,T0809,20,0.0,0.0,0.0,0.3
-SCENARIO_D,T0814,20,0.0,0.0,0.0,0.2
-SCENARIO_D,T0860,20,0.0,0.0,0.0,0.45
+scenario,attack_id,executions,avg_nearest_zabbix_sample_delta_s,max_nearest_zabbix_sample_delta_s,avg_wazuh_event_delta_s,max_wazuh_event_delta_s
+SCENARIO_D,T0809,20,0.15,1.0,0.0,0.0
+SCENARIO_D,T0814,20,0.1,1.0,0.0,0.0
+SCENARIO_D,T0860,20,0.55,1.0,0.0,0.0

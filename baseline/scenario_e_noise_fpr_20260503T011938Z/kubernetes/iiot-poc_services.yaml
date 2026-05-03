@@ -1,0 +1,317 @@
+apiVersion: v1
+items:
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"v1","kind":"Service","metadata":{"annotations":{},"labels":{"project":"iiot-correlation-lab","stage":"foundation"},"name":"health-app","namespace":"iiot-poc"},"spec":{"ports":[{"name":"http","port":8080,"targetPort":8080}],"selector":{"app":"health-app","project":"iiot-correlation-lab","stage":"foundation"},"type":"ClusterIP"}}
+    creationTimestamp: "2026-05-02T02:03:37Z"
+    labels:
+      project: iiot-correlation-lab
+      stage: foundation
+    name: health-app
+    namespace: iiot-poc
+    resourceVersion: "30827"
+    uid: 177b2890-bd0a-4e47-a9e2-b013b1f318f8
+  spec:
+    clusterIP: 10.152.183.113
+    clusterIPs:
+    - 10.152.183.113
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: http
+      port: 8080
+      protocol: TCP
+      targetPort: 8080
+    selector:
+      app: health-app
+      project: iiot-correlation-lab
+      stage: foundation
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"v1","kind":"Service","metadata":{"annotations":{"metallb.io/loadBalancerIPs":"10.10.0.152"},"labels":{"project":"iiot-correlation-lab","stage":"foundation"},"name":"health-app-lb","namespace":"iiot-poc"},"spec":{"loadBalancerIP":"10.10.0.152","ports":[{"name":"http","port":8080,"targetPort":8080}],"selector":{"app":"health-app","project":"iiot-correlation-lab","stage":"foundation"},"type":"LoadBalancer"}}
+      metallb.io/loadBalancerIPs: 10.10.0.152
+    creationTimestamp: "2026-05-02T02:03:37Z"
+    labels:
+      project: iiot-correlation-lab
+      stage: foundation
+    name: health-app-lb
+    namespace: iiot-poc
+    resourceVersion: "30837"
+    uid: e87b0a6c-0dd9-4799-81a8-b9920ef09c51
+  spec:
+    allocateLoadBalancerNodePorts: true
+    clusterIP: 10.152.183.22
+    clusterIPs:
+    - 10.152.183.22
+    externalTrafficPolicy: Cluster
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    loadBalancerIP: 10.10.0.152
+    ports:
+    - name: http
+      nodePort: 31855
+      port: 8080
+      protocol: TCP
+      targetPort: 8080
+    selector:
+      app: health-app
+      project: iiot-correlation-lab
+      stage: foundation
+    sessionAffinity: None
+    type: LoadBalancer
+  status:
+    loadBalancer:
+      ingress:
+      - ip: 10.10.0.152
+        ipMode: VIP
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"v1","kind":"Service","metadata":{"annotations":{},"labels":{"project":"iiot-correlation-lab","stage":"foundation"},"name":"mosquitto","namespace":"iiot-poc"},"spec":{"ports":[{"name":"mqtt","port":1883,"targetPort":1883}],"selector":{"app":"mosquitto","project":"iiot-correlation-lab","stage":"foundation"},"type":"ClusterIP"}}
+    creationTimestamp: "2026-05-02T02:03:37Z"
+    labels:
+      project: iiot-correlation-lab
+      stage: foundation
+    name: mosquitto
+    namespace: iiot-poc
+    resourceVersion: "30840"
+    uid: 889957d2-b5bd-4116-89ab-848762cb4c73
+  spec:
+    clusterIP: 10.152.183.173
+    clusterIPs:
+    - 10.152.183.173
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: mqtt
+      port: 1883
+      protocol: TCP
+      targetPort: 1883
+    selector:
+      app: mosquitto
+      project: iiot-correlation-lab
+      stage: foundation
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"v1","kind":"Service","metadata":{"annotations":{"metallb.io/loadBalancerIPs":"10.10.0.151"},"labels":{"project":"iiot-correlation-lab","stage":"foundation"},"name":"mosquitto-lb","namespace":"iiot-poc"},"spec":{"loadBalancerIP":"10.10.0.151","ports":[{"name":"mqtt","port":1883,"targetPort":1883}],"selector":{"app":"mosquitto","project":"iiot-correlation-lab","stage":"foundation"},"type":"LoadBalancer"}}
+      metallb.io/loadBalancerIPs: 10.10.0.151
+    creationTimestamp: "2026-05-02T02:03:38Z"
+    labels:
+      project: iiot-correlation-lab
+      stage: foundation
+    name: mosquitto-lb
+    namespace: iiot-poc
+    resourceVersion: "30851"
+    uid: 23113809-c6a5-4cdf-8a97-6b296e09b2c9
+  spec:
+    allocateLoadBalancerNodePorts: true
+    clusterIP: 10.152.183.218
+    clusterIPs:
+    - 10.152.183.218
+    externalTrafficPolicy: Cluster
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    loadBalancerIP: 10.10.0.151
+    ports:
+    - name: mqtt
+      nodePort: 31070
+      port: 1883
+      protocol: TCP
+      targetPort: 1883
+    selector:
+      app: mosquitto
+      project: iiot-correlation-lab
+      stage: foundation
+    sessionAffinity: None
+    type: LoadBalancer
+  status:
+    loadBalancer:
+      ingress:
+      - ip: 10.10.0.151
+        ipMode: VIP
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"v1","kind":"Service","metadata":{"annotations":{},"labels":{"project":"iiot-correlation-lab","stage":"foundation"},"name":"telemetry-api","namespace":"iiot-poc"},"spec":{"ports":[{"name":"http","port":8080,"targetPort":8080}],"selector":{"app":"telemetry-api","project":"iiot-correlation-lab","stage":"foundation"},"type":"ClusterIP"}}
+    creationTimestamp: "2026-05-02T02:03:38Z"
+    labels:
+      project: iiot-correlation-lab
+      stage: foundation
+    name: telemetry-api
+    namespace: iiot-poc
+    resourceVersion: "30853"
+    uid: 8e3f4b46-a429-4463-97c6-5a7104f44068
+  spec:
+    clusterIP: 10.152.183.203
+    clusterIPs:
+    - 10.152.183.203
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: http
+      port: 8080
+      protocol: TCP
+      targetPort: 8080
+    selector:
+      app: telemetry-api
+      project: iiot-correlation-lab
+      stage: foundation
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"v1","kind":"Service","metadata":{"annotations":{"metallb.io/loadBalancerIPs":"10.10.0.153"},"labels":{"project":"iiot-correlation-lab","stage":"foundation"},"name":"telemetry-api-lb","namespace":"iiot-poc"},"spec":{"loadBalancerIP":"10.10.0.153","ports":[{"name":"http","port":8080,"targetPort":8080}],"selector":{"app":"telemetry-api","project":"iiot-correlation-lab","stage":"foundation"},"type":"LoadBalancer"}}
+      metallb.io/loadBalancerIPs: 10.10.0.153
+    creationTimestamp: "2026-05-02T02:03:38Z"
+    labels:
+      project: iiot-correlation-lab
+      stage: foundation
+    name: telemetry-api-lb
+    namespace: iiot-poc
+    resourceVersion: "30862"
+    uid: 9211b2ed-e0e6-4d3c-9a95-922cf7981a91
+  spec:
+    allocateLoadBalancerNodePorts: true
+    clusterIP: 10.152.183.67
+    clusterIPs:
+    - 10.152.183.67
+    externalTrafficPolicy: Cluster
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    loadBalancerIP: 10.10.0.153
+    ports:
+    - name: http
+      nodePort: 30410
+      port: 8080
+      protocol: TCP
+      targetPort: 8080
+    selector:
+      app: telemetry-api
+      project: iiot-correlation-lab
+      stage: foundation
+    sessionAffinity: None
+    type: LoadBalancer
+  status:
+    loadBalancer:
+      ingress:
+      - ip: 10.10.0.153
+        ipMode: VIP
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"v1","kind":"Service","metadata":{"annotations":{},"labels":{"project":"iiot-correlation-lab","stage":"foundation"},"name":"vulnerable-app","namespace":"iiot-poc"},"spec":{"ports":[{"name":"http","port":8080,"targetPort":8080}],"selector":{"app":"vulnerable-app","project":"iiot-correlation-lab","stage":"foundation"},"type":"ClusterIP"}}
+    creationTimestamp: "2026-05-02T02:03:39Z"
+    labels:
+      project: iiot-correlation-lab
+      stage: foundation
+    name: vulnerable-app
+    namespace: iiot-poc
+    resourceVersion: "30864"
+    uid: c878fbd4-b588-4d61-8d9d-13cc652c4d2f
+  spec:
+    clusterIP: 10.152.183.86
+    clusterIPs:
+    - 10.152.183.86
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: http
+      port: 8080
+      protocol: TCP
+      targetPort: 8080
+    selector:
+      app: vulnerable-app
+      project: iiot-correlation-lab
+      stage: foundation
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"v1","kind":"Service","metadata":{"annotations":{"metallb.io/loadBalancerIPs":"10.10.0.154"},"labels":{"project":"iiot-correlation-lab","stage":"foundation"},"name":"vulnerable-app-lb","namespace":"iiot-poc"},"spec":{"loadBalancerIP":"10.10.0.154","ports":[{"name":"http","port":8080,"targetPort":8080}],"selector":{"app":"vulnerable-app","project":"iiot-correlation-lab","stage":"foundation"},"type":"LoadBalancer"}}
+      metallb.io/loadBalancerIPs: 10.10.0.154
+    creationTimestamp: "2026-05-02T02:03:39Z"
+    labels:
+      project: iiot-correlation-lab
+      stage: foundation
+    name: vulnerable-app-lb
+    namespace: iiot-poc
+    resourceVersion: "30872"
+    uid: 4eca5159-d9f1-4bfe-aa5e-e0906dc5fe13
+  spec:
+    allocateLoadBalancerNodePorts: true
+    clusterIP: 10.152.183.127
+    clusterIPs:
+    - 10.152.183.127
+    externalTrafficPolicy: Cluster
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    loadBalancerIP: 10.10.0.154
+    ports:
+    - name: http
+      nodePort: 30326
+      port: 8080
+      protocol: TCP
+      targetPort: 8080
+    selector:
+      app: vulnerable-app
+      project: iiot-correlation-lab
+      stage: foundation
+    sessionAffinity: None
+    type: LoadBalancer
+  status:
+    loadBalancer:
+      ingress:
+      - ip: 10.10.0.154
+        ipMode: VIP
+kind: List
+metadata:
+  resourceVersion: ""

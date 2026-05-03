@@ -2,369 +2,448 @@
 set -euo pipefail
 
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
-source "${ROOT_DIR}/scripts/lib/common.sh"
-script_start "$(basename "$0")"
+cd "$ROOT_DIR"
 
-prefer_microk8s_kubectl(){
-  if command -v microk8s >/dev/null 2>&1; then echo "microk8s kubectl"; elif command -v kubectl >/dev/null 2>&1; then echo kubectl; else fail "No se encontró microk8s ni kubectl."; fi
+TZ_NAME="${TZ_NAME:-America/Lima}"
+
+now_local() {
+  TZ="$TZ_NAME" date '+%Y-%m-%d %H:%M:%S %z (%Z)'
 }
 
-KUBECTL="$(prefer_microk8s_kubectl)"
-WAZUH_NS="${WAZUH_NS:-security}"
-RAW_DIR="${ROOT_DIR}/results/raw/scenario_d"
-PROCESSED_DIR="${ROOT_DIR}/results/processed"
-EVIDENCE_DIR="${ROOT_DIR}/evidence/wazuh"
-TS="$(date -u +%Y%m%dT%H%M%SZ)"
+line() {
+  printf '%s\n' '============================================================'
+}
+
+phase() {
+  printf '\n------------------------------------------------------------\n'
+  printf '[PHASE %s] ES: %s\n' "$1" "$2"
+  printf '[PHASE %s] EN: %s\n' "$1" "$3"
+  printf '%s\n\n' '------------------------------------------------------------'
+}
+
+ok() {
+  printf '[OK] ES: %s\n' "$1"
+  printf '[OK] EN: %s\n' "$2"
+}
+
+warn() {
+  printf '[WARN] ES: %s\n' "$1"
+  printf '[WARN] EN: %s\n' "$2"
+}
+
+fail() {
+  printf '\n[ERROR] ES: %s\n' "$1" >&2
+  printf '[ERROR] EN: %s\n' "$2" >&2
+  exit 1
+}
+
+script_start() {
+  line
+  printf '[SCRIPT START] %s\n' "$1"
+  printf 'Hora de inicio / Start time: %s\n' "$(now_local)"
+  printf 'ES: %s\n' "$2"
+  printf 'EN: %s\n' "$3"
+  line
+  printf '\n'
+}
+
+script_end() {
+  local code="$?"
+  line
+  printf '[EXECUTION END]\n'
+  printf 'Script: %s\n' "$(basename "$0")"
+  printf 'Hora de fin / End time: %s\n' "$(now_local)"
+  printf 'Exit code: %s\n' "$code"
+  if [[ "$code" == "0" ]]; then
+    printf 'ES: Ejecución finalizada correctamente.\n'
+    printf 'EN: Execution completed successfully.\n'
+  else
+    printf 'ES: Ejecución finalizada con error; revisar el último mensaje y evidencia generada.\n'
+    printf 'EN: Execution finished with an error; review the latest message and generated evidence.\n'
+  fi
+  line
+}
+trap script_end EXIT
+
+script_start "16-run-correlation-experiment.sh" \
+  "Correlacionar Wazuh con métricas Zabbix reales generando deltas por ejecución." \
+  "Correlate Wazuh with real Zabbix metrics generating per-execution deltas."
+
+KUBECTL="${KUBECTL:-microk8s kubectl}"
+RAW_D_DIR="${RAW_D_DIR:-results/raw/scenario_d}"
+PROCESSED_DIR="${PROCESSED_DIR:-results/processed}"
 CORRELATION_WINDOW_SECONDS="${CORRELATION_WINDOW_SECONDS:-120}"
 ZABBIX_HISTORY_LOOKBACK_SECONDS="${ZABBIX_HISTORY_LOOKBACK_SECONDS:-120}"
 ZABBIX_HISTORY_FORWARD_SECONDS="${ZABBIX_HISTORY_FORWARD_SECONDS:-120}"
-MIN_ZABBIX_REAL_SAMPLES_PER_ATTACK="${MIN_ZABBIX_REAL_SAMPLES_PER_ATTACK:-1}"
-FAIL_ON_MISSING_ZABBIX_HISTORY="${FAIL_ON_MISSING_ZABBIX_HISTORY:-1}"
-ATTACKS_FILE="${RAW_DIR}/mitre_ics_attacks.csv"
-HTTP_OBS_FILE="${RAW_DIR}/attack_http_observations.csv"
-WAZUH_EVENTS_FILE="${RAW_DIR}/wazuh_security_events.csv"
-ZABBIX_FILE="${RAW_DIR}/zabbix_correlation_metrics.csv"
-CORRELATION_FILE="${PROCESSED_DIR}/correlation_dataset.csv"
-ZABBIX_VALIDATION_FILE="${RAW_DIR}/zabbix_history_validation.csv"
-
 ZABBIX_URL="${ZABBIX_URL:-http://10.10.0.160/api_jsonrpc.php}"
 ZABBIX_USER="${ZABBIX_USER:-Admin}"
 ZABBIX_PASSWORD="${ZABBIX_PASSWORD:-zabbix}"
 
-find_manager_pod(){
-  local pod=""
-  pod="$(${KUBECTL} -n "$WAZUH_NS" get pods -l 'app=wazuh-manager,node-type=master' -o jsonpath='{.items[0].metadata.name}' 2>/dev/null || true)"
-  if [[ -z "$pod" ]]; then
-    pod="$(${KUBECTL} -n "$WAZUH_NS" get pods --no-headers 2>/dev/null | awk '/wazuh-manager-master/ && $3 == "Running" {print $1; exit}')"
-  fi
-  echo "$pod"
-}
+mkdir -p "$RAW_D_DIR" "$PROCESSED_DIR" evidence/wazuh
 
-mkdir -p "$RAW_DIR" "$PROCESSED_DIR" "$EVIDENCE_DIR"
-log "Ejecutando correlación Escenario D — Zabbix + Wazuh con history.get real"
-log "Cliente Kubernetes: ${KUBECTL}"
-log "Ventana de correlación fuerte: ${CORRELATION_WINDOW_SECONDS}s"
-log "Ventana history.get Zabbix: -${ZABBIX_HISTORY_LOOKBACK_SECONDS}s / +${ZABBIX_HISTORY_FORWARD_SECONDS}s"
+ATTACK_FILE="$RAW_D_DIR/mitre_ics_attacks.csv"
+WAZUH_FILE="$RAW_D_DIR/wazuh_security_events.csv"
+ZABBIX_METRICS_FILE="$RAW_D_DIR/zabbix_correlation_metrics.csv"
+ZABBIX_VALIDATION_FILE="$RAW_D_DIR/zabbix_history_validation.csv"
+CORRELATION_FILE="$PROCESSED_DIR/correlation_dataset.csv"
 
-[[ -s "$ATTACKS_FILE" ]] || fail "No existe dataset de ataques: ${ATTACKS_FILE}. Ejecuta 15-run-mitre-ics-attacks.sh."
-[[ -s "$HTTP_OBS_FILE" ]] || fail "No existe dataset de observaciones HTTP: ${HTTP_OBS_FILE}. Ejecuta 15-run-mitre-ics-attacks.sh."
-${KUBECTL} get ns "$WAZUH_NS" >/dev/null 2>&1 || fail "No existe namespace ${WAZUH_NS}."
-manager_pod="$(find_manager_pod)"
-[[ -n "$manager_pod" ]] || fail "No se pudo identificar Wazuh Manager master."
+phase "1/4" "Validar entradas de campaña D." "Validate Scenario D campaign inputs."
 
-log "Exportando eventos Wazuh SCENARIO_D desde localfile y alerts.json..."
-${KUBECTL} -n "$WAZUH_NS" exec "$manager_pod" -- bash -lc 'cat /var/ossec/logs/iiot-lab/scenario_d_attacks.json 2>/dev/null || true' > "$EVIDENCE_DIR/${TS}-scenario-d-localfile-events.ndjson" || true
-${KUBECTL} -n "$WAZUH_NS" exec "$manager_pod" -- bash -lc 'tail -n 3000 /var/ossec/logs/alerts/alerts.json 2>/dev/null || true' > "$EVIDENCE_DIR/${TS}-scenario-d-alerts.json" || true
+[[ -f "$ATTACK_FILE" ]] || fail \
+  "No existe $ATTACK_FILE. Ejecutar script 15 primero." \
+  "$ATTACK_FILE does not exist. Run script 15 first."
 
-log "Consultando history.get real de Zabbix y generando dataset correlacionado..."
-export RAW_DIR PROCESSED_DIR ATTACKS_FILE HTTP_OBS_FILE WAZUH_EVENTS_FILE ZABBIX_FILE CORRELATION_FILE ZABBIX_VALIDATION_FILE EVIDENCE_DIR TS CORRELATION_WINDOW_SECONDS ZABBIX_HISTORY_LOOKBACK_SECONDS ZABBIX_HISTORY_FORWARD_SECONDS MIN_ZABBIX_REAL_SAMPLES_PER_ATTACK FAIL_ON_MISSING_ZABBIX_HISTORY ZABBIX_URL ZABBIX_USER ZABBIX_PASSWORD
-python3 <<'PY'
-import csv, json, os, statistics, time, sys
-from collections import defaultdict
-from datetime import datetime, timezone
+phase "2/4" "Exportar eventos Wazuh SCENARIO_D desde localfile/alerts." "Export Wazuh SCENARIO_D events from localfile/alerts."
+
+MANAGER_POD="$($KUBECTL get pod -n security -l app=wazuh-manager,role=master -o jsonpath='{.items[0].metadata.name}' 2>/dev/null || true)"
+if [[ -z "$MANAGER_POD" ]]; then
+  MANAGER_POD="$($KUBECTL get pod -n security | awk '/wazuh-manager-master/ {print $1; exit}')"
+fi
+[[ -n "$MANAGER_POD" ]] || fail "No se encontró pod Wazuh Manager master." "Wazuh Manager master pod was not found."
+
+# Export localfile content. It may contain historical runs; Python will filter by attack_uid.
+$KUBECTL exec -n security "$MANAGER_POD" -- sh -c 'cat /var/ossec/logs/iiot-lab/scenario_d_attacks.json 2>/dev/null || true' \
+  > evidence/wazuh/scenario_d_attacks_localfile_export.ndjson || true
+
+phase "3/4" "Generar correlación con deltas por attack_uid." "Generate correlation with per-attack_uid deltas."
+
+export ATTACK_FILE WAZUH_FILE ZABBIX_METRICS_FILE ZABBIX_VALIDATION_FILE CORRELATION_FILE
+export CORRELATION_WINDOW_SECONDS ZABBIX_HISTORY_LOOKBACK_SECONDS ZABBIX_HISTORY_FORWARD_SECONDS
+export ZABBIX_URL ZABBIX_USER ZABBIX_PASSWORD
+
+python3 - <<'PY'
+import csv, json, os, math
 from pathlib import Path
+from datetime import datetime, timezone
 from urllib.request import Request, urlopen
+from collections import defaultdict
 
-raw_dir = Path(os.environ['RAW_DIR'])
-processed_dir = Path(os.environ['PROCESSED_DIR'])
-attacks_file = Path(os.environ['ATTACKS_FILE'])
-http_obs_file = Path(os.environ['HTTP_OBS_FILE'])
-wazuh_events_file = Path(os.environ['WAZUH_EVENTS_FILE'])
-zabbix_file = Path(os.environ['ZABBIX_FILE'])
-correlation_file = Path(os.environ['CORRELATION_FILE'])
-zabbix_validation_file = Path(os.environ['ZABBIX_VALIDATION_FILE'])
-evidence_dir = Path(os.environ['EVIDENCE_DIR'])
-ts = os.environ['TS']
-strong_window = int(os.environ['CORRELATION_WINDOW_SECONDS'])
-lookback = int(os.environ['ZABBIX_HISTORY_LOOKBACK_SECONDS'])
-forward = int(os.environ['ZABBIX_HISTORY_FORWARD_SECONDS'])
-min_real = int(os.environ['MIN_ZABBIX_REAL_SAMPLES_PER_ATTACK'])
-fail_missing = os.environ['FAIL_ON_MISSING_ZABBIX_HISTORY'] == '1'
-zabbix_url = os.environ['ZABBIX_URL']
-zabbix_user = os.environ['ZABBIX_USER']
-zabbix_password = os.environ['ZABBIX_PASSWORD']
+attack_file = Path(os.environ["ATTACK_FILE"])
+wazuh_file = Path(os.environ["WAZUH_FILE"])
+zabbix_metrics_file = Path(os.environ["ZABBIX_METRICS_FILE"])
+zabbix_validation_file = Path(os.environ["ZABBIX_VALIDATION_FILE"])
+correlation_file = Path(os.environ["CORRELATION_FILE"])
+localfile_export = Path("evidence/wazuh/scenario_d_attacks_localfile_export.ndjson")
 
-localfile_ndjson = evidence_dir / f'{ts}-scenario-d-localfile-events.ndjson'
+corr_window = float(os.environ.get("CORRELATION_WINDOW_SECONDS", "120"))
+lookback = int(float(os.environ.get("ZABBIX_HISTORY_LOOKBACK_SECONDS", "120")))
+forward = int(float(os.environ.get("ZABBIX_HISTORY_FORWARD_SECONDS", "120")))
 
-LAB_HOSTS = {'health-app', 'telemetry-api', 'vulnerable-app', 'mqtt-broker'}
-TARGET_TO_ZABBIX_HOST = {
-    'mosquitto': 'mqtt-broker',
-    'mqtt-broker': 'mqtt-broker',
-    'health-app': 'health-app',
-    'telemetry-api': 'telemetry-api',
-    'vulnerable-app': 'vulnerable-app'
-}
+ZABBIX_URL=os.environ["ZABBIX_URL"]
+ZABBIX_USER=os.environ["ZABBIX_USER"]
+ZABBIX_PASSWORD=os.environ["ZABBIX_PASSWORD"]
 
-def parse_iso(s):
-    s = (s or '').strip()
-    if s.endswith('Z'):
-        s = s[:-1] + '+00:00'
-    return datetime.fromisoformat(s)
-
-def epoch_from_iso(s):
-    return int(parse_iso(s).timestamp())
-
-def epoch_to_iso(e):
+def parse_ts(ts):
+    if not ts:
+        return None
+    ts = ts.strip()
+    if ts.endswith("Z"):
+        ts = ts[:-1] + "+00:00"
     try:
-        return datetime.fromtimestamp(int(e), timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ')
+        return datetime.fromisoformat(ts)
     except Exception:
-        return ''
+        return None
+
+def fmt_ts(dt):
+    if not dt:
+        return ""
+    return dt.astimezone(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
 
 def read_csv(path):
-    with path.open(newline='', encoding='utf-8') as f:
+    with path.open(newline="", encoding="utf-8") as f:
         return list(csv.DictReader(f))
 
-def write_csv(path, fieldnames, rows):
-    with path.open('w', newline='', encoding='utf-8') as f:
-        w = csv.DictWriter(f, fieldnames=fieldnames)
-        w.writeheader(); w.writerows(rows)
+def write_csv(path, rows, fields):
+    path.parent.mkdir(parents=True, exist_ok=True)
+    with path.open("w", newline="", encoding="utf-8") as f:
+        w=csv.DictWriter(f, fieldnames=fields)
+        w.writeheader()
+        w.writerows(rows)
 
-def safe_float(v, default=0.0):
-    try:
-        return float(v)
-    except Exception:
-        return default
+def get(row, *names, default=""):
+    for n in names:
+        if n in row and row[n] not in ("", None):
+            return row[n]
+    return default
 
-def zbx_api(method, params=None, auth=None):
-    payload = {'jsonrpc': '2.0', 'method': method, 'params': params or {}, 'id': 1}
+def api(method, params=None, auth=None):
+    payload={"jsonrpc":"2.0","method":method,"params":params or {},"id":1}
     if auth:
-        payload['auth'] = auth
-    req = Request(zabbix_url, data=json.dumps(payload).encode(), headers={'Content-Type':'application/json'})
-    with urlopen(req, timeout=25) as r:
-        data = json.loads(r.read().decode())
-    if 'error' in data:
-        raise RuntimeError(data['error'])
-    return data['result']
+        payload["auth"]=auth
+    req=Request(ZABBIX_URL, data=json.dumps(payload).encode(), headers={"Content-Type":"application/json"})
+    with urlopen(req, timeout=20) as r:
+        data=json.loads(r.read().decode())
+    if "error" in data:
+        raise RuntimeError(data["error"])
+    return data["result"]
 
-attacks = read_csv(attacks_file)
-http_obs = read_csv(http_obs_file)
+# Attack campaign map
+attacks = read_csv(attack_file)
+attack_by_uid={}
+for r in attacks:
+    uid=get(r,"attack_uid","execution_id")
+    if not uid:
+        continue
+    start=parse_ts(get(r,"start_utc","timestamp_utc"))
+    end=parse_ts(get(r,"end_utc"))
+    aid=get(r,"attack_id","mitre_ics")
+    attack_by_uid[uid]={
+        "attack_uid":uid,
+        "scenario":get(r,"scenario","scenario_id",default="SCENARIO_D"),
+        "iteration":get(r,"iteration"),
+        "attack_id":aid,
+        "mitre_ics":get(r,"mitre_ics","technique_id",default=aid),
+        "technique":get(r,"technique","event_type",default=aid),
+        "target_component":get(r,"target_component","target"),
+        "start_utc":fmt_ts(start),
+        "end_utc":fmt_ts(end) if end else "",
+        "start_dt":start,
+        "end_dt":end
+    }
 
-wazuh_events = []
-if localfile_ndjson.exists():
-    for line in localfile_ndjson.read_text(encoding='utf-8', errors='ignore').splitlines():
-        line = line.strip()
+campaign_uids=set(attack_by_uid)
+
+# Wazuh events from localfile export, filtered by attack_uid
+wazuh_rows=[]
+if localfile_export.exists():
+    for line in localfile_export.read_text(encoding="utf-8", errors="ignore").splitlines():
+        line=line.strip()
         if not line:
             continue
         try:
-            obj = json.loads(line)
+            obj=json.loads(line)
         except Exception:
             continue
-        lab = obj.get('iiot_lab', {}) if isinstance(obj, dict) else {}
-        if lab.get('scenario') != 'SCENARIO_D':
+        lab=obj.get("iiot_lab", obj)
+        uid=lab.get("attack_uid") or obj.get("attack_uid")
+        if uid not in campaign_uids:
             continue
-        wazuh_events.append({
-            'timestamp_utc': obj.get('timestamp_utc') or obj.get('timestamp') or '',
-            'attack_uid': lab.get('attack_uid', ''),
-            'attack_id': lab.get('attack_id', ''),
-            'mitre_ics': lab.get('mitre_ics', ''),
-            'component': obj.get('component') or lab.get('asset', ''),
-            'event_type': obj.get('event_type', ''),
-            'source': 'wazuh_localfile_json'
+        meta=attack_by_uid[uid]
+        ts=lab.get("timestamp_utc") or obj.get("timestamp") or meta["start_utc"]
+        wazuh_rows.append({
+            "timestamp_utc":ts,
+            "scenario":lab.get("scenario", "SCENARIO_D"),
+            "attack_uid":uid,
+            "iteration":meta["iteration"],
+            "attack_id":lab.get("attack_id", meta["attack_id"]),
+            "mitre_ics":lab.get("technique_id", meta["mitre_ics"]),
+            "component":lab.get("target", lab.get("component", meta["target_component"])),
+            "event_type":lab.get("event_type", meta["technique"]),
+            "severity":str(lab.get("severity","security")),
+            "source":"wazuh_localfile_json",
+            "rule_id":str(lab.get("rule_id","")),
+            "rule_description":lab.get("rule_description","")
         })
-write_csv(wazuh_events_file, ['timestamp_utc','attack_uid','attack_id','mitre_ics','component','event_type','source'], wazuh_events)
 
-# Zabbix item discovery.
-auth = zbx_api('user.login', {'username': zabbix_user, 'password': zabbix_password})
-items = zbx_api('item.get', {
-    'output': ['itemid','name','key_','lastvalue','lastclock','value_type','state','status'],
-    'selectHosts': ['host'],
-    'search': {'key_': 'net.tcp.service'},
-    'sortfield': 'name'
+# If no localfile rows matched, fall back to existing file filtered.
+if not wazuh_rows and wazuh_file.exists():
+    for r in read_csv(wazuh_file):
+        uid=get(r,"attack_uid","execution_id")
+        if uid in campaign_uids:
+            wazuh_rows.append(r)
+
+wazuh_fields=["timestamp_utc","scenario","attack_uid","iteration","attack_id","mitre_ics","component","event_type","severity","source","rule_id","rule_description"]
+write_csv(wazuh_file, wazuh_rows, wazuh_fields)
+
+# Zabbix API item discovery
+auth=api("user.login", {"username":ZABBIX_USER, "password":ZABBIX_PASSWORD})
+items=api("item.get", {
+    "output":["itemid","name","key_","value_type","lastvalue","lastclock"],
+    "selectHosts":["host"],
+    "search":{"key_":"net.tcp.service"},
+    "sortfield":"name"
 }, auth)
-selected = []
+
+lab_hosts={"mqtt-broker","health-app","telemetry-api","vulnerable-app"}
+items_by_host=defaultdict(list)
 for item in items:
-    hosts = item.get('hosts') or []
+    hosts=item.get("hosts",[])
     if not hosts:
         continue
-    host = hosts[0].get('host','')
-    if host in LAB_HOSTS:
-        item['_host'] = host
-        selected.append(item)
+    host=hosts[0].get("host","")
+    if host in lab_hosts:
+        items_by_host[host].append(item)
 
-if not selected:
-    raise RuntimeError('No se encontraron items Zabbix net.tcp.service para hosts del laboratorio. Ejecuta 06-configure-zabbix-monitoring.sh y 12-validate-wazuh-security.sh antes de D.')
+# Target-specific mapping; include health-app as global operational reference.
+target_related = {
+    "mosquitto": ["mqtt-broker","health-app"],
+    "mqtt-broker": ["mqtt-broker","health-app"],
+    "telemetry-api": ["telemetry-api","health-app"],
+    "vulnerable-app": ["vulnerable-app","health-app"],
+    "health-app": ["health-app"]
+}
 
-# Evidence: item inventory used for correlation.
-write_csv(evidence_dir / f'{ts}-scenario-d-zabbix-items-used.csv',
-          ['host','itemid','name','key_','value_type','lastvalue','lastclock','state','status'],
-          [{k: it.get(k,'') for k in ['itemid','name','key_','value_type','lastvalue','lastclock','state','status']} | {'host': it['_host']} for it in selected])
+metrics_rows=[]
+validation_rows=[]
+corr_rows=[]
 
-zabbix_rows = []
-validation_rows = []
-for attack in attacks:
-    uid = attack['attack_uid']
-    start_epoch = int(attack.get('start_epoch') or epoch_from_iso(attack.get('start_utc')))
-    end_epoch = int(attack.get('end_epoch') or epoch_from_iso(attack.get('end_utc')))
-    target_host = TARGET_TO_ZABBIX_HOST.get(attack.get('target_component',''), attack.get('target_component',''))
-    query_from = max(0, start_epoch - lookback)
-    query_till = max(int(time.time()), end_epoch + forward)
-    real_samples_target = 0
-    real_samples_total = 0
-    nearest_delta_abs = None
+# Wazuh nearest event map
+wazuh_by_uid=defaultdict(list)
+for w in wazuh_rows:
+    uid=get(w,"attack_uid")
+    dt=parse_ts(get(w,"timestamp_utc"))
+    if uid and dt:
+        wazuh_by_uid[uid].append((dt,w))
 
-    for item in selected:
-        value_type = int(item.get('value_type', 3))
-        history = zbx_api('history.get', {
-            'output': 'extend',
-            'history': value_type,
-            'itemids': item['itemid'],
-            'time_from': query_from,
-            'time_till': query_till,
-            'sortfield': 'clock',
-            'sortorder': 'ASC',
-            'limit': 2000
-        }, auth)
-        values = [safe_float(h.get('value')) for h in history]
-        clocks = [int(h.get('clock', 0)) for h in history if str(h.get('clock','')).isdigit()]
-        samples = len(values)
-        real_samples_total += samples
-        if item['_host'] == target_host:
-            real_samples_target += samples
-            for c in clocks:
-                d = min(abs(c - start_epoch), abs(c - end_epoch))
-                nearest_delta_abs = d if nearest_delta_abs is None else min(nearest_delta_abs, d)
-        zabbix_rows.append({
-            'attack_uid': uid,
-            'target_host': target_host,
-            'host': item['_host'],
-            'item': item.get('name',''),
-            'key': item.get('key_',''),
-            'itemid': item.get('itemid',''),
-            'value_type': value_type,
-            'samples': samples,
-            'min_value': min(values) if values else '',
-            'avg_value': round(sum(values)/len(values), 6) if values else '',
-            'max_value': max(values) if values else '',
-            'last_value': values[-1] if values else '',
-            'first_clock': clocks[0] if clocks else '',
-            'last_clock': clocks[-1] if clocks else '',
-            'first_utc': epoch_to_iso(clocks[0]) if clocks else '',
-            'last_utc': epoch_to_iso(clocks[-1]) if clocks else '',
-            'source': 'history.get' if samples else 'NO_HISTORY_IN_WINDOW'
-        })
+for uid,meta in sorted(attack_by_uid.items(), key=lambda kv: (kv[1]["attack_id"], int(kv[1]["iteration"] or 0))):
+    start=meta["start_dt"]
+    if not start:
+        continue
+    time_from=int(start.timestamp())-lookback
+    time_till=int(start.timestamp())+forward
+    target=meta["target_component"]
+    hosts=target_related.get(target,[target,"health-app"])
+
+    candidate_samples=[]
+    for host in hosts:
+        for item in items_by_host.get(host,[]):
+            itemid=item["itemid"]
+            value_type=int(item.get("value_type","0"))
+            hist=api("history.get", {
+                "output":"extend",
+                "history": value_type,
+                "itemids":[itemid],
+                "time_from": time_from,
+                "time_till": time_till,
+                "sortfield":"clock",
+                "sortorder":"ASC",
+                "limit": 200
+            }, auth)
+            for h in hist:
+                clock=int(h["clock"])
+                sample_dt=datetime.fromtimestamp(clock, tz=timezone.utc)
+                delta=abs((sample_dt-start).total_seconds())
+                val=h.get("value","")
+                row={
+                    "timestamp_utc":fmt_ts(sample_dt),
+                    "scenario":"SCENARIO_D",
+                    "attack_uid":uid,
+                    "iteration":meta["iteration"],
+                    "attack_id":meta["attack_id"],
+                    "mitre_ics":meta["mitre_ics"],
+                    "target_component":target,
+                    "host":host,
+                    "item":item.get("name",""),
+                    "key":item.get("key_",""),
+                    "itemid":itemid,
+                    "value_type":value_type,
+                    "history_clock":clock,
+                    "history_utc":fmt_ts(sample_dt),
+                    "history_value":val,
+                    "sample_delta_s":round(delta,6),
+                    "correlation_window_seconds":corr_window
+                }
+                metrics_rows.append(row)
+                candidate_samples.append(row)
+
+    # Nearest Zabbix sample
+    nearest=None
+    if candidate_samples:
+        nearest=min(candidate_samples, key=lambda r: float(r["sample_delta_s"]))
+
+    # Nearest Wazuh event
+    nearest_wazuh=None
+    if wazuh_by_uid.get(uid):
+        nearest_wazuh=min(wazuh_by_uid[uid], key=lambda pair: abs((pair[0]-start).total_seconds()))
+
+    z_delta=float(nearest["sample_delta_s"]) if nearest else None
+    w_delta=abs((nearest_wazuh[0]-start).total_seconds()) if nearest_wazuh else None
+
+    valid_z = z_delta is not None and z_delta <= corr_window
+    valid_w = w_delta is not None and w_delta <= corr_window
+    strong = valid_z and valid_w
+
     validation_rows.append({
-        'attack_uid': uid,
-        'attack_id': attack.get('attack_id',''),
-        'target_component': attack.get('target_component',''),
-        'target_zabbix_host': target_host,
-        'real_zabbix_samples_target': real_samples_target,
-        'real_zabbix_samples_all_hosts': real_samples_total,
-        'nearest_zabbix_sample_delta_seconds': '' if nearest_delta_abs is None else nearest_delta_abs,
-        'zabbix_history_status': 'OK' if real_samples_target >= min_real else 'MISSING_TARGET_HISTORY'
+        "scenario":"SCENARIO_D",
+        "attack_uid":uid,
+        "iteration":meta["iteration"],
+        "attack_id":meta["attack_id"],
+        "mitre_ics":meta["mitre_ics"],
+        "target_component":target,
+        "attack_start_utc":meta["start_utc"],
+        "nearest_zabbix_sample_utc":nearest["history_utc"] if nearest else "",
+        "nearest_zabbix_sample_delta_s":"" if z_delta is None else round(z_delta,6),
+        "nearest_zabbix_host":nearest["host"] if nearest else "",
+        "nearest_zabbix_itemid":nearest["itemid"] if nearest else "",
+        "nearest_zabbix_item":nearest["item"] if nearest else "",
+        "nearest_zabbix_value":nearest["history_value"] if nearest else "",
+        "wazuh_event_utc":fmt_ts(nearest_wazuh[0]) if nearest_wazuh else "",
+        "wazuh_event_delta_s":"" if w_delta is None else round(w_delta,6),
+        "correlation_window_seconds":corr_window,
+        "has_wazuh_event":"YES" if nearest_wazuh else "NO",
+        "has_zabbix_sample":"YES" if nearest else "NO",
+        "valid_temporal_correlation":"YES" if strong else "NO",
+        "correlation_strength":"strong" if strong else ("partial" if (valid_z or valid_w) else "failed")
     })
-
-write_csv(zabbix_file, ['attack_uid','target_host','host','item','key','itemid','value_type','samples','min_value','avg_value','max_value','last_value','first_clock','last_clock','first_utc','last_utc','source'], zabbix_rows)
-write_csv(zabbix_validation_file, ['attack_uid','attack_id','target_component','target_zabbix_host','real_zabbix_samples_target','real_zabbix_samples_all_hosts','nearest_zabbix_sample_delta_seconds','zabbix_history_status'], validation_rows)
-
-missing = [r for r in validation_rows if r['zabbix_history_status'] != 'OK']
-if missing and fail_missing:
-    detail = '\n'.join(f"{r['attack_uid']} target={r['target_zabbix_host']} samples={r['real_zabbix_samples_target']}" for r in missing[:20])
-    (evidence_dir / f'{ts}-scenario-d-zabbix-history-missing.txt').write_text(detail + '\n', encoding='utf-8')
-    raise RuntimeError('Zabbix history.get no devolvió muestras reales para uno o más ataques. No se generará correlación cuantitativa falsa. Detalle:\n' + detail)
-
-wazuh_by_uid = defaultdict(list)
-for ev in wazuh_events:
-    wazuh_by_uid[ev['attack_uid']].append(ev)
-http_by_uid = defaultdict(list)
-for obs in http_obs:
-    http_by_uid[obs['attack_uid']].append(obs)
-zbx_by_uid = defaultdict(list)
-for row in zabbix_rows:
-    zbx_by_uid[row['attack_uid']].append(row)
-validation_by_uid = {r['attack_uid']: r for r in validation_rows}
-
-corr_rows = []
-for attack in attacks:
-    uid = attack['attack_uid']
-    observations = http_by_uid.get(uid, [])
-    pre = [o for o in observations if o.get('phase') == 'pre']
-    post = [o for o in observations if o.get('phase') == 'post']
-    pre_latency = statistics.mean([safe_float(o.get('time_total_seconds')) for o in pre]) if pre else 0.0
-    post_latency = statistics.mean([safe_float(o.get('time_total_seconds')) for o in post]) if post else 0.0
-    http_error = any((o.get('http_code','000') == '000' or not o.get('http_code','').startswith(('2','3'))) for o in post)
-    evs = wazuh_by_uid.get(uid, [])
-    zbx_rows = zbx_by_uid.get(uid, [])
-    vrow = validation_by_uid.get(uid, {})
-    target_host = TARGET_TO_ZABBIX_HOST.get(attack.get('target_component',''), attack.get('target_component',''))
-    target_zbx = [z for z in zbx_rows if z.get('host') == target_host]
-    real_samples = int(vrow.get('real_zabbix_samples_target') or 0)
-    nearest_delta = vrow.get('nearest_zabbix_sample_delta_seconds','')
-
-    # Operational degradation from real Zabbix only: availability item observed down OR latency item degraded > 50 ms.
-    zabbix_degraded = 'NO'
-    for zr in target_zbx:
-        key = zr.get('key','')
-        samples = int(zr.get('samples') or 0)
-        if samples <= 0:
-            continue
-        min_v = safe_float(zr.get('min_value'), None)
-        max_v = safe_float(zr.get('max_value'), None)
-        avg_v = safe_float(zr.get('avg_value'), None)
-        if key.startswith('net.tcp.service[') and min_v is not None and min_v < 1:
-            zabbix_degraded = 'YES'
-        if key.startswith('net.tcp.service.perf[') and max_v is not None and avg_v is not None and max_v >= max(avg_v + 0.05, avg_v * 2.0):
-            zabbix_degraded = 'YES'
-
-    strong_temporal = False
-    try:
-        strong_temporal = nearest_delta != '' and int(nearest_delta) <= strong_window
-    except Exception:
-        strong_temporal = False
-    correlation_strength = 'strong' if evs and real_samples >= min_real and strong_temporal else ('moderate' if evs and real_samples >= min_real else 'weak')
 
     corr_rows.append({
-        'scenario': 'SCENARIO_D',
-        'attack_uid': uid,
-        'iteration': attack.get('iteration',''),
-        'attack_id': attack.get('attack_id',''),
-        'mitre_ics': attack.get('mitre_ics',''),
-        'technique': attack.get('technique',''),
-        'target_component': attack.get('target_component',''),
-        'target_zabbix_host': target_host,
-        'start_utc': attack.get('start_utc',''),
-        'end_utc': attack.get('end_utc',''),
-        'wazuh_detected': 'YES' if evs else 'NO',
-        'wazuh_event_count': len(evs),
-        'zabbix_real_samples_target': real_samples,
-        'zabbix_real_samples_all_hosts': vrow.get('real_zabbix_samples_all_hosts',''),
-        'nearest_zabbix_sample_delta_seconds': nearest_delta,
-        'zabbix_degraded': zabbix_degraded,
-        'http_error_observed': 'YES' if http_error else 'NO',
-        'http_pre_latency_avg_s': round(pre_latency, 6),
-        'http_post_latency_avg_s': round(post_latency, 6),
-        'http_latency_delta_s': round(post_latency - pre_latency, 6),
-        'correlation_window_seconds': strong_window,
-        'correlation_strength': correlation_strength,
-        'zabbix_source': 'history.get'
+        "scenario":"SCENARIO_D",
+        "attack_uid":uid,
+        "iteration":meta["iteration"],
+        "attack_id":meta["attack_id"],
+        "mitre_ics":meta["mitre_ics"],
+        "technique":meta["technique"],
+        "target_component":target,
+        "start_utc":meta["start_utc"],
+        "end_utc":meta["end_utc"],
+        "wazuh_detected":"YES" if nearest_wazuh else "NO",
+        "wazuh_event_utc":fmt_ts(nearest_wazuh[0]) if nearest_wazuh else "",
+        "wazuh_event_delta_s":"" if w_delta is None else round(w_delta,6),
+        "zabbix_real_sampled":"YES" if nearest else "NO",
+        "nearest_zabbix_sample_utc":nearest["history_utc"] if nearest else "",
+        "nearest_zabbix_sample_delta_s":"" if z_delta is None else round(z_delta,6),
+        "nearest_zabbix_host":nearest["host"] if nearest else "",
+        "nearest_zabbix_item":nearest["item"] if nearest else "",
+        "nearest_zabbix_value":nearest["history_value"] if nearest else "",
+        "correlation_window_seconds":corr_window,
+        "strong_temporal_correlation":"YES" if strong else "NO",
+        "correlation_strength":"strong" if strong else ("partial" if (valid_z or valid_w) else "failed")
     })
 
-write_csv(correlation_file, ['scenario','attack_uid','iteration','attack_id','mitre_ics','technique','target_component','target_zabbix_host','start_utc','end_utc','wazuh_detected','wazuh_event_count','zabbix_real_samples_target','zabbix_real_samples_all_hosts','nearest_zabbix_sample_delta_seconds','zabbix_degraded','http_error_observed','http_pre_latency_avg_s','http_post_latency_avg_s','http_latency_delta_s','correlation_window_seconds','correlation_strength','zabbix_source'], corr_rows)
-metadata = {
-    'timestamp_utc': datetime.now(timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ'),
-    'scenario': 'SCENARIO_D',
-    'zabbix_method': 'history.get',
-    'correlation_window_seconds': strong_window,
-    'zabbix_history_lookback_seconds': lookback,
-    'zabbix_history_forward_seconds': forward,
-    'fail_on_missing_zabbix_history': fail_missing,
-    'attacks': len(attacks),
-    'wazuh_events': len(wazuh_events),
-    'zabbix_history_rows': len(zabbix_rows),
-    'correlation_rows': len(corr_rows)
-}
-(evidence_dir / f'{ts}-scenario-d-correlation-metadata.json').write_text(json.dumps(metadata, indent=2), encoding='utf-8')
-print(f'[OK] Correlation dataset generated with real Zabbix history.get: {correlation_file}')
+metric_fields=["timestamp_utc","scenario","attack_uid","iteration","attack_id","mitre_ics","target_component","host","item","key","itemid","value_type","history_clock","history_utc","history_value","sample_delta_s","correlation_window_seconds"]
+validation_fields=["scenario","attack_uid","iteration","attack_id","mitre_ics","target_component","attack_start_utc","nearest_zabbix_sample_utc","nearest_zabbix_sample_delta_s","nearest_zabbix_host","nearest_zabbix_itemid","nearest_zabbix_item","nearest_zabbix_value","wazuh_event_utc","wazuh_event_delta_s","correlation_window_seconds","has_wazuh_event","has_zabbix_sample","valid_temporal_correlation","correlation_strength"]
+corr_fields=["scenario","attack_uid","iteration","attack_id","mitre_ics","technique","target_component","start_utc","end_utc","wazuh_detected","wazuh_event_utc","wazuh_event_delta_s","zabbix_real_sampled","nearest_zabbix_sample_utc","nearest_zabbix_sample_delta_s","nearest_zabbix_host","nearest_zabbix_item","nearest_zabbix_value","correlation_window_seconds","strong_temporal_correlation","correlation_strength"]
+
+write_csv(zabbix_metrics_file, metrics_rows, metric_fields)
+write_csv(zabbix_validation_file, validation_rows, validation_fields)
+write_csv(correlation_file, corr_rows, corr_fields)
+
+# Ensure no missing per-UID deltas for final campaign
+missing=[r["attack_uid"] for r in validation_rows if r["nearest_zabbix_sample_delta_s"]==""]
+if missing:
+    raise RuntimeError(f"Missing nearest_zabbix_sample_delta_s for attack_uids: {missing[:10]}")
+
+print(json.dumps({
+    "attacks":len(attacks),
+    "wazuh_events_filtered":len(wazuh_rows),
+    "zabbix_metric_samples":len(metrics_rows),
+    "validation_rows":len(validation_rows),
+    "correlation_rows":len(corr_rows),
+    "correlation_file":str(correlation_file),
+    "zabbix_validation_file":str(zabbix_validation_file)
+}, indent=2))
 PY
 
-csv_has_data "$WAZUH_EVENTS_FILE"
-csv_has_data "$CORRELATION_FILE"
-csv_has_data "$ZABBIX_FILE"
-csv_has_data "$ZABBIX_VALIDATION_FILE"
+phase "4/4" "Validar salidas con deltas por ejecución." "Validate outputs with per-execution deltas."
 
-summary_header "Scenario D Correlation Experiment — Real Zabbix History"
-summary_ok "Eventos Wazuh exportados: results/raw/scenario_d/wazuh_security_events.csv"
-summary_ok "Métricas Zabbix reales exportadas con history.get: results/raw/scenario_d/zabbix_correlation_metrics.csv"
-summary_ok "Validación history.get generada: results/raw/scenario_d/zabbix_history_validation.csv"
-summary_ok "Dataset correlacionado generado: results/processed/correlation_dataset.csv"
-summary_ok "Ventana de correlación fuerte aplicada: ${CORRELATION_WINDOW_SECONDS}s"
-summary_ok "Escenario D listo para exportación final de datasets/tablas/figuras"
+for f in "$WAZUH_FILE" "$ZABBIX_METRICS_FILE" "$ZABBIX_VALIDATION_FILE" "$CORRELATION_FILE"; do
+  [[ -s "$f" ]] || fail "Archivo ausente o vacío: $f" "Missing or empty file: $f"
+  ok "Generado: $f" "Generated: $f"
+done
+
+python3 - <<'PY'
+import csv
+from pathlib import Path
+p=Path("results/raw/scenario_d/zabbix_history_validation.csv")
+rows=list(csv.DictReader(p.open(encoding="utf-8")))
+missing=[r for r in rows if not r.get("nearest_zabbix_sample_delta_s")]
+if missing:
+    raise SystemExit("Missing nearest_zabbix_sample_delta_s in validation file")
+print(f"[OK] Per-execution Zabbix deltas available: {len(rows)}")
+PY
+
+line
+echo "[SUMMARY] Scenario D Correlation Experiment v1.1"
+line
+ok "Correlation dataset regenerated with per-attack_uid temporal deltas" "Correlation dataset regenerated with per-attack_uid temporal deltas"
+ok "zabbix_history_validation.csv now includes nearest_zabbix_sample_delta_s" "zabbix_history_validation.csv now includes nearest_zabbix_sample_delta_s"

@@ -221,3 +221,17 @@ Al completar los scripts `00` a `18`, el laboratorio debe contar con:
 [OK] Datasets raw/processed/tables/figures generados
 [OK] Freeze final reproducible con SHA256SUMS
 ```
+
+
+<!-- SCENARIO_E_NOISE_FPR_V1 -->
+
+## Escenario E — Operational Noise / False Positive Control
+
+El Escenario E ejecuta ruido operacional legítimo y controlado para medir falsos positivos frente a las técnicas MITRE ATT&CK for ICS evaluadas en el Escenario D. No introduce ataques, sabotaje, chaos engineering ni infraestructura adicional.
+
+```bash
+ITERATIONS_PER_PROFILE=20 NOISE_DURATION_SECONDS=30 INTER_NOISE_COOLDOWN_SECONDS=10 ./scripts/run/23-run-operational-noise-control.sh
+./scripts/run/24-analyze-false-positive-rate.sh
+./scripts/run/25-freeze-noise-control-results.sh
+```
+

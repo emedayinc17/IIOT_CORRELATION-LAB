@@ -144,3 +144,11 @@ After completing scripts `00` through `18`, the laboratory should include:
 [OK] Raw/processed/tables/figures datasets generated
 [OK] Final reproducible freeze with SHA256SUMS
 ```
+
+
+<!-- SCENARIO_E_NOISE_FPR_V1 -->
+
+## Scenario E — Operational Noise / False Positive Control
+
+Scenario E runs legitimate and controlled operational noise to measure false positives against the MITRE ATT&CK for ICS techniques evaluated in Scenario D. It does not introduce attacks, sabotage, chaos engineering, or additional infrastructure.
+

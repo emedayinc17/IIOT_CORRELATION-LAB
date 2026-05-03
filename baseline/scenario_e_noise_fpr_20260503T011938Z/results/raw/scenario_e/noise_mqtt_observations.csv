@@ -1,0 +1,10 @@
+timestamp_utc,noise_uid,profile,iteration,mqtt_host,mqtt_port,topic,messages_attempted,messages_success,messages_failed,legitimate_publish
+2026-05-03T01:14:38Z,E-LOW-1,LOW,1,10.10.0.151,1883,sensors/legitimate/low,20,20,0,YES
+2026-05-03T01:15:09Z,E-LOW-2,LOW,2,10.10.0.151,1883,sensors/legitimate/low,20,20,0,YES
+2026-05-03T01:15:40Z,E-LOW-3,LOW,3,10.10.0.151,1883,sensors/legitimate/low,20,20,0,YES
+2026-05-03T01:16:12Z,E-MEDIUM-1,MEDIUM,1,10.10.0.151,1883,sensors/legitimate/medium,40,40,0,YES
+2026-05-03T01:16:43Z,E-MEDIUM-2,MEDIUM,2,10.10.0.151,1883,sensors/legitimate/medium,40,40,0,YES
+2026-05-03T01:17:14Z,E-MEDIUM-3,MEDIUM,3,10.10.0.151,1883,sensors/legitimate/medium,40,40,0,YES
+2026-05-03T01:17:45Z,E-HIGH-1,HIGH,1,10.10.0.151,1883,sensors/legitimate/high,80,80,0,YES
+2026-05-03T01:18:16Z,E-HIGH-2,HIGH,2,10.10.0.151,1883,sensors/legitimate/high,80,80,0,YES
+2026-05-03T01:18:48Z,E-HIGH-3,HIGH,3,10.10.0.151,1883,sensors/legitimate/high,80,80,0,YES

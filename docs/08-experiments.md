@@ -86,3 +86,11 @@ ITERATIONS=900 SLEEP_SECONDS=2 ./scripts/run/13-run-wazuh-security-baseline.sh
 | Eventos estructurados | `results/raw/scenario_c/wazuh_security_baseline.csv` |
 | Reglas IIoT/MITRE ICS preparadas | `wazuh-iiot-rules.yaml` y validación en manager |
 | Freeze reproducible | `baseline/scenario_c_wazuh_security/` |
+
+
+<!-- SCENARIO_E_NOISE_FPR_V1 -->
+
+## Scenario E — Operational Noise / False Positive Control
+
+Scenario E is a non-attack control campaign. It generates legitimate MQTT and HTTP activity under LOW, MEDIUM, and HIGH operational noise profiles to estimate false positives under normal operational variability.
+

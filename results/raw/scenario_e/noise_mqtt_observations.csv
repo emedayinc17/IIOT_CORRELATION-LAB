@@ -1,0 +1,17 @@
+timestamp_utc,noise_uid,profile,iteration,mqtt_host,mqtt_port,topic,messages_attempted,messages_success,messages_failed,legitimate_publish
+2026-05-03T01:23:08Z,E-LOW-1,LOW,1,10.10.0.151,1883,sensors/legitimate/low,20,20,0,YES
+2026-05-03T01:23:56Z,E-LOW-2,LOW,2,10.10.0.151,1883,sensors/legitimate/low,20,20,0,YES
+2026-05-03T01:24:45Z,E-LOW-3,LOW,3,10.10.0.151,1883,sensors/legitimate/low,20,20,0,YES
+2026-05-03T01:25:33Z,E-LOW-4,LOW,4,10.10.0.151,1883,sensors/legitimate/low,20,20,0,YES
+2026-05-03T01:26:21Z,E-LOW-5,LOW,5,10.10.0.151,1883,sensors/legitimate/low,20,20,0,YES
+2026-05-03T01:27:09Z,E-LOW-6,LOW,6,10.10.0.151,1883,sensors/legitimate/low,20,20,0,YES
+2026-05-03T01:27:57Z,E-LOW-7,LOW,7,10.10.0.151,1883,sensors/legitimate/low,20,20,0,YES
+2026-05-03T01:28:45Z,E-LOW-8,LOW,8,10.10.0.151,1883,sensors/legitimate/low,20,20,0,YES
+2026-05-03T01:29:33Z,E-LOW-9,LOW,9,10.10.0.151,1883,sensors/legitimate/low,20,20,0,YES
+2026-05-03T01:30:21Z,E-LOW-10,LOW,10,10.10.0.151,1883,sensors/legitimate/low,20,20,0,YES
+2026-05-03T01:31:09Z,E-LOW-11,LOW,11,10.10.0.151,1883,sensors/legitimate/low,20,20,0,YES
+2026-05-03T01:31:57Z,E-LOW-12,LOW,12,10.10.0.151,1883,sensors/legitimate/low,20,20,0,YES
+2026-05-03T01:32:45Z,E-LOW-13,LOW,13,10.10.0.151,1883,sensors/legitimate/low,20,20,0,YES
+2026-05-03T01:33:33Z,E-LOW-14,LOW,14,10.10.0.151,1883,sensors/legitimate/low,20,20,0,YES
+2026-05-03T01:34:21Z,E-LOW-15,LOW,15,10.10.0.151,1883,sensors/legitimate/low,20,20,0,YES
+2026-05-03T01:35:09Z,E-LOW-16,LOW,16,10.10.0.151,1883,sensors/legitimate/low,20,20,0,YES

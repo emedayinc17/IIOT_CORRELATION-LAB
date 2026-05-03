@@ -1,0 +1,10 @@
+timestamp_utc,noise_uid,scenario,profile,iteration,event_type,severity,expected_impact,target_services,source
+2026-05-03T01:14:17Z,E-LOW-1,SCENARIO_E,LOW,1,legitimate_operational_noise,benign,benign_no_attack,"health-app;telemetry-api;vulnerable-app;mqtt-broker",wazuh_localfile_json
+2026-05-03T01:14:48Z,E-LOW-2,SCENARIO_E,LOW,2,legitimate_operational_noise,benign,benign_no_attack,"health-app;telemetry-api;vulnerable-app;mqtt-broker",wazuh_localfile_json
+2026-05-03T01:15:19Z,E-LOW-3,SCENARIO_E,LOW,3,legitimate_operational_noise,benign,benign_no_attack,"health-app;telemetry-api;vulnerable-app;mqtt-broker",wazuh_localfile_json
+2026-05-03T01:15:50Z,E-MEDIUM-1,SCENARIO_E,MEDIUM,1,legitimate_operational_noise,benign,benign_no_attack,"health-app;telemetry-api;vulnerable-app;mqtt-broker",wazuh_localfile_json
+2026-05-03T01:16:22Z,E-MEDIUM-2,SCENARIO_E,MEDIUM,2,legitimate_operational_noise,benign,benign_no_attack,"health-app;telemetry-api;vulnerable-app;mqtt-broker",wazuh_localfile_json
+2026-05-03T01:16:53Z,E-MEDIUM-3,SCENARIO_E,MEDIUM,3,legitimate_operational_noise,benign,benign_no_attack,"health-app;telemetry-api;vulnerable-app;mqtt-broker",wazuh_localfile_json
+2026-05-03T01:17:24Z,E-HIGH-1,SCENARIO_E,HIGH,1,legitimate_operational_noise,benign,benign_no_attack,"health-app;telemetry-api;vulnerable-app;mqtt-broker",wazuh_localfile_json
+2026-05-03T01:17:55Z,E-HIGH-2,SCENARIO_E,HIGH,2,legitimate_operational_noise,benign,benign_no_attack,"health-app;telemetry-api;vulnerable-app;mqtt-broker",wazuh_localfile_json
+2026-05-03T01:18:27Z,E-HIGH-3,SCENARIO_E,HIGH,3,legitimate_operational_noise,benign,benign_no_attack,"health-app;telemetry-api;vulnerable-app;mqtt-broker",wazuh_localfile_json

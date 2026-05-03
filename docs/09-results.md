@@ -1,62 +1,20 @@
-# 09 — Results
+## Corrección v1.1 — resultados con deltas por ejecución
 
-## Estructura
+Las tablas finales deben ser regeneradas después de ejecutar el script 16 corregido:
 
-```text
-results/
-├── raw/
-├── processed/
-├── figures/
-└── tables/
+```bash
+./scripts/run/16-run-correlation-experiment.sh
+./scripts/run/17-export-final-datasets.sh
+./scripts/run/21-analyze-temporal-correlation.sh
+./scripts/run/22-run-statistical-analysis.sh
 ```
 
-## Escenario A
-
-| Archivo | Descripción |
-|---|---|
-| `http_baseline.csv` | latencia y disponibilidad HTTP |
-| `mqtt_messages.csv` | telemetría MQTT |
-| `k8s_resources.csv` | recursos Kubernetes |
-| `experiment_metadata.json` | metadata |
-
-## Escenario B
-
-| Archivo | Descripción |
-|---|---|
-| `http_baseline_zabbix.csv` | latencia HTTP con Zabbix activo |
-| `mqtt_messages_zabbix.csv` | telemetría MQTT con Zabbix activo |
-| `k8s_resources_zabbix.csv` | recursos Kubernetes con Zabbix |
-| `zabbix_items_snapshot.csv` | snapshot de items Zabbix |
-| `experiment_metadata_zabbix.json` | metadata |
-
-## Evidencia adicional
-
-```text
-evidence/inventory/
-evidence/zabbix/
-baseline/scenario_A_*.tar.gz
-baseline/scenario_B_*.tar.gz
-```
+No es necesario repetir el script 15 si la campaña de ataques ya fue ejecutada correctamente.
 
 
-## Escenario C
+<!-- SCENARIO_E_NOISE_FPR_V1 -->
 
-| Archivo | Descripción |
-|---|---|
-| `results/raw/scenario_c/wazuh_security_baseline.csv` | eventos estructurados de baseline de seguridad |
-| `evidence/wazuh/*-wazuh-validation-summary.csv` | validación técnica de componentes Wazuh |
-| `evidence/wazuh/*-scenario-c-baseline-events.ndjson` | eventos JSON escritos para Wazuh Manager |
-| `evidence/wazuh/*-wazuh-alerts-tail.json` | cola de alertas Wazuh al momento de la corrida |
-| `evidence/wazuh/*-wazuh-archives-tail.json` | cola de archivos Wazuh al momento de la corrida |
-| `baseline/scenario_c_wazuh_security/SHA256SUMS` | checksums del freeze |
+## Scenario E results
 
-## Evidencia adicional actualizada
+Scenario E produces `table_noise_fpr_summary.csv`, `table_noise_wilson_ci.csv`, `table_noise_profile_summary.csv`, and `table_noise_zabbix_quality.csv`. FPR must be reported with Wilson confidence intervals.
 
-```text
-evidence/inventory/
-evidence/zabbix/
-evidence/wazuh/
-baseline/scenario_A_*
-baseline/scenario_B_*
-baseline/scenario_c_wazuh_security/
-```

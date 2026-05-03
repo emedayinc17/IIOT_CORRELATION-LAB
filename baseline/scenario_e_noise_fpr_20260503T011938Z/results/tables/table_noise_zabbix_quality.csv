@@ -1,0 +1,4 @@
+scenario,profile,noise_executions,zabbix_observability_note
+SCENARIO_E,HIGH,3,Scenario E validates FPR under legitimate traffic; Zabbix observability remains evidenced by prior Scenario B/D history and operational HTTP/MQTT observations.
+SCENARIO_E,LOW,3,Scenario E validates FPR under legitimate traffic; Zabbix observability remains evidenced by prior Scenario B/D history and operational HTTP/MQTT observations.
+SCENARIO_E,MEDIUM,3,Scenario E validates FPR under legitimate traffic; Zabbix observability remains evidenced by prior Scenario B/D history and operational HTTP/MQTT observations.

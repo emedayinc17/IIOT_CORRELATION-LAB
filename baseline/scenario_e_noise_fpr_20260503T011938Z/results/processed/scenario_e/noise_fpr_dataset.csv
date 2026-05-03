@@ -1,0 +1,10 @@
+timestamp_utc,scenario,noise_uid,profile,iteration,noise_type,intensity,duration_seconds,target_services,expected_impact,false_positive_count,false_positive_detected
+2026-05-03T01:14:17Z,SCENARIO_E,E-LOW-1,LOW,1,mixed_operational_noise,low,15,health-app;telemetry-api;vulnerable-app;mqtt-broker,benign_no_attack,0,NO
+2026-05-03T01:14:48Z,SCENARIO_E,E-LOW-2,LOW,2,mixed_operational_noise,low,15,health-app;telemetry-api;vulnerable-app;mqtt-broker,benign_no_attack,0,NO
+2026-05-03T01:15:19Z,SCENARIO_E,E-LOW-3,LOW,3,mixed_operational_noise,low,15,health-app;telemetry-api;vulnerable-app;mqtt-broker,benign_no_attack,0,NO
+2026-05-03T01:15:50Z,SCENARIO_E,E-MEDIUM-1,MEDIUM,1,mixed_operational_noise,medium,15,health-app;telemetry-api;vulnerable-app;mqtt-broker,benign_no_attack,0,NO
+2026-05-03T01:16:22Z,SCENARIO_E,E-MEDIUM-2,MEDIUM,2,mixed_operational_noise,medium,15,health-app;telemetry-api;vulnerable-app;mqtt-broker,benign_no_attack,0,NO
+2026-05-03T01:16:53Z,SCENARIO_E,E-MEDIUM-3,MEDIUM,3,mixed_operational_noise,medium,15,health-app;telemetry-api;vulnerable-app;mqtt-broker,benign_no_attack,0,NO
+2026-05-03T01:17:24Z,SCENARIO_E,E-HIGH-1,HIGH,1,mixed_operational_noise,high,15,health-app;telemetry-api;vulnerable-app;mqtt-broker,benign_no_attack,0,NO
+2026-05-03T01:17:55Z,SCENARIO_E,E-HIGH-2,HIGH,2,mixed_operational_noise,high,15,health-app;telemetry-api;vulnerable-app;mqtt-broker,benign_no_attack,0,NO
+2026-05-03T01:18:27Z,SCENARIO_E,E-HIGH-3,HIGH,3,mixed_operational_noise,high,15,health-app;telemetry-api;vulnerable-app;mqtt-broker,benign_no_attack,0,NO
